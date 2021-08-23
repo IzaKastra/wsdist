@@ -1,7 +1,10 @@
 # wsdist
 Python3-based weapon skill simulator for Final Fantasy XI.
+
 Created by Kastra on Asura. First published 2021 August 23
+
 Feel free to /tell me in game or message me on FFXIAH (https://www.ffxiah.com/player/Asura/Kastra) if you have any comments, questions, or suggestions.
+
 
 The code is working as intended, but it currently only supports Ninja and Samurai main jobs. Adding other jobs is tedious, but incredibly simple. I will work on adding other jobs sometime later. For now, I encourage other users to download the code and add the jobs themselves until I get around to doing it on the official release.
 
