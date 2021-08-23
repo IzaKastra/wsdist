@@ -9,7 +9,7 @@ Feel free to /tell me in game or message me on FFXIAH (https://www.ffxiah.com/pl
 The code is working as intended, but it currently only supports Ninja and Samurai main jobs. Adding other jobs is tedious, but incredibly simple. I will work on adding other jobs sometime later. For now, I encourage other users to download the code and add the jobs themselves until I get around to doing it on the official release.
 
 On my computer, the code takes 3 seconds to find the best set and 10 seconds to plot it when only changing one piece of gear at a time.
-  This is increased to 190 seconds to find the best set and 10 seconds to plot it when changing two pieces of gear simultaneously. This could be significantly faster if we include multiprocessing.
+  This is increased to 190 seconds to find the best set and 10 seconds to plot it when changing two pieces of gear simultaneously. This could be significantly faster if we include multiprocessing. These runtimes are heavily affected by the number of equipment pieces you want to check per equipment slot.
 
 Requires numpy and scipy
 
