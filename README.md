@@ -6,7 +6,8 @@ On my computer, the code takes 3 seconds to find the best set and 10 seconds to 
   This is increased to 190 seconds to find the best set and 10 seconds to plot it when changing two pieces of gear at once.
 
 Requires numpy and scipy
-Has references to cProfile, datetime, matplotlib, mpl_toolkits, numba, os, pstats, random, re, and sys.
+
+Has references to cProfile, datetime, matplotlib, mpl_toolkits, numba, os, pstats, random, re, and sys. These libraries are technically optional if you're willing to make some minor modifications to the code.
 
 Process to run the simulator:
 1) Open gear.py to select which pieces of gear you're interested in testing in each slot. I recommend just keeping everything included for now.
