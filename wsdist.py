@@ -214,7 +214,6 @@ def get_hitrate(player_accuracy, ws_acc, enemy_eva, enemy_lvl, weaponslot, hitak
     # https://www.bg-wiki.com/ffxi/Hit_Rate
     # The first main and sub hits gain +100 accuracy (https://www.bg-wiki.com/ffxi/Category:Weapon_Skills)
     #
-    # Right now it just assumes you're i119 and that you drop to i117 with Hitaki. I need to adjust it to calculate ilvl, but that's not really worth the time.
     # I think this function also doesn't really need "weaponslot", "first", or "ws_acc"
     # Might update it later, but it works for now so not a big deal.
     #
@@ -900,7 +899,7 @@ for o in range(len(tp1_list)):
     print("---------------")
     print("---------------")
     n_iter=20 # Maximum number of of times to check every combination of gear? Usually stops changing around iteration 2 or 3, but putting 20 doesn't hurt since we also have a convergence criterion.
-    nconverge = 5 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
+    nconverge = 3 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
 
     converge_count = 0 # Count for convergence (number of times the change between iterations was <0.1% for example; see near the end of this code for the exact value used)
     best_damage = 0
@@ -937,7 +936,7 @@ for o in range(len(tp1_list)):
                 #     2. Now check every combination of head and necklace to see if a specific pair is an improvement
                 #     3. Now check every combination of head and ear1 to see if a specific pair is an improvement
                 #     4. Repeat til every head + everything_else is checked
-                #   Repeat til all cominbations of all armor has been checked
+                #   Repeat til all combinations of all armor has been checked
                 # Repeat that whole process n_iter times.
                 # Stop early if converge_count >= nconverge
 
