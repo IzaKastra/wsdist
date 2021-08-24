@@ -37,3 +37,5 @@ Process to run the simulator:
      If you set savetext=True in init.py, then the code's final best set will be saved to a .txt file in the directory you specified as the savepath variable in init.py
      
      If you set save_img=True in init.py, then the code will save the final plot in the "savepath" directory, otherwise it'll try a plt.show()
+
+![Example Output Image](example_output.png)
