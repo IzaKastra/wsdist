@@ -90,7 +90,7 @@ layout = [
           ]
          ]
 
-window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15)- ColorTheme:{random_theme}",layout,size=(700,950),resizable=True,alpha_channel=1.0,no_titlebar=False)
+window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15)- ColorTheme:{random_theme}",layout,size=(700,850),resizable=True,alpha_channel=1.0,no_titlebar=False)
 
 while True:
     # Run the code within this while True block once.
