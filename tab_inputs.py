@@ -9,8 +9,13 @@
 import PySimpleGUI as sg
 import numpy as np # Just to randomly choose the starting gear set
 import os
+# import ctypes # https://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
+# user32 = ctypes.windll.user32
+# screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+# x,y = screensize
 
-font_choice = "Courier 12"
+# https://stackoverflow.com/questions/67148741/pysimplegui-change-font-font-display-ubuntu-ugly-fonts
+font_choice = ["Cascadia Mono", 9]
 
 main_jobs = ["NIN", "DRK"]
 sub_jobs = ["WAR", "SAM"]
@@ -75,7 +80,7 @@ roll2 = "Samurai"
 buffs_cor_column = [
   [sg.Checkbox("COR",size=(14,1),tooltip="Use Corsair buffs?",key="cor_on",default=False,enable_events=True,font=font_choice)],
   [sg.Combo(values=("Rolls +8","Rolls +7","Rolls +6","Rolls +5","Rolls +3","Rolls +0"), default_value="Rolls +7", readonly=True, k="nroll",size=(14,1),font=font_choice)],
-  [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(14,1),font=font_choice,enable_events=True)],
+  [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(18,1),font=font_choice,enable_events=True)],
   [sg.Combo(values=rolls_list + ["None"], default_value=roll2, readonly=True, k="roll2",size=(14,1),font=font_choice,enable_events=True)],
   [sg.Checkbox("Light Shot",size=(14,1),font=font_choice,disabled=True,k="LIGHTSHOT")],
   [sg.Checkbox("Crooked\nCards*",size=(14,2),font=font_choice,disabled=True,k="Crooked Cards",tooltip="Crooked Cards applies to the first roll.")],
@@ -132,7 +137,7 @@ import PySimpleGUI as sg
 from gear import *
 import numpy as np
 import base64
-from PIL import Image
+from PIL import Image # Imported only for image resizing. Useful for super high resolutions where showing a 32x32 icon is tiny...
 
 def item2image(item_name):
     #
@@ -188,8 +193,6 @@ def item2image(item_name):
     return(encoded)
 
 
-font_choice = "Courier 12"
-
 items = np.loadtxt('item_list.txt',dtype=str, delimiter=";", unpack=True)
 
 
@@ -212,7 +215,7 @@ random_back = np.random.choice(capes)
 
 
 while random_sub["Name2"] == random_main["Name2"]:
-    random_sub = np.random.choice([k for k in mains if k["Skill Type"] in ["Katana","Dagger"]]),
+    random_sub = np.random.choice([k for k in mains if k["Skill Type"] in ["Katana","Dagger"]])
 while random_ring2["Name2"] == random_ring1["Name2"]:
     random_ring2 = np.random.choice(rings2)
 while random_ear2["Name2"] == random_ear1["Name2"]:
@@ -355,7 +358,7 @@ radio_tab = [
 
 input_tab = [
           [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column))],[sg.Column(ws_column)]],size=[250,200])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
-          [sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]]))],
-          [sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look",key="quicklook")],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350]))]
+          [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
+          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look",key="quicklook")],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Column([[sg.Column(starting_set_tab)],[sg.Button("test")]]),sg.Column([radio_tab])],],size=[600,275]))]
          ]

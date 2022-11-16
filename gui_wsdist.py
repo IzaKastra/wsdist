@@ -2,6 +2,12 @@ import PySimpleGUI as sg
 import numpy as np
 import traceback # https://stackoverflow.com/questions/3702675/how-to-catch-and-print-the-full-exception-traceback-without-halting-exiting-the
 
+
+sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
+w, h = sg.Window.get_screen_size()
+
+
+
 random_theme = np.random.choice(sg.theme_list())
 random_theme = np.random.choice([k for k in sg.theme_list() if "Mono" in k])
 
@@ -84,7 +90,7 @@ layout = [
           ]
          ]
 
-window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15)- ColorTheme:{random_theme}",layout,size=(850,950),resizable=True,alpha_channel=1.0,no_titlebar=False)
+window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15)- ColorTheme:{random_theme}",layout,size=(700,950),resizable=True,alpha_channel=1.0,no_titlebar=False)
 
 while True:
     # Run the code within this while True block once.

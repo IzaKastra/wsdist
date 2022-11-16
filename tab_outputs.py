@@ -8,8 +8,10 @@
 # This will be renamed later to "WS Outputs" when I add TP sets and nuking.
 #
 import PySimpleGUI as sg
+sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
+w, h = sg.Window.get_screen_size()
 
-font_choice = "Courier 12"
+font_choice = ["Cascadia Mono", 9]
 
 
 warning_messages = {"Incorrect main":" can not use ",
