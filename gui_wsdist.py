@@ -6,8 +6,6 @@ import traceback # https://stackoverflow.com/questions/3702675/how-to-catch-and-
 sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
 w, h = sg.Window.get_screen_size()
 
-
-
 random_theme = np.random.choice(sg.theme_list())
 random_theme = np.random.choice([k for k in sg.theme_list() if "Mono" in k])
 
@@ -99,7 +97,8 @@ layout = [
 
 window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 random_style = np.random.choice(window_styles)
-window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+
 
 
 while True:
@@ -115,16 +114,21 @@ while True:
     if event in (None, "Exit"):
         break
 
-    # Allow the user to define their font size (lazy way of having the user try to fix their own UI formatting issues). Currently broken. Can't find a way to update all text programmatically yet
-    # if event[1:] in [k[2:] for k in font_size_options]:
-    #     new_size = event.strip().split("::")[0]
-    #     window["mintp"].set_font(["Courier New", 100])
-    #     for value in values:
-    #         if window[value].Font == ['Cascadia Mono', 9]:
-    #             try:
-    #                 window[value].update(font=["Cascadia Mono", new_size])
-    #             except:
-    #                 print("Failed ",value)
+
+    # # Allow the user to define their font size (lazy way of having the user try to fix their own UI formatting issues). Currently broken. Can't find a way to update all text programmatically yet
+    if event[1:] in [k[2:] for k in font_size_options]:
+        # This is not well-written yet. Some GUI elements do not have a font keyword in their .update() method.
+        # Input.update() was just recently updated to include it, but Button (and others) are missing it still.
+        # To update the font of elements missing the font keyword, I'm using the code from jason990420 (https://github.com/PySimpleGUI/PySimpleGUI/issues/6012)
+        # It works, but there may be stuff that breaks because of it.
+        new_size = event.strip().split("::")[0]
+        new_font = ["Cascadia Mono", new_size]
+        for value in values:
+            if window[value].Font == ['Cascadia Mono', 9]:
+                try:
+                    window[value].update(font=new_font)
+                except:
+                    window[value].Widget.configure(font=new_font)    # state is 'normal', 'readonly' or 'disabled'
 
     try:
         # If the user selects a new enemy from the enemy drop down list, then automatically update the enemy stats.
