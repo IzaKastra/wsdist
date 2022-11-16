@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2021 August 22
+# Version date: 2022 November 15
 #
 # This code takes in a gear set and a list of damage values from N simulations to output a fancy plot showing the distribution and basic player stats.
 #
@@ -12,43 +12,44 @@ from matplotlib import rc
 import matplotlib.image as mpimg
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-from init import *
-
 # Create a fancy plot of a weapon skill distribution.
 
-def get_images(gearset):
-    import re
+def get_image_ids(gearset):
+
+    items_file = "item_list.txt"
+    icons_path = "icons32/"
+
+    item_ids, item_names = np.loadtxt(items_file, unpack=True, dtype=str, delimiter=';')
+    item_ids = np.array(item_ids, dtype=int)
+    item_names = np.array([k.lower() for k in item_names])
+
     gear = gearset.equipped
     gear_list = []
     for k in gear:
         if gear[k] != 'Empty':
             gear_list.append(gear[k])
-    ids = np.empty(15,dtype='<U128') # Matrix containing item IDs for each equipped item for plotting. Hard-coded to ignore ranged slot.
-    with open(items_file, encoding='utf-8') as ifile:
-        for k in range(3):
-            ifile.readline()
-        a = ifile.readlines()
-        for k in a: # Hard-coded to skip lines that threw errors at me while I tested the code.
-            if "category=\"General" in k or "category=\"Maze" in k or "ring:" in k:
-                continue
-            if "category=\"Gil" in k:
-                break
-            k = " ".join(k.replace("=",":").split()[2:])[1:-2].replace("\"","") # Overly-complicated method to deal with the formatting in the "items_file" and obtain each item's ID
-            res = np.array(re.split(',|:', k)).reshape(-1,2)
-            for i,item_name in enumerate(gear_list):
-                if item_name.lower() == res[3][1].lower() or item_name.lower() == res[1][1].lower():
-                    ids[i] = res[0][1] # Matrix containing item IDs for each equipped item for plotting.
+
+    ids = np.zeros(15) # Matrix containing item IDs for each equipped item for plotting. Hard-coded to ignore ranged slot.
+    for i,k in enumerate(gear_list):
+        a = np.ravel(np.where(item_names == k.lower()))[-1]
+        # print(a,item_names[a],i,k)
+        ids[i] = item_ids[a]
 
     return(ids)
 
-def plot_final(damage, gearset, attack_cap, shortname, output_file_suffix, tp1, tp2, WS_name):
+def plot_final(damage, gearset, tp1, tp2, WS_name):
+
+    items_file = "item_list.txt"
+    icons_path = "icons32/"
+
+    output_file_suffix = ""
+    shortname = "".join(WS_name.split())
 
     rc('font',**{'family':['Courier New']})
     rc('text', usetex=False)
 
     sub_type = gearset.gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon or a grip or nothing. If the item doesn't have a "Type" Key then return "None", meaning nothing is equipped.
     dual_wield = sub_type == 'Weapon'
-
 
     # https://jakevdp.github.io/PythonDataScienceHandbook/04.08-multiple-subplots.html
     fig = plt.figure(figsize=(10,5))
@@ -82,8 +83,8 @@ def plot_final(damage, gearset, attack_cap, shortname, output_file_suffix, tp1, 
     player_mnd = gearset.playerstats['MND']
     player_chr = gearset.playerstats['CHR']
 
-    player_attack1 = gearset.playerstats['Attack1'] if not attack_cap else 99999
-    player_attack2 = gearset.playerstats['Attack2'] if not attack_cap else 99999
+    player_attack1 = gearset.playerstats['Attack1']
+    player_attack2 = gearset.playerstats['Attack2']
     player_attack2 = 0 if not dual_wield else player_attack2
     player_accuracy1 = gearset.playerstats['Accuracy1']
     player_accuracy2 = gearset.playerstats['Accuracy2'] if dual_wield else 0
@@ -93,21 +94,27 @@ def plot_final(damage, gearset, attack_cap, shortname, output_file_suffix, tp1, 
     bbox = dict(boxstyle="round", fc="1.0",)
     ax.annotate(anno, xycoords="figure fraction", xy=(0.015,0.15), bbox=bbox, fontsize=11) # Print the stats in a specific format
 
-    ids = get_images(gearset)
+    ids = get_image_ids(gearset)
+    # ids = [20977,21925,21391,25614,25491,27544,27545,26528,27118,28471,26175,26258,28440,25892,27496]
     gear_list = [gearset.gear[k] for k in gearset.gear]
     for i,id in enumerate(ids):
+        id = int(id)
         try:
-            img = mpimg.imread(f"{icons_path}32/{id}.png") # Try to obtain the 32x32 pixel image if it exists. BG-wiki usually has the 32x32 versions you can download.
+            img = mpimg.imread(f"{icons_path}{id}.png") # Try to obtain the 32x32 pixel image if it exists. BG wiki usually has the 32x32 versions you can download.
+            gear_ax[i].imshow(img)
         except:
-            img = mpimg.imread(f"{icons_path}{id}.bmp") # Use the .bmp version if the 32x32 image does not exist. If this fails then just download the 32x32 from BG-wiki and rerun the code.
+            item_ids, item_names = np.loadtxt(items_file, unpack=True, dtype=str, delimiter=';')
+            item_ids = np.array(item_ids, dtype=int)
+            item_names = np.array([k.lower() for k in item_names])
+            a = np.where(item_ids == id)
+            print(f"\nUnable to find image file: {icons_path}{id}.png ({item_names[a][0]})")
+            print(f"Download the 32x32.png image icon for this item as {icons_path}{id}.png and try again.\n")
 
-        gear_ax[i].imshow(img)
-
-    ax.hist(damage,bins=100,histtype='stepfilled',density=True,color='grey',alpha=0.25) # Filled-in distribution, grey
-    ax.hist(damage,bins=100,histtype='step',density=True,color='black',alpha=1.0) # Solid black outline for the filled grey distribution.
+    ax.hist(damage,bins=200,histtype='stepfilled',density=True,color='grey',alpha=0.25) # Filled-in distribution, grey
+    ax.hist(damage,bins=200,histtype='step',density=True,color='black',alpha=1.0) # Solid black outline for the filled grey distribution.
     ax.axvline(x=np.average(damage),ymin=0,ymax=1,color='black',linestyle='--',label=f'Average = {int(np.average(damage))} damage.') # Vertical line at the average damage value.
     ax.set_xlabel('Damage')
-    # ax.set_xlim([0,100000]) # Only plot damage between 0 and 100,000
+
     ax.tick_params(
         axis='y',
         which='both',
@@ -116,23 +123,10 @@ def plot_final(damage, gearset, attack_cap, shortname, output_file_suffix, tp1, 
         left=False,
         labelleft=False,
         labelbottom=True)
+
     ax.set_title(f"{shortname}{output_file_suffix}_{tp1}_{tp2}.png\n{f'TP=[{tp1},{tp2}]':>15s} {'Minimum':>8s} {'Mean':>8s} {'Median':>8s} {'Maximum':>8s}\n{WS_name:>15s} {np.min(damage):>8} {int(np.average(damage)):>8} {int(np.median(damage)):>8} {np.max(damage):>8}",loc="left")
     # plt.legend()
 
-    if save_img:
-        plt.savefig(f'{savepath}{shortname}{output_file_suffix}_{tp1}_{tp2}.png') # Save the image using the predetermined filename. Currently results in something like "BladeShun_GrapeDaifuku_Dia2_1500_1800.png"
-    else:
-        try:
-            plt.show()
-        except:
-            print("Unable to display output image. Command failed: \'plt.show()\'.")
-            import sys ; sys.exit()
-
-    if savetext:
-        with open(f'{savepath}{shortname}{output_file_suffix}_{tp1}_{tp2}.txt', 'a') as ofile:
-            ofile.write(f'\nWS TP Range: [{tp1},{tp2}]\n')
-            ofile.write('WeaponSkill       Minimum    Average     Median    Maximum\n')
-            ofile.write('_______________   _______    _______    _______    _______\n')
-            ofile.write(f'{WS_name:<15s}  {np.min(damage):>8}   {int(np.average(damage)):>8}   {int(np.median(damage)):>8}   {np.max(damage):>8}\n')
-        print('WeaponSkill       Minimum    Average     Median    Maximum')
-        print(f'{WS_name:<15s}  {np.min(damage):>8}   {int(np.average(damage)):>8}   {int(np.median(damage)):>8}   {np.max(damage):>8}')
+    savepath = "."
+    # plt.savefig(f'{savepath}{shortname}{output_file_suffix}_{tp1}_{tp2}.png') # Save the image using the predetermined filename. Currently results in something like "BladeShun_GrapeDaifuku_Dia2_1500_1800.png"
+    plt.show()

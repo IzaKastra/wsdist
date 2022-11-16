@@ -107,7 +107,7 @@ BladeShun = {
                 'main' : Heishi,
                 'sub' : Gleti_Knife,
                 'ranged' : Empty,
-                'ammo' : Crepsecular_Pebble,
+                'ammo' : Crepuscular_Pebble,
                 'head' : Kendatsuba_Jinpachi,
                 'body' : Malignance_Tabard,
                 'hands' : Malignance_Gloves,
@@ -159,9 +159,9 @@ BladeMetsu = {
 
 BladeKamu = {
                 'main' : Nagi,
-                'sub' : Crepsecular_Knife,
+                'sub' : Crepuscular_Knife,
                 'ranged' : Empty,
-                'ammo' : Crepsecular_Pebble,
+                'ammo' : Crepuscular_Pebble,
                 'head' : Hachiya_Hatsuburi,
                 'body' : Nyame_Mail,
                 'hands' : Malignance_Gloves,

@@ -2,9 +2,9 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2021 August 22
+# Version date: 2022 January 22
 #
-# Calculate PDIF
+# Calculate PDIF using equations from BG Wiki
 #
 import random
 from numba import njit
@@ -97,7 +97,7 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
 
     ratio = player_attack / enemy_defense
 
-    cratio = ratio # Ignore Level Differences for now
+    cratio = ratio # Ignore Level Differences
 
     wratio = cratio + 1.0*crit_rate
 
@@ -138,47 +138,54 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
         pdif = qratio
 
     # Add 1.0 to PDIF value if crit.
+    crit_rate = 1.0 if crit_rate > 1.0 else crit_rate # Limit crit rate to 100%
     pdif += 1.0*crit_rate
 
-    # Random multiplier to final PDIF value
+    # Average multiplier to final PDIF value
     pdif *= 1.025
 
     return(pdif)
 
 
 
-# Haven't looked at the ranged attack PDIF in probably a year. Commenting it out for now since it likely needs some changes. Will double check it later when I need to use it for TP sets.
-# @njit
-# def get_pdif_ranged(player_ranged_attack, pdl_gear=0, enemy_defense=1300, crit_rate=0):
-#
-#     pdl_trait = 0.1
-#
-#     crit = random.uniform(0,1) < crit_rate
-#
-#     ratio = player_ranged_attack / enemy_defense
-#     ratio = 3.2375 if ratio > 3.2375 else ratio
-#
-#     cratio = ratio # Ignore Level Differences for now
-#
-#     wratio = cratio
-#
-#     if wratio >= 0.0 and wratio < 0.9:
-#         upper_qlim = wratio * (10./9.)
-#     elif wratio >= 0.9 and wratio < 1.1:
-#         upper_qlim = 1
-#     elif wratio >= 1.1:
-#         upper_qlim = wratio
-#
-#     if wratio >= 0.0 and wratio < 0.9:
-#         lower_qlim = wratio
-#     elif wratio >= 0.9 and wratio < 1.1:
-#         lower_qlim = 1
-#     elif wratio >= 1.1:
-#         lower_qlim = wratio*(20./19) - (3./19)
-#
-#     pdif = (random.uniform(lower_qlim, upper_qlim)+pdl_trait)*(1+pdl_gear)
-#
-#     if crit:
-#         pdif *= 1.25
-#
-#     return(pdif, crit)
+@njit
+def get_pdif_ranged(player_ranged_attack, pdl_trait, pdl_gear=0, enemy_defense=1300, crit_rate=0):
+
+    pdif_base_cap = 3.25 # Assume always throwing, not archery or marksmanship.
+
+    crit = random.uniform(0,1) < crit_rate
+
+    ratio = player_ranged_attack / enemy_defense
+
+    cratio = ratio # Ignore Level Differences for now
+
+    wratio = cratio
+
+    if wratio >= 0.0 and wratio < 0.9:
+        upper_qlim = wratio * (10./9.)
+    elif wratio >= 0.9 and wratio < 1.1:
+        upper_qlim = 1
+    elif wratio >= 1.1:
+        upper_qlim = wratio
+
+    if wratio >= 0.0 and wratio < 0.9:
+        lower_qlim = wratio
+    elif wratio >= 0.9 and wratio < 1.1:
+        lower_qlim = 1
+    elif wratio >= 1.1:
+        lower_qlim = wratio*(20./19) - (3./19)
+
+    qratio = random.uniform(lower_qlim, upper_qlim)
+
+    pdif_cap = (pdif_base_cap+pdl_trait)*(1+pdl_gear)
+    if qratio <= 0:
+        pdif = 0
+    elif qratio >= pdif_cap:
+        pdif = pdif_cap
+    else:
+        pdif = qratio
+
+    if crit:
+        pdif *= 1.25
+
+    return(pdif, crit)
