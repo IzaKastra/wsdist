@@ -9,10 +9,17 @@
 import PySimpleGUI as sg
 import numpy as np # Just to randomly choose the starting gear set
 import os
-# import ctypes # https://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
-# user32 = ctypes.windll.user32
-# screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-# x,y = screensize
+import numpy as np
+import base64 # Used to convert image icons into image_data readable by the GUI
+from PIL import Image # Imported only for image resizing. Useful for super high resolutions where showing a 32x32 icon is tiny...
+
+from gear import all_food
+from gear import *
+from enemies import *
+
+
+sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
+w, h = sg.Window.get_screen_size()
 
 # https://stackoverflow.com/questions/67148741/pysimplegui-change-font-font-display-ubuntu-ugly-fonts
 font_choice = ["Cascadia Mono", 9]
@@ -38,7 +45,6 @@ ws_column = [ # Copy pasted out of player_column for now.
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
 ]
 
-from gear import all_food
 food_list = sorted([k["Name"] for k in all_food]) + ["None"] # Reads "all_food" from gear.py
 buffs_whm_column = [
   [sg.Checkbox("WHM",size=(15,1),tooltip="Use White Magic buffs?",key="whm_on",default=False,font=font_choice)],
@@ -110,7 +116,7 @@ text_length = [15,1]
 stat_length = [5,1]
 bwidth = 1
 nopad = [1,2]
-from enemies import *
+
 default_enemy = "Apex Toad" # Just a default value so the fields are populated on start up.
 enemy_stat_column = [
   [sg.Text("Enemy:", font=font_choice, size=[6,2],justification="r"), sg.Column([[sg.Combo(values=tuple(list(preset_enemies.keys())+["Custom"]), default_value=preset_enemies[default_enemy]["Name"], readonly=True, k="enemy_name", size=[20,1],font=font_choice,enable_events=True)],
@@ -127,17 +133,6 @@ enemy_stat_column = [
 
 
 
-
-
-
-
-
-
-import PySimpleGUI as sg
-from gear import *
-import numpy as np
-import base64
-from PIL import Image # Imported only for image resizing. Useful for super high resolutions where showing a 32x32 icon is tiny...
 
 def item2image(item_name):
     #
