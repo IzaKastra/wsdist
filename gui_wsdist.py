@@ -79,8 +79,15 @@ from tab_inputs import * # Load the inputs tab
 from tab_select_gear import *  # Load the select_gear tab
 from tab_outputs import * # Load the outputs tab.
 
+# Add a menu bar for the user to adjust font size and stuff.
+font_size_options = [f"&{k:>3d}::font{k}" for k in [l for l in range(6,16)]]
+# https://csveda.com/python-menu-button-menu-and-option-menu-with-pysimplegui/
+menu_def=[['&Edit', ['&Font Size',font_size_options, '&Theme','---', '!&Save Defaults','C&lose']]]
+
 layout = [
-          [sg.TabGroup([
+          [
+          [sg.Menu(menu_def, font='Verdana', pad=(10,10),key="menubar_select")],
+          sg.TabGroup([
                         [
                          sg.Tab("Inputs", input_tab),
                          sg.Tab("Select Gear", select_gear_tab),
@@ -90,7 +97,10 @@ layout = [
           ]
          ]
 
-window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15)- ColorTheme:{random_theme}",layout,size=(700,850),resizable=True,alpha_channel=1.0,no_titlebar=False)
+window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
+random_style = np.random.choice(window_styles)
+window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,no_titlebar=False,ttk_theme=random_style)
+
 
 while True:
     # Run the code within this while True block once.
@@ -99,12 +109,22 @@ while True:
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
-    # print(event)
+
 
     # Exit the program if given exit or null command.
     if event in (None, "Exit"):
         break
 
+    # Allow the user to define their font size (lazy way of having the user try to fix their own UI formatting issues). Currently broken. Can't find a way to update all text programmatically yet
+    # if event[1:] in [k[2:] for k in font_size_options]:
+    #     new_size = event.strip().split("::")[0]
+    #     window["mintp"].set_font(["Courier New", 100])
+    #     for value in values:
+    #         if window[value].Font == ['Cascadia Mono', 9]:
+    #             try:
+    #                 window[value].update(font=["Cascadia Mono", new_size])
+    #             except:
+    #                 print("Failed ",value)
 
     try:
         # If the user selects a new enemy from the enemy drop down list, then automatically update the enemy stats.
