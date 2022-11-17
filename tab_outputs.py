@@ -11,7 +11,8 @@ import PySimpleGUI as sg
 sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
 w, h = sg.Window.get_screen_size()
 
-font_choice = ["Cascadia Mono", 9]
+fontsize = 9
+font_choice = ["Cascadia Mono", fontsize]
 
 
 warning_messages = {"Incorrect main":" can not use ",
@@ -26,6 +27,6 @@ ws_tab = [
           # [sg.Frame("Active warnings",[[sg.Text("\n".join(active_warnings),key="ws warnings",font=font_choice,text_color="orange",size=(200,8))]],font=font_choice,visible=True,)], # This line should go in the "Select Gear" tab later.
 
           # Comment out this next line if you want to use the terminal for outputs instead of the GUI. Doing so will prevent the GUI from crashing without any messages explaining why.
-          [sg.Push(),sg.Output(size=(80, 23),font=font_choice),sg.Push()], # can only have one "sg.Output() since it takes the STDOUT"
+          # [sg.Push(),sg.Output(size=(80, 23),font=font_choice),sg.Push()], # can only have one "sg.Output() since it takes the STDOUT"
 
 ]

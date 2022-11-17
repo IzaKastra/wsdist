@@ -471,7 +471,7 @@ while True:
 
             # We need to transfer the list of gear to check into a list of lists now. This will be used by the main code to check each piece, slot by slot.
             check_gear = [] # List of lists, containing dictionaries for items to be checked. This gets appended to later using the items in the GUI with checkboxes marked.
-            check_slots = ["main","sub","ammo","head","neck","ear1","ear2","body","hands","ring1","ring2","back","belt","legs","feet"] # Slot names to check. This gets filtered later with .remove()
+            check_slots = ["main","sub","ammo","head","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet"] # Slot names to check. This gets filtered later with .remove()
             remove_slots = []
             for s in check_slots:
                 gear_to_check = []

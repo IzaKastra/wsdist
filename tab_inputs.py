@@ -22,7 +22,8 @@ sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/
 w, h = sg.Window.get_screen_size()
 
 # https://stackoverflow.com/questions/67148741/pysimplegui-change-font-font-display-ubuntu-ugly-fonts
-font_choice = ["Cascadia Mono", 9]
+fontsize = 9
+font_choice = ["Cascadia Mono", fontsize]
 
 main_jobs = ["NIN", "DRK"]
 sub_jobs = ["WAR", "SAM"]
@@ -352,7 +353,7 @@ radio_tab = [
 
 
 input_tab = [
-          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column))],[sg.Column(ws_column)]],size=[250,200])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column)]],size=[250,200])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
           [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
           [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look",key="quicklook")],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Column([[sg.Column(starting_set_tab)],[sg.Button("test")]]),sg.Column([radio_tab])],],size=[600,275]))]

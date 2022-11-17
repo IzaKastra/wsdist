@@ -12,7 +12,8 @@ sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/
 w, h = sg.Window.get_screen_size()
 
 
-font_choice = ["Cascadia Mono", 9]
+fontsize = 9
+font_choice = ["Cascadia Mono", fontsize]
 
 # --------------------------------------------------------------------------------
 # Create the full list of checkboxes for each of 15 gear slots. Lots of hard-coding for now...
