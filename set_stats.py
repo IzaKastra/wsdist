@@ -82,7 +82,6 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      }
         if mainjob == "DRK":  # Master Level 20 Dark Knight stats
-            # Ninja gets +8% WSD from job gifts
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
                      'Scythe Skill':460, 'Dagger Skill':409, 'Sword Skill':424, 'Hand-to-Hand Skill':0, 'Great Katana Skill':0, 'Club Skill':404, 'Throwing Skill':0,
                      'Katana Skill':0, 'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,

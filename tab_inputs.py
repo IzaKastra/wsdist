@@ -29,8 +29,8 @@ main_jobs = ["NIN", "DRK"]
 sub_jobs = ["WAR", "SAM"]
 
 player_column = [
-  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=True)],
-  [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value=sub_jobs[0], readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=True)],
+  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False)],
+  [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value=sub_jobs[0], readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=False)],
 ]
 
 ws_list = sorted(

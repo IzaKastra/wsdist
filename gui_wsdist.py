@@ -269,6 +269,39 @@ while True:
                     if k.split()[0][:-1] == slot:
                         window[k].update(False)
 
+
+        if event == "select all main":
+            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
+                        "sub":subs + grips,
+                        "ammo":ammos,
+                        "head":heads,
+                        "neck":necks,
+                        "ear1":ears,
+                        "ear2":ears2,
+                        "body":bodies,
+                        "hands":hands,
+                        "ring1":rings,
+                        "ring2":rings2,
+                        "back":capes,
+                        "waist":waists,
+                        "legs":legs,
+                        "feet":feet}
+            main_job = values["mainjob"].lower()
+            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+                if window[f"{k} display"].visible:
+                    slot = k
+                    displayed_equipment_list = gear_map[slot]
+                    break
+            for k in values:
+                if type(k) == str:
+                    if k.split()[0][:-1] == slot:
+                        for l in displayed_equipment_list:
+                            if main_job in l.get("Jobs",[]):
+                                window[f"{slot}: {l['Name2']}"].update(True)
+                            else:
+                                window[f"{slot}: {l['Name2']}"].update(False)
+
+
         # Setup buttons to show/hide radio buttons on the starting gearset tab.
         # Clicking the "main" slot will show the radio buttons for the "main" gear on the right while hiding all other slot radio buttons
         if event.split()[0] == "showstart":
@@ -298,10 +331,15 @@ while True:
             main_job = values["mainjob"]
             sub_job = values["subjob"]
 
+
             # Define weapon skill and TP range.
             ws_name = values["select weaponskill"]
             min_tp = int(values["mintp"])
             max_tp = int(values["maxtp"])
+
+
+            # New window to show output?
+            # window2 = sg.Window(f"{main_job}/{sub_job}  {ws_name}  {min_tp}-{max_tp}",[[[sg.Push(),sg.Output(size=(150, 60),font=font_choice),sg.Push()]]],size=(800 ,500),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
@@ -503,6 +541,7 @@ while True:
                 window["copy best set"].update(disabled=False)
         # Copy the best set to the initial set tab for convenience:
         if event == "copy best set":
+            window["tab group"].Widget.select(0) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
             for val in values:
                 if type(val) == str:
                     if "start" == val[:5]:

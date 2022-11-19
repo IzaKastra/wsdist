@@ -109,7 +109,7 @@ gear_tab = [
     [sg.Push(),sg.Button("Back",font=font_choice,pad=(0,0),border_width=1,size=(8,3),key="display back"),sg.Button("Waist",font=font_choice,pad=(0,0),border_width=1,size=(8,3),key="display waist"),sg.Button("Legs",font=font_choice,pad=(0,0),border_width=1,size=(8,3),key="display legs"),sg.Button("Feet",font=font_choice,pad=(0,0),border_width=1,size=(8,3),key="display feet"),sg.Push()],
     [sg.Push(),sg.Text("",font=font_choice)],
     [sg.Push(),sg.Button("Select All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all gear",tooltip="Select all items in the displayed list.",enable_events=True),sg.Button("Unselect All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="unselect all gear",tooltip="Unselect all items in the displayed list.",enable_events=True)],
-    [sg.Push(),sg.Button("Select All\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all main",tooltip="Select all items in the displayed list that your selected main job can equip.",enable_events=True,disabled=True),sg.Push()]
+    [sg.Push(),sg.Button("Select All\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all main",tooltip="Select all items in the displayed list that your selected main job can equip.",enable_events=True,disabled=False),sg.Push()]
   ],vertical_alignment="center",size=[370,450]),]]
 checkbox_tab = [[sg.Column([[
   sg.Push(),
@@ -130,5 +130,5 @@ checkbox_tab = [[sg.Column([[
   sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
 ]
 
-select_gear_tab = [[sg.Frame("Select equipment",[[sg.Push(),sg.vtop(sg.Column(gear_tab)),sg.Push(),sg.vtop(sg.Column(checkbox_tab))]],size=(800,500))]]
+select_gear_tab = [[sg.Frame("Select equipment",[[sg.Push(),sg.vtop(sg.Column(gear_tab)),sg.Push(),sg.vtop(sg.Column(checkbox_tab))]],size=(800,500),background_color='blue')]]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column(starting_set_tab)),sg.Push(),sg.Column([radio_tab])]],size=[600,275]))]
