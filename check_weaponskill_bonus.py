@@ -5,7 +5,7 @@
 # Version date: 2022 November 15
 #
 from get_dex_crit import *
-from scipy.interpolate import interp1d
+import numpy as np
 
 def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     #
@@ -64,7 +64,7 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         # https://www.bg-wiki.com/ffxi/Shining_One
         crit_rate +=  gearset.playerstats['Crit Rate']/100
         crit_boost = [0.05, 0.10, 0.15]
-        crit_bonus = interp1d(base_tp, crit_boost)(tp)
+        crit_bonus = np.interp(tp, base_tp, crit_boost)
         crit_rate += crit_bonus
         crit_rate += get_dex_crit(gearset.playerstats['DEX'], enemy_agi)
         if ws_name == 'Impulse Drive':

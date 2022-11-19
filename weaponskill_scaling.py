@@ -4,7 +4,7 @@
 #
 # Version date: 2022 November 15
 #
-from scipy.interpolate import interp1d
+import numpy as np
 from set_stats import *
 from get_dex_crit import *
 
@@ -33,13 +33,13 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     base_tp = [1000,2000,3000]
     if ws_name == "Savage Blade":
         base_ftp = [4.0, 10.25, 13.75] # Base TP bonuses for 1k, 2k, 3k TP
-        ftp = interp1d(base_tp, base_ftp)(tp) # Effective TP at WS use
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
         wsc  = int(0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]) # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
     elif ws_name == "Blade: Shun":
         atk_boost = [1.0, 2.0, 3.0]
-        ws_atk_bonus = interp1d(base_tp, atk_boost)(tp) - 1.0
+        ws_atk_bonus = np.interp(tp, base_tp, atk_boost) - 1.0
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
@@ -49,7 +49,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 5
     elif ws_name == "Blade: Ten":
         base_ftp = [4.5, 11.5, 15.5]
-        ftp      = interp1d(base_tp, base_ftp)(tp)
+        ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         wsc      = 0.3*(player_str+player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 1
@@ -64,7 +64,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         enemy_defense *= 0.75
     elif ws_name == "Blade: Ku":
         acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
-        acc_bonus = interp1d(base_tp, acc_boost)(tp)
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.25
         ftp_rep = True
         wsc = 0.3*(player_str+player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
@@ -77,7 +77,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Hi":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.15, 0.2, 0.25]
-        crit_bonus = interp1d(base_tp, crit_boost)(tp) # Bonus crit rate from TP scaling
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
         crit_rate += crit_bonus
         crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
         ftp = 5.0
@@ -87,7 +87,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Evisceration":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.1, 0.25, 0.5]
-        crit_bonus = interp1d(base_tp, crit_boost)(tp)
+        crit_bonus = np.interp(tp, base_tp, crit_boost)
         crit_rate += crit_bonus
         crit_rate += get_dex_crit(player_dex, enemy_agi)
         ftp = 1.25
@@ -97,7 +97,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Chi":
         hybrid    = True
         base_ftp  = [0.5, 1.375, 2.25]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.3*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
@@ -106,7 +106,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Teki":
         hybrid    = True
         base_ftp  = [0.5, 1.375, 2.25]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.3*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
@@ -115,7 +115,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: To":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.4*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
@@ -129,33 +129,33 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits     = 2
     elif ws_name == "Asuran Fists":
         acc_boost = [1.0, 1.1, 1.2] # Made these numbers up, same as Blade: Ku (see above)
-        acc_bonus = interp1d(base_tp, acc_boost)(tp)
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp       = 1.25
         ftp_rep   = True
         wsc       = 0.15*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits     = 8
     elif ws_name == "Impulse Drive":
         base_ftp = [1.0, 3.0, 5.5]
-        ftp      = interp1d(base_tp, base_ftp)(tp)
+        ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = False
         wsc      = 1.0*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 2
     elif ws_name == "Stardiver":
         base_ftp = [0.75, 1.25, 1.75]
-        ftp      = interp1d(base_tp, base_ftp)(tp)
+        ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.85*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 4
     elif ws_name == "Tachi: Rana":
         acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
-        acc_bonus = interp1d(base_tp, acc_boost)(tp)
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.0
         ftp_rep = False
         wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 3
     elif ws_name == "Tachi: Fudo":
         base_ftp = [3.75, 5.75, 8.0]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
@@ -166,7 +166,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 1
     elif ws_name == "Tachi: Shoha":
         base_ftp = [1.375, 2.1875, 2.6875]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         special_set = set_gear(buffs, equipment, main_job, sub_job, 1.375) # The attack bonus from Tachi: Shoha is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -175,7 +175,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 2
     elif ws_name == "Tachi: Kasha":
         base_ftp = [1.5625, 2.6875, 4.125]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         special_set = set_gear(buffs, equipment, main_job, sub_job, 1.65) # The attack bonus from Tachi: Kasha is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -184,7 +184,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 1
     elif ws_name == "Tachi: Gekko":
         base_ftp = [1.5625, 2.6875, 4.125]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         special_set = set_gear(buffs, equipment, main_job, sub_job, 2.0) # The attack bonus from Tachi: Gekko is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -194,7 +194,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Tachi: Koki":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.3*player_mnd + 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -203,7 +203,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Tachi: Kagero":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.75*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -212,7 +212,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Tachi: Goten":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.6*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -221,7 +221,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Tachi: Jinpu":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -230,7 +230,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Tachi: Jinpu":
         hybrid    = True
         base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = interp1d(base_tp, base_ftp)(tp)
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
         ftp       = 1.0
         ftp_rep   = False
         wsc       = 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -238,19 +238,19 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         element   = "Wind"
     elif ws_name == "Insurgency":
         base_ftp = [0.5, 3.25, 6.0]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         wsc = 0.2*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 4
     elif ws_name == "Cross Reaper":
         base_ftp = [2.0, 4.0, 7.0]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         wsc = 0.6*(player_str+player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 2
     elif ws_name == "Entropy":
         base_ftp = [0.75, 1.25, 2.0]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = True
         wsc = 0.85*(player_int) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 4
@@ -260,7 +260,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.6*(player_mnd+player_str)
         nhits = 1
         base_enemy_def_scaling = [0.10, 0.30, 0.50]
-        enemy_def_scaling = interp1d(base_tp, base_enemy_def_scaling)(tp)
+        enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
         enemy_defense *= (1-enemy_def_scaling)
     elif ws_name == "Catastrophe":
         ftp  = 2.75
@@ -274,13 +274,13 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 1
     elif ws_name == "Torcleaver":
         base_ftp = [4.75, 7.5, 9.765625]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         wsc = 0.8*(player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Resolution":
         base_ftp = [0.71875, 1.5, 2.25]
-        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = True
         wsc = 0.85*(player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5

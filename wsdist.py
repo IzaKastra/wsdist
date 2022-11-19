@@ -7,7 +7,6 @@
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
 from numba import njit
-from scipy.interpolate import interp1d
 import numpy as np
 
 from get_ma_rate import *

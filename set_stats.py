@@ -9,8 +9,6 @@
 from buffs import *
 from gear import *
 
-import sys
-
 class set_gear:
     #
     # Python class used to build a dictionary of player stats from gear, buffs, and food.
