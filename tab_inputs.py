@@ -88,7 +88,7 @@ roll2 = "Samurai"
 buffs_cor_column = [
   [sg.Checkbox("COR",size=(14,1),tooltip="Use Corsair buffs?",key="cor_on",default=False,enable_events=True,font=font_choice)],
   [sg.Combo(values=("Rolls +8","Rolls +7","Rolls +6","Rolls +5","Rolls +3","Rolls +0"), default_value="Rolls +7", readonly=True, k="nroll",size=(14,1),font=font_choice)],
-  [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(18,1),font=font_choice,enable_events=True)],
+  [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(14,1),font=font_choice,enable_events=True)],
   [sg.Combo(values=rolls_list + ["None"], default_value=roll2, readonly=True, k="roll2",size=(14,1),font=font_choice,enable_events=True)],
   [sg.Checkbox("Light Shot",size=(14,1),font=font_choice,disabled=True,k="LIGHTSHOT")],
   [sg.Checkbox("Crooked\nCards*",size=(14,2),font=font_choice,disabled=True,k="Crooked Cards",tooltip="Crooked Cards applies to the first roll.")],
@@ -109,7 +109,7 @@ buffs_geo_column = [
   [sg.Combo(values=entrustspells, default_value="None", readonly=True, k="entrust",size=(20,1),font=font_choice,enable_events=True,tooltip="Indi/Geo-bubbles overwrite the entrust bubble.")],
   [sg.Checkbox("Blaze of\nGlory*",size=(15,2),font=font_choice,disabled=True,k="geo_bog",tooltip="Blaze of Glory applies to the \"Geo-\" bubble.")],
   [sg.Checkbox("Bolster",size=(15,1),font=font_choice,disabled=True,k="bolster",enable_events=True)],
-  [sg.Text("GEO potency: ",font=font_choice,tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency"),sg.Input("100",size=(3,1),pad=(1,1),font=font_choice,key="geomancy_potency",tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency")],
+  [sg.Text("GEO potency: ",font=font_choice,tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency"),sg.Input("100",size=(4,1),pad=(1,1),font=font_choice,key="geomancy_potency",tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency")],
 
 ]
 

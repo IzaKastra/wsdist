@@ -80,7 +80,7 @@ from tab_outputs import * # Load the outputs tab.
 # Add a menu bar for the user to adjust font size and stuff.
 font_size_options = [f"&{k:>3d}::font{k}" for k in [l for l in range(6,16)]]
 # https://csveda.com/python-menu-button-menu-and-option-menu-with-pysimplegui/
-menu_def=[['&Edit', ['&Font Size',font_size_options, '&Theme','---', '!&Save Defaults','C&lose']]]
+menu_def=[['&Edit', ['&Font Size',font_size_options, '&Theme','---', '!&Save Defaults']]]
 
 layout = [
           [
@@ -97,6 +97,7 @@ layout = [
 
 window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 random_style = np.random.choice(window_styles)
+random_style = "xpnative"
 window = sg.Window(f"Kastra WS Damage Simulator v0.6 (2022 November 15) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
