@@ -130,5 +130,5 @@ checkbox_tab = [[sg.Column([[
   sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
 ]
 
-select_gear_tab = [[sg.Frame("Select equipment",[[sg.Push(),sg.vtop(sg.Column(gear_tab)),sg.Push(),sg.vtop(sg.Column(checkbox_tab))]],size=(800,500),background_color='blue')]]
+select_gear_tab = [[sg.Frame("Select equipment",[[sg.Push(),sg.vtop(sg.Column(gear_tab)),sg.Push(),sg.vtop(sg.Column(checkbox_tab))]],size=(800,500),)]]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column(starting_set_tab)),sg.Push(),sg.Column([radio_tab])]],size=[600,275]))]

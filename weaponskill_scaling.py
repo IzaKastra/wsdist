@@ -267,6 +267,24 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.4*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Scourge":
+        ftp  = 3.0
+        ftp_rep = False
+        wsc = 0.4*(player_str+player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Torcleaver":
+        base_ftp = [4.75, 7.5, 9.765625]
+        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp_rep = False
+        wsc = 0.8*(player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Resolution":
+        base_ftp = [0.71875, 1.5, 2.25]
+        ftp = interp1d(base_tp, base_ftp)(tp)
+        ftp_rep = True
+        wsc = 0.85*(player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 5
+    
 
     scaling = {"hybrid":hybrid,
                "wsc":wsc,

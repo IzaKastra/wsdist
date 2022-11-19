@@ -38,7 +38,8 @@ ws_list = sorted(
            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
            "Evisceration",
            "Savage Blade",
-           "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe"])
+           "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
+           "Torcleaver","Scourge","Resolution"])
 
 ws_column = [ # Copy pasted out of player_column for now.
   [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label")],[sg.Combo(values=ws_list, default_value="Blade: Shun", readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
@@ -108,7 +109,7 @@ buffs_geo_column = [
   [sg.Combo(values=entrustspells, default_value="None", readonly=True, k="entrust",size=(20,1),font=font_choice,enable_events=True,tooltip="Indi/Geo-bubbles overwrite the entrust bubble.")],
   [sg.Checkbox("Blaze of\nGlory*",size=(15,2),font=font_choice,disabled=True,k="geo_bog",tooltip="Blaze of Glory applies to the \"Geo-\" bubble.")],
   [sg.Checkbox("Bolster",size=(15,1),font=font_choice,disabled=True,k="bolster",enable_events=True)],
-  [sg.Text("GEO nerf: ",font=font_choice,tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency"),sg.Input("0",size=(3,1),pad=(1,1),font=font_choice,key="geomancy_nerf",tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency")],
+  [sg.Text("GEO potency: ",font=font_choice,tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency"),sg.Input("100",size=(3,1),pad=(1,1),font=font_choice,key="geomancy_potency",tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency")],
 
 ]
 

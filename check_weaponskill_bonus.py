@@ -88,5 +88,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Anguta":
         if ws_name == "Entropy":
             bonuses["ws_bonus"] += 0.1
-
+    elif main_wpn_name == "Caladbolg":
+        if ws_name == "Torcleaver":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Ragnarok":
+        if ws_name == "Scourge":
+            bonuses["ws_bonus"] += 0.68
+            
     return(bonuses)
