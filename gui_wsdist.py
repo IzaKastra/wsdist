@@ -421,6 +421,8 @@ while True:
             indibubble = values["indibuff"]
             geobubble = values["geobuff"]
             geomancy_potency = float(values["geomancy_potency"])/100
+            geomancy_potency = 0 if geomancy_potency < 0 else geomancy_potency
+            geomancy_potency = 1 if geomancy_potency > 1 else geomancy_potency
             active_bubbles = [indibubble.split("-")[-1],geobubble.split("-")[-1]]
             entrust = values["entrust"]
             blazeofglory = values["geo_bog"]
