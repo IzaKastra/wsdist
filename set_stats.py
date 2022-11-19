@@ -294,16 +294,24 @@ class set_gear:
         if buffs["brd"]:
             self.playerstats['Accuracy1'] += buffs['brd'].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs['brd'].get('Accuracy',0) if dual_wield else 0
-            self.playerstats['Ranged Accuracy'] += buffs['brd'].get('Accuracy',0)
+            self.playerstats['Ranged Accuracy'] += buffs['brd'].get('Ranged Accuracy',0)
+            self.playerstats['Ranged Attack'] += buffs['brd'].get('Ranged Attack',0)
         if buffs["geo"]:
             self.playerstats['Accuracy1'] += buffs["geo"].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs["geo"].get('Accuracy',0) if dual_wield else 0
-            self.playerstats['Ranged Accuracy'] += buffs["geo"].get('Accuracy',0)
+            self.playerstats['Ranged Accuracy'] += buffs["geo"].get('Ranged Accuracy',0)
+            self.playerstats['Ranged Attack'] += buffs["geo"].get('Ranged Attack',0)
+            self.playerstats['Magic Accuracy'] += buffs["geo"].get('Magic Accuracy',0)
+            self.playerstats['Magic Attack'] += buffs["geo"].get('Magic Attack',0)
         if buffs["cor"]:
             self.playerstats['Accuracy1'] += buffs["cor"].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs["cor"].get('Accuracy',0) if dual_wield else 0
-            self.playerstats['Ranged Accuracy'] += buffs["cor"].get('Accuracy',0)
+            self.playerstats['Ranged Accuracy'] += buffs["cor"].get('Ranged Accuracy',0)
             self.playerstats['Store TP'] += buffs["cor"].get('Store TP', 0)
+            self.playerstats['Magic Accuracy'] += buffs["cor"].get('Magic Accuracy', 0)
+            self.playerstats['Magic Attack'] += buffs["cor"].get('Magic Attack', 0)
+            self.playerstats['DA'] += buffs["cor"].get('DA', 0)
+            self.playerstats['Crit Rate'] += buffs["cor"].get('Crit Rate', 0)
 
 
 
