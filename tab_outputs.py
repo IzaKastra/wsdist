@@ -22,7 +22,7 @@ warning_messages = {"Incorrect main":" can not use ",
 
 active_warnings = [] # Default no warnings
 ws_tab = [
-          [sg.Text("Number of simulations for the final plot:",font=font_choice),sg.Input("0",key="n_sims",size=(10,1),tooltip="Number of weapon skill simulations used for the final plot\nand for calculating damage statistics.\nValues less than 10 are converted to 10.",font=font_choice)],
+          [sg.Text("Number of simulated weapon skills:",font=font_choice),sg.Input("0",key="n_sims",size=(10,1),tooltip="Number of weapon skill simulations used for the final plot\nAND for calculating damage statistics (min/median/mean/max).\nValues less than 10 are converted to 10.",font=font_choice)],
           [sg.Checkbox("Show final simulated damage distribution plot?",font=font_choice,size=(50,1),key="show final plot",enable_events=False,default=False)],[sg.Checkbox("Find the best set?",font=font_choice,size=(50,1),key="find set",enable_events=False,default=True,tooltip="Enabled: Check every combination of selected gear (2 at a time) to find the best set.\nDisabled: Calculate damage statistics and plot the initial set from the inputs tab.")],[sg.Button("Run",size=(5,2)),sg.Button("Copy best set",size=(6,2),pad=(15,0),key="copy best set",disabled=True,tooltip="Copies best set to the initial set in the inputs tab for quick look.\nUseful for making minor changes to the best set for comparisons.")],
           # [sg.Frame("Active warnings",[[sg.Text("\n".join(active_warnings),key="ws warnings",font=font_choice,text_color="orange",size=(200,8))]],font=font_choice,visible=True,)], # This line should go in the "Select Gear" tab later.
 

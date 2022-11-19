@@ -346,7 +346,7 @@ while True:
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
 
             # How many simulations in the final plot?
-            n_sims = int(values["n_sims"]) if int(values["n_sims"]) > 10 else 10
+            n_sims = int(values["n_sims"]) if int(values["n_sims"]) > 100 else 100
 
 
             # How many maximum iterations before assuming converged? Currently hard-coded to 10 and 0. 0 means "do not find best set."
