@@ -95,9 +95,9 @@ layout = [
           ]
          ]
 
-window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
+# window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
+window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 random_style = np.random.choice(window_styles)
-random_style = "xpnative"
 window = sg.Window(f"Kastra WS Damage Simulator (2022 November 18) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
