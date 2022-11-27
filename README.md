@@ -18,7 +18,10 @@ You should be able to run the executable with just the following files:
     icons32/*
     icons64/*
 
-The gui_wsdist.exe was created with the following commands within a Python3.8.8 virtual environment (see https://virtualenv.pypa.io/en/stable/user_guide.html):
+The gui_wsdist.exe was created with the following commands within a Python3.8.8 virtual environment using Windows10 PowerShell (see https://virtualenv.pypa.io/en/stable/user_guide.html):
+
+    virtualenv venv
+    .\venv\Scripts\activate.ps1
 
     pip install numpy
     pip install matplotlib
