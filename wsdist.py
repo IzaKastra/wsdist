@@ -103,11 +103,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     if main_job.lower() == "nin":
         ninjutsu_damage = gearset.playerstats['Ninjutsu Damage']
 
-    dStat = ['STR', 0] # Part of the fix for Crepsecular Knife's CHR bonus. Needed to first assign a base dStat bonus. In this case I just used STR with 0 bonus to apply to all WSs, and Crepsecular just changes this to ['CHR', 0.03]. Utu Grip changes this to ['DEX', 0.10]
+    dStat = ['STR', 0] # Part of the fix for Crepuscular Knife's CHR bonus. Needed to first assign a base dStat bonus. In this case I just used STR with 0 bonus to apply to all WSs, and Crepsecular just changes this to ['CHR', 0.03]. Utu Grip changes this to ['DEX', 0.10]
     if sub_wpn_name == "Crepuscular Knife":
         dStat = ['CHR', 3]
     elif sub_wpn_name == "Utu Grip":
-        dStat = ['DEX', 3]
+        dStat = ['DEX', 10]
     dStat[1] /= 100.
 
     enemy_int = enemy["INT"]
