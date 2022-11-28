@@ -725,12 +725,14 @@ if __name__ == "__main__":
     ws_name = "Blade: Shun"
     min_tp = 1000
     max_tp = 1500
-    n_iter = 0
-    n_sims = 1000
-    #check_gear = [[Heishi,Kikoku],[Fotia_Gorget, Ninja_Nodowa]]
+    n_iter = 10
+    n_sims = 10000
+    # check_gear = [[Heishi,Kikoku],[Fotia_Gorget, Ninja_Nodowa]]
     # check_slots = ["main","neck"]
-    check_gear = [mains, subs, ammos, necks, capes, feet]
-    check_slots = ["main", "sub", "ammo", "neck", "back", "feet"]
+    # check_gear = [mains, subs, ammos, heads, necks, ears, ears2, bodies, hands, rings, rings2, capes, waists, legs, feet]
+    # check_slots = ["main", "sub", "ammo", "head", "neck", "ear1", "ear2", "body", "hands", "ring1", "ring2", "back", "waist", "legs", "feet"]
+    check_gear = [mains, subs, ammos, heads, necks, ears, ears2,]
+    check_slots = ["main", "sub", "ammo", "head", "neck", "ear1", "ear2"]
     buffs = {"food": Grape_Daifuku,
              "brd": {"Attack": 0, "Accuracy": 0, "Ranged Accuracy": 0},
              "cor": {"Attack": 0, "Store TP": 0, "Accuracy": 0, "Magic Attack": 0, "DA":0, "Crit Rate": 0},
@@ -761,7 +763,9 @@ if __name__ == "__main__":
 
     nuke = False # True/False
     spell = False # "Doton: Ichi" etc
-    burst = True
-    futae = False
+    burst = True # True/False
+    futae = False # True/False
 
-    run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
+    import cProfile
+    cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)",sort="cumtime")
+    # run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
