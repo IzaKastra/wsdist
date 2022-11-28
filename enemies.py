@@ -17,6 +17,7 @@ apex_bats = {'Name': 'Apex Bats',
              'INT': 233,
              'CHR': 277, # CHR unknown. Using value from apex_toad
              'Magic Defense': 0,
+             'Magic Evasion': 0,
              'Location':"Dho Gates"}
 
 # Woh Gates toads
@@ -30,6 +31,7 @@ apex_toad = {'Name': "Apex Toad",
              'INT': 293,
              'CHR': 277,
              'Magic Defense': 0,
+             'Magic Evasion': 0,
              'Location':"Woh Gates"}
 
 # Outer Ra'Kaznar single bats
@@ -43,6 +45,7 @@ apex_bat  = {'Name': "Apex Bat",
              'INT': 267,
              'CHR': 277, # CHR unknown. Using value from apex_toad
              'Magic Defense': 0,
+             'Magic Evasion': 0,
              'Location':"Outer Ra'Kaznar"}
 
 ozma = {"Name": "Ozma",
@@ -54,7 +57,8 @@ ozma = {"Name": "Ozma",
              'MND': 999,
              'INT': 999,
              'CHR': 999, # CHR unknown. Using value from apex_toad
-             'Magic Defense': 100,
+             'Magic Defense': 0,
+             'Magic Evasion': 0,
              'Location':"Chocobo's Air Garden"}
 
 octorok = {"Name": "Octorok",
@@ -67,6 +71,7 @@ octorok = {"Name": "Octorok",
              'INT': 1,
              'CHR': 1,
              'Magic Defense': 0,
+             'Magic Evasion': 0,
              'Location':"Hyrule"}
 
 preset_enemies = {"Apex Bat":apex_bat, "Apex Bats":apex_bats, "Apex Toad":apex_toad, "Octorok":octorok, "Ozma":ozma, }

@@ -100,9 +100,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     player_mab = gearset.playerstats['Magic Attack']
     player_magic_damage = gearset.playerstats['Magic Damage']
-    if main_job.lower() == "nin":
-        ninjutsu_damage = gearset.playerstats['Ninjutsu Damage']
-
+    
+    ninjutsu_damage = gearset.playerstats['Ninjutsu Damage'] if main_job.lower() == "nin" else 0
+     
     dStat = ['STR', 0] # Part of the fix for Crepuscular Knife's CHR bonus. Needed to first assign a base dStat bonus. In this case I just used STR with 0 bonus to apply to all WSs, and Crepsecular just changes this to ['CHR', 0.03]. Utu Grip changes this to ['DEX', 0.10]
     if sub_wpn_name == "Crepuscular Knife":
         dStat = ['CHR', 3]
@@ -119,24 +119,58 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Nuking stuff. Move this to a separate Nuke() function for the Nuke tab to call later. TODO
     if nuke:
-        player_mab += gearset.playerstats['Ninjutsu Magic Attack']
+        # Define Ninjutsu specifics: element, tier, bonus damage
+        if ": Ichi" in spell or ": Ni" in spell or ": San" in spell:
+            # Add Ninjutsu Magic Attack to Ninjutsu nukes
+            player_mab += gearset.playerstats['Ninjutsu Magic Attack']
 
-        spells = {"Katon": "Fire",
-                  "Suiton": "Water",
-                  "Raiton": "Thunder",
-                  "Doton": "Earth",
-                  "Huton": "Wind",
-                  "Hyoton": "Ice"}
-        tiers = {"Ichi": 1,
-                 "Ni": 2,
-                 "San": 3}
+            spells = {
+                    "Katon": "Fire",
+                    "Suiton": "Water",
+                    "Raiton": "Thunder",
+                    "Doton": "Earth",
+                    "Huton": "Wind",
+                    "Hyoton": "Ice"
+                    }
 
-        element = spells[spell.split(":")[0]]
-        tier = tiers[spell.split(" ")[-1]]
+            element = spells[spell.split(":")[0]].lower()
+            tier = spell.split()[-1]
 
-        damage = nuking(tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, ninjutsu_damage, futae, burst)
+            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, ninjutsu_damage, futae, burst)
 
-        return(damage,0)
+        else:
+            # If not Ninjutsu, then assume Black Magic
+            spells = {
+                    "Stone": "Earth",
+                    "Water": "Water",
+                    "Aero": "Wind",
+                    "Fire": "Fire",
+                    "Blizzard": "Ice",
+                    "Thunder": "Thunder",
+                    }
+            jaspells = {
+                    "Stoneja": "Earth",
+                    "Waterja": "Water",
+                    "Aeroja": "Wind",
+                    "Firaja": "Fire",
+                    "Blizzaja": "Ice",
+                    "Thundaja": "Thunder",
+                    }
+            
+            if spell[-2:] == "ja":
+                element = jaspells[spell].lower()
+                tier = "ja"
+
+            elif len(spell.split()) == 1:
+                element = spells[spell.split()[0]].lower()
+                tier = "I"
+            elif len(spell.split()) == 2:
+                element = spells[spell.split()[0]].lower()
+                tier = spell.split()[-1]
+
+            damage = nuking("Black Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, 0, futae, burst)
+
+        return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
 
     # Check weapon + weapon skill synergy for things like bonus weapon skill damage. (and mythic AM3)
@@ -384,37 +418,48 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
     damage = []
     tp_return = []
 
+    if nuke:
+        show_final_plot = False
     if final:
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final) # values = [damage, TP_return]
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae) # values = [damage, TP_return]
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
         print()
         print()
-        print(f"Best '{ws_name}' gear for the TP range [{tp1}, {tp2}] and the provided buffs:\n")
+        if nuke:
+            print(f"Best '{spell}' gear with the provided buffs:\n")
+        else:
+            print(f"Best '{ws_name}' gear for the TP range [{tp1}, {tp2}] and the provided buffs:\n")
         for k in equipment:
             print(f"{k:>10s}  {equipment[k]['Name2']:<50s}")
         print()
-        print(f"{'WeaponSkill':<15s} | {'Minimum':>8s} | {'Average':>8s} | {'Median':>8s} | {'Maximum':>8s}")
-        print(f"{ws_name:<15s} | {int(np.min(damage)):>8d} | {int(np.average(damage)):>8d} | {int(np.median(damage)):>8d} | {int(np.max(damage)):>8d}")
+        if nuke:
+            print(f"{'Spell':<15s} | {'Minimum':>8s} | {'Average':>8s} | {'Median':>8s} | {'Maximum':>8s}")
+            print(f"{spell:<15s} | {int(np.min(damage)):>8d} | {int(np.average(damage)):>8d} | {int(np.median(damage)):>8d} | {int(np.max(damage)):>8d}")
+        else:
+            print(f"{'WeaponSkill':<15s} | {'Minimum':>8s} | {'Average':>8s} | {'Median':>8s} | {'Maximum':>8s}")
+            print(f"{ws_name:<15s} | {int(np.min(damage)):>8d} | {int(np.average(damage)):>8d} | {int(np.median(damage)):>8d} | {int(np.max(damage)):>8d}")
+
         if show_final_plot:
             plot_final(damage, gearset, tp1, tp2, ws_name)
         return()
     else:
         tp = np.average([tp1,tp2])
 
-        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final)
+        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae)
         return(damage)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot):
-    nuke, spell, burst, futae = [False for k in range(4)]
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False):
+
     if nuke:
-        return()
+        show_final_plot = False
+
     Best_Gearset =  starting_gearset.copy()
     for k in Best_Gearset:
         # Assign a Name2 to all gear to allow the later code to be cleaned up.
@@ -426,7 +471,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     tp1 = mintp
     tp2 = maxtp
     print("---------------")
-    print(f"Checking:  {ws_name}  TP=[{tp1},{tp2}]")
+    if nuke:
+        print(f"Checking:  {spell}")
+    else:
+        print(f"Checking:  {ws_name}  TP=[{tp1},{tp2}]")
+
     print("---------------")
     nconverge = 2 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
 
@@ -623,7 +672,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
                                 # Now test the gearset by calculating its average damage.
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
-                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False)) # Test the set and return its damage as a single number
+                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae)) # Test the set and return its damage as a single number
 
                                 # If the damage returned after swapping those 1~3 pieces is higher than the previous best, then run this next bit of code to print the swap that was performed and the change in damage observed.
                                 if damage > best_damage:
@@ -666,7 +715,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     best_set = set_gear(buffs, Best_Gearset, main_job, sub_job) # Create a class from the best gearset
 
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
-    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True ,nuke, spell, burst, futae)
+    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae)
     return(Best_Gearset)
 
 if __name__ == "__main__":
@@ -710,4 +759,9 @@ if __name__ == "__main__":
                 'back' : Andartia_Critdex}
     show_final_plot = True
 
-    run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1,show_final_plot)
+    nuke = False # True/False
+    spell = False # "Doton: Ichi" etc
+    burst = True
+    futae = False
+
+    run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)

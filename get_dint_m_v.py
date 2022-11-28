@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 September
+# Version date: 2022 November 27
 #
 # This code contains the function used to calculate the M and V coefficients for spell base damage.
 #
@@ -20,7 +20,7 @@ def get_mv(tier, player_int, enemy_int):
     #
     dINT = player_int - enemy_int
 
-    if tier==1:
+    if tier=="Ichi":
         if dINT <= -9:
             m=0.00; v=11.0
         elif dINT <= -1:
@@ -32,7 +32,7 @@ def get_mv(tier, player_int, enemy_int):
         else:
             m=0.00; v=66.0
 
-    elif tier==2:
+    elif tier=="Ni":
         if dINT <= -43:
             m=0.00; v=47.0
         elif dINT <= -1:
@@ -44,7 +44,7 @@ def get_mv(tier, player_int, enemy_int):
         else:
             m=0.00; v=295.0
 
-    elif tier==3:
+    elif tier=="San":
         if dINT <= -53:
             m=0.00; v=81.0
         elif dINT <= 1:
@@ -55,7 +55,7 @@ def get_mv(tier, player_int, enemy_int):
             m=0.00; v=655.0
 
     return(m,v)
-
+    
 def get_mv_blm(element, tier, player_int, enemy_int):
     #
     # Using the table from BG wiki
@@ -122,7 +122,7 @@ def get_mv_blm(element, tier, player_int, enemy_int):
          "ice":     {"0":[ 950,4.4],"50":[1170,4.00],"100":[1750,2.92],"200":[2042,2.0],"300":[2242,1.0],"400":[2342,0.0],"500":[2342,0.0],"600":[2342,0.0]},
          "thunder": {"0":[1000,4.0],"50":[1200,3.75],"100":[1762,2.90],"200":[2052,2.0],"300":[2252,1.0],"400":[2352,0.0],"500":[2352,0.0],"600":[2352,0.0]}},
     }
-
     v,m = mv[tier][element][window]
+    # print(tier, element, dINT, window, v, m)
 
-    return(m,v)
+    return(m, v, int(window))

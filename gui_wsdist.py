@@ -8,6 +8,8 @@ w, h = sg.Window.get_screen_size()
 
 random_theme = np.random.choice(sg.theme_list())
 random_theme = np.random.choice([k for k in sg.theme_list() if "Mono" in k])
+random_theme = "BlueMono"
+
 
 sg.theme(random_theme)
 
@@ -98,7 +100,9 @@ layout = [
 # window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 random_style = np.random.choice(window_styles)
-window = sg.Window(f"Kastra WS Damage Simulator (2022 November 18) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+random_style = "default"
+
+window = sg.Window(f"Kastra WS Damage Simulator (2022 November 27) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -302,6 +306,36 @@ while True:
                             else:
                                 window[f"{slot}: {l['Name2']}"].update(False)
 
+        # select every piece of equipment in all slots that your main job can equip.
+        if event == "select ALL main":
+            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
+                        "sub":subs + grips,
+                        "ammo":ammos,
+                        "head":heads,
+                        "neck":necks,
+                        "ear1":ears,
+                        "ear2":ears2,
+                        "body":bodies,
+                        "hands":hands,
+                        "ring1":rings,
+                        "ring2":rings2,
+                        "back":capes,
+                        "waist":waists,
+                        "legs":legs,
+                        "feet":feet}
+            main_job = values["mainjob"].lower()
+            for slot in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+                displayed_equipment_list = gear_map[slot]
+                for k in values:
+                    if type(k) == str:
+                        if k.split()[0][:-1] == slot:
+                            for l in displayed_equipment_list:
+                                if main_job in l.get("Jobs",[]):
+                                    window[f"{slot}: {l['Name2']}"].update(True)
+                                else:
+                                    window[f"{slot}: {l['Name2']}"].update(False)
+
+
 
         # Setup buttons to show/hide radio buttons on the starting gearset tab.
         # Clicking the "main" slot will show the radio buttons for the "main" gear on the right while hiding all other slot radio buttons
@@ -326,9 +360,34 @@ while True:
             window[f"showstart {slot}"].set_tooltip(item)
 
 
-        # Begin collecting variables to pass into the main code. There will be a lot of variables.
-        if event == "Run" or event == "quicklook":
+        # if event == "check magic": # Only enable the "Run Magic" button if the magic checkbox is checked.
+        #     if values["check magic"]:
+        #         window["Run Magic"].update(disabled=False)
+        #         window["quicklook magic"].update(disabled=False)
+        #     else:
+        #         window["Run Magic"].update(disabled=True)
+        #         window["quicklook magic"].update(disabled=True)
 
+        # Modify lists to only display items related to the currently selected main job.
+        # if event == "mainjob":
+        #     spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
+        #       "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
+        #       "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
+        #       "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
+        #       "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
+        #       "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
+        #     ]
+        #     if values["mainjob"] != "NIN":
+        #         non_nin_spells = [k for k in spell_list if ":" not in k]
+        #         window["select spell"].update(values=non_nin_spells)
+        #     else:
+        #         nin_spells = [k for k in spell_list if ":" in k]
+        #         window["select spell"].update(values=nin_spells)
+
+
+        # Begin collecting variables to pass into the main code. There will be a lot of variables.
+        if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic"]:
+            
             main_job = values["mainjob"]
             sub_job = values["subjob"]
 
@@ -464,25 +523,25 @@ while True:
             }
             dia_potency = dia_dictionary[values["ndia"]] if whm_on else 0.0
 
-
-            for food in all_food:
-                if food["Name"] == values["food"]:
-                    food_attack = food.get("Attack",0)
-                    food_rangedattack = food.get("Ranged Attack",0)
-                    food_accuracy = food.get("Accuracy",0)
-                    food_rangedaccuracy = food.get("Ranged Accuracy",0)
-                    food_magicaccuracy = food.get("Magic Accuracy",0)
-                    food_magicattack = food.get("Magic Attack",0)
-                    food_str = food.get("STR",0)
-                    food_dex = food.get("DEX",0)
-                    food_vit = food.get("VIT",0)
-                    food_agi = food.get("AGI",0)
-                    food_int = food.get("INT",0)
-                    food_mnd = food.get("MND",0)
-                    food_chr = food.get("CHR",0)
-                    food_found = True
-            if not food_found:
-                attack,food_rangedattack,food_accuracy,food_rangedaccuracy,food_magicaccuracy,food_magicattack,food_str,food_dex,food_vit,food_agi,food_int,food_mnd,food_chr = [0 for k in range(13)]
+            use_food = False if values["food"] == "None" else True
+            if use_food:
+                for food in all_food:
+                    if food["Name"] == values["food"]:
+                        food_attack = food.get("Attack",0)
+                        food_rangedattack = food.get("Ranged Attack",0)
+                        food_accuracy = food.get("Accuracy",0)
+                        food_rangedaccuracy = food.get("Ranged Accuracy",0)
+                        food_magicaccuracy = food.get("Magic Accuracy",0)
+                        food_magicattack = food.get("Magic Attack",0)
+                        food_str = food.get("STR",0)
+                        food_dex = food.get("DEX",0)
+                        food_vit = food.get("VIT",0)
+                        food_agi = food.get("AGI",0)
+                        food_int = food.get("INT",0)
+                        food_mnd = food.get("MND",0)
+                        food_chr = food.get("CHR",0)
+            else:
+                food_attack,food_rangedattack,food_accuracy,food_rangedaccuracy,food_magicaccuracy,food_magicattack,food_str,food_dex,food_vit,food_agi,food_int,food_mnd,food_chr = [0 for k in range(13)]
 
 
 
@@ -499,6 +558,7 @@ while True:
             enemy = {"Defense":int(values["enemy_defense"]),
                      "Evasion":int(values["enemy_evasion"]),
                      "Magic Defense":int(values["enemy_mdefense"]),
+                     "Magic Evasion":int(values["enemy_mevasion"]),
                      "VIT":int(values["enemy_vit"]),
                      "INT":int(values["enemy_int"]),
                      "AGI":int(values["enemy_agi"]),
@@ -529,19 +589,39 @@ while True:
             for s in remove_slots:
                 check_slots.remove(s)
 
+            spell = values["select spell"]
+            burst = values["magic burst toggle"]
+            futae = values["futae toggle"]
 
             if event == "quicklook":
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset)[0]
-                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
-            else:
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae)[0]
+                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
+
+            elif event == "quicklook magic":
+                from wsdist import weaponskill
+                from set_stats import *
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae)[0]
+                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
+
+            elif event == "Run WS":
                 from wsdist import run_weaponskill
 
                 show_final_plot = values["show final plot"]
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae)
                 window["copy best set"].update(disabled=False)
+           
+            elif event == "Run Magic":
+                from wsdist import run_weaponskill
+
+                show_final_plot = False
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae)
+                window["copy best set"].update(disabled=False)
+
+
         # Copy the best set to the initial set tab for convenience:
         if event == "copy best set":
             window["tab group"].Widget.select(0) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
@@ -550,7 +630,7 @@ while True:
                     if "start" == val[:5]:
                         window[val].update(False)
             for slot in best_set:
-                if slot == "ranged":
+                if slot == "ranged" or best_set[slot]["Name"]=="Empty":
                     continue
                 # print(slot, best_set[slot]["Name2"],values[f"start{slot}: {best_set[slot]['Name2']}"])
                 window[f"showstart {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
@@ -560,16 +640,10 @@ while True:
     except Exception as err:
 
         # Automatically move to the "Output" if something returns an error.
-        window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
+        # window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
 
         traceback.print_exc() # print the most recent error to the output tab.
                               # this is only the most recent. if you have a chain of errors, then you'll have to work your way up one at a time.
-
-    # This bit is useless until I add the Nuke Tab
-    # nuke = False
-    # spell = "Doton: Ichi"
-    # burst = False
-    # futae = False
 
 
 # window.set_min_size(window.size)

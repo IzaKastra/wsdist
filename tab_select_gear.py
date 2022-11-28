@@ -109,7 +109,7 @@ gear_tab = [
     [sg.Push(),sg.Button("Back",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display back"),sg.Button("Waist",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display waist"),sg.Button("Legs",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display legs"),sg.Button("Feet",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display feet"),sg.Push()],
     [sg.Push(),sg.Text("",font=font_choice)],
     [sg.Push(),sg.Button("Select All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all gear",tooltip="Select all items in the displayed list.",enable_events=True),sg.Button("Unselect All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="unselect all gear",tooltip="Unselect all items in the displayed list.",enable_events=True)],
-    [sg.Push(),sg.Button("Select All\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all main",tooltip="Select all items in the displayed list that your selected main job can equip.",enable_events=True,disabled=False),sg.Push()]
+    [sg.Push(),sg.Button("Select All\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all main",tooltip="Select all items in the displayed list that your selected main job can equip.",enable_events=True,disabled=False),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)]
   ],vertical_alignment="center",size=[370,450]),]]
 checkbox_tab = [[sg.Column([[
   sg.Push(),

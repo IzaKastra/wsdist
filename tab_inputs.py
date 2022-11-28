@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 November 27
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -25,11 +25,11 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = ["NIN", "DRK"]
-sub_jobs = ["WAR", "SAM"]
+main_jobs = ["NIN", "DRK",]
+sub_jobs = ["WAR", "SAM",]
 
 player_column = [
-  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False)],
+  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
   [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value=sub_jobs[0], readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=False)],
 ]
 
@@ -41,11 +41,39 @@ ws_list = sorted(
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
            "Torcleaver","Scourge","Resolution"])
 
-ws_column = [ # Copy pasted out of player_column for now.
-  [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label")],[sg.Combo(values=ws_list, default_value="Blade: Shun", readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
+spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
+              "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
+              "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
+              "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
+              "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
+              "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
+]
+non_nin_spells = [k for k in spell_list if ":" not in k]
+# spell_list = [k for k in spell_list if ":" in k] if main_job == "NIN" else [k for k in spell_list if ":" not in k]
+# Same for weapon skill; filter to only show weapon skills that the selected main weapon can equip
+
+ws_column = [
+  [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label"),sg.Push()],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
 ]
+
+
+ws_column2 = [
+  [sg.Column([
+  [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=ws_list, default_value="Blade: Shun", readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
+  [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
+  [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
+  ]),sg.Push(),
+  sg.Column([
+  [sg.Text("Spell:",size=(15,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_list, default_value="Doton: San", readonly=True, k="select spell",font=font_choice,enable_events=True)],
+  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle")],
+  [sg.Checkbox("Futae",font=font_choice,key="futae toggle")],
+  ])
+
+
+]]
+
 
 food_list = sorted([k["Name"] for k in all_food]) + ["None"] # Reads "all_food" from gear.py
 buffs_whm_column = [
@@ -127,6 +155,7 @@ enemy_stat_column = [
   [sg.Text("Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_evasion"),sg.Text("AGI:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["AGI"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_agi")],
   [sg.Text("Defense:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Defense"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_defense"),sg.Text("VIT:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["VIT"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_vit")],
   [sg.Text("Magic Defense:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Magic Defense"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mdefense"), sg.Text("INT:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["INT"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_int")],
+  [sg.Text("Magic Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Magic Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mevasion")],
 ]
 
 
@@ -212,7 +241,7 @@ random_back = np.random.choice([k for k in capes if "nin" in k["Jobs"]])
 
 
 while random_sub["Name2"] == random_main["Name2"]:
-    random_sub = np.random.choice([k for k in mains if k["Skill Type"] in ["Katana","Dagger"]])
+    random_sub = np.random.choice([k for k in subs if k["Skill Type"] in ["Katana","Dagger"]])
 while random_ring2["Name2"] == random_ring1["Name2"]:
     random_ring2 = np.random.choice(rings2)
 while random_ear2["Name2"] == random_ear1["Name2"]:
@@ -236,6 +265,25 @@ starting_gearset = {
                     'ring2' : random_ring2,
                     'back' : random_back,
         }
+
+# starting_gearset = {
+#                     'main' : Hitaki,
+#                     'sub' : Empty,
+#                     'ranged' : Empty,
+#                     'ammo' : Empty,
+#                     'head' : Empty,
+#                     'body' : Empty,
+#                     'hands' : Empty,
+#                     'legs' : Empty,
+#                     'feet' : Empty,
+#                     'neck' : Empty,
+#                     'waist' : Empty,
+#                     'ear1' : Empty,
+#                     'ear2' : Empty,
+#                     'ring1' : Empty,
+#                     'ring2' : Empty,
+#                     'back' : Empty,
+#         }
 
 # Define a dictionary containing slot:item_name pairs. The item_name is used to search item_list.txt for item IDs, which are then pulled from icons32/ and displayed in the GUI.
 default_images = dict([[k,starting_gearset[k]["Name"]] for k in starting_gearset] )
@@ -354,8 +402,8 @@ radio_tab = [
 
 
 input_tab = [
-          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column)]],size=[250,200])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[350,220])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
           [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
-          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look",key="quicklook")],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
+          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Column([[sg.Column(starting_set_tab)],[sg.Button("test")]]),sg.Column([radio_tab])],],size=[600,275]))]
          ]
