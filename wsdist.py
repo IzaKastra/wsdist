@@ -9,7 +9,7 @@
 from numba import njit
 import numpy as np
 
-from get_ma_rate import *
+from get_ma_rate import get_ma_rate3
 from get_fstr import *
 from get_dex_crit import *
 from get_phys_damage import *
@@ -226,7 +226,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
         # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
-        main_hits, sub_hits = get_ma_rate(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
+        main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
 
         # Calculate average damage dealt per hit for each hand.
         avg_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Main-hand average PDIF
@@ -769,3 +769,12 @@ if __name__ == "__main__":
     import cProfile
     cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)",sort="cumtime")
     # run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
+
+    # TODO:
+    # 2-handed weapons cap at 95% accuracy. The code currently uses 99% since it was based on NIN dual-wielding two single-handed weapons.
+    #   Maybe use something like
+    # 
+    #       if sub_type == "grip":
+    #           hit_rate = 0.95 if hit_rate > 0.95 else hit rate
+    #
+    # Add Magic Accuracy and resistance ranks to magic calculations.
