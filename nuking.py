@@ -189,16 +189,24 @@ def get_magic_hit_rate(player_macc, enemy_meva=0):
 def get_resist_state(magic_hit_rate):
     #
     # https://www.bg-wiki.com/ffxi/Resist
-    # Sounds like this bit simply rolls three times.
+    # Sounds like this bit simply rolls three times or until your roll wins.
     # Each failed roll halves your damage.
     # 
     # This function is useful if you wanted to do simulations, but magic damage doesn't really need simulations. considering there are only a few possible damage values.
     # I instead use get_resist_state_average() to calculate the average damage from all four resist states (1/1, 1/2, 1/4, 1/8)
     #
-    roll1 = np.random.uniform(0,1)
-    roll2 = np.random.uniform(0,1)
-    roll3 = np.random.uniform(0,1)
-    resist_state = 1*(1-0.5*(roll1 > magic_hit_rate)) * (1-0.5*(roll2 > magic_hit_rate)) * (1-0.5*(roll3 > magic_hit_rate))
+    # roll1 = np.random.uniform(0,1)
+    # roll2 = np.random.uniform(0,1)
+    # roll3 = np.random.uniform(0,1)
+    # resist_state = 1*(1-0.5*(roll1 > magic_hit_rate)) * (1-0.5*(roll2 > magic_hit_rate)) * (1-0.5*(roll3 > magic_hit_rate))
+
+    resist_state = 1.0
+    for k in range(3):
+        if magic_hit_rate >= np.random.uniform(0,1):
+            break
+        else:
+            resist_state *= 0.5
+
     return(resist_state)
 
 @njit
@@ -206,10 +214,16 @@ def get_resist_state_average(magic_hit_rate):
     #
     # Estimate the average resist coefficient using magic hit rate
     #
-    resist_state = 1*1.000*((magic_hit_rate)**3) + \
-                   3*0.500*(magic_hit_rate**2)*(1-magic_hit_rate) + \
-                   3*0.250*(magic_hit_rate)*((1-magic_hit_rate)**2) + \
-                   1*0.125*((1-magic_hit_rate)**3)
+    # resist_state = 1*1.000*((magic_hit_rate)**3) + \
+    #                3*0.500*(magic_hit_rate**2)*(1-magic_hit_rate) + \
+    #                3*0.250*(magic_hit_rate)*((1-magic_hit_rate)**2) + \
+    #                1*0.125*((1-magic_hit_rate)**3)
+    
+    resist_state = magic_hit_rate + \
+                   0.500*magic_hit_rate*(1-magic_hit_rate) + \
+                   0.250*magic_hit_rate*((1-magic_hit_rate)**2) + \
+                   0.125*((1-magic_hit_rate)**3)
+
     return(resist_state)
 
 if __name__ == "__main__":
