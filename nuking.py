@@ -115,60 +115,29 @@ def get_dstat_macc(player_stat, enemy_stat):
     #
     #
     # The process for estimating Magic Accuracy from STAT is not explained well on the BG Wiki page...
-    # My interpretation is:
-    #
-    # Consider the equation of a straight line:
-    # 
-    #     y = m*x + b
-    # or
-    #     MAcc_stat = m*dSTAT + b
-    #
-    # BG Wiki gives the slope (m) for various dSTAT ranges, but has no mention of the y-intercept (b) for these ranges.
-    # BG instead provides a CHANGE in MAcc caused by a CHANGE in dSTAT. This is a derivative, so we need the derivative of the straight-line equation to relate it to BG Wiki:
-    #
-    #     dy = m*dx   (assuming m and b are constants)
-    #
-    # Now I assume that this derivative formula has an additional reasonable boundary condition:
-    #
-    #     y(0) = 0 
-    #    (Magic Accuracy from STAT is +0 when the player has exactly 0 STAT total)
-    #
-    # This suggests that b = 0 for the first dSTAT range (up to dSTAT=10).
-    # This is the only b value that matters for our purposes, but we could use derivative boundary conditions to derive exact formulae for y=mx+b in all ranges if we wanted to.
-    #
-    # We can now write a simple formula relating magic_accuracy to player_stat, enemy_stat, and m for various dSTAT ranges:
-    #
-    #     MAcc = 1.00*min(Enemy_INT+10, Player_INT) + 
-    #            0.50*min((Enemy_INT+30)-(Enemy_INT+10), Player_INT-(Enemy_INT+10)) + 
-    #            0.25*min((Enemy_INT+70)-(Enemy_INT+30), Player_INT-(Enemy_INT+30))
-    #
-    # As an example, consider player_INT = 254 and enemy_INT = 217.
-    # 1) dINT = +37, so we need to sum the contribution from the dINT<=10 range, the dINT<=30 range, and the partial dINT<=70 range.
-    # 2) dINT = 10 when player_INT = enemy_INT+10 = 227, so we gain +227 Magic Accuracy from this first dINT range just for having dINT>10
-    # 3) dINT = 30 when player_INT = enemy_INT+30, but we need to subtract off the dINT<10 range or we'll double count it.
-    #    This leaves Player_INT-(Enemy_INT+10) <= 20 dINT contributing to Magic Accuracy in this range. Since we have dINT=+37, we use the full 20 in this range.
-    #    m=0.5 in this range, so total magic accuracy gained is 20*0.5 = 10
-    # 4) Now dINT = 70 when player_INT = enemy_INT+70 = 287, which is higher than our player_INT; only a portion of our remaining INT contributes in this range
-    #    Again, we need to remove the contribution from the previous dINT ranges to avoid double-counting them
-    #    This leaves Player_INT-(Enemy_INT+30) <= 40 contributing in this range.
-    #    In our case, we only have 254 INT, so only 254 - 217+30 = 7 of our INT contributes to this range
-    #    m=0.25 for this dINT range, so we have 7*0.25 = +1.75 Magic Accuracy in the final dINT range
-    #
-    # 5) Adding all of these together, we get 227 + 10 + 1.75 = +238.75 Magic Accuracy from dINT alone
-    # 6) This should probably be truncated, so we have +238 Magic Accuracy total from dINT alone.
-    # 
-    # This gets added to Magic Accuracy, <Ninjutsu> Skill, and Magic Accuracy Skill to determine Magic Hit Rate, which gives resist states later.
-    #
-    # As an extreme example, if we had infinite INT, then the maximum possible Magic Accuracy gained from STAT is determined entirely from the enemy_INT:
-    #
-    #     dstat_macc = 1.00*(enemy_stat+10) + 0.5*20 + 0.25*40
-    #                = enemy_stat + 30
-    #
-    # For enemy_stat = 293, the maximum Magic Accuracy we could obtain from STAT would be 293+30 = 323 as long as we had dSTAT>70
-    #
-    dstat_macc = 1.00*max(0,min(enemy_stat+10, player_stat)) + \
-                 0.50*max(0,min((enemy_stat+30)-(enemy_stat+10), player_stat-(enemy_stat+10))) + \
-                 0.25*max(0,min((enemy_stat+70)-(enemy_stat+30), player_stat-(enemy_stat+30)))
+    # The JP blog (auto translated: https://luteff11.livedoor.blog/archives/49725347.html) is pretty clear.
+
+    # First version based only on BG Wiki. It uses my incorrect interpretation of what BG Wiki is trying to say.
+    # dstat_macc = 1.00*max(0,min(enemy_stat+10, player_stat)) + \
+    #              0.50*max(0,min((enemy_stat+30)-(enemy_stat+10), player_stat-(enemy_stat+10))) + \
+    #              0.25*max(0,min((enemy_stat+70)-(enemy_stat+30), player_stat-(enemy_stat+30)))
+
+    dstat = player_stat - enemy_stat
+
+    if dstat <= -70:
+        dstat_macc = -30
+    elif dstat <= -30:
+        dstat_macc = 0.25*dstat - 12.5
+    elif dstat <= -10:
+        dstat_macc = 0.5*dstat - 5.0
+    elif dstat <= 10:
+        dstat_macc = 1.0*dstat
+    elif dstat <= 30:
+        dstat_macc = 0.5*dstat + 5.0
+    elif dstat <= 70:
+        dstat_macc = 0.25*dstat + 12.5
+    else:
+        dstat_macc = 30
 
     return(dstat_macc)
 
@@ -218,7 +187,7 @@ def get_resist_state_average(magic_hit_rate):
     #                3*0.500*(magic_hit_rate**2)*(1-magic_hit_rate) + \
     #                3*0.250*(magic_hit_rate)*((1-magic_hit_rate)**2) + \
     #                1*0.125*((1-magic_hit_rate)**3)
-    
+
     resist_state = magic_hit_rate + \
                    0.500*magic_hit_rate*(1-magic_hit_rate) + \
                    0.250*magic_hit_rate*((1-magic_hit_rate)**2) + \
