@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 27
+# Version date: 2022 November 29
 #
 # This code holds the methods for building a player's stats.
 #
@@ -36,7 +36,7 @@ class set_gear:
                  'STR':0, 'DEX':0, 'VIT':0, 'AGI':0, 'INT':0, 'MND':0, 'CHR':0,
                  'Katana Skill':0, 'Dagger Skill':0, 'Sword Skill':0, 'Hand-to-Hand Skill':0, 'Great Katana Skill':0, 'Club Skill':0, 'Throwing Skill':0,
                  'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                 'Ninjutsu Skill':0, 'Great Sword Skill':0, 'Marksmanship Skill':0,
+                 'Ninjutsu Skill':0, 'Great Sword Skill':0, 'Marksmanship Skill':0, "Elemental Magic Skill":0,
                  'Accuracy':0, 'Attack':0,
                  'Ranged Accuracy':0, 'Ranged Attack':0,
                  'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0,
@@ -63,7 +63,7 @@ class set_gear:
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
                      'Katana Skill':460, 'Dagger Skill':414, 'Sword Skill':409, 'Hand-to-Hand Skill':336, 'Great Katana Skill':404, 'Club Skill':336, 'Throwing Skill':460,
                      'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                     'Ninjutsu Skill':489,
+                     'Ninjutsu Skill':489, "Elemental Magic Skill":0,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
                      'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
@@ -83,7 +83,7 @@ class set_gear:
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
                      'Scythe Skill':460, 'Dagger Skill':409, 'Sword Skill':424, 'Hand-to-Hand Skill':0, 'Great Katana Skill':0, 'Club Skill':404, 'Throwing Skill':0,
                      'Katana Skill':0, 'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                     'Ninjutsu Skill':0, 'Great Sword Skill':453, 'Marksmanship Skill':336, 'Dark Magic Skill':489, 'Axe Skill':424, 'Great Axe Skill':424,
+                     'Ninjutsu Skill':0, 'Great Sword Skill':453, 'Marksmanship Skill':336, 'Dark Magic Skill':489, 'Axe Skill':424, 'Great Axe Skill':424, "Elemental Magic Skill":0,
                      'Accuracy1':22, 'Accuracy2':22, 'Attack1':202, 'Attack2':202,
                      'Ranged Accuracy':22, 'Ranged Attack':202,
                      'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0,
@@ -103,7 +103,7 @@ class set_gear:
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
                      'Katana Skill':460, 'Dagger Skill':414, 'Sword Skill':409, 'Hand-to-Hand Skill':336, 'Great Katana Skill':404, 'Club Skill':336, 'Throwing Skill':460,
                      'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                     'Ninjutsu Skill':489,
+                     'Ninjutsu Skill':489, "Elemental Magic Skill":0,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
                      'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 November 29
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -116,6 +116,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     enemy_eva = enemy["Evasion"]
     enemy_def = enemy["Defense"]
     enemy_mdb = enemy["Magic Defense"]
+    enemy_meva = enemy["Magic Evasion"]
 
     # Nuking stuff. Move this to a separate Nuke() function for the Nuke tab to call later. TODO
     if nuke:
@@ -123,7 +124,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if ": Ichi" in spell or ": Ni" in spell or ": San" in spell:
             # Add Ninjutsu Magic Attack to Ninjutsu nukes
             player_mab += gearset.playerstats['Ninjutsu Magic Attack']
-
+            
             spells = {
                     "Katon": "Fire",
                     "Suiton": "Water",
@@ -136,10 +137,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             element = spells[spell.split(":")[0]].lower()
             tier = spell.split()[-1]
 
-            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, ninjutsu_damage, futae, burst)
+            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst)
 
         else:
-            # If not Ninjutsu, then assume Black Magic
+            # If not Ninjutsu, then assume Elemental Magic
             spells = {
                     "Stone": "Earth",
                     "Water": "Water",
@@ -168,7 +169,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 element = spells[spell.split()[0]].lower()
                 tier = spell.split()[-1]
 
-            damage = nuking("Black Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, 0, futae, burst)
+            damage = nuking("Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst)
 
         return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
@@ -743,15 +744,15 @@ if __name__ == "__main__":
     enemy = apex_toad
 
     starting_gearset1 = {
-                'main' : Tauret,
-                'sub' : Gleti_Knife,
+                'main' : Heishi,
+                'sub' : Kunimitsu,
                 'ranged' : Empty,
                 'ammo' : Yetshila,
                 'head' : Blistering_Sallet,
                 'body' : Mpaca_Doublet,
                 'hands' : Ryuo_Tekko_A,
                 'legs' : Jokushu_Haidate,
-                'feet' : Kendatsuba_Sune_Ate,
+                'feet' : Mochizuki_Kyahan,
                 'neck' : Ninja_Nodowa,
                 'waist' : Fotia_Gorget,
                 'ear1' : Odr_Earring,
@@ -761,14 +762,16 @@ if __name__ == "__main__":
                 'back' : Andartia_Critdex}
     show_final_plot = True
 
-    nuke = False # True/False
-    spell = False # "Doton: Ichi" etc
+    nuke = True # True/False
+    spell = "Doton: Ichi" # "Doton: Ichi" etc
     burst = True # True/False
     futae = False # True/False
 
-    import cProfile
-    cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)",sort="cumtime")
-    # run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
+    if False:
+        import cProfile
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)",sort="cumtime")
+    else:
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
 
     # TODO:
     # 2-handed weapons cap at 95% accuracy. The code currently uses 99% since it was based on NIN dual-wielding two single-handed weapons.
