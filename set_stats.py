@@ -279,14 +279,14 @@ class set_gear:
             self.playerstats['Attack1'] += buffs['brd'].get('Attack',0)
             self.playerstats['Attack2'] += buffs['brd'].get('Attack',0) if dual_wield else 0
             self.playerstats['Ranged Attack'] += buffs['brd'].get('Attack',0)
-            self.playerstats['Magic Haste'] += buffs['brd'].get('Haste',0)
 
         # Now multiply each attack by the sum of the %-based attack boosts like COR GEO and Kikoku's Attack+10%
+        # First collect the individual attack% boosts and add them together.
         percent_attack_buff = 0.0
         if buffs['cor']:
-            percent_attack_buff += buffs['cor'].get('Attack',0)
+            percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
         if buffs['geo']:
-            percent_attack_buff += buffs['geo'].get('Attack',0)
+            percent_attack_buff += buffs['geo'].get('Attack',0) # Fury
         if gear['main']['Name'] == "Kikoku":
             percent_attack_buff += 100./1024.  # +10% Attack boost from Kikoku Aftermath is applied as a sum with GEO and COR % boosts
         if gear['main']['Name'] == 'Naegling':
@@ -295,6 +295,7 @@ class set_gear:
             nbuffs += 2 if buffs['cor'] else 0 # If COR in party, assume +2 buffs from rolls
             nbuffs += 1 if buffs['geo'] else 0 # If GEO in party, assume +1 buff from bubble
             percent_attack_buff += 10.*nbuffs/1024.
+        # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
         self.playerstats['Attack1'] *= (1+percent_attack_buff)
@@ -335,24 +336,30 @@ class set_gear:
             self.playerstats['Accuracy1'] += buffs['brd'].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs['brd'].get('Accuracy',0) if dual_wield else 0
             self.playerstats['Ranged Accuracy'] += buffs['brd'].get('Ranged Accuracy',0)
-            self.playerstats['Ranged Attack'] += buffs['brd'].get('Ranged Attack',0)
         if buffs["geo"]:
             self.playerstats['Accuracy1'] += buffs["geo"].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs["geo"].get('Accuracy',0) if dual_wield else 0
             self.playerstats['Ranged Accuracy'] += buffs["geo"].get('Ranged Accuracy',0)
-            self.playerstats['Ranged Attack'] += buffs["geo"].get('Ranged Attack',0)
-            self.playerstats['Magic Accuracy'] += buffs["geo"].get('Magic Accuracy',0)
-            self.playerstats['Magic Attack'] += buffs["geo"].get('Magic Attack',0)
         if buffs["cor"]:
             self.playerstats['Accuracy1'] += buffs["cor"].get('Accuracy',0)
             self.playerstats['Accuracy2'] += buffs["cor"].get('Accuracy',0) if dual_wield else 0
             self.playerstats['Ranged Accuracy'] += buffs["cor"].get('Ranged Accuracy',0)
+
+
+        # Now add extra stat buffs like Store TP and Magic stuff.
+        # Magic Accuracy should get it's own section later to include magic accuracy from INT, but this is currently handled in the nuking.py file for now. TODO
+        if buffs["geo"]:
+            self.playerstats['Magic Accuracy'] += buffs["geo"].get('Magic Accuracy',0)
+            self.playerstats['Magic Attack'] += buffs["geo"].get('Magic Attack',0)
+            self.playerstats['Magic Haste'] += buffs['geo'].get('Haste',0)
+        if buffs["cor"]:
             self.playerstats['Store TP'] += buffs["cor"].get('Store TP', 0)
             self.playerstats['Magic Accuracy'] += buffs["cor"].get('Magic Accuracy', 0)
             self.playerstats['Magic Attack'] += buffs["cor"].get('Magic Attack', 0)
             self.playerstats['DA'] += buffs["cor"].get('DA', 0)
             self.playerstats['Crit Rate'] += buffs["cor"].get('Crit Rate', 0)
-
+        if buffs["brd"]:
+            self.playerstats['Magic Haste'] += buffs['brd'].get('Haste',0)
 
 
         # Finally, after normal spell buffs, food buffs to accuracy and attack take effect
