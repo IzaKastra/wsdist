@@ -721,7 +721,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
 if __name__ == "__main__":
 
-    main_job = "NIN"
+    main_job = "DRK"
     sub_job = "WAR"
     ws_name = "Blade: Shun"
     min_tp = 1000
@@ -762,7 +762,7 @@ if __name__ == "__main__":
                 'back' : Andartia_Critdex}
     show_final_plot = True
 
-    nuke = True # True/False
+    nuke = False # True/False
     spell = "Doton: Ichi" # "Doton: Ichi" etc
     burst = True # True/False
     futae = False # True/False

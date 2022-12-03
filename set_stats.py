@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 29
+# Version date: 2022 December 02 (Smite added)
 #
 # This code holds the methods for building a player's stats.
 #
@@ -283,6 +283,7 @@ class set_gear:
         # Now multiply each attack by the sum of the %-based attack boosts like COR GEO and Kikoku's Attack+10%
         # First collect the individual attack% boosts and add them together.
         percent_attack_buff = 0.0
+        smite_bonus = 0.
         if buffs['cor']:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
         if buffs['geo']:
@@ -295,12 +296,23 @@ class set_gear:
             nbuffs += 2 if buffs['cor'] else 0 # If COR in party, assume +2 buffs from rolls
             nbuffs += 1 if buffs['geo'] else 0 # If GEO in party, assume +1 buff from bubble
             percent_attack_buff += 10.*nbuffs/1024.
+        if mainjob in ["DRK","WAR","MNK","DRG","PUP"]: # Add smite based on selected main job. TODO: add subjob versions.
+            if self.gear['main']['Skill Type'] in ["Scythe", "Great Sword", "Hand-to-Hand", "Polearm", "Great Axe", "Great Katana", "Staff"]:
+                if mainjob == "DRK":
+                    smite_bonus = 304./1024
+                elif mainjob == "WAR":
+                    smite_bonus = 204./1024
+                elif mainjob in ["DRG", "MNK"]:
+                    smite_bonus = 152./1024
+                elif mainjob == "PUP":
+                    smite_bonus = 100./1024 
+
         # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
-        self.playerstats['Attack1'] *= (1+percent_attack_buff)
-        self.playerstats['Attack2'] *= (1+percent_attack_buff) if dual_wield else 1.0
-        self.playerstats['Ranged Attack'] *= (1+percent_attack_buff)
+        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus)
+        self.playerstats['Attack2'] *= (1+percent_attack_buff) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
+        self.playerstats['Ranged Attack'] *= (1+percent_attack_buff) # Smite does not apply to ranged attacks.
 
         # Convert the attack values to integers.
         self.playerstats['Attack1'] = int(self.playerstats['Attack1'])

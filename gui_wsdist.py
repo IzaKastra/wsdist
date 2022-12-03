@@ -102,7 +102,7 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 November 27) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 02) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
