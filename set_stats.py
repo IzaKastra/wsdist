@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 02 (Smite added)
+# Version date: 2022 December 03
 #
 # This code holds the methods for building a player's stats.
 #
@@ -119,6 +119,51 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      }
+        elif mainjob == "RDM":  # Master Level 40 Black Mage stats
+            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+                     'Katana Skill':460, 'Dagger Skill':414, 'Sword Skill':409, 'Hand-to-Hand Skill':336, 'Great Katana Skill':404, 'Club Skill':336, 'Throwing Skill':460,
+                     'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
+                     'Ninjutsu Skill':489, "Elemental Magic Skill":0,
+                     'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
+                     'Ranged Accuracy':56, 'Ranged Attack':70,
+                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
+                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,
+                     'Crit Rate':0+5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':10,
+                     'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
+                     'Zanshin':0,
+                     'Weaponskill Damage':5, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     }
+        elif mainjob == "SCH":  # Master Level 40 Black Mage stats
+            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+                     'Katana Skill':460, 'Dagger Skill':414, 'Sword Skill':409, 'Hand-to-Hand Skill':336, 'Great Katana Skill':404, 'Club Skill':336, 'Throwing Skill':460,
+                     'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
+                     'Ninjutsu Skill':489, "Elemental Magic Skill":0,
+                     'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
+                     'Ranged Accuracy':56, 'Ranged Attack':70,
+                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
+                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,
+                     'Crit Rate':0+5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':10,
+                     'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
+                     'Zanshin':0,
+                     'Weaponskill Damage':5, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     }
+
+
+        two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
+        one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"] # H2H goes here?
+
         # Add stats in from your subjob
         # This can get complicated if your main job has a better version of a trait that your subjob would give. For example: DRK main job has a higher "Attack Bonus" trait than subjob WAR. So when DRK/WAR, don't add the Attack bonus from /WAR traits.
         if subjob == "WAR": # Master Level 20 bonus stats from Lv53 WAR subjob
@@ -134,17 +179,9 @@ class set_gear:
             self.playerstats['MND'] += 7
             self.playerstats['CHR'] += 9
         elif subjob == "SAM": # Master Level 20 bonus stats from Lv53 SAM subjob
-            self.playerstats['STR'] += 12+7 # +7 from full-time Hasso (Assuming using 2h weapons for now, no DRK Savage Blade yet)
-            self.playerstats['DEX'] += 12
-            self.playerstats['VIT'] += 12
-            self.playerstats['AGI'] += 10
-            self.playerstats['INT'] += 9
-            self.playerstats['MND'] += 9
-            self.playerstats['CHR'] += 10
-            self.playerstats['Accuracy1'] += 10
-            self.playerstats['Accuracy2'] += 10
-            self.playerstats['JA Haste'] += 10
-        elif subjob == "RDM": # Master Level 20 bonus stats from Lv53 RDM subjob. Not yet implemented; copy/pasted /sam stuff
+            if self.gear['main'].get('Skill Type', 'None') in two_handed:
+                self.playerstats["STR"] += 7 # +7 from full-time Hasso 
+                self.playerstats['JA Haste'] += 10 # +10 JA haste from Hasso
             self.playerstats['STR'] += 12+7
             self.playerstats['DEX'] += 12
             self.playerstats['VIT'] += 12
@@ -154,7 +191,16 @@ class set_gear:
             self.playerstats['CHR'] += 10
             self.playerstats['Accuracy1'] += 10
             self.playerstats['Accuracy2'] += 10
-            self.playerstats['JA Haste'] += 10
+        elif subjob == "RDM": # Master Level 20 bonus stats from Lv53 RDM subjob. Not yet implemented; copy/pasted /sam stuff
+            self.playerstats['STR'] += 12
+            self.playerstats['DEX'] += 12
+            self.playerstats['VIT'] += 12
+            self.playerstats['AGI'] += 10
+            self.playerstats['INT'] += 9
+            self.playerstats['MND'] += 9
+            self.playerstats['CHR'] += 10
+            self.playerstats['Accuracy1'] += 10
+            self.playerstats['Accuracy2'] += 10
         elif subjob == "SCH": # Master Level 20 bonus stats from Lv53 SCH subjob. Not yet implemented; copy/pasted /sam stuff
             self.playerstats['STR'] += 12+7
             self.playerstats['DEX'] += 12
@@ -165,7 +211,6 @@ class set_gear:
             self.playerstats['CHR'] += 10
             self.playerstats['Accuracy1'] += 10
             self.playerstats['Accuracy2'] += 10
-            self.playerstats['JA Haste'] += 10
 
 
         # Count the number of set-bonus gear equipped.

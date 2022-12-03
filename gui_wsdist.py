@@ -102,7 +102,7 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 02) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,850),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 03) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -386,7 +386,7 @@ while True:
 
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.
-        if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic"]:
+        if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic", "quicklook tp", "get stats"]:
             
             main_job = values["mainjob"]
             sub_job = values["subjob"]
@@ -453,6 +453,7 @@ while True:
             brd_attack = brd_on*int(brd_min5_attack + brd_min4_attack + brd_min3_attack + brd_hm_attack)
             brd_accuracy = brd_on*int(brd_hm_accuracy + brd_swordmad_accuracy + brd_blademad_accuracy)
             brd_rangedaccuracy = brd_on*int(brd_hm_accuracy)
+            brd_haste = brd_on*(brd_vmarch_haste + brd_amarch_haste + brd_hm_haste)
 
 
             # Define COR buffs: Total bonus stat obtained from a Lucky roll with "Rolls +nroll" bonus from gear.
@@ -506,14 +507,14 @@ while True:
 
             # Define buffs from white magic:
             whm_on = values["whm_on"]
-            whm_haste = whm["Haste"]["Haste"]*(values["nhaste"] == "Haste") + whm["Haste II"]["Haste"]*(values["nhaste"] == "Haste II")
-            whm_str = whm["Boost-STR"]["STR"]*(values["whm_boost"]=="Boost-STR")
-            whm_dex = whm["Boost-DEX"]["DEX"]*(values["whm_boost"]=="Boost-DEX")
-            whm_vit = whm["Boost-VIT"]["VIT"]*(values["whm_boost"]=="Boost-VIT")
-            whm_agi = whm["Boost-AGI"]["AGI"]*(values["whm_boost"]=="Boost-AGI")
-            whm_int = whm["Boost-INT"]["INT"]*(values["whm_boost"]=="Boost-INT")
-            whm_mnd = whm["Boost-MND"]["MND"]*(values["whm_boost"]=="Boost-MND")
-            whm_chr = whm["Boost-CHR"]["CHR"]*(values["whm_boost"]=="Boost-CHR")
+            whm_haste = whm_on*(whm["Haste"]["Haste"]*(values["nhaste"] == "Haste") + whm["Haste II"]["Haste"]*(values["nhaste"] == "Haste II"))
+            whm_str   = whm_on*(whm["Boost-STR"]["STR"]*(values["whm_boost"]=="Boost-STR"))
+            whm_dex   = whm_on*(whm["Boost-DEX"]["DEX"]*(values["whm_boost"]=="Boost-DEX"))
+            whm_vit   = whm_on*(whm["Boost-VIT"]["VIT"]*(values["whm_boost"]=="Boost-VIT"))
+            whm_agi   = whm_on*(whm["Boost-AGI"]["AGI"]*(values["whm_boost"]=="Boost-AGI"))
+            whm_int   = whm_on*(whm["Boost-INT"]["INT"]*(values["whm_boost"]=="Boost-INT"))
+            whm_mnd   = whm_on*(whm["Boost-MND"]["MND"]*(values["whm_boost"]=="Boost-MND"))
+            whm_chr   = whm_on*(whm["Boost-CHR"]["CHR"]*(values["whm_boost"]=="Boost-CHR"))
 
             # Define Dia
             dia_dictionary = {"None":0,
@@ -547,12 +548,11 @@ while True:
 
             # Collect all of the buffs into a single dictionary which gets looped over in the main code to add towards your final stats.
             buffs = {"food": {"Attack": food_attack, "Ranged Attack": food_attack, "Accuracy": food_accuracy, "Ranged Accuracy":food_accuracy, "Magic Attack":food_magicattack, "Magic Accuracy":food_magicaccuracy, "STR":food_str,"DEX":food_dex, "VIT":food_vit, "AGI":food_agi, "INT":food_int, "MND":food_mnd, "CHR":food_chr,},
-                     "brd": {"Attack": brd_attack, "Accuracy": brd_accuracy, "Ranged Accuracy": brd_rangedaccuracy, "Ranged Attack": brd_attack},
+                     "brd": {"Attack": brd_attack, "Accuracy": brd_accuracy, "Ranged Accuracy": brd_rangedaccuracy, "Ranged Attack": brd_attack,"Haste":brd_haste},
                      "cor": {"Attack": cor_attack, "Ranged Attack": cor_attack, "Store TP": cor_stp, "Accuracy": cor_accuracy, "Magic Attack": cor_magicattack, "DA":cor_da, "Crit Rate": cor_critrate},
-                     "geo": {"Attack": geo_attack, "Ranged Attack": geo_attack, "Accuracy": geo_accuracy, "Ranged Accuracy":geo_accuracy, "Magic Accuracy":geo_magicaccuracy, "Magic Attack":geo_magicattack, "STR":geo_str,"DEX":geo_dex, "VIT":geo_vit, "AGI":geo_agi, "INT":geo_int, "MND":geo_mnd, "CHR":geo_chr,},
+                     "geo": {"Attack": geo_attack, "Ranged Attack": geo_attack, "Accuracy": geo_accuracy, "Ranged Accuracy":geo_accuracy, "Magic Accuracy":geo_magicaccuracy, "Magic Attack":geo_magicattack, "STR":geo_str,"DEX":geo_dex, "VIT":geo_vit, "AGI":geo_agi, "INT":geo_int, "MND":geo_mnd, "CHR":geo_chr,"Haste":geo_haste},
                      "whm": {"Haste": whm_haste, "STR":whm_str,"DEX":whm_dex, "VIT":whm_vit, "AGI":whm_agi, "INT":whm_int, "MND":whm_mnd, "CHR":whm_chr}, # WHM buffs like boost-STR. Not tested
                      }
-
 
             # Define your enemy stats based on the enemy tab.
             enemy = {"Defense":int(values["enemy_defense"]),
@@ -621,6 +621,100 @@ while True:
                 best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae)
                 window["copy best set"].update(disabled=False)
 
+            # 
+            elif event == "get stats":
+                from set_stats import *
+           
+                empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
+                empty_gearset = set_gear({"food":{},"brd":{},"cor":{},"geo":{},"whm":{}},empty_set, main_job, sub_job)
+
+                gearset = set_gear(buffs, starting_gearset, main_job, sub_job)
+                dual_wield = gearset.gear['sub'].get('Type', 'None') == "Weapon"
+
+                window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
+                
+                player_str = f"{int(empty_gearset.playerstats['STR']):3d}+{int(gearset.playerstats['STR'])-int(empty_gearset.playerstats['STR']):3d}"
+                window["str stat"].update(f"{'STR:':<5s} {player_str:>7s}")
+                player_dex = f"{int(empty_gearset.playerstats['DEX']):3d}+{int(gearset.playerstats['DEX'])-int(empty_gearset.playerstats['DEX']):3d}"
+                window["dex stat"].update(f"{'DEX:':<5s} {player_dex:>7s}")
+                player_vit = f"{int(empty_gearset.playerstats['VIT']):3d}+{int(gearset.playerstats['VIT'])-int(empty_gearset.playerstats['VIT']):3d}"
+                window["vit stat"].update(f"{'VIT:':<5s} {player_vit:>7s}")
+                player_agi = f"{int(empty_gearset.playerstats['AGI']):3d}+{int(gearset.playerstats['AGI'])-int(empty_gearset.playerstats['AGI']):3d}"
+                window["agi stat"].update(f"{'AGI:':<5s} {player_agi:>7s}")
+                player_int = f"{int(empty_gearset.playerstats['INT']):3d}+{int(gearset.playerstats['INT'])-int(empty_gearset.playerstats['INT']):3d}"
+                window["int stat"].update(f"{'INT:':<5s} {player_int:>7s}")
+                player_mnd = f"{int(empty_gearset.playerstats['MND']):3d}+{int(gearset.playerstats['MND'])-int(empty_gearset.playerstats['MND']):3d}"
+                window["mnd stat"].update(f"{'MND:':<5s} {player_mnd:>7s}")
+                player_chr = f"{int(empty_gearset.playerstats['CHR']):3d}+{int(gearset.playerstats['CHR'])-int(empty_gearset.playerstats['CHR']):3d}"
+                window["chr stat"].update(f"{'CHR:':<5s} {player_chr:>7s}")
+
+                player_accuracy1 = int(gearset.playerstats['Accuracy1'])
+                window["acc1 stat"].update(f"{'Accuracy1:':<16s} {player_accuracy1:>4d}")
+                player_accuracy2 = int(gearset.playerstats['Accuracy2']) if dual_wield else 0
+                window["acc2 stat"].update(f"{'Accuracy2:':<16s} {player_accuracy2:>4d}")
+                player_attack1 = int(gearset.playerstats['Attack1'])
+                window["atk1 stat"].update(f"{'Attack1:':<16s} {player_attack1:>4d}")
+                player_attack2 = int(gearset.playerstats['Attack2']) if dual_wield else 0
+                window["atk2 stat"].update(f"{'Attack2:':<16s} {player_attack2:>4d}")
+                player_rangedaccuracy = int(gearset.playerstats['Ranged Accuracy'])
+                window["racc stat"].update(f"{'Ranged Accuracy:':<16s} {player_rangedaccuracy:>4d}")
+                player_rangedattack = int(gearset.playerstats['Ranged Attack'])
+                window["ratk stat"].update(f"{'Ranged Attack:':<16s} {player_rangedattack:>4d}")
+
+                player_magic_accuracy = int(gearset.playerstats['Magic Accuracy'])
+                window["macc stat"].update(f"{'Magic Accuracy:':<20s} {player_magic_accuracy:>4d}")
+                player_matk = int(gearset.playerstats['Magic Attack'])
+                window["matk stat"].update(f"{'Magic Attack:':<20s} {player_matk:>4d}")
+                player_magic_damage = int(gearset.playerstats['Magic Damage'])
+                window["mdmg stat"].update(f"{'Magic Damage:':<20s} {player_magic_damage:>4d}")
+                magic_burst_bonus = int(gearset.playerstats['Magic Burst Damage'])
+                window["mbb stat"].update(f"{'Magic Burst Bonus:':<21s} {magic_burst_bonus:>3d}")
+                magic_burst_bonus2 = int(gearset.playerstats['Magic Burst Damage II'])
+                window["mbb2 stat"].update(f"{'Magic Burst Bonus II:':<21s} {magic_burst_bonus2:>3d}")
+
+                wsd = int(gearset.playerstats['Weaponskill Damage'])
+                window["wsd stat"].update(f"{'Weapon skill damage:':<25s} {wsd:>3d}")
+                ws_bonus = int(gearset.playerstats['Weaponskill Bonus'])
+                window["ws bonus stat"].update(f"{'Weapon skill bonus:':<25s} {ws_bonus:>3d}")
+                tp_bonus = int(gearset.playerstats['TP Bonus'])
+                window["tp bonus stat"].update(f"{'TP Bonus:':<24s} {tp_bonus:>4d}")
+
+
+                pdl = int(gearset.playerstats['PDL'])
+                window["pdl gear stat"].update(f"{'PDL (gear):':<25s} {pdl:>3d}")
+                pdl_trait = int(gearset.playerstats['PDL Trait'])
+                window["pdl trait stat"].update(f"{'PDL (trait):':<25s} {pdl_trait:>3d}")
+
+                qa = int(gearset.playerstats['QA'])
+                window["qa stat"].update(f"{'Quad. Attack:':<25s} {qa:>3d}")
+                ta = int(gearset.playerstats['TA'])
+                window["ta stat"].update(f"{'Triple Attack:':<25s} {ta:>3d}")
+                da = int(gearset.playerstats['DA'])
+                window["da stat"].update(f"{'Double Attack:':<25s} {da:>3d}")
+                crit_rate = int(gearset.playerstats['Crit Rate'])
+                window["crit rate stat"].update(f"{'Crit. Rate:':<25s} {crit_rate:>3d}")
+
+                stp = int(gearset.playerstats['Store TP'])
+                window["stp stat"].update(f"{'Store TP:':<16s} {stp:>4d}")
+                dw = int(gearset.playerstats['Dual Wield']) if dual_wield else 0
+                window["dw stat"].update(f"{'Dual Wield:':<16s} {dw:>4d}")
+                gear_haste = int(gearset.playerstats['Gear Haste'])
+                window["gear haste stat"].update(f"{'Gear Haste:':<16s} {gear_haste:>4d}")
+                magic_haste = gearset.playerstats['Magic Haste']*100
+                window["magic haste stat"].update(f"{'Magic Haste:':<15s} {magic_haste:>5.1f}")
+                ja_haste = int(gearset.playerstats['JA Haste'])
+                window["ja haste stat"].update(f"{'JA Haste:':<16s} {ja_haste:>4d}")
+
+                gear_haste = 25. if gear_haste > 25. else gear_haste
+                ja_haste = 25. if ja_haste > 25. else ja_haste
+                magic_haste = 448/1024*100. if magic_haste > 448/1024*100. else magic_haste
+                total_haste = magic_haste + gear_haste + ja_haste
+
+                delay = (1-total_haste/100)*(1-dw/100)
+                delay_min = 0.2
+                delay_reduction = 1-delay_min if delay < delay_min else 1-delay
+
+                window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {delay_reduction*100:>4.1f}")
 
         # Copy the best set to the initial set tab for convenience:
         if event == "copy best set":

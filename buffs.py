@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 December 03
 #
 # This file contains a list of buffs that may be provided to a gear set when simulating damage.
 #
@@ -51,7 +51,7 @@ geo_trust = {"Acumen": {"Magic Attack": 21},
 geo = {"Fury": {"Attack": [0.347,0.027], "Ranged Attack": [0.347,0.027]},
        "Acumen": {"Magic Attack": [15,3]},
        "Focus": {"Magic Accuracy":[50,5]},
-       "Haste": {"Haste": [29.9/100, 0.011/100]},
+       "Haste": {"Haste": [29.9/100, 1.1/100]},
        "Precision": {"Accuracy": [50,5], "Ranged Accuracy": [50,5]},
        "Frailty": {"Defense":[0.148,0.027]},
        "Torpor": {"Evasion":[50,5]},

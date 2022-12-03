@@ -25,8 +25,8 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = ["NIN", "DRK",]
-sub_jobs = ["WAR", "SAM",]
+main_jobs = ["NIN", "DRK","SCH","RDM","BLM"]
+sub_jobs = ["WAR", "SAM","SCH", "RDM", "None"]
 
 player_column = [
   [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
@@ -288,68 +288,75 @@ starting_gearset = {
 # Define a dictionary containing slot:item_name pairs. The item_name is used to search item_list.txt for item IDs, which are then pulled from icons32/ and displayed in the GUI.
 default_images = dict([[k,starting_gearset[k]["Name"]] for k in starting_gearset] )
 
-start_main,start_sub,start_ammo,start_head,start_neck,start_ear1,start_ear2,start_body,start_hands,start_ring1,start_ring2,start_back,start_waist,start_legs,start_feet = [[] for k in range(15)]
+def setup_radio_list(main_job):
+    start_main,start_sub,start_ammo,start_head,start_neck,start_ear1,start_ear2,start_body,start_hands,start_ring1,start_ring2,start_back,start_waist,start_legs,start_feet = [[] for k in range(15)]
 
-main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains]
-for k in sorted(main_names):
-    start_main.append([sg.Radio(k,"main",font=font_choice,size=(50,1),key="startmain: "+k,enable_events=True)])
+    main_job = "NIN"
 
-sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips]
-for k in sorted(sub_names):
-    start_sub.append([sg.Radio(k,"sub",font=font_choice,size=(50,1),key="startsub: "+k,enable_events=True)])
+    main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains]
+    for k in sorted(main_names):
+        start_main.append([sg.Radio(k,"main",font=font_choice,size=(50,1),key="startmain: "+k,enable_events=True)])
 
-ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos]
-for k in sorted(ammo_names):
-    start_ammo.append([sg.Radio(k,"ammo",font=font_choice,size=(50,1),key="startammo: "+k,enable_events=True)])
+    sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips]
+    for k in sorted(sub_names):
+        start_sub.append([sg.Radio(k,"sub",font=font_choice,size=(50,1),key="startsub: "+k,enable_events=True)])
 
-head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads]
-for k in sorted(head_names):
-    start_head.append([sg.Radio(k,"head",font=font_choice,size=(50,1),key="starthead: "+k,enable_events=True)])
+    ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos]
+    for k in sorted(ammo_names):
+        start_ammo.append([sg.Radio(k,"ammo",font=font_choice,size=(50,1),key="startammo: "+k,enable_events=True)])
 
-neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks]
-for k in sorted(neck_names):
-    start_neck.append([sg.Radio(k,"neck",font=font_choice,size=(50,1),key="startneck: "+k,enable_events=True)])
+    head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads]
+    for k in sorted(head_names):
+        start_head.append([sg.Radio(k,"head",font=font_choice,size=(50,1),key="starthead: "+k,enable_events=True)])
 
-ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears]
-for k in sorted(ear1_names):
-    start_ear1.append([sg.Radio(k,"ear1",font=font_choice,size=(50,1),key="startear1: "+k,enable_events=True)])
+    neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks]
+    for k in sorted(neck_names):
+        start_neck.append([sg.Radio(k,"neck",font=font_choice,size=(50,1),key="startneck: "+k,enable_events=True)])
 
-ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2]
-for k in sorted(ear2_names):
-    start_ear2.append([sg.Radio(k,"ear2",font=font_choice,size=(50,1),key="startear2: "+k,enable_events=True)])
+    ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears]
+    for k in sorted(ear1_names):
+        start_ear1.append([sg.Radio(k,"ear1",font=font_choice,size=(50,1),key="startear1: "+k,enable_events=True)])
 
-body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies]
-for k in sorted(body_names):
-    start_body.append([sg.Radio(k,"body",font=font_choice,size=(50,1),key="startbody: "+k,enable_events=True)])
+    ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2]
+    for k in sorted(ear2_names):
+        start_ear2.append([sg.Radio(k,"ear2",font=font_choice,size=(50,1),key="startear2: "+k,enable_events=True)])
 
-hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands]
-for k in sorted(hands_names):
-    start_hands.append([sg.Radio(k,"hands",font=font_choice,size=(50,1),key="starthands: "+k,enable_events=True)])
+    body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies]
+    for k in sorted(body_names):
+        start_body.append([sg.Radio(k,"body",font=font_choice,size=(50,1),key="startbody: "+k,enable_events=True)])
 
-ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings]
-for k in sorted(ring1_names):
-    start_ring1.append([sg.Radio(k,"ring1",font=font_choice,size=(50,1),key="startring1: "+k,enable_events=True)])
+    hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands]
+    for k in sorted(hands_names):
+        start_hands.append([sg.Radio(k,"hands",font=font_choice,size=(50,1),key="starthands: "+k,enable_events=True)])
 
-ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2]
-for k in sorted(ring2_names):
-    start_ring2.append([sg.Radio(k,"ring2",font=font_choice,size=(50,1),key="startring2: "+k,enable_events=True)])
+    ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings]
+    for k in sorted(ring1_names):
+        start_ring1.append([sg.Radio(k,"ring1",font=font_choice,size=(50,1),key="startring1: "+k,enable_events=True)])
 
-back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes]
-for k in sorted(back_names):
-    start_back.append([sg.Radio(k,"back",font=font_choice,size=(50,1),key="startback: "+k,enable_events=True)])
+    ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2]
+    for k in sorted(ring2_names):
+        start_ring2.append([sg.Radio(k,"ring2",font=font_choice,size=(50,1),key="startring2: "+k,enable_events=True)])
 
-waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists]
-for k in sorted(waist_names):
-    start_waist.append([sg.Radio(k,"waist",font=font_choice,size=(50,1),key="startwaist: "+k,enable_events=True)])
+    back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes]
+    for k in sorted(back_names):
+        start_back.append([sg.Radio(k,"back",font=font_choice,size=(50,1),key="startback: "+k,enable_events=True)])
 
-legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs]
-for k in sorted(legs_names):
-    start_legs.append([sg.Radio(k,"legs",font=font_choice,size=(50,1),key="startlegs: "+k,enable_events=True)])
+    waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists]
+    for k in sorted(waist_names):
+        start_waist.append([sg.Radio(k,"waist",font=font_choice,size=(50,1),key="startwaist: "+k,enable_events=True)])
 
-feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet]
-for k in sorted(feet_names):
-    start_feet.append([sg.Radio(k,"feet",font=font_choice,size=(50,1),key="startfeet: "+k,enable_events=True)])
+    legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs]
+    for k in sorted(legs_names):
+        start_legs.append([sg.Radio(k,"legs",font=font_choice,size=(50,1),key="startlegs: "+k,enable_events=True)])
 
+    feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet]
+    for k in sorted(feet_names):
+        start_feet.append([sg.Radio(k,"feet",font=font_choice,size=(50,1),key="startfeet: "+k,enable_events=True)])
+
+    return(start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet)
+
+
+start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet = setup_radio_list("NIN")
 framesize = [300,300]
 
 starting_set_tab = [
@@ -404,6 +411,8 @@ radio_tab = [
 input_tab = [
           [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[350,220])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
           [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
-          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],[sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
+          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
+          [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+          [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Column([[sg.Column(starting_set_tab)],[sg.Button("test")]]),sg.Column([radio_tab])],],size=[600,275]))]
          ]
