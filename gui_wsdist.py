@@ -622,20 +622,37 @@ while True:
 
                 window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
                 
-                player_str = f"{int(empty_gearset.playerstats['STR']):3d}+{int(gearset.playerstats['STR'])-int(empty_gearset.playerstats['STR']):3d}"
-                window["str stat"].update(f"{'STR:':<5s} {player_str:>7s}")
-                player_dex = f"{int(empty_gearset.playerstats['DEX']):3d}+{int(gearset.playerstats['DEX'])-int(empty_gearset.playerstats['DEX']):3d}"
-                window["dex stat"].update(f"{'DEX:':<5s} {player_dex:>7s}")
-                player_vit = f"{int(empty_gearset.playerstats['VIT']):3d}+{int(gearset.playerstats['VIT'])-int(empty_gearset.playerstats['VIT']):3d}"
-                window["vit stat"].update(f"{'VIT:':<5s} {player_vit:>7s}")
-                player_agi = f"{int(empty_gearset.playerstats['AGI']):3d}+{int(gearset.playerstats['AGI'])-int(empty_gearset.playerstats['AGI']):3d}"
-                window["agi stat"].update(f"{'AGI:':<5s} {player_agi:>7s}")
-                player_int = f"{int(empty_gearset.playerstats['INT']):3d}+{int(gearset.playerstats['INT'])-int(empty_gearset.playerstats['INT']):3d}"
-                window["int stat"].update(f"{'INT:':<5s} {player_int:>7s}")
-                player_mnd = f"{int(empty_gearset.playerstats['MND']):3d}+{int(gearset.playerstats['MND'])-int(empty_gearset.playerstats['MND']):3d}"
-                window["mnd stat"].update(f"{'MND:':<5s} {player_mnd:>7s}")
-                player_chr = f"{int(empty_gearset.playerstats['CHR']):3d}+{int(gearset.playerstats['CHR'])-int(empty_gearset.playerstats['CHR']):3d}"
-                window["chr stat"].update(f"{'CHR:':<5s} {player_chr:>7s}")
+                # player_str = f"{int(empty_gearset.playerstats['STR']):3d}+{int(gearset.playerstats['STR'])-int(empty_gearset.playerstats['STR']):3d}"
+                # window["str stat"].update(f"{'STR:':<5s} {player_str:>4s}")
+                # window[f"str stat"].set_tooltip(f"Total STR: {int(gearset.playerstats['STR'])}")
+                
+                player_str = f"STR: {int(empty_gearset.playerstats['STR']):3d}{'+' + str(int(gearset.playerstats['STR'])-int(empty_gearset.playerstats['STR'])):>5s}"
+                window["str stat"].update(f"STR: {int(gearset.playerstats['STR'])}")
+                window[f"str stat"].set_tooltip(player_str)
+
+                player_dex = f"DEX: {int(empty_gearset.playerstats['DEX']):3d}{'+' + str(int(gearset.playerstats['DEX'])-int(empty_gearset.playerstats['DEX'])):>5s}"
+                window["dex stat"].update(f"DEX: {int(gearset.playerstats['DEX'])}")
+                window[f"dex stat"].set_tooltip(player_dex)
+
+                player_vit = f"VIT: {int(empty_gearset.playerstats['VIT']):3d}{'+' + str(int(gearset.playerstats['VIT'])-int(empty_gearset.playerstats['VIT'])):>5s}"
+                window["vit stat"].update(f"VIT: {int(gearset.playerstats['VIT'])}")
+                window[f"vit stat"].set_tooltip(player_vit)
+
+                player_agi = f"AGI: {int(empty_gearset.playerstats['AGI']):3d}{'+' + str(int(gearset.playerstats['AGI'])-int(empty_gearset.playerstats['AGI'])):>5s}"
+                window["agi stat"].update(f"AGI: {int(gearset.playerstats['AGI'])}")
+                window[f"agi stat"].set_tooltip(player_agi)
+
+                player_int = f"INT: {int(empty_gearset.playerstats['INT']):3d}{'+' + str(int(gearset.playerstats['INT'])-int(empty_gearset.playerstats['INT'])):>5s}"
+                window["int stat"].update(f"INT: {int(gearset.playerstats['INT'])}")
+                window[f"int stat"].set_tooltip(player_int)
+
+                player_mnd = f"MND: {int(empty_gearset.playerstats['MND']):3d}{'+' + str(int(gearset.playerstats['MND'])-int(empty_gearset.playerstats['MND'])):>5s}"
+                window["mnd stat"].update(f"MND: {int(gearset.playerstats['MND'])}")
+                window[f"mnd stat"].set_tooltip(player_mnd)
+
+                player_chr = f"CHR: {int(empty_gearset.playerstats['CHR']):3d}{'+' + str(int(gearset.playerstats['CHR'])-int(empty_gearset.playerstats['CHR'])):>5s}"
+                window["chr stat"].update(f"CHR: {int(gearset.playerstats['CHR'])}")
+                window[f"chr stat"].set_tooltip(player_chr)
 
                 player_accuracy1 = int(gearset.playerstats['Accuracy1'])
                 window["acc1 stat"].update(f"{'Accuracy1:':<16s} {player_accuracy1:>4d}")

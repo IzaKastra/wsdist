@@ -17,13 +17,13 @@ font_choice = ["Cascadia Mono", fontsize]
 
 
 base_stats = sg.vtop(sg.Frame("Base",[
-    [sg.Text(f"{'STR:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="str stat")],
-    [sg.Text(f"{'DEX:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="dex stat")],
-    [sg.Text(f"{'VIT:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="vit stat")],
-    [sg.Text(f"{'AGI:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="agi stat")],
-    [sg.Text(f"{'INT:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="int stat")],
-    [sg.Text(f"{'MND:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="mnd stat")],
-    [sg.Text(f"{'CHR:':<5s} {'---+---':>7s}",font=font_choice,size=(13,1),key="chr stat")],]))
+    [sg.Text(f"{'STR:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="str stat")],
+    [sg.Text(f"{'DEX:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="dex stat")],
+    [sg.Text(f"{'VIT:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="vit stat")],
+    [sg.Text(f"{'AGI:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="agi stat")],
+    [sg.Text(f"{'INT:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="int stat")],
+    [sg.Text(f"{'MND:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="mnd stat")],
+    [sg.Text(f"{'CHR:':<5s} {'----':>4s}",font=font_choice,size=(10,1),key="chr stat")],]))
 
 
 physical = sg.vtop(sg.Frame("Physical",[
