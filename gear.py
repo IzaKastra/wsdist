@@ -21,55 +21,64 @@ all_jobs = ["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","s
 
 
 # BLM Stuff:
-Amalric_Coif = {"Name":"Amalric Coif +1", "Name2":"Amalric Coif +1A",   "STR":10,"DEX":10,"VIT":10,"AGI":1,"INT":24,"MND":20,"CHR":19,"Magic Accuracy":36+20,"Magic Attack":0+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Jobs":["blm","sch","rdm","geo"]}
-Amalric_Doublet = {"Name":"Amalric Doublet +1", "Name2":"Amalric Doublet +1A","STR":16,"DEX":19,"VIT":16,"AGI":16,"INT":38,"MND":30,"CHR":28,"Magic Accuracy":33+20,"Magic Attack":33+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Jobs":["blm","sch","rdm","geo"]}
-Amalric_Gages = {"Name":"Amalric Gages +1", "Name2":"Amalric Gages +1A",  "STR":3,"DEX":23,"VIT":20,"AGI":2,"INT":24,"MND":34,"CHR":19,"Magic Accuracy":0+20,"Magic Attack":33+20,"Magic Burst Damage":0,"Magic Burst Damage II":6,"Magic Damage":0,"Jobs":["blm","sch","rdm","geo"]}
-Amalric_Slops = {"Name":"Amalric Slops +1", "Name2":"Amalric Slops +1A",  "STR":19,"DEX":0,"VIT":6,"AGI":14,"INT":40,"MND":25,"CHR":19,"Magic Accuracy":0+20,"Magic Attack":40+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Jobs":["blm","sch","rdm","geo"]}
-Amalric_Nails = {"Name":"Amalric Nails +1", "Name2":"Amalric Nails +1A",  "STR":6,"DEX":6,"VIT":6,"AGI":26,"INT":21,"MND":20,"CHR":33,"Magic Accuracy":0+20,"Magic Attack":32,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":20,"Jobs":["blm","sch","rdm","geo"]}
 
-Ea_Hat = {"Name":"Ea Hat +1",                 "STR":20,"DEX":21,"VIT":24,"AGI":25,"INT":43,"MND":29,"CHR":29,"Magic Accuracy":50,"Magic Attack":38,"Magic Burst Damage":7, "Magic Burst Damage II":7,"Jobs":["blm", "rdm", "geo"]}
-Ea_Houppelande = {"Name":"Ea Houppelande +1", "STR":23,"DEX":24,"VIT":26,"AGI":26,"INT":48,"MND":37,"CHR":34,"Magic Accuracy":52,"Magic Attack":44,"Magic Burst Damage":9, "Magic Burst Damage II":9,"Jobs":["blm", "rdm", "geo"]}
-Ea_Cuffs = {"Name":"Ea Cuffs +1",             "STR":7,"DEX":29,"VIT":30,"AGI":0,"INT":40,"MND":40,"CHR":23,"Magic Accuracy":49,"Magic Attack":35,"Magic Burst Damage":6, "Magic Burst Damage II":6,"Jobs":["blm", "rdm", "geo"]}
-Ea_Slops = {"Name":"Ea Slops +1",             "STR":26,"DEX":0,"VIT":17,"AGI":24,"INT":48,"MND":31,"CHR":23,"Magic Accuracy":51,"Magic Attack":41,"Magic Burst Damage":8, "Magic Burst Damage II":8,"Jobs":["blm", "rdm", "geo"]}
-Ea_Pigaches = {"Name":"Ea Pigaches +1",       "STR":11,"DEX":14,"VIT":15,"AGI":38,"INT":5,"MND":26,"CHR":39,"Magic Accuracy":48,"Magic Attack":32,"Magic Burst Damage":5, "Magic Burst Damage II":5,"Jobs":["blm", "rdm", "geo"]}
 
-Agwu_Cap = {"Name":"Agwu's Cap", "Name2": "Agwu's Cap R25", "STR":26,"DEX":24,"VIT":11,"AGI":5,"INT":33,"MND":26,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":7,"Magic Burst Damage II":0,"Magic Damage":20+13,"Jobs":["blm", "sch", "geo"]}
-Agwu_Robe = {"Name":"Agwu's Robe", "Name2": "Agwu's Robe R25", "STR":33,"DEX":30,"VIT":19,"AGI":20,"INT":47,"MND":37,"CHR":35, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":10,"Magic Burst Damage II":0,"Magic Damage":20,"Jobs":["blm", "sch", "geo"]}
-Agwu_Gages = {"Name":"Agwu's Gages", "Name2": "Agwu's Gages R25", "STR":14,"DEX":38,"VIT":23,"AGI":6,"INT":33,"MND":40,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":8,"Magic Burst Damage II":0+5,"Magic Damage":20,"Jobs":["blm", "sch", "geo"]}
-Agwu_Slops = {"Name":"Agwu's Slops", "Name2": "Agwu's Slops R25", "STR":43,"DEX":0,"VIT":8,"AGI":17,"INT":49,"MND":32,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":9,"Magic Burst Damage II":0,"Magic Damage":20,"Jobs":["blm", "sch", "geo"]}
-Agwu_Pigaches = {"Name":"Agwu's Pigaches", "Name2": "Agwu's Pigaches R25", "STR":21,"DEX":25,"VIT":8,"AGI":30,"INT":30,"MND":26,"CHR":39, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":6,"Magic Burst Damage II":0,"Magic Damage":20,"Jobs":["blm", "sch", "geo"]}
-
-Wicce_Petasos = {"Name":"Wicce Petasos +3", "STR":22,"DEX":25,"VIT":27,"AGI":16,"INT":39,"MND":32,"CHR":32, "Accuracy":61,"Magic Accuracy":61,"Magic Attack":51,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":31,"Elemental Magic Skill":35,"Jobs":["blm"]}
-Wicce_Coat = {"Name":"Wicce Coat +3", "STR":29,"DEX":34,"VIT":34,"AGI":34,"INT":50,"MND":43,"CHR":43, "Accuracy":64,"Magic Accuracy":64,"Magic Attack":59,"Magic Burst Damage":0,"Magic Burst Damage II":5,"Magic Damage":34,"Jobs":["blm"]}
-Wicce_Gloves = {"Name":"Wicce Gloves +3", "STR":16,"DEX":40,"VIT":38,"AGI":20,"INT":38,"MND":47,"CHR":32, "Accuracy":62,"Magic Accuracy":62,"Magic Attack":57,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":32,"Jobs":["blm"]}
-Wicce_Chausses = {"Name":"Wicce Chausses +3", "STR":31,"DEX":0,"VIT":31,"AGI":31,"INT":53,"MND":38,"CHR":32, "Accuracy":63,"Magic Accuracy":63,"Magic Attack":58,"Magic Burst Damage":15,"Magic Burst Damage II":0,"Magic Damage":33,"Jobs":["blm"]}
-Wicce_Sabots = {"Name":"Wicce Sabots +3", "STR":18,"DEX":21,"VIT":23,"AGI":44,"INT":36,"MND":32,"CHR":47, "Accuracy":60,"Magic Accuracy":60,"Magic Attack":50,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":30,"Jobs":["blm"]}
-Wicce_Earring = {"Name":"Wicce Earring +2", "Magic Attack":9,"Magic Damage":9,"INT":15,"MND":15,"Magic Accuracy":20,"Jobs":["blm"]}
-Malignance_Earring = {"Name":"Malignance Earring","INT":8,"MND":8,"Magic Accuracy":10,"Magic Attack":8,"Jobs":["blm","rdm","sch","geo","drk"]}
-Enki_Strap = {"Name":"Enki Strap", "INT":10,"MND":10,"Magic Accuracy":10, "Type":"Grip","Jobs":["blm","rdm","sch","geo"]}
 Marin_Staff = {"Name":"Marin Staff +1","Name2":"Marin Staff +1 R15","INT":36,"MND":22,"Magic Accuracy":15+40,"Magic Attack":28+40,"Magic Damage":217,"Staff Skill":242, 'Skill Type': 'Staff', 'Type':'Weapon', 'DMG': 199, 'Delay': 356,"Magic Accuracy Skill":228,"Jobs":["blm","rdm","sch","geo"]}
+Bunzi_Rod = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R25", "INT":15, "MND":15, "DMG":144+10,"Delay":216,"Magic Accuracy":40+10,"Magic Attack":35+25,"Magic Damage":248,"Club Skill":242, 'Skill Type': 'Club', 'Type':'Weapon',"Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40+10,"Jobs":["blm","rdm","sch","geo"]}
+Enki_Strap = {"Name":"Enki Strap", "INT":10,"MND":10,"Magic Accuracy":10, "Type":"Grip","Jobs":["blm","rdm","sch","geo"]}
+Ammurapi_Shield = {"Name":"Ammurapi Shield", "Type":"Shield", "Skill Type": "Shield", "INT":13, "MND":13, "Magic Accuracy":38, "Magic Attack":38,"Jobs":["blm","sch","rdm","geo  "]}
 
-Archmage_Petasos = {"Name":"Archmage's Petasos +3", "STR":24,"DEX":24,"VIT":24,"AGI":24,"INT":34,"MND":29,"CHR":29, "Magic Accuracy":43,"Magic Attack":55, "Elemental Magic Skill":21, "Accuracy":37,"Jobs":["blm"]}
-Archmage_Coat = {"Name":"Archmage's Coat +3", "STR":31,"DEX":31,"VIT":31,"AGI":31,"INT":46,"MND":39,"CHR":39, "Magic Accuracy":40,"Magic Attack":52, "Elemental Magic Skill":24, "Accuracy":40,"Jobs":["blm"]}
-Archmage_Gloves = {"Name":"Archmage's Gloves +3", "STR":16,"DEX":38,"VIT":35,"AGI":15,"INT":36,"MND":43,"CHR":29, "Magic Accuracy":38,"Magic Attack":50, "Elemental Magic Skill":23, "Accuracy":38,"Jobs":["blm"]}
-Archmage_Tonbon = {"Name":"Archmage's Tonbon +3", "STR":35,"DEX":0,"VIT":22,"AGI":27,"INT":40,"MND":34,"CHR":29, "Magic Accuracy":46,"Magic Attack":58, "Magic Burst Damage II":3, "Accuracy":39,"Jobs":["blm"]}
-Archmage_Sabots = {"Name":"Archmage's Sabots +3", "STR":20,"DEX":21,"VIT":20,"AGI":43,"INT":30,"MND":29,"CHR":44, "Magic Accuracy":42,"Magic Attack":54, "Elemental Magic Skill":17, "Accuracy":36,"Jobs":["blm"]}
-Sorcerers_Stole = {"Name":"Sorcerer's Stole +2", "Name2":"Sorcerer's Stole +2 R25", "INT":0+15, "MND":0+15, "Magic Burst Damage":10, "Magic Accuracy":30+25, "Magic Attack":7}
+Sorcerers_Stole = {"Name":"Sorcerer's Stole +2", "Name2":"Sorcerer's Stole +2 R25", "INT":0+15, "MND":0+15, "Magic Burst Damage":10, "Magic Accuracy":30+25, "Magic Attack":7,"Jobs":["blm"]}
 Quanpur_Necklace = {"Name":"Quanpur Necklace", "Magic Attack":7, "Earth Elemental Bonus":5,"Jobs":["blm","rdm","sch","geo"]}
+Mizukage_no_Kubikazari = {"Name":"Mizukage-no-Kubikazari","INT":4, "MND":4, "Magic Attack":8, "Magic Burst Damage":10,"Jobs":["blm","rdm","sch","geo"]}
+
+
+
+Freke_Ring = {"Name":"Freke Ring", "INT":10, "Magic Attack":8,"Jobs":["blm","rdm","sch","geo"]}
+
+Regal_Earring = {"Name":"Regal Earring", "INT":10, "MND":10, "CHR":10, "Magic Attack":7,"Jobs":["blm","rdm","sch","geo"]}
+Malignance_Earring = {"Name":"Malignance Earring","INT":8,"MND":8,"Magic Accuracy":10,"Magic Attack":8,"Jobs":["blm","rdm","sch","geo","drk"]}
+Barkarole_Earring = {"Name":"Barkarole Earring", "INT":3, "Magic Accuracy":8, "Magic Attack":8,"Jobs":["blm","sch","geo"]}
+Wicce_Earring = {"Name":"Wicce Earring +2", "Magic Attack":9,"Magic Damage":9,"INT":15,"MND":15,"Magic Accuracy":20,"Jobs":["blm"]}
 
 Taranus_Cape = {"Name":"Taranus's Cape", "Magic Burst Damage":5, "INT":30, "Magic Accuracy":30, "Magic Damage":20, "Magic Attack":10,"Jobs":["blm"]}
-Freke_Ring = {"Name":"Freke Ring", "INT":10, "Magic Attack":8,"Jobs":["blm","rdm","sch","geo"]}
-Regal_Earring = {"Name":"   ", "INT":10, "MND":10, "CHR":10, "Magic Attack":7,"Jobs":["blm","rdm","sch","geo"]}
-Mizukage_no_Kubikazari = {"Name":"Mizukage-no-Kubikazari","INT":4, "MND":4, "Magic Attack":8, "Magic Burst Damage":10,"Jobs":["blm","rdm","sch","geo"]}
-Barkarole_Earring = {"Name":"Barkarole Earring", "INT":3, "Magic Accuracy":8, "Magic Attack":8,"Jobs":["blm","sch","geo"]}
-Bunzi_Rod = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R25", "INT":15, "MND":15, "DMG":144+10,"Delay":216,"Magic Accuracy":40+10,"Magic Attack":35+25,"Magic Damage":248,"Club Skill":242, 'Skill Type': 'Club', 'Type':'Weapon',"Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40+10,"Jobs":["blm","rdm","sch","geo"]}
 
-Spaekona_Petasos = {"Name":"Spaekona Petasos +3", "STR":29,"DEX":29,"VIT":29,"AGI":29,"INT":37,"MND":34,"CHR":34,"Magic Accuracy":47,"Magic Damage":42,"Magic Attack":23,"Jobs":["blm"]}
-Spaekona_Coat = {"Name":"Spaekona Coat +3", "STR":31,"DEX":31,"VIT":31,"AGI":31,"INT":39,"MND":39,"CHR":39,"Magic Accuracy":55,"Magic Damage":48,"Magic Attack":0,"Jobs":["blm"]}
-Spaekona_Gloves = {"Name":"Spaekona Gloves +3", "STR":16,"DEX":38,"VIT":35,"AGI":15,"INT":37,"MND":43,"CHR":29,"Magic Accuracy":52,"Magic Damage":44,"Magic Attack":0,"Elemental Magic Skill":21,"Magic Burst Damage II":8,"Jobs":["blm"]}
-Spaekona_Tonbon = {"Name":"Spaekona Tonbon +3", "STR":35,"DEX":0,"VIT":22,"AGI":27,"INT":44,"MND":34,"CHR":29,"Magic Accuracy":49,"Magic Damage":46,"Magic Attack":30,"Jobs":["blm"]}
-Spaekona_Sabots = {"Name":"Spaekona Sabots +3", "STR":20,"DEX":21,"VIT":20,"AGI":43,"INT":32,"MND":29,"CHR":44,"Magic Accuracy":54,"Magic Damage":40,"Magic Attack":26,"Jobs":["blm"]}
 
+
+Amalric_Coif = {"Name":"Amalric Coif +1", "Name2":"Amalric Coif +1A",   "STR":10,"DEX":10,"VIT":10,"AGI":1,"INT":24,"MND":20,"CHR":19,"Magic Accuracy":36+20,"Magic Attack":0+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Gear Haste":6,"Jobs":["blm","sch","rdm","geo"]}
+Ea_Hat = {"Name":"Ea Hat +1","STR":20,"DEX":21,"VIT":24,"AGI":25,"INT":43,"MND":29,"CHR":29,"Magic Accuracy":50,"Magic Attack":38,"Magic Burst Damage":7, "Magic Burst Damage II":7,"Gear Haste":6,"Jobs":["blm", "rdm", "geo"]}
+Agwu_Cap = {"Name":"Agwu's Cap", "Name2": "Agwu's Cap R25", "STR":26,"DEX":24,"VIT":11,"AGI":5,"INT":33,"MND":26,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":7,"Magic Burst Damage II":0,"Magic Damage":20+13,"Gear Haste":6,"Jobs":["blm", "sch", "geo"]}
+Wicce_Petasos = {"Name":"Wicce Petasos +3", "STR":22,"DEX":25,"VIT":27,"AGI":16,"INT":39,"MND":32,"CHR":32, "Accuracy":61,"Magic Accuracy":61,"Magic Attack":51,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":31,"Elemental Magic Skill":35,"Gear Haste":6,"Jobs":["blm"]}
+Archmage_Petasos = {"Name":"Archmage's Petasos +3", "STR":24,"DEX":24,"VIT":24,"AGI":24,"INT":34,"MND":29,"CHR":29, "Magic Accuracy":43,"Magic Attack":55, "Elemental Magic Skill":21, "Accuracy":37,"Gear Haste":6,"Jobs":["blm"]}
+Spaekona_Petasos = {"Name":"Spaekona Petasos +3", "STR":29,"DEX":29,"VIT":29,"AGI":29,"INT":37,"MND":34,"CHR":34,"Magic Accuracy":47,"Magic Damage":42,"Magic Attack":23,"Gear Haste":6,"Jobs":["blm"]}
+
+Amalric_Doublet = {"Name":"Amalric Doublet +1", "Name2":"Amalric Doublet +1A","STR":16,"DEX":19,"VIT":16,"AGI":16,"INT":38,"MND":30,"CHR":28,"Magic Accuracy":33+20,"Magic Attack":33+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Gear Haste":3,"Jobs":["blm","sch","rdm","geo"]}
+Ea_Houppelande = {"Name":"Ea Houppelande +1", "STR":23,"DEX":24,"VIT":26,"AGI":26,"INT":48,"MND":37,"CHR":34,"Magic Accuracy":52,"Magic Attack":44,"Magic Burst Damage":9, "Magic Burst Damage II":9,"Gear Haste":3,"Jobs":["blm", "rdm", "geo"]}
+Agwu_Robe = {"Name":"Agwu's Robe", "Name2": "Agwu's Robe R25", "STR":33,"DEX":30,"VIT":19,"AGI":20,"INT":47,"MND":37,"CHR":35, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":10,"Magic Burst Damage II":0,"Magic Damage":20,"Gear Haste":3,"Jobs":["blm", "sch", "geo"]}
+Wicce_Coat = {"Name":"Wicce Coat +3", "STR":29,"DEX":34,"VIT":34,"AGI":34,"INT":50,"MND":43,"CHR":43, "Accuracy":64,"Magic Accuracy":64,"Magic Attack":59,"Magic Burst Damage":0,"Magic Burst Damage II":5,"Magic Damage":34,"Gear Haste":3,"Jobs":["blm"]}
+Archmage_Coat = {"Name":"Archmage's Coat +3", "STR":31,"DEX":31,"VIT":31,"AGI":31,"INT":46,"MND":39,"CHR":39, "Magic Accuracy":40,"Magic Attack":52, "Elemental Magic Skill":24, "Accuracy":40,"Gear Haste":3,"Jobs":["blm"]}
+Spaekona_Coat = {"Name":"Spaekona Coat +3", "STR":31,"DEX":31,"VIT":31,"AGI":31,"INT":39,"MND":39,"CHR":39,"Magic Accuracy":55,"Magic Damage":48,"Magic Attack":0,"Gear Haste":3,"Jobs":["blm"]}
+
+Amalric_Gages = {"Name":"Amalric Gages +1", "Name2":"Amalric Gages +1A",  "STR":3,"DEX":23,"VIT":20,"AGI":2,"INT":24,"MND":34,"CHR":19,"Magic Accuracy":0+20,"Magic Attack":33+20,"Magic Burst Damage":0,"Magic Burst Damage II":6,"Magic Damage":0,"Gear Haste":3,"Jobs":["blm","sch","rdm","geo"]}
+Ea_Cuffs = {"Name":"Ea Cuffs +1","STR":7,"DEX":29,"VIT":30,"AGI":0,"INT":40,"MND":40,"CHR":23,"Magic Accuracy":49,"Magic Attack":35,"Magic Burst Damage":6, "Magic Burst Damage II":6,"Gear Haste":3,"Jobs":["blm", "rdm", "geo"]}
+Agwu_Gages = {"Name":"Agwu's Gages", "Name2": "Agwu's Gages R25", "STR":14,"DEX":38,"VIT":23,"AGI":6,"INT":33,"MND":40,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":8,"Magic Burst Damage II":0+5,"Magic Damage":20,"Gear Haste":3,"Jobs":["blm", "sch", "geo"]}
+Wicce_Gloves = {"Name":"Wicce Gloves +3", "STR":16,"DEX":40,"VIT":38,"AGI":20,"INT":38,"MND":47,"CHR":32, "Accuracy":62,"Magic Accuracy":62,"Magic Attack":57,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":32,"Gear Haste":3,"Jobs":["blm"]}
+Archmage_Gloves = {"Name":"Archmage's Gloves +3", "STR":16,"DEX":38,"VIT":35,"AGI":15,"INT":36,"MND":43,"CHR":29, "Magic Accuracy":38,"Magic Attack":50, "Elemental Magic Skill":23, "Accuracy":38,"Jobs":["blm"]}
+Spaekona_Gloves = {"Name":"Spaekona Gloves +3", "STR":16,"DEX":38,"VIT":35,"AGI":15,"INT":37,"MND":43,"CHR":29,"Magic Accuracy":52,"Magic Damage":44,"Magic Attack":0,"Gear Haste":3,"Elemental Magic Skill":21,"Magic Burst Damage II":8,"Gear Haste":3,"Jobs":["blm"]}
+
+Amalric_Slops = {"Name":"Amalric Slops +1", "Name2":"Amalric Slops +1A",  "STR":19,"DEX":0,"VIT":6,"AGI":14,"INT":40,"MND":25,"CHR":19,"Magic Accuracy":0+20,"Magic Attack":40+20,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":0,"Gear Haste":5,"Jobs":["blm","sch","rdm","geo"]}
+Ea_Slops = {"Name":"Ea Slops +1","STR":26,"DEX":0,"VIT":17,"AGI":24,"INT":48,"MND":31,"CHR":23,"Magic Accuracy":51,"Magic Attack":41,"Magic Burst Damage":8, "Magic Burst Damage II":8,"Gear Haste":5,"Jobs":["blm", "rdm", "geo"]}
+Agwu_Slops = {"Name":"Agwu's Slops", "Name2": "Agwu's Slops R25", "STR":43,"DEX":0,"VIT":8,"AGI":17,"INT":49,"MND":32,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":9,"Magic Burst Damage II":0,"Magic Damage":20,"Gear Haste":5,"Jobs":["blm", "sch", "geo"]}
+Wicce_Chausses = {"Name":"Wicce Chausses +3", "STR":31,"DEX":0,"VIT":31,"AGI":31,"INT":53,"MND":38,"CHR":32, "Accuracy":63,"Magic Accuracy":63,"Magic Attack":58,"Magic Burst Damage":15,"Magic Burst Damage II":0,"Magic Damage":33,"Gear Haste":5,"Jobs":["blm"]}
+Archmage_Tonbon = {"Name":"Archmage's Tonbon +3", "STR":35,"DEX":0,"VIT":22,"AGI":27,"INT":40,"MND":34,"CHR":29, "Magic Accuracy":46,"Magic Attack":58, "Magic Burst Damage II":3, "Accuracy":39,"Gear Haste":5,"Jobs":["blm"]}
+Spaekona_Tonbon = {"Name":"Spaekona Tonbon +3", "STR":35,"DEX":0,"VIT":22,"AGI":27,"INT":44,"MND":34,"CHR":29,"Magic Accuracy":49,"Magic Damage":46,"Magic Attack":30,"Gear Haste":5,"Jobs":["blm"]}
+
+Amalric_Nails = {"Name":"Amalric Nails +1", "Name2":"Amalric Nails +1A",  "STR":6,"DEX":6,"VIT":6,"AGI":26,"INT":21,"MND":20,"CHR":33,"Magic Accuracy":0+20,"Magic Attack":32,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":20,"Gear Haste":3,"Jobs":["blm","sch","rdm","geo"]}
+Ea_Pigaches = {"Name":"Ea Pigaches +1", "STR":11,"DEX":14,"VIT":15,"AGI":38,"INT":5,"MND":26,"CHR":39,"Magic Accuracy":48,"Magic Attack":32,"Magic Burst Damage":5, "Magic Burst Damage II":5,"Gear Haste":3,"Jobs":["blm", "rdm", "geo"]}
+Agwu_Pigaches = {"Name":"Agwu's Pigaches", "Name2": "Agwu's Pigaches R25", "STR":21,"DEX":25,"VIT":8,"AGI":30,"INT":30,"MND":26,"CHR":39, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":6,"Magic Burst Damage II":0,"Magic Damage":20,"Gear Haste":3,"Jobs":["blm", "sch", "geo"]}
+Wicce_Sabots = {"Name":"Wicce Sabots +3", "STR":18,"DEX":21,"VIT":23,"AGI":44,"INT":36,"MND":32,"CHR":47, "Accuracy":60,"Magic Accuracy":60,"Magic Attack":50,"Magic Burst Damage":0,"Magic Burst Damage II":0,"Magic Damage":30,"Jobs":["blm"]}
+Archmage_Sabots = {"Name":"Archmage's Sabots +3", "STR":20,"DEX":21,"VIT":20,"AGI":43,"INT":30,"MND":29,"CHR":44, "Magic Accuracy":42,"Magic Attack":54, "Elemental Magic Skill":17, "Accuracy":36,"Gear Haste":3,"Jobs":["blm"]}
+Spaekona_Sabots = {"Name":"Spaekona Sabots +3", "STR":20,"DEX":21,"VIT":20,"AGI":43,"INT":32,"MND":29,"CHR":44,"Magic Accuracy":54,"Magic Damage":40,"Magic Attack":26,"Gear Haste":3,"Jobs":["blm"]}
 
 
 
@@ -117,12 +126,10 @@ Alber_Strap = {"Name": "Alber Strap", "Type": "Grip", "Magic Attack":7, "DA":2,"
 Rigorous_Grip = {"Name": "Rigorous Grip +1", "Name2": "Rigorous Grip +1 R15", "Type":"Grip", "STR":4+15, "Attack":13+30, "Accuracy":3,"Jobs":all_jobs}
 Utu_Grip = {"Name": "Utu Grip", "Type": "Grip", "Accuracy":30, "Attack":30,"Jobs":["drk","sam"]}
 
-mains = [Heishi, Kannagi, Kikoku, Nagi, Gokotai, MalevolenceA, Tauret, Naegling, Anguta, Liberator, Apocalypse, Redemption]
-subs = [Ternion, Kunimitsu, Gleti_Knife, Tauret, Gokotai, Crepuscular_Knife, MalevolenceB, Hitaki]
-grips = [Rigorous_Grip, Utu_Grip]
 
-mains = [Anguta,Apocalypse,Crepuscular_Knife,Gleti_Knife,Gokotai,Hachimonji,Heishi,Kannagi,Kikoku,Kunimitsu,Liberator,Naegling,Nagi,Redemption,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Ragnarok,Caladbolg]
-subs = [Crepuscular_Knife,Gleti_Knife,Gokotai,Hitaki,Kunimitsu,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,]
+mains = [Bunzi_Rod, Marin_Staff, Anguta,Apocalypse,Crepuscular_Knife,Gleti_Knife,Gokotai,Hachimonji,Heishi,Kannagi,Kikoku,Kunimitsu,Liberator,Naegling,Nagi,Redemption,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Ragnarok,Caladbolg]
+subs = [Ammurapi_Shield,Crepuscular_Knife,Gleti_Knife,Gokotai,Hitaki,Kunimitsu,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,]
+grips = [Rigorous_Grip, Utu_Grip, Enki_Strap]
 
 
 
@@ -159,14 +166,12 @@ Mummu_Bonnet = {"Name": "Mummu Bonnet +2", "STR":20,"DEX":39,"VIT":16,"AGI":34,"
 Nyame_Helm = {"Name": "Nyame Helm", "Name2": "Nyame Helm R25 B", "STR":26, "DEX":25, "VIT":24, "AGI":23, "INT":28, "MND":26, "CHR":24,"Accuracy":40,"Attack":30+30, "Gear Haste":6,"Weaponskill Damage":0+10,"DA":0+4,"Magic Accuracy":40,"Magic Attack":30,"Ranged Accuracy":40,"Ranged Attack":30+30,"Magic Burst Damage":5,"Jobs":all_jobs}
 Pixie_Hairpin = {"Name": "Pixie Hairpin +1", "INT":27, "Dark Elemental Bonus":28,"Jobs":all_jobs}
 Ratri_Sallet = {"Name": "Ratri Sallet +1", "STR":40, "DEX":33, "VIT":26, "AGI":21, "INT":26, "MND":23, "CHR":22, "Magic Accuracy":45, "Scythe Skill":54, "Gear Haste":7, "Weaponskill Damage":8,"Jobs":["drk"]}
-Ryuo_Somen_A = {"Name": "Ryuo Somen +1", "Name2": "Ryuo Somen +1 A", "STR":21+12, "DEX":17+12, "VIT":14, "AGI":20, "INT":11, "MND":11, "CHR":11, "Accuracy":35+20,"Ranged Accuracy":35,"Gear Haste":7,"Store TP":7,"Dual Wield":9,"Jobs":all_jobs}
+Ryuo_Somen_A = {"Name": "Ryuo Somen +1", "Name2": "Ryuo Somen +1 A", "STR":21+12, "DEX":17+12, "VIT":14, "AGI":20, "INT":11, "MND":11, "CHR":11, "Accuracy":35+20,"Ranged Accuracy":35,"Gear Haste":7,"Store TP":7,"Dual Wield":9,"Jobs":["nin","sam"]}
 Sakpata_Helm = {"Name": "Sakpata's Helm", "Name2": "Sakpata's Helm R25", "STR":33,"DEX":20,"VIT":40,"AGI":21,"INT":19,"MND":23,"CHR":21,"Accuracy":40+10,"Magic Accuracy":40+10,"Attack":40+25,"Gear Haste":4,"DA":5,"PDL":5,"DA DMG":0+13,"Jobs":["drk"]}
 Sulevia_Mask = {"Name": "Sulevia's Mask +2", "STR":33,"DEX":19,"VIT":40,"AGI":12,"INT":11,"MND":22,"CHR":22,"Accuracy":44,"Attack":48,"Gear Haste":3,"Store TP":10,"Jobs":["drk"]}
 Hattori_Zukin = {"Name": "Hattori Zukin +3", "STR":31,"DEX":41,"VIT":28,"AGI":34,"INT":27,"MND":27,"CHR":27,"Accuracy":61,"Attack":61,"Ranged Accuracy":61,"Magic Accuracy":61,"Gear Haste":10,"Dual Wield":7,"Jobs":["nin"]}
 Heathen_Burgeonet = {"Name": "Heathen's Burgeonet +3", "STR":42,"DEX":26,"VIT":33,"AGI":28,"INT":31,"MND":27,"CHR":29,"Accuracy":61,"Attack":61,"Magic Accuracy":61,"Gear Haste":7,"Scythe Skill":38,"DA":6,"PDL":10,"Jobs":["drk"]}
-heads = [Adhemar_Bonnet_A,Adhemar_Bonnet_B, Hachiya_Hatsuburi, Mochizuki_Hatsuburi, Malignance_Chapeau, Kendatsuba_Jinpachi, Mummu_Bonnet, Nyame_Helm, Mpaca_Cap, Blistering_Sallet,Hattori_Zukin]
-heads = [Adhemar_Bonnet_A,Adhemar_Bonnet_B,Blistering_Sallet,Flamma_Zucchetto,Hachiya_Hatsuburi,Kendatsuba_Jinpachi,Malignance_Chapeau,Mpaca_Cap,Mummu_Bonnet,Nyame_Helm,Ratri_Sallet,Ryuo_Somen_A,Sakpata_Helm,Sulevia_Mask,Hattori_Zukin,Heathen_Burgeonet,Mochizuki_Hatsuburi]
-heads = [Adhemar_Bonnet_A,Adhemar_Bonnet_B,Blistering_Sallet,Dampening_Tam,Flamma_Zucchetto,Hachiya_Hatsuburi,Hizamaru_Somen,Kendatsuba_Jinpachi,Malignance_Chapeau,Mochizuki_Hatsuburi,Mpaca_Cap,Mummu_Bonnet,Nyame_Helm,Pixie_Hairpin,Ratri_Sallet,Ryuo_Somen_A,Sakpata_Helm,Sulevia_Mask,Hattori_Zukin,Heathen_Burgeonet,]
+heads = [Amalric_Coif,Ea_Hat,Agwu_Cap,Wicce_Petasos,Archmage_Petasos,Spaekona_Petasos,Adhemar_Bonnet_A,Adhemar_Bonnet_B,Blistering_Sallet,Dampening_Tam,Flamma_Zucchetto,Hachiya_Hatsuburi,Hizamaru_Somen,Kendatsuba_Jinpachi,Malignance_Chapeau,Mochizuki_Hatsuburi,Mpaca_Cap,Mummu_Bonnet,Nyame_Helm,Pixie_Hairpin,Ratri_Sallet,Ryuo_Somen_A,Sakpata_Helm,Sulevia_Mask,Hattori_Zukin,Heathen_Burgeonet,]
 
 
 Abyssal_Beads = {"Name": "Abyssal Bead Necklace +2", "Name2":"Abyssal Bead Necklace +2 R25","Accuracy":15,"Magic Accuracy":15,"Attack":40,"Store TP":0+7,"STR":0+25,"Crit Rate":4,"PDL":0+10,"Jobs":["drk"]}
@@ -179,9 +184,7 @@ Samurai_Nodowa = {"Name": "Samurai's Nodowa +2", "Name2":"Samurai's Nodowa +2 R2
 Sanctity_Necklace = {"Name": "Sanctity Necklace", "Attack":10,"Ranged Attack":10,"Ranged Accuracy":10,"Magic Accuracy":10,"Magic Attack":10, "Jobs":all_jobs}
 Sibyl_Scarf = {"Name": "Sibyl Scarf", "INT":10, "Magic Attack":10,"Jobs":all_jobs}
 Warders_Charm = {"Name": "Warder's Charm +1", "Name2": "Warder's Charm +1 R15","Magic Burst Damage":10,"Jobs":all_jobs}
-necks = [Ninja_Nodowa, Fotia_Gorget, Caro_Necklace, Baetyl_Pendant, Rep_Plat_Medal,Sibyl_Scarf,Warders_Charm]
-necks = [Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Samurai_Nodowa, Sanctity_Necklace,Sibyl_Scarf,]
-necks = [Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm]
+necks = [Mizukage_no_Kubikazari,Sorcerers_Stole, Quanpur_Necklace, Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm]
 
 Balder_Earring = {"Name": "Balder Earring +1", "Attack":10, "Store TP":3, "QA":1, "Jobs":all_jobs}
 Brutal_Earring = {"Name": "Brutal Earring", "DA":5,"Store TP":1, "Jobs":all_jobs}
@@ -205,14 +208,8 @@ Telos_Earring = {"Name": "Telos Earring", "Accuracy":10, "Attack":10, "Ranged Ac
 Thrud_Earring = {"Name": "Thrud Earring", "STR":10, "VIT":10, "Weaponskill Damage":3, "Jobs":["war","pld","drk","bst","sam","drg"]}
 Hattori_Earring = {"Name": "Hattori Earring +2", "PDL":9, "Throwing Skill":12, "Katana Skill":12, "Accuracy":18, "Magic Accuracy":18, "Store TP":7, "DEX":11, "AGI":11, "Jobs":["nin"]}
 Heathen_Earring = {"Name": "Heathen's Earring +2", "Attack":20, "PDL":9, "Accuracy":18, "Weaponskill Damage":6, "STR":11, "INT":11, "Jobs":["drk"]}
-ears = [Static_Earring,Ishvara_Earring, Lugra_Earring_Aug, Moonshade_Earring, Brutal_Earring, Friomisi_Earring, Crematio_Earring, Balder_Earring, Mache_Earring1, Mache_Earring2, Odr_Earring, Crepuscular_Earring,Telos_Earring]
-ears2 = [Static_Earring, Ishvara_Earring, Lugra_Earring_Aug, Moonshade_Earring, Brutal_Earring, Friomisi_Earring, Crematio_Earring, Balder_Earring, Mache_Earring1, Mache_Earring2, Odr_Earring, Crepuscular_Earring,Hattori_Earring,Telos_Earring,Heathen_Earring]
-
-ears = [Brutal_Earring,Cessance_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Thrud_Earring]
-ears2 = [Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring]
-
-ears = [Suppanomimi,Dedition_Earring,Telos_Earring,Eabani_Earring,Cessance_Earring, Balder_Earring,Brutal_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Thrud_Earring]
-ears2 = [Suppanomimi,Dedition_Earring,Telos_Earring,Eabani_Earring,Cessance_Earring, Balder_Earring,Brutal_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,]
+ears = [Malignance_Earring, Barkarole_Earring, Regal_Earring, Suppanomimi,Dedition_Earring,Telos_Earring,Eabani_Earring,Cessance_Earring, Balder_Earring,Brutal_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Thrud_Earring]
+ears2 = [Wicce_Earring, Malignance_Earring, Barkarole_Earring, Regal_Earring, Suppanomimi,Dedition_Earring,Telos_Earring,Eabani_Earring,Cessance_Earring, Balder_Earring,Brutal_Earring,Crematio_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,]
 
 Abnoba_Kaftan = {"Name": "Abnoba Kaftan", "STR":25, "DEX":38, "VIT":24, "AGI":28, "INT":21, "MND":21, "CHR":21, "Accuracy":22, "Attack":22, "Gear Haste":4, "Crit Rate":5, "Crit Damage":5,"Jobs":["nin"]}
 Adhemar_Jacket_A = {"Name": "Adhemar Jacket +1", "Name2": "Adhemar Jacket +1 A", "STR":26, "DEX":33+12, "VIT":23, "AGI":29+12, "INT":20, "MND":20, "CHR":20, "Accuracy":35+20, "Attack":35, "Ranged Accuracy":35, "Ranged Attack":35, "Gear Haste":4, "TA":4, "Dual Wield":6,"Jobs":["nin"]}
@@ -241,9 +238,7 @@ Sulevia_Platemail = {"Name": "Sulevia's Platemail +2", "STR":41,"DEX":24,"VIT":4
 Tatenashi_Haramaki = {"Name": "Tatenashi Haramaki +1", "Name2": "Tatenashi Haramaki +1 R15", "STR":28+10, "DEX":24+10, "VIT":28+10, "AGI":19+10, "INT":19+10, "MND":19+10, "CHR":19+10,"Accuracy":35+30,"Attack":35,"Gear Haste":3,"Crit Rate":6,"Store TP":8,"TA":0+5,"Jobs":["nin","sam"]}
 Hattori_Ningi = {"Name": "Hattori Ningi +3", "STR":40,"DEX":47,"VIT":35,"AGI":43,"INT":36,"MND":31,"CHR":31,"Accuracy":64,"Attack":74,"Ranged Accuracy":64,"Magic Accuracy":64,"Gear Haste":4,"Crit Rate":8,"Jobs":["nin"]}
 Heathen_Cuirass = {"Name": "Heathen's Cuirass +3", "STR":47,"DEX":31,"VIT":43,"AGI":33,"INT":35,"MND":35,"CHR":35,"Accuracy":64,"Attack":74,"Magic Accuracy":64,"Gear Haste":4,"Crit Rate":7,"Jobs":["drk"]}
-bodies = [Kendatsuba_Samue, Adhemar_Jacket_A, Adhemar_Jacket_B, Malignance_Tabard, Nyame_Mail, Samnuha_Coat, Gyve_Doublet, Abnoba_Kaftan, Mpaca_Doublet, Tatenashi_Haramaki, Ryuo_Domaru_A, Agony_Jerkin, Hattori_Ningi]
-bodies = [Abnoba_Kaftan,Adhemar_Jacket_A,Adhemar_Jacket_B,Agony_Jerkin,Dagon_Breastplate,Flamma_Korazin,Hizamaru_Haramaki,Ignominy_Cuirass,Kendatsuba_Samue,Malignance_Tabard,Mpaca_Doublet,Nyame_Mail,Ratri_Breastplate,Sakonji_Domaru,Sakpata_Breastplate,Sulevia_Platemail,Tatenashi_Haramaki,Hattori_Ningi,Heathen_Cuirass]
-bodies = [Abnoba_Kaftan,Adhemar_Jacket_A,Adhemar_Jacket_B,Agony_Jerkin,Ashera_Harness,Dagon_Breastplate,Flamma_Korazin,Gyve_Doublet,Hachiya_Chainmail,Herculean_Vest,Hizamaru_Haramaki,Ignominy_Cuirass,Kendatsuba_Samue,Malignance_Tabard,Mochizuki_Chainmail,Mpaca_Doublet,Mummu_Jacket,Nyame_Mail,Ratri_Breastplate,Ryuo_Domaru_A,Sakpata_Breastplate,Samnuha_Coat,Sulevia_Platemail,Tatenashi_Haramaki,Hattori_Ningi,Heathen_Cuirass,]
+bodies = [Amalric_Doublet,Ea_Houppelande,Agwu_Robe,Wicce_Coat,Archmage_Coat,Spaekona_Coat,Abnoba_Kaftan,Adhemar_Jacket_A,Adhemar_Jacket_B,Agony_Jerkin,Ashera_Harness,Dagon_Breastplate,Flamma_Korazin,Gyve_Doublet,Hachiya_Chainmail,Herculean_Vest,Hizamaru_Haramaki,Ignominy_Cuirass,Kendatsuba_Samue,Malignance_Tabard,Mochizuki_Chainmail,Mpaca_Doublet,Mummu_Jacket,Nyame_Mail,Ratri_Breastplate,Ryuo_Domaru_A,Sakpata_Breastplate,Samnuha_Coat,Sulevia_Platemail,Tatenashi_Haramaki,Hattori_Ningi,Heathen_Cuirass,]
 
 Adhemar_Wristbands_A = {"Name": "Adhemar Wristbands +1", "Name2": "Adhemar Wristbands +1 A", "STR":15, "DEX":44+12, "VIT":29, "AGI":7+12, "INT":12, "MND":30, "CHR":17, "Accuracy":32+20, "Ranged Accuracy":32, "TA":4, "Store TP":7, "Gear Haste":5, "Jobs":["nin"]}
 Adhemar_Wristbands_B = {"Name": "Adhemar Wristbands +1", "Name2": "Adhemar Wristbands +1 B", "STR":15+12, "DEX":44+12, "VIT":29, "AGI":7, "INT":12, "MND":30, "CHR":17, "Accuracy":32, "Ranged Accuracy":32, "TA":4, "Store TP":7, "Attack":0+20, "Gear Haste":5, "Jobs":["nin"]}
@@ -267,9 +262,7 @@ Sulevia_Gauntlets = {"Name": "Sulevia's Gauntlets +2", "STR":23,"DEX":34,"VIT":4
 Tatenashi_Gote = {"Name": "Tatenashi Gote +1", "Name2": "Tatenashi Gote +1 R15", "STR":8+10, "DEX":40+10, "VIT":32+10, "AGI":7+10, "INT":6+10, "MND":23+10, "CHR":16+10,"Accuracy":21+40,"Gear Haste":4,"Store TP":7,"TA":0+4, "Jobs":["nin","sam"]}
 Hattori_Tekko = {"Name": "Hattori Tekko +3", "STR":27,"DEX":55,"VIT":40,"AGI":24,"INT":27,"MND":40,"CHR":27,"Gear Haste":5,"Accuracy":62,"Attack":62,"Ranged Accuracy":62,"Magic Accuracy":62,"Ninjutsu Magic Attack":18,"Magic Burst Damage":15,"Jobs":["nin"]}
 Heathen_Gauntlets = {"Name": "Heathen's Gauntlets +3", "STR":27,"DEX":43,"VIT":47,"AGI":0,"INT":25,"MND":40,"CHR":35,"Gear Haste":6,"Accuracy":62,"Attack":72,"Magic Accuracy":62,"Great Sword Skill":38, "Jobs":["drk"]}
-hands = [Adhemar_Wristbands_A, Adhemar_Wristbands_B, Mochizuki_Tekko, Mummu_Wrists, Malignance_Gloves, Kendatsuba_Tekko, Nyame_Gauntlets, Mpaca_Gloves, Tatenashi_Gote, Ryuo_Tekko_A, Ryuo_Tekko_D, Hattori_Tekko]
-hands = [Adhemar_Wristbands_A,Adhemar_Wristbands_B,Flamma_Manopolas,Kendatsuba_Tekko,Malignance_Gloves,Mpaca_Gloves,Mummu_Wrists,Nyame_Gauntlets,Ratri_Gadlings,Ryuo_Tekko_A,Ryuo_Tekko_D,Sakpata_Gauntlets,Sulevia_Gauntlets,Hattori_Tekko,Heathen_Gauntlets]
-hands = [Adhemar_Wristbands_A,Adhemar_Wristbands_B,Flamma_Manopolas,Floral_Gauntlets,Hachiya_Tekko,Herculean_Gloves,Hizamaru_Kote,Kendatsuba_Tekko,Leyline_Gloves,Malignance_Gloves,Mochizuki_Tekko,Mpaca_Gloves,Mummu_Wrists,Nyame_Gauntlets,Ratri_Gadlings,Ryuo_Tekko_A,Ryuo_Tekko_D,Sakpata_Gauntlets,Sulevia_Gauntlets,Tatenashi_Gote,Hattori_Tekko,Heathen_Gauntlets,]
+hands = [Amalric_Gages,Ea_Cuffs,Agwu_Gages,Wicce_Gloves,Archmage_Gloves,Spaekona_Gloves,Adhemar_Wristbands_A,Adhemar_Wristbands_B,Flamma_Manopolas,Floral_Gauntlets,Hachiya_Tekko,Herculean_Gloves,Hizamaru_Kote,Kendatsuba_Tekko,Leyline_Gloves,Malignance_Gloves,Mochizuki_Tekko,Mpaca_Gloves,Mummu_Wrists,Nyame_Gauntlets,Ratri_Gadlings,Ryuo_Tekko_A,Ryuo_Tekko_D,Sakpata_Gauntlets,Sulevia_Gauntlets,Tatenashi_Gote,Hattori_Tekko,Heathen_Gauntlets,]
 
 Apate_Ring = {"Name": "Apate Ring", "STR":6, "DEX":6, "AGI":6, "Store TP":3,"Jobs":all_jobs}
 Archon_Ring = {"Name": "Archon Ring", "Dark Elemental Bonus":5,"Jobs":all_jobs}
@@ -298,14 +291,8 @@ Shiva_Ring2 = {"Name": "Shiva Ring +1", "Name2": "Shiva Ring +1B", "INT":9, "Mag
 Shukuyu_Ring = {"Name": "Shukuyu Ring", "STR":7, "Attack":15,"Jobs":all_jobs}
 Sroda_Ring = {"Name": "Sroda Ring", "STR":15, "DEX":-20, "PDL":3,"Jobs":all_jobs}
 Weatherspoon_Ring = {"Name": "Weatherspoon Ring +1", "Light Elemental Bonus":11, "Magic Accuracy":13,"Jobs":all_jobs}
-rings = [Mujin_Band, Sroda_Ring, Gere_Ring, Hetairoi_Ring, Shukuyu_Ring, Apate_Ring, Ilabrat_Ring, Regal_Ring, Epona_Ring, Petrov_Ring, Rufescent_Ring, Begrudging_Ring, Epaminondas_Ring, Mummu_Ring, Beithir_Ring, Dingir_Ring, Metamorph_Ring, Shiva_Ring1, Shiva_Ring2, Weatherspoon_Ring]
-rings2 = [Mujin_Band, Sroda_Ring, Gere_Ring, Hetairoi_Ring, Shukuyu_Ring, Apate_Ring, Ilabrat_Ring, Regal_Ring, Epona_Ring, Petrov_Ring, Rufescent_Ring, Begrudging_Ring, Epaminondas_Ring, Mummu_Ring, Beithir_Ring, Dingir_Ring, Metamorph_Ring, Shiva_Ring1, Shiva_Ring2, Weatherspoon_Ring]
-
-rings = [Apate_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Metamorph_Ring,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
-rings2 = [Apate_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Metamorph_Ring,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
-
-rings = [Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Karieyh_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shiva_Ring2,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
-rings2 = [Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Karieyh_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shiva_Ring2,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
+rings = [Freke_Ring, Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Karieyh_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shiva_Ring2,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
+rings2 = [Freke_Ring, Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Karieyh_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shiva_Ring2,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,]
 
 Andartia_Critagi = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle AGI Crit Rate", "AGI":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "Jobs":["nin"]}
 Andartia_Critdex = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle DEX Crit Rate", "DEX":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "Jobs":["nin"]}
@@ -324,8 +311,7 @@ Ankou_Mantle_DAstr = {"Name": "Ankou's Mantle", "Name2": "Ankou's Mantle STR DA"
 Ankou_Mantle_STPdex = {"Name": "Ankou's Mantle", "Name2": "Ankou's Mantle DEX Store TP", "DEX":30, "Accuracy":20, "Attack":20, "Store TP":10, "Jobs":["drk"]}
 Smertrios_DAstr = {"Name": "Smertrios's Mantle", "Name2": "Smertrios's Mantle STR DA", "STR":30, "Attack":20, "Accuracy":20, "DA":10, "Skillchain Bonus":3,"Jobs":["sam"]}
 Smertrios_WSDstr = {"Name": "Smertrios's Mantle", "Name2": "Smertrios's Mantle STR WSD", "STR":30, "Attack":20, "Accuracy":20, "Weaponskill Damage":10, "Skillchain Bonus":3,"Jobs":["sam"]}
-capes = [Andartia_DAdex, Andartia_DAstr, Andartia_DAagi, Andartia_Critagi, Andartia_Critdex, Andartia_WSDstr, Andartia_WSDdex, Andartia_WSDagi, Andartia_Nuke, Andartia_WSDstr_mdmg]
-capes = [Andartia_DW,Andartia_Critagi,Andartia_Critdex,Andartia_DAdex,Andartia_DAstr,Andartia_Nuke,Andartia_WSDstr_mdmg,Andartia_STP,Andartia_WSDagi,Andartia_WSDdex,Andartia_WSDstr,Ankou_Mantle_WSDstr,Ankou_Mantle_DAstr,Ankou_Mantle_STPdex,Smertrios_DAstr,Smertrios_WSDstr,]
+capes = [Taranus_Cape, Andartia_DW,Andartia_Critagi,Andartia_Critdex,Andartia_DAdex,Andartia_DAstr,Andartia_Nuke,Andartia_WSDstr_mdmg,Andartia_STP,Andartia_WSDagi,Andartia_WSDdex,Andartia_WSDstr,Ankou_Mantle_WSDstr,Ankou_Mantle_DAstr,Ankou_Mantle_STPdex,Smertrios_DAstr,Smertrios_WSDstr,]
 
 Eschan_Stone = {"Name": "Eschan Stone", "Accuracy":15, "Ranged Accuracy":15, "Attack":15, "Ranged Attack":15, "Magic Accuracy":7, "Magic Attack":7,"Jobs":all_jobs}
 Fotia_Belt = {"Name": "Fotia Belt", "Weaponskill Accuracy": 10, "ftp": 25./256.,"Jobs":all_jobs}
@@ -338,8 +324,6 @@ Reiki_Yotai = {"Name": "Reiki Yotai", "Accuracy":10, "Ranged Accuracy":10, "Stor
 Sailfi_Belt = {"Name": "Sailfi Belt +1", "Name2": "Sailfi Belt +1 R15", "Gear Haste":9, "TA":2, "Attack":14, "STR":0+15, "DA":0+5,"Jobs":["nin","drk","sam"]}
 Windbuffet_Belt = {"Name": "Windbuffet Belt +1", "Accuracy":2, "TA":2, "QA":2,"Jobs":all_jobs}
 Skrymir_Cord = {"Name":"Skrymir Cord +1", "Magic Accuracy":7, "Magic Attack":7, "Magic Damage":35,"Jobs":all_jobs}
-waists = [Windbuffet_Belt, Fotia_Belt, Grunfeld_Rope, Kentarch_Belt, Sailfi_Belt, Orpheus_Sash,Skrymir_Cord]
-waists = [Eschan_Stone,Fotia_Belt,Grunfeld_Rope,Ioskeha_Belt,Kentarch_Belt,Orpheus_Sash,Reiki_Yotai,Sailfi_Belt,Windbuffet_Belt,Skrymir_Cord,]
 waists = [Eschan_Stone,Fotia_Belt,Grunfeld_Rope,Ioskeha_Belt,Kentarch_Belt,Orpheus_Sash,Reiki_Yotai,Sailfi_Belt,Windbuffet_Belt,Skrymir_Cord,]
 
 Adhemar_Kecks_A = {"Name": "Adhemar Kecks +1", "Name2": "Adhemar Kecks +1 A", "STR":32, "DEX":0+12, "VIT":15, "AGI":30+12, "INT":28, "MND":16, "CHR":8, "Accuracy":34+20, "Ranged Accuracy":34, "Gear Haste":6, "Store TP":8,"Jobs":["nin"]}
@@ -368,9 +352,7 @@ Tatenashi_Haidate = {"Name": "Tatenashi Haidate +1", "Name2": "Tatenashi Haidate
 Wakido_Haidate = {"Name": "Wakido Haidate +3", "STR":44, "DEX":0, "VIT":29, "AGI":25, "INT":37, "MND":26, "CHR":20, "Accuracy":49, "Attack":40, "Ranged Attack":40, "Gear Haste":5, "Store TP":9, "Weaponskill Damage":10,"Jobs":["sam"]}
 Hattori_Hakama = {"Name": "Hattori Hakama +3", "STR":44,"DEX":0,"VIT":27,"AGI":35,"INT":45,"MND":27,"CHR":21,"Gear Haste":8,"Katana Skill":33,"Accuracy":63,"Ranged Accuracy":63,"Magic Accuracy":63,"Attack":63,"Jobs":["nin"]}
 Heathen_Flanchard = {"Name": "Heathen's Flanchard +3", "STR":53,"DEX":0,"VIT":35,"AGI":30,"INT":41,"MND":29,"CHR":26,"Gear Haste":5,"Accuracy":63,"Magic Accuracy":63,"Attack":73,"Jobs":["drk"]}
-legs = [Kendatsuba_Hakama, Adhemar_Kecks_A, Adhemar_Kecks_B, Mochizuki_Hakama, Samnuha_Tights, Jokushu_Haidate, Malignance_Tights, Mummu_Kecks, Gyve_Trousers, Hizamaru_Hizayoroi, Nyame_Flanchard, Mpaca_Hose, Tatenashi_Haidate, Ryuo_Hakama_A, Rao_Haidate_B, Hattori_Hakama]
-legs = [Adhemar_Kecks_A,Adhemar_Kecks_B,Fallen_Flanchard,Flamma_Dirs,Hizamaru_Hizayoroi,Ignominy_Flanchard,Jokushu_Haidate,Kendatsuba_Hakama,Malignance_Tights,Mochizuki_Hakama,Mpaca_Hose,Mummu_Kecks,Nyame_Flanchard,Rao_Haidate_B,Ratri_Cuisses,Ryuo_Hakama_A,Sakpata_Cuisses,Samnuha_Tights,Sulevia_Flanchard,Tatenashi_Haidate,Wakido_Haidate,Hattori_Hakama,Heathen_Flanchard]
-legs = [Adhemar_Kecks_A,Adhemar_Kecks_B,Fallen_Flanchard,Flamma_Dirs,Gyve_Trousers,Hachiya_Hakama,Herculean_Trousers,Hizamaru_Hizayoroi,Ignominy_Flanchard,Jokushu_Haidate,Kendatsuba_Hakama,Malignance_Tights,Mochizuki_Hakama,Mpaca_Hose,Mummu_Kecks,Nyame_Flanchard,Rao_Haidate_B,Ratri_Cuisses,Ryuo_Hakama_A,Sakpata_Cuisses,Samnuha_Tights,Sulevia_Flanchard,Tatenashi_Haidate,Hattori_Hakama,Heathen_Flanchard,]
+legs = [Amalric_Slops,Ea_Slops,Agwu_Slops,Wicce_Chausses,Archmage_Tonbon,Spaekona_Tonbon, Adhemar_Kecks_A,Adhemar_Kecks_B,Fallen_Flanchard,Flamma_Dirs,Gyve_Trousers,Hachiya_Hakama,Herculean_Trousers,Hizamaru_Hizayoroi,Ignominy_Flanchard,Jokushu_Haidate,Kendatsuba_Hakama,Malignance_Tights,Mochizuki_Hakama,Mpaca_Hose,Mummu_Kecks,Nyame_Flanchard,Rao_Haidate_B,Ratri_Cuisses,Ryuo_Hakama_A,Sakpata_Cuisses,Samnuha_Tights,Sulevia_Flanchard,Tatenashi_Haidate,Hattori_Hakama,Heathen_Flanchard,]
 
 Adhemar_Gamashes_A = {"Name": "Adhemar Gamashes +1", "Name2": "Adhemar Gamashes +1 A", "STR":15, "DEX":23+12, "VIT":8, "AGI":42+12, "INT":0, "MND":11, "CHR":25, "Accuracy":20, "Attack":34, "Ranged Attack":34, "Magic Attack":35, "Gear Haste":4, "Crit Rate":4, "Jobs":["nin"]}
 Adhemar_Gamashes_B = {"Name": "Adhemar Gamashes +1", "Name2": "Adhemar Gamashes +1 B", "STR":15+12, "DEX":23+12, "VIT":8, "AGI":42, "INT":0, "MND":11, "CHR":25, "Attack":34+20, "Ranged Attack":34, "Magic Attack":35, "Gear Haste":4, "Crit Rate":4, "Jobs":["nin"]}
@@ -393,9 +375,7 @@ Sulevia_Leggings = {"Name": "Sulevia's Leggings +2", "STR":29,"DEX":19,"VIT":29,
 Tatenashi_SuneAte = {"Name": "Tatenashi Sune-ate +1", "Name2": "Tatenashi Sune-ate +1 R15", "STR":16+10, "DEX":19+10, "VIT":16+10, "AGI":32+10, "INT":0+10, "MND":5+10, "CHR":19+10,"Accuracy":0+60,"Gear Haste":3,"Store TP":7,"TA":0+3, "Jobs":["nin","sam"]}
 Hattori_Kyahan = {"Name": "Hattori Kyahan +3", "STR":27,"DEX":39,"VIT":23,"AGI":54,"INT":0,"MND":22,"CHR":40,"Gear Haste":5,"Accuracy":60,"Attack":60,"Ranged Accuracy":60,"Magic Accuracy":60,"Weaponskill Damage":12,"Jobs":["nin"]}
 Heathen_Sollerets = {"Name": "Heathen's Sollerets +3", "STR":33,"DEX":25,"VIT":30,"AGI":42,"INT":22,"MND":26,"CHR":38,"Gear Haste":3,"Accuracy":60,"Attack":60,"Ranged Accuracy":60,"Magic Accuracy":60,"Weaponskill Damage":12,"Jobs":["drk"]}
-feet = [Mochizuki_Kyahan, Adhemar_Gamashes_A, Adhemar_Gamashes_B, Malignance_Boots, Mummu_Gamashes, Kendatsuba_Sune_Ate, Nyame_Sollerets, Mpaca_Boots, Tatenashi_SuneAte, Ryuo_SuneAte_D, Rao_SuneAte_D,Hattori_Kyahan]
-feet = [Adhemar_Gamashes_A,Adhemar_Gamashes_B,Flamma_Gambieras,Kendatsuba_Sune_Ate,Malignance_Boots,Mpaca_Boots,Mummu_Gamashes,Nyame_Sollerets,Rao_SuneAte_D,Ratri_Sollerets,Ryuo_SuneAte_D,Sakpata_Leggings,Sulevia_Leggings,Tatenashi_SuneAte,Hattori_Kyahan,Heathen_Sollerets]
-feet = [Adhemar_Gamashes_A,Adhemar_Gamashes_B,Flamma_Gambieras,Hachiya_Kyahan,Herculean_Boots,Herculean_Boots_QA,Hizamaru_Sune_Ate,Kendatsuba_Sune_Ate,Malignance_Boots,Mochizuki_Kyahan,Mpaca_Boots,Mummu_Gamashes,Nyame_Sollerets,Rao_SuneAte_D,Ratri_Sollerets,Ryuo_SuneAte_D,Sakpata_Leggings,Sulevia_Leggings,Tatenashi_SuneAte,Hattori_Kyahan,Heathen_Sollerets,]
+feet = [Amalric_Nails,Ea_Pigaches,Agwu_Pigaches,Wicce_Sabots,Archmage_Sabots,Spaekona_Sabots,Adhemar_Gamashes_A,Adhemar_Gamashes_B,Flamma_Gambieras,Hachiya_Kyahan,Herculean_Boots,Hizamaru_Sune_Ate,Kendatsuba_Sune_Ate,Malignance_Boots,Mochizuki_Kyahan,Mpaca_Boots,Mummu_Gamashes,Nyame_Sollerets,Rao_SuneAte_D,Ratri_Sollerets,Ryuo_SuneAte_D,Sakpata_Leggings,Sulevia_Leggings,Tatenashi_SuneAte,Hattori_Kyahan,Heathen_Sollerets,]
 
 # Confirm that the stats for each piece of gear being checked are spelled correctly.
 # Compare each stat against a pre-made list of accepted stats.

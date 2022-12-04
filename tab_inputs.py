@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = ["NIN", "DRK","SCH","RDM","BLM"]
+main_jobs = ["NIN", "DRK","SCH", "RDM", "BLM"]
 sub_jobs = ["WAR", "SAM","SCH", "RDM", "None"]
 
 player_column = [
@@ -291,72 +291,75 @@ default_images = dict([[k,starting_gearset[k]["Name"]] for k in starting_gearset
 def setup_radio_list(main_job):
     start_main,start_sub,start_ammo,start_head,start_neck,start_ear1,start_ear2,start_body,start_hands,start_ring1,start_ring2,start_back,start_waist,start_legs,start_feet = [[] for k in range(15)]
 
-    main_job = "NIN"
-
-    main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains]
+    main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains if main_job.lower() in k["Jobs"]]
     for k in sorted(main_names):
-        start_main.append([sg.Radio(k,"main",font=font_choice,size=(50,1),key="startmain: "+k,enable_events=True)])
+        start_main.append([sg.Radio(k,"main",font=font_choice,size=(50,1),key="startmain: "+k+";;"+main_job,enable_events=True)])
 
-    sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips]
+    sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips if main_job.lower() in k["Jobs"]]
     for k in sorted(sub_names):
-        start_sub.append([sg.Radio(k,"sub",font=font_choice,size=(50,1),key="startsub: "+k,enable_events=True)])
+        start_sub.append([sg.Radio(k,"sub",font=font_choice,size=(50,1),key="startsub: "+k+";;"+main_job,enable_events=True)])
 
-    ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos]
+    ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos if main_job.lower() in k["Jobs"]]
     for k in sorted(ammo_names):
-        start_ammo.append([sg.Radio(k,"ammo",font=font_choice,size=(50,1),key="startammo: "+k,enable_events=True)])
+        start_ammo.append([sg.Radio(k,"ammo",font=font_choice,size=(50,1),key="startammo: "+k+";;"+main_job,enable_events=True)])
 
-    head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads]
+    head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads if main_job.lower() in k["Jobs"]]
     for k in sorted(head_names):
-        start_head.append([sg.Radio(k,"head",font=font_choice,size=(50,1),key="starthead: "+k,enable_events=True)])
+        start_head.append([sg.Radio(k,"head",font=font_choice,size=(50,1),key="starthead: "+k+";;"+main_job,enable_events=True)])
 
-    neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks]
+    neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks if main_job.lower() in k["Jobs"]]
     for k in sorted(neck_names):
-        start_neck.append([sg.Radio(k,"neck",font=font_choice,size=(50,1),key="startneck: "+k,enable_events=True)])
+        start_neck.append([sg.Radio(k,"neck",font=font_choice,size=(50,1),key="startneck: "+k+";;"+main_job,enable_events=True)])
 
-    ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears]
+    ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears if main_job.lower() in k["Jobs"]]
     for k in sorted(ear1_names):
-        start_ear1.append([sg.Radio(k,"ear1",font=font_choice,size=(50,1),key="startear1: "+k,enable_events=True)])
+        start_ear1.append([sg.Radio(k,"ear1",font=font_choice,size=(50,1),key="startear1: "+k+";;"+main_job,enable_events=True)])
 
-    ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2]
+    ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2 if main_job.lower() in k["Jobs"]]
     for k in sorted(ear2_names):
-        start_ear2.append([sg.Radio(k,"ear2",font=font_choice,size=(50,1),key="startear2: "+k,enable_events=True)])
+        start_ear2.append([sg.Radio(k,"ear2",font=font_choice,size=(50,1),key="startear2: "+k+";;"+main_job,enable_events=True)])
 
-    body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies]
+    body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies if main_job.lower() in k["Jobs"]]
     for k in sorted(body_names):
-        start_body.append([sg.Radio(k,"body",font=font_choice,size=(50,1),key="startbody: "+k,enable_events=True)])
+        start_body.append([sg.Radio(k,"body",font=font_choice,size=(50,1),key="startbody: "+k+";;"+main_job,enable_events=True)])
 
-    hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands]
+    hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands if main_job.lower() in k["Jobs"]]
     for k in sorted(hands_names):
-        start_hands.append([sg.Radio(k,"hands",font=font_choice,size=(50,1),key="starthands: "+k,enable_events=True)])
+        start_hands.append([sg.Radio(k,"hands",font=font_choice,size=(50,1),key="starthands: "+k+";;"+main_job,enable_events=True)])
 
-    ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings]
+    ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings if main_job.lower() in k["Jobs"]]
     for k in sorted(ring1_names):
-        start_ring1.append([sg.Radio(k,"ring1",font=font_choice,size=(50,1),key="startring1: "+k,enable_events=True)])
+        start_ring1.append([sg.Radio(k,"ring1",font=font_choice,size=(50,1),key="startring1: "+k+";;"+main_job,enable_events=True)])
 
-    ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2]
+    ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2 if main_job.lower() in k["Jobs"]]
     for k in sorted(ring2_names):
-        start_ring2.append([sg.Radio(k,"ring2",font=font_choice,size=(50,1),key="startring2: "+k,enable_events=True)])
+        start_ring2.append([sg.Radio(k,"ring2",font=font_choice,size=(50,1),key="startring2: "+k+";;"+main_job,enable_events=True)])
 
-    back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes]
+    back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes if main_job.lower() in k["Jobs"]]
     for k in sorted(back_names):
-        start_back.append([sg.Radio(k,"back",font=font_choice,size=(50,1),key="startback: "+k,enable_events=True)])
+        start_back.append([sg.Radio(k,"back",font=font_choice,size=(50,1),key="startback: "+k+";;"+main_job,enable_events=True)])
 
-    waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists]
+    waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists if main_job.lower() in k["Jobs"]]
     for k in sorted(waist_names):
-        start_waist.append([sg.Radio(k,"waist",font=font_choice,size=(50,1),key="startwaist: "+k,enable_events=True)])
+        start_waist.append([sg.Radio(k,"waist",font=font_choice,size=(50,1),key="startwaist: "+k+";;"+main_job,enable_events=True)])
 
-    legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs]
+    legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs if main_job.lower() in k["Jobs"]]
     for k in sorted(legs_names):
-        start_legs.append([sg.Radio(k,"legs",font=font_choice,size=(50,1),key="startlegs: "+k,enable_events=True)])
+        start_legs.append([sg.Radio(k,"legs",font=font_choice,size=(50,1),key="startlegs: "+k+";;"+main_job,enable_events=True)])
 
-    feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet]
+    feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet if main_job.lower() in k["Jobs"]]
     for k in sorted(feet_names):
-        start_feet.append([sg.Radio(k,"feet",font=font_choice,size=(50,1),key="startfeet: "+k,enable_events=True)])
+        start_feet.append([sg.Radio(k,"feet",font=font_choice,size=(50,1),key="startfeet: "+k+";;"+main_job,enable_events=True)])
 
     return(start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet)
 
-
-start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet = setup_radio_list("NIN")
+# We can't dynamically update a radio button list with PySimpleGUI without destroying and recreating the window every time.
+# We can, however, create a million frames, one for each situation, and simply hide the ones we don't want to show.
+start_radio = {k:setup_radio_list(k) for k in main_jobs}
+# start_radio = {
+#     "NIN":setup_radio_list("NIN"),
+#     "DRK":setup_radio_list("DRK"),}
+start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet = setup_radio_list("DRK")
 framesize = [300,300]
 
 starting_set_tab = [
@@ -378,26 +381,51 @@ starting_set_tab = [
             sg.Button(image_data=item2image(default_images["legs"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart legs",tooltip=starting_gearset["legs"]["Name2"] if "Name2" in starting_gearset["legs"] else starting_gearset["legs"]["Name"]),
             sg.Button(image_data=item2image(default_images["feet"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart feet",tooltip=starting_gearset["feet"]["Name2"] if "Name2" in starting_gearset["feet"] else starting_gearset["feet"]["Name"]),],
           ]),]]
-radio_tab = [
-          sg.Frame("Select starting main-hand", [[sg.Column(start_main,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True,key="main start radio"),
-          sg.Frame("Select starting off-hand",  [[sg.Column(start_sub,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="sub start radio"),
-          sg.Frame("Select starting ammo", [[sg.Column(start_ammo,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ammo start radio"),
-          sg.Frame("Select starting head", [[sg.Column(start_head,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="head start radio"),
-          sg.Frame("Select starting neck", [[sg.Column(start_neck,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="neck start radio"),
-          sg.Frame("Select starting left ear", [[sg.Column(start_ear1,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear1 start radio"),
-          sg.Frame("Select starting ring ear", [[sg.Column(start_ear2,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear2 start radio"),
-          sg.Frame("Select starting body", [[sg.Column(start_body,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="body start radio"),
-          sg.Frame("Select starting hands", [[sg.Column(start_hands,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="hands start radio"),
-          sg.Frame("Select starting left ring", [[sg.Column(start_ring1,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring1 start radio"),
-          sg.Frame("Select starting right ring", [[sg.Column(start_ring2,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring2 start radio"),
-          sg.Frame("Select starting back", [[sg.Column(start_back,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="back start radio"),
-          sg.Frame("Select starting waist", [[sg.Column(start_waist,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="waist start radio"),
-          sg.Frame("Select starting legs", [[sg.Column(start_legs,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="legs start radio"),
-          sg.Frame("Select starting feet", [[sg.Column(start_feet,size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="feet start radio"),
-         ]
 
+# radio_tab = [
+#           sg.Frame("Select starting main-hand", [[sg.Column(start_radio["NIN"][0],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True,key="main start radio NIN"),
+#           sg.Frame("Select starting off-hand",  [[sg.Column(start_radio["NIN"][1],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="sub start radio NIN"),
+#           sg.Frame("Select starting ammo", [[sg.Column(start_radio["NIN"][2],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ammo start radio NIN"),
+#           sg.Frame("Select starting head", [[sg.Column(start_radio["NIN"][3],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="head start radio NIN"),
+#           sg.Frame("Select starting neck", [[sg.Column(start_radio["NIN"][4],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="neck start radio NIN"),
+#           sg.Frame("Select starting left ear", [[sg.Column(start_radio["NIN"][5],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear1 start radio NIN"),
+#           sg.Frame("Select starting ring ear", [[sg.Column(start_radio["NIN"][6],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear2 start radio NIN"),
+#           sg.Frame("Select starting body", [[sg.Column(start_radio["NIN"][7],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="body start radio NIN"),
+#           sg.Frame("Select starting hands", [[sg.Column(start_radio["NIN"][8],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="hands start radio NIN"),
+#           sg.Frame("Select starting left ring", [[sg.Column(start_radio["NIN"][9],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring1 start radio NIN"),
+#           sg.Frame("Select starting right ring", [[sg.Column(start_radio["NIN"][10],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring2 start radio NIN"),
+#           sg.Frame("Select starting back", [[sg.Column(start_radio["NIN"][11],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="back start radio NIN"),
+#           sg.Frame("Select starting waist", [[sg.Column(start_radio["NIN"][12],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="waist start radio NIN"),
+#           sg.Frame("Select starting legs", [[sg.Column(start_radio["NIN"][13],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="legs start radio NIN"),
+#           sg.Frame("Select starting feet", [[sg.Column(start_radio["NIN"][14],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="feet start radio NIN"),
 
+#           sg.Frame("Select starting main-hand", [[sg.Column(start_radio["DRK"][0],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="main start radio DRK"),
+#           sg.Frame("Select starting off-hand",  [[sg.Column(start_radio["DRK"][1],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="sub start radio DRK"),
+#           sg.Frame("Select starting ammo", [[sg.Column(start_radio["DRK"][2],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ammo start radio DRK"),
+#           sg.Frame("Select starting head", [[sg.Column(start_radio["DRK"][3],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="head start radio DRK"),
+#           sg.Frame("Select starting neck", [[sg.Column(start_radio["DRK"][4],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="neck start radio DRK"),
+#           sg.Frame("Select starting left ear", [[sg.Column(start_radio["DRK"][5],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear1 start radio DRK"),
+#           sg.Frame("Select starting ring ear", [[sg.Column(start_radio["DRK"][6],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear2 start radio DRK"),
+#           sg.Frame("Select starting body", [[sg.Column(start_radio["DRK"][7],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="body start radio DRK"),
+#           sg.Frame("Select starting hands", [[sg.Column(start_radio["DRK"][8],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="hands start radio DRK"),
+#           sg.Frame("Select starting left ring", [[sg.Column(start_radio["DRK"][9],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring1 start radio DRK"),
+#           sg.Frame("Select starting right ring", [[sg.Column(start_radio["DRK"][10],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring2 start radio DRK"),
+#           sg.Frame("Select starting back", [[sg.Column(start_radio["DRK"][11],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="back start radio DRK"),
+#           sg.Frame("Select starting waist", [[sg.Column(start_radio["DRK"][12],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="waist start radio DRK"),
+#           sg.Frame("Select starting legs", [[sg.Column(start_radio["DRK"][13],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="legs start radio DRK"),
+#           sg.Frame("Select starting feet", [[sg.Column(start_radio["DRK"][14],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="feet start radio DRK"),
+#          ]
 
+# The above commented block can be reduced to the following two lines to cover all slots and all jobs at once.
+# The first element is printed on screen. The 2nd element is used by the code to organize things.
+# Allowing a dynamic radio list required a lot of changes. If things appear unreasonably broken, then simply download the Github versions from 2022 December 03 titled " Better output tab. " which are the save state before this big change.
+radio_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
+radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True,key=f"{l[1]} start radio {k}") if l[1]=="main" and k=="NIN" else sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
+#radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
+
+# k = main_job
+# l = [used in the frame header display, used in the code for organization]
+# m = 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14 (slot index)
 
 
 

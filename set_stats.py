@@ -106,7 +106,7 @@ class set_gear:
                      'Ninjutsu Skill':489, "Elemental Magic Skill":0,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
-                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
+                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,
                      'Crit Rate':0+5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
                      'Store TP':0,

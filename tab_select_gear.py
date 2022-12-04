@@ -14,6 +14,11 @@ w, h = sg.Window.get_screen_size()
 
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
+main_job = "NIN"
+main_jobs = ["NIN", "DRK","SCH", "RDM", "BLM"]
+
+
+
 
 # --------------------------------------------------------------------------------
 # Create the full list of checkboxes for each of 15 gear slots. Lots of hard-coding for now...
@@ -97,6 +102,17 @@ feet_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k
 for k in sorted(feet_names):
     gear_feet.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="feet: "+k,enable_events=True)])
 
+
+gear_list = {"main":mains,"sub":subs+grips,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
+slots = [k for k in gear_list]
+checkbox_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
+
+
+names = {job: {slot:sorted([k["Name2"] for k in gear_list[slot] if job.lower() in k["Jobs"]]) for slot in slots} for job in main_jobs}
+gear  = {job: {slot:[k for k in gear_list[slot] if job.lower() in k["Jobs"]] for slot in slots} for job in main_jobs}
+
+# gear = {f"{slot}": {f"{job}":[[sg.Checkbox(k,font=font_choice,size=(50,1),key="sub: "+k+";;"+job,enable_events=True)] for k in names[job][slot]] for job in main_jobs} for slot in [l[1] for l in checkbox_slots]}
+
 from tab_inputs import item2image
 framesize = [400,450]
 # sg.Push()
@@ -109,26 +125,34 @@ gear_tab = [
     [sg.Push(),sg.Button("Back",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display back"),sg.Button("Waist",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display waist"),sg.Button("Legs",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display legs"),sg.Button("Feet",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display feet"),sg.Push()],
     [sg.Push(),sg.Text("",font=font_choice)],
     [sg.Push(),sg.Button("Select All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all gear",tooltip="Select all items in the displayed list.",enable_events=True),sg.Button("Unselect All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="unselect all gear",tooltip="Unselect all items in the displayed list.",enable_events=True)],
-    [sg.Push(),sg.Button("Select All\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all main",tooltip="Select all items in the displayed list that your selected main job can equip.",enable_events=True,disabled=False),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)]
+    [sg.Push(),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)]
   ],vertical_alignment="center",size=[370,450]),]]
+
+    # gear_main.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="main: "+k,enable_events=True)])
+
 checkbox_tab = [[sg.Column([[
-  sg.Push(),
-  sg.Frame("Select main-hand equipment", [[sg.Column([  k for k in gear_main  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True,key="main display",size=framesize),
-  sg.Frame("Select off-hand equipment", [[sg.Column([  k for k in gear_sub  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="sub display",size=framesize),
-  sg.Frame('Select ammo equipment',[[sg.Column([  k for k in gear_ammo  ],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key='ammo display',size=framesize),
-  sg.Frame("Select head equipment", [[sg.Column([  k for k in gear_head  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="head display",size=framesize),
-  sg.Frame("Select neck equipment", [[sg.Column([  k for k in gear_neck  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="neck display",size=framesize),
-  sg.Frame("Select left ear equipment", [[sg.Column([  k for k in gear_ear1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear1 display",size=framesize),
-  sg.Frame("Select right ear equipment", [[sg.Column([  k for k in gear_ear2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear2 display",size=framesize),
-  sg.Frame("Select body equipment", [[sg.Column([  k for k in gear_body  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="body display",size=framesize),
-  sg.Frame("Select hands equipment", [[sg.Column([  k for k in gear_hands  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="hands display",size=framesize),
-  sg.Frame("Select left ring equipment", [[sg.Column([  k for k in gear_ring1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring1 display",size=framesize),
-  sg.Frame("Select right ring equipment", [[sg.Column([  k for k in gear_ring2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring2 display",size=framesize),
-  sg.Frame("Select back equipment", [[sg.Column([  k for k in gear_back  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="back display",size=framesize),
-  sg.Frame("Select waist equipment", [[sg.Column([  k for k in gear_waist  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="waist display",size=framesize),
-  sg.Frame("Select legs equipment", [[sg.Column([  k for k in gear_legs ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="legs display",size=framesize),
-  sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
+  sg.Frame(f"Select {l[1]} equipment", [[sg.Column([  [sg.Checkbox(k,font=font_choice,size=(50,1),key=f"{l[1]}: {k};;{job}",enable_events=True)] for k in names[job][l[1]]  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True,key=f"{l[1]} display {job}",size=framesize) for l in checkbox_slots for job in main_jobs
 ]
+])]]
+
+# checkbox_tab = [[sg.Column([[
+
+#   sg.Frame("Select main-hand equipment", [[sg.Column([  k for k in gear_main  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True,key="main display",size=framesize),
+#   sg.Frame("Select off-hand equipment", [[sg.Column([  k for k in gear_sub[job]  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="sub display",size=framesize),
+#   sg.Frame('Select ammo equipment',[[sg.Column([  k for k in gear_ammo  ],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key='ammo display',size=framesize),
+#   sg.Frame("Select head equipment", [[sg.Column([  k for k in gear_head  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="head display",size=framesize),
+#   sg.Frame("Select neck equipment", [[sg.Column([  k for k in gear_neck  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="neck display",size=framesize),
+#   sg.Frame("Select left ear equipment", [[sg.Column([  k for k in gear_ear1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear1 display",size=framesize),
+#   sg.Frame("Select right ear equipment", [[sg.Column([  k for k in gear_ear2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear2 display",size=framesize),
+#   sg.Frame("Select body equipment", [[sg.Column([  k for k in gear_body  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="body display",size=framesize),
+#   sg.Frame("Select hands equipment", [[sg.Column([  k for k in gear_hands  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="hands display",size=framesize),
+#   sg.Frame("Select left ring equipment", [[sg.Column([  k for k in gear_ring1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring1 display",size=framesize),
+#   sg.Frame("Select right ring equipment", [[sg.Column([  k for k in gear_ring2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring2 display",size=framesize),
+#   sg.Frame("Select back equipment", [[sg.Column([  k for k in gear_back  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="back display",size=framesize),
+#   sg.Frame("Select waist equipment", [[sg.Column([  k for k in gear_waist  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="waist display",size=framesize),
+#   sg.Frame("Select legs equipment", [[sg.Column([  k for k in gear_legs ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="legs display",size=framesize),
+#   sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
+# ]
 
 select_gear_tab = [[sg.Frame("Select equipment",[[sg.Push(),sg.vtop(sg.Column(gear_tab)),sg.Push(),sg.vtop(sg.Column(checkbox_tab))]],size=(800,500),)]]
           # [sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column(starting_set_tab)),sg.Push(),sg.Column([radio_tab])]],size=[600,275]))]

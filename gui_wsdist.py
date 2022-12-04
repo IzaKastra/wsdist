@@ -13,55 +13,6 @@ random_theme = "BlueMono"
 
 sg.theme(random_theme)
 
-def get_warnings(values):
-    #
-    # This would print warnings, but it doesn't correctly read the status of selected items.
-    # Will fix later. The user just needs to know that they shouldn't try to use Liberator in their Blade: Shun set...
-    #
-    selected_mains = [] # Currently enabled main weapons
-    selected_subs = []
-    for k in values:
-        if "main: " in str(k) and values[k]: # If the "main" gear slot item is enabled:
-            selected_mains.append( " ".join(k.split()[1:]) )
-        if "sub: " in str(k) and values[k]: # If the "sub" gear slot item is enabled:
-            selected_subs.append( " ".join(k.split()[1:]) )
-
-    if "Blade:" in values["select weaponskill"]:
-        selected_ws_type = "Katana"
-    elif "Tachi:" in values["select weaponskill"]:
-        selected_ws_type = "Great Katana"
-    elif values["select weaponskill"] in ["Insurgency", "Cross Reaper", "Entropy", "Infernal Scythe", "Catastrophe", "Quietus"]:
-        selected_ws_type = "Scythe"
-    elif values["select weaponskill"] in ["Torcleaver", "Resolution", "Scourge"]:
-        selected_ws_type = "Great Sword"
-    elif values["select weaponskill"] in ["Savage Blade", "Requiescat", "Chant du Cygne ", "Death Blossom"]:
-        selected_ws_type = "Sword"
-    elif values["select weaponskill"] in ["Evisceration", "Mercy Stroke", "Mandalic Stab", "Rudra's Storm", "Exenterator"]:
-        selected_ws_type = "Dagger"
-
-
-
-    active_warnings = []
-    two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
-    one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"]
-    for k in selected_mains:
-        for l in mains:
-            wname = l["Name2"] if "Name2" in l else l["Name"]
-            if k==wname:
-                if l["Skill Type"] != selected_ws_type:
-                    active_warnings.append("Main:["+wname+"]" + warning_messages["Incorrect main"] + "["+values["select weaponskill"]+"]")
-
-                for k2 in selected_subs:
-                    for l2 in subs+grips:
-                        wname2 = l2["Name2"] if "Name2" in l2 else l2["Name"]
-                        if k2==wname2:
-                            if l2["Type"] == "Grip" and l["Skill Type"] not in two_handed:
-                                active_warnings.append("Sub:["+wname2+"]" + warning_messages["Incorrect sub"] + "Main:["+wname+"]")
-                            if l2["Type"] == "Weapon" and l["Skill Type"] in two_handed:
-                                active_warnings.append("Sub:["+wname2+"]" + warning_messages["Incorrect sub"] + "Main:["+wname+"]")
-    window["ws warnings"].update("\n".join(active_warnings),visible=True)
-
-
 def name2dictionary(name, all_gear):
     #
     # Given an item name ("Adhemar Bonnet +1A"), find the dictionary (adhemar_bonnet_A) which containts that item's stats.
@@ -103,7 +54,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 window = sg.Window(f"Kastra WS Damage Simulator (2022 December 03) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
-
+# window["main start radio NIN"].update(visible=True)
 
 
 while True:
@@ -113,12 +64,11 @@ while True:
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
-
+    # print(event)
 
     # Exit the program if given exit or null command.
     if event in (None, "Exit"):
         break
-
 
     # # Allow the user to define their font size (lazy way of having the user try to fix their own UI formatting issues). Currently broken. Can't find a way to update all text programmatically yet
     if event[1:] in [k[2:] for k in font_size_options]:
@@ -244,67 +194,45 @@ while True:
                 window["marcato"].update(disabled=False)
 
         # Setup the buttons which display/hide gear lists on the gear tab.
-        if event in ["display main","display sub","display ammo","display head","display body","display neck","display ear1","display ear2","display body","display hands","display ring1","display ring2","display back","display waist","display legs","display feet",]:
-            slot = event.split()[-1]
+        if event.split()[0] == "display":
+            if event == "display ---":
+                continue
+            slot = event.split()[1] # The slot selected by the user
+            main_job = values["mainjob"] # The main job from the inputs tab
             for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if slot==k:
-                    window[f"{k} display"].update(visible=True)
-                else:
-                    window[f"{k} display"].update(visible=False)
+                for l in main_jobs:
+                    if slot==k and main_job == l:
+                        window[f"{k} display {l}"].update(visible=True)
+                    else:
+                        window[f"{k} display {l}"].update(visible=False)
 
         # Setup buttons to automatically select everything in the displayed list.
         if event == "select all gear":
+            main_job = values["mainjob"]
             for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if window[f"{k} display"].visible:
+                if window[f"{k} display {main_job}"].visible:
                     slot = k
                     break
             for k in values:
                 if type(k) == str:
                     if k.split()[0][:-1] == slot:
-                        window[k].update(True)
+                        if k.split(";;")[-1] == main_job:
+                            window[k].update(True)
+                        else:
+                            window[k].update(False)
+                        
 
         # Setup buttons to automatically unselect everything in the displayed list.
         if event == "unselect all gear":
+            main_job = values["mainjob"]
             for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if window[f"{k} display"].visible:
+                if window[f"{k} display {main_job}"].visible:
                     slot = k
                     break
             for k in values:
                 if type(k) == str:
-                    if k.split()[0][:-1] == slot:
+                    if k.split()[0][:-1] == slot and k.split(";;")[-1] == main_job:
                         window[k].update(False)
-
-
-        if event == "select all main":
-            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
-                        "sub":subs + grips,
-                        "ammo":ammos,
-                        "head":heads,
-                        "neck":necks,
-                        "ear1":ears,
-                        "ear2":ears2,
-                        "body":bodies,
-                        "hands":hands,
-                        "ring1":rings,
-                        "ring2":rings2,
-                        "back":capes,
-                        "waist":waists,
-                        "legs":legs,
-                        "feet":feet}
-            main_job = values["mainjob"].lower()
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if window[f"{k} display"].visible:
-                    slot = k
-                    displayed_equipment_list = gear_map[slot]
-                    break
-            for k in values:
-                if type(k) == str:
-                    if k.split()[0][:-1] == slot:
-                        for l in displayed_equipment_list:
-                            if main_job in l.get("Jobs",[]):
-                                window[f"{slot}: {l['Name2']}"].update(True)
-                            else:
-                                window[f"{slot}: {l['Name2']}"].update(False)
 
         # select every piece of equipment in all slots that your main job can equip.
         if event == "select ALL main":
@@ -323,38 +251,98 @@ while True:
                         "waist":waists,
                         "legs":legs,
                         "feet":feet}
-            main_job = values["mainjob"].lower()
-            for slot in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                displayed_equipment_list = gear_map[slot]
-                for k in values:
-                    if type(k) == str:
-                        if k.split()[0][:-1] == slot:
-                            for l in displayed_equipment_list:
-                                if main_job in l.get("Jobs",[]):
-                                    window[f"{slot}: {l['Name2']}"].update(True)
-                                else:
-                                    window[f"{slot}: {l['Name2']}"].update(False)
+            main_job = values["mainjob"]
+            ws_name = values["select weaponskill"]
+            ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin"],
+                       "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
+                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime"],
+                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Requiescat", "Sanguine Blade", "Seraph Blade"],
+                       "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe"],
+                       "Great Sword":["Torcleaver","Scourge","Resolution"],
+                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","True Strike"],
+                       "Staff":["Cataclysm","Shattersoul"]}
 
+            for slot in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+                for job in main_jobs:
+                    displayed_equipment_list = gear_map[slot]
+                    for k in values:
+                        if type(k) == str:
+                            if k.split()[0][:-1] == slot: # sub:  ammo:  main:  etc
+                                for l in displayed_equipment_list:
+                                    if job.lower() in l["Jobs"] and main_job==job:
+                                        window[f"{slot}: {l['Name2']};;{job}"].update(True)
+                                        if slot == "main" and ws_name not in ws_dict[l["Skill Type"]] and main_job not in ["BLM", "SCH", "RDM"]: # Unselect weapons that can't use the selected weapon skill
+                                            window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                    else:
+                                        if f"{slot}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
+                                            window[f"{slot}: {l['Name2']};;{job}"].update(False)
 
 
         # Setup buttons to show/hide radio buttons on the starting gearset tab.
         # Clicking the "main" slot will show the radio buttons for the "main" gear on the right while hiding all other slot radio buttons
+        # Modified to only show gear that your main job can use.
         if event.split()[0] == "showstart":
+            main_job = values["mainjob"]
             slot = event.split()[-1]
             if slot == "---":
                 continue
             for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if k == slot:
-                    if not window[f"{k} start radio"].visible:
-                        window[f"{k} start radio"].update(visible=True)
-                else:
-                    if window[f"{k} start radio"].visible:
-                        window[f"{k} start radio"].update(visible=False)
+                for l in main_jobs:
+                    if k == slot:
+                        if l == main_job:
+                            if not window[f"{k} start radio {l}"].visible:
+                                window[f"{k} start radio {l}"].update(visible=True)
+                        elif window[f"{k} start radio {l}"].visible:
+                            window[f"{k} start radio {l}"].update(visible=False)
+                    else:
+                        if window[f"{k} start radio {l}"].visible:
+                            window[f"{k} start radio {l}"].update(visible=False)
+
+        # Update the radio list if the main job changes.
+        if event == "mainjob":
+            main_job = values["mainjob"]
+            main_jobs = ["NIN","DRK","SCH","RDM","BLM"]
+
+            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
+                        "sub":subs + grips,
+                        "ammo":ammos,
+                        "head":heads,
+                        "neck":necks,
+                        "ear1":ears,
+                        "ear2":ears2,
+                        "body":bodies,
+                        "hands":hands,
+                        "ring1":rings,
+                        "ring2":rings2,
+                        "back":capes,
+                        "waist":waists,
+                        "legs":legs,
+                        "feet":feet}
+
+            # Update the radio and checkbox lists to display only items the main job can equip
+            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+                for job in main_jobs:
+                    if window[f"{k} start radio {job}"].visible:
+                        slot = k
+                    window[f"{k} start radio {job}"].update(visible=False)
+                    window[f"{k} display {job}"].update(visible=False)
+
+                    displayed_equipment_list = gear_map[k] # Start checkbox part (copy pasted from select ALL)
+                    for k2 in values:
+                        if type(k2) == str:
+                            if k2.split()[0][:-1] == k: # sub:  ammo:  main:  etc
+                                for l in displayed_equipment_list:
+                                    if f"{k}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
+                                        window[f"{k}: {l['Name2']};;{job}"].update(False)
+
+            window[f"{slot} start radio {main_job}"].update(visible=True)
+            window[f"{slot} display {main_job}"].update(visible=True)
+        
 
         # Setup fancy pictures on the buttons when you select a radio button on starting set tab.
         if event[:5] == "start":
             slot = event.split(":")[0][5:]
-            item = event.split(":")[1][1:]
+            item = event.split(":")[1].split(";;")[0][1:] # Had to append "NIN" to the end of the NIN list to distinguish it from the DRK, BLM, etc lists. I simply remove that bit here or it'll say something like "Heishi Shorinken R15;;NIN" and yell at us
             item_name = all_names_map[item]
             window[f"showstart {slot}"].update(image_data=item2image(item_name))
             window[f"showstart {slot}"].set_tooltip(item)
@@ -418,7 +406,7 @@ while True:
                     if k[:5] == "start" and ":" in k: # If the key is a "start_____: " key for a starting item
                         if values[k]: # if the start item is set to true
                             slot = k.split(":")[0][5:] # The slot is recorded in the key
-                            item_name2 = k.split(":")[1][1:] # The item name is also recorded in the key
+                            item_name2 = k.split(":")[1].split(";;")[0][1:] # The item name is also recorded in the key, but there is one item per job that can equip it, so we must remove the ";;NIN" bit. This is because we can't dynamically alter radio lists in PySimpleGUI...
                             starting_gearset[slot] = name2dictionary(item_name2,all_gear)
 
 
@@ -580,8 +568,9 @@ while True:
                     if type(val) == str:
                         # print(slot, val, val.split(":")[0],values[val])
                         if val.split(":")[0] == s and values[val]:
-                            item_name = " ".join(val.split()[1:])
+                            item_name = " ".join(val.split()[1:]).split(";;")[0]
                             gear_to_check.append(name2dictionary(item_name,all_gear))
+                            # print(s,item_name) # Print gear to be checked
                 if len(gear_to_check) > 0:
                     check_gear.append(gear_to_check)
                 else:
@@ -728,7 +717,8 @@ while True:
                     continue
                 # print(slot, best_set[slot]["Name2"],values[f"start{slot}: {best_set[slot]['Name2']}"])
                 window[f"showstart {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
-                window[f"start{slot}: {best_set[slot]['Name2']}"].update(True)
+                if f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
+                    window[f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}"].update(True)
                 window[f"showstart {slot}"].set_tooltip(best_set[slot]["Name2"])
 
     except Exception as err:

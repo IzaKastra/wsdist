@@ -47,7 +47,7 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
         magic_burst_multiplier = 1.
 
     
-    magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva)
+    magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
     resist_state = get_resist_state_average(magic_hit_rate)
     # print(magic_hit_rate,spelltype_skill,magic_accuracy_skill,dstat_macc,magic_accuracy,resist_state)
     # print(magic_accuracy, enemy_meva, magic_hit_rate, resist_state)
