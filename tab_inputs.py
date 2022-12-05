@@ -41,7 +41,7 @@ ws_list = sorted(
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
            "Torcleaver", "Scourge", "Resolution",
            "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
-           "Black Halo", "Judgment","Hexa Strike","Realmrazer"])
+           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer"])
 
 spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",

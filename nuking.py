@@ -9,11 +9,11 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
     # print(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, ninjutsu_damage, futae, burst, steps)
 
     # Determine Magic Accuracies
-    spelltype_skill = gearset.playerstats[f"{spelltype} Skill"] # Magic Accuracy from Ninjutsu Skill
+    spelltype_skill = gearset.playerstats[f"{spelltype} Skill"] # Magic Accuracy from Ninjutsu Skill.
 
     magic_accuracy_skill = gearset.playerstats["Magic Accuracy Skill"] # Magic Accuracy from Magic Accuracy Skill. Currently includes off-hand weapon stats.
     magic_accuracy_skill -= gearset.gear["sub"].get("Magic Accuracy Skill",0) # Subtract off the Magic Accuracy Skill from the off-hand slot, since it does not contribute to spell accuracy.
- 
+
     dstat_macc = get_dstat_macc(player_INT, enemy_INT) # Get magic accuracy from dINT
 
     magic_accuracy = gearset.playerstats["Magic Accuracy"] # Read base Magic Accuracy from playerstats, including traits and gear with "Magic Accuracy"
@@ -56,9 +56,15 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
 
     futae_bonus = 1.0
     if spelltype == "Ninjutsu":
-        ninjutsu_skill_potency = 2.00 if tier=="Ichi" else 2.12 # Assumes maximum bonus damage from Ninjutsu Skill > 500. 
-                                                                # This should be true at ML31 with Ninjutsu merits.
-                                                                # Or at ML8 with Ninjutsu merits and the Relic+3 feet equipped.
+        if tier == "Ichi":
+            ninjutsu_skill_potency = (100 + (spelltype_skill-50)/2)/100 if spelltype_skill <= 250 else 2.0
+        elif tier == "Ni":
+            ninjutsu_skill_potency = (100 + (spelltype_skill-126)/2)/100 if spelltype_skill <= 350 else 2.12
+        elif tier == "San":
+            ninjutsu_skill_potency = (100 + (spelltype_skill-276)/2)/100 if spelltype_skill <= 500 else 2.12
+        else:
+            ninjutsu_skill_potency = 0 # If something breaks and tier wasn't given, then just give 0 potency (results in zero damage always).
+
         m,v = get_mv(tier, player_INT, enemy_INT)
         d = int(v+mdmg+dINT*m)
 

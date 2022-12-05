@@ -79,9 +79,9 @@ class set_gear:
         if mainjob == "NIN":  # Master Level 20 Ninja stats
             # Ninja gets +5% WSD from job gifts
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
-                     'Katana Skill':460, 'Dagger Skill':414, 'Sword Skill':409, 'Hand-to-Hand Skill':336, 'Great Katana Skill':404, 'Club Skill':336, 'Throwing Skill':460,
-                     'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                     'Ninjutsu Skill':489, "Elemental Magic Skill":0,
+                     'Katana Skill':444+16, 'Dagger Skill':398+16, 'Sword Skill':393+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
+                     'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':320+16,'Marksmanship Skill':393+16,
+                     'Ninjutsu Skill':473+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
                      'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7,
@@ -430,7 +430,6 @@ class set_gear:
             else:
                 self.playerstats[stat] += self.set_bonuses[stat]
 
-
         # Build the gearstat dictionary from the provided gear set.
         for stat in self.gearstats: # stat = stat name as seen in the gearstats dictionary: "STR", "TA", "Crit Rate", etc
             for k in self.gear.values(): # k = Dictionary containing the stats for a single piece of gear for all slots one slot at a time: {'Name': 'Gere Ring', 'STR': 10, 'Attack': 16, 'TA': 5}
@@ -458,7 +457,6 @@ class set_gear:
             fencer_bonus = get_fencer_bonus(self.playerstats["Fencer"])
             self.playerstats["TP Bonus"] += fencer_bonus[0]
             self.playerstats["Crit Rate"] += fencer_bonus[1]
-
 
         # Stats from food are used to calculate Attack and Accuracy before any % bonuses such as Chaos Roll or GEO's Fury bubble
         # Add food stat bonuses here
