@@ -387,11 +387,12 @@ class set_gear:
      
 
         # Count the number of set-bonus gear equipped.
-        self.set_bonuses = {'Crit Rate':0, 'DEX':0, 'AGI':0, 'VIT':0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, 'STR':0, 'VIT':0}
+        self.set_bonuses = {'Crit Rate':0, 'DEX':0, 'AGI':0, 'VIT':0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, 'STR':0, 'VIT':0, "Magic Attack":0}
         adhemar_count = 0    # Adhemar +1 gives Crit Rate
         mummu_count = 0      # Mummu +2 with the Mummu Ring gives DEX/AGI/VIT/CHR
         regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy
         flamma_count = 0     # Flamma +2 with the Flamma Ring gives STR/DEX/VIT
+        amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
         for slot in gear:
             if "adhemar" in gear[slot]['Name'].lower() and "+1" in gear[slot]['Name'].lower():
                 adhemar_count += 1
@@ -406,6 +407,8 @@ class set_gear:
             if "flamma ring" == gear['ring1']['Name'].lower() or "flamma ring" == gear['ring2']['Name'].lower():
                 if "flamma" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
                     flamma_count += 1
+            if "Amalric" in gear[slot]["Name"]:
+                amalric_count += 1
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
         self.set_bonuses['DEX'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
@@ -417,6 +420,7 @@ class set_gear:
         self.set_bonuses['DEX'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['VIT'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['STR'] += (flamma_count)*8 if flamma_count >= 2 else 0
+        self.set_bonuses['Magic Attack'] += (amalric_count)*10 if amalric_count >= 2 else 0
 
         # Add set bonuses to gearstats
         for stat in self.set_bonuses:
