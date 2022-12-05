@@ -9,14 +9,14 @@
 from numba import njit
 
 @njit
-def get_hitrate(player_accuracy, ws_acc, enemy_eva, weaponslot, first):
+def get_hitrate(player_accuracy, ws_acc, enemy_eva, weaponslot, first, two_hand=False):
     #
     # Calculate hit rates based on player and enemy stats. Uses equation from BG wiki
     # https://www.bg-wiki.com/ffxi/Hit_Rate
     # The first main- and sub-hits gain +100 accuracy (https://www.bg-wiki.com/ffxi/Category:Weapon_Skills)
     #
     if weaponslot == 'main': # Main hits caps at 99% hit rate
-        accuracy_cap = 0.99
+        accuracy_cap = 0.99 if not two_hand else 0.95
     elif weaponslot == 'sub': # Sub hits cap at 95% hit rate
         accuracy_cap = 0.95
 

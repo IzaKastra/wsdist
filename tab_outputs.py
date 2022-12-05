@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 December 04
 #
 # This file contains a the GUI tab "Outputs".
 # This will be renamed later to "WS Outputs" when I add TP sets and nuking.
@@ -53,15 +53,15 @@ tp = sg.vtop(sg.Frame("TP",[
     ]))
 
 other = sg.vtop(sg.Frame("Other",[
-    [sg.Text(f"{'Crit. Rate:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="crit rate stat")],
-    [sg.Text(f"{'Double Attack:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="da stat")],
-    [sg.Text(f"{'Triple Attack:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="ta stat")],
-    [sg.Text(f"{'Quad. Attack:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="qa stat")],
-    [sg.Text(f"{'Weapon skill damage:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="wsd stat")],
-    [sg.Text(f"{'Weapon skill bonus:':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="ws bonus stat",tooltip="Ambuscade WS damage bonus, hidden Relic/Mythic WS damage, REMA augments, etc")],
-    [sg.Text(f"{'PDL (gear):':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="pdl gear stat",tooltip="Multiplicative with PDIF cap for (weapon_base_PDIF + PDL_trait).")],
-    [sg.Text(f"{'PDL (trait):':<25s} {'---':>3s}",font=font_choice,size=(30,1),key="pdl trait stat", tooltip="Additive with weapon base PDIF value.")],
-    [sg.Text(f"{'TP Bonus:':<24s} {'----':>4s}",font=font_choice,size=(30,1),key="tp bonus stat")],
+    [sg.Text(f"{'Crit. Rate:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="crit rate stat")],
+    [sg.Text(f"{'Double Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="da stat")],
+    [sg.Text(f"{'Triple Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ta stat")],
+    [sg.Text(f"{'Quad. Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="qa stat")],
+    [sg.Text(f"{'Weapon skill damage:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="wsd stat")],
+    [sg.Text(f"{'Weapon skill bonus:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ws bonus stat",tooltip="Ambuscade WS damage bonus, hidden Relic/Mythic WS damage, REMA augments, etc")],
+    [sg.Text(f"{'PDL (gear):':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="pdl gear stat",tooltip="Multiplicative with PDIF cap for (weapon_base_PDIF + PDL_trait).")],
+    [sg.Text(f"{'PDL (trait):':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="pdl trait stat", tooltip="Additive with weapon base PDIF value.")],
+    [sg.Text(f"{'TP Bonus:':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="tp bonus stat")],
     ]))
 
 ws_tab = [

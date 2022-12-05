@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 December 04
 #
 from get_dex_crit import *
 import numpy as np
@@ -21,6 +21,26 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     if main_wpn_name == 'Naegling':
         if ws_name == 'Savage Blade':
             bonuses['ws_bonus'] += 0.15
+    if main_wpn_name == 'Murgleis':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Death Blossom':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    if main_wpn_name == 'Almace':
+        if ws_name == "Chant du Cygne":
+            bonuses['ws_bonus'] += 0.1
+    if main_wpn_name == 'Excalibur':
+        if ws_name == 'Knights of Round':
+            bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
+    if main_wpn_name == 'Maxentius':
+        if ws_name == 'Black Halo':
+            bonuses['ws_bonus'] += 0.5
+    if main_wpn_name == 'Tishtrya':
+        if ws_name == 'Realmrazer':
+            bonuses['ws_bonus'] += 0.1
+    if main_wpn_name == 'Mjollnir':
+        if ws_name == 'Randgrith':
+            bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
     elif 'Kikoku' in main_wpn_name:
         if ws_name == 'Blade: Metsu':
             bonuses['ws_bonus'] += 0.68 # Hidden +40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
@@ -31,7 +51,7 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Blade: Kamu':
-            bonuses['ws_bonus'] += 0.495 # Hidden +30% Relic WS damage * R15 +15% WS damage (1.3)*(1.15)
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif 'Heishi' in main_wpn_name:
         if ws_name == 'Blade: Shun':
             bonuses['ws_bonus'] += 0.1
@@ -41,6 +61,9 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Tauret':
         if ws_name == 'Evisceration':
             bonuses['ws_bonus'] += 0.5
+    elif main_wpn_name == 'Aeneas':
+        if ws_name == 'Exenterator':
+            bonuses['ws_bonus'] += 0.1
     elif main_wpn_name == 'Karambit':
         if ws_name == "Asuran Fists":
             bonuses['ws_bonus'] += 0.5
@@ -62,13 +85,27 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
 
         # Shining One allows all weapon skills to crit. Seems pretty OP, but here we are...
         # https://www.bg-wiki.com/ffxi/Shining_One
-        crit_rate +=  gearset.playerstats['Crit Rate']/100
+        crit_rate = gearset.playerstats['Crit Rate']/100
         crit_boost = [0.05, 0.10, 0.15]
-        crit_bonus = np.interp(tp, base_tp, crit_boost)
+        crit_bonus = np.interp(tp, [1000,2000,3000], crit_boost)
         crit_rate += crit_bonus
         crit_rate += get_dex_crit(gearset.playerstats['DEX'], enemy_agi)
         if ws_name == 'Impulse Drive':
             bonuses['ws_bonus'] += 0.4
+    elif main_wpn_name == 'Gungnir':
+        if ws_name == 'Geirskogul':
+            bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
+    elif main_wpn_name == "Rhongomiant":
+        if ws_name == "Camlann's Torment":
+            bonuses['ws_bonus'] += 0.1
+    elif main_wpn_name == "Ryunohige":
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == "Drakesbane":
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == "Trishula":
+        if ws_name == "Stardiver":
+            bonuses['ws_bonus'] += 0.1 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif main_wpn_name == 'Hachimonji':
         # Hachimonji does some weird stuff with store TP and multi-hits. I do not include such effects here.
         # https://www.bg-wiki.com/ffxi/Hachimonji

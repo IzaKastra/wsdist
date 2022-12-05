@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 December 04
 #
 import numpy as np
 from set_stats import *
@@ -35,8 +35,28 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_ftp = [4.0, 10.25, 13.75] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
-        wsc  = int(0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]) # Stat modifiers, including things like Utu Grip if applicable.
+        wsc  = 0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
+    elif ws_name == "Death Blossom":
+        ftp  = 4.0
+        ftp_rep = False
+        wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 3
+    elif ws_name == "Knights of Round":
+        ftp  = 5.0
+        ftp_rep = False
+        wsc = 0.4*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Chant du Cygne":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0.15, 0.25, 0.40]
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.6328125
+        ftp_rep = True
+        wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 3
     elif ws_name == "Blade: Shun":
         atk_boost = [1.0, 2.0, 3.0]
         ws_atk_bonus = np.interp(tp, base_tp, atk_boost) - 1.0
@@ -61,7 +81,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, 1.25) # The attack bonus from Blade: Kamu is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
-        enemy_defense *= 0.75
+        enemy_defense *= 0.75 # TODO: This should be additive with Dia, Frailty, etc. Fix it later. See quietus in this same file
     elif ws_name == "Blade: Ku":
         acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -94,6 +114,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.5*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
+    elif ws_name == "Exenterator":
+        ftp = 1.0
+        ftp_rep = True
+        wsc = 0.85*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 4
     elif ws_name == "Blade: Chi":
         hybrid    = True
         base_ftp  = [0.5, 1.375, 2.25]
@@ -146,6 +171,40 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep  = True
         wsc      = 0.85*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 4
+    elif ws_name == "Geirskogul":
+        ftp      = 3.0
+        ftp_rep  = False
+        wsc      = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits    = 1
+    elif ws_name == "Camlann's Torment":
+        ftp  = 3.0
+        ftp_rep = False
+        wsc = 0.6*(player_vit+player_str)
+        nhits = 1
+        base_enemy_def_scaling = [0.125, 0.375, 0.625]
+        enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
+        enemy_defense *= (1-enemy_def_scaling)
+    elif ws_name == "Drakesbane":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0.1, 0.25, 0.40]
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.0
+        ftp_rep = False
+        wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 4
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.8125 - 1.0) # Recalculate the player attack using a negative multiplier bonus
+        player_attack1 = special_set.playerstats["Attack1"]
+    elif ws_name == "Penta Thrust":
+        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 1.00
+        ftp_rep = False
+        wsc = 0.2*(player_str+player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 5
+        special_set = set_gear(buffs, equipment, main_job, sub_job, -0.125) # Recalculate the player attack using a negative multiplier bonus
+        player_attack1 = special_set.playerstats["Attack1"]
     elif ws_name == "Tachi: Rana":
         acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -284,6 +343,35 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.85*(player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
+    elif ws_name == "Black Halo":
+        base_ftp = [3.0, 7.25, 9.75] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.7*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
+    elif ws_name == "Hexa Strike":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0.1, 0.175, 0.25] # Middle value unknown. I just picked the half-way point to force linear scaling.
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.125
+        ftp_rep = True
+        wsc = 0.3*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 6
+    elif ws_name == "Judgment":
+        base_ftp = [3.5, 8.75, 12.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc = 0.5*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1 # Savage is a 2-hit weaponskill (+1 for offhand)
+    elif ws_name == "Realmrazer":
+        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 0.9
+        ftp_rep = True
+        wsc = 0.85*player_mnd + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 7
     
 
     scaling = {"hybrid":hybrid,

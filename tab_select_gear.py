@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 15
+# Version date: 2022 December 04
 #
 # This file contains a the GUI tab "Select Gear".
 #
@@ -15,7 +15,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 main_job = "NIN"
-main_jobs = ["NIN", "DRK","SCH", "RDM", "BLM"]
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
 
 
 
@@ -28,90 +28,88 @@ all_gear = mains+subs+grips+ammos+heads+necks+ears+ears2+bodies+hands+rings+ring
 all_names_map = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in all_gear]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
 
 
-main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains]
-for k in sorted(main_names):
-    gear_main.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="main: "+k,enable_events=True)])
+# main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains]
+# for k in sorted(main_names):
+#     gear_main.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="main: "+k,enable_events=True)])
 
-sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips]
-sub_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in subs+grips]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
-for k in sorted(sub_names):
-    gear_sub.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="sub: "+k,enable_events=True)])
+# sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips]
+# sub_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in subs+grips]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
+# for k in sorted(sub_names):
+#     gear_sub.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="sub: "+k,enable_events=True)])
 
-ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos]
-ammo_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ammos]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
-for k in sorted(ammo_names):
-    gear_ammo.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ammo: "+k,enable_events=True)])
+# ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos]
+# ammo_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ammos]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
+# for k in sorted(ammo_names):
+#     gear_ammo.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ammo: "+k,enable_events=True)])
 
-head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads]
-head_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in heads]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
-for k in sorted(head_names):
-    gear_head.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="head: "+k,enable_events=True)])
+# head_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in heads]
+# head_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in heads]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
+# for k in sorted(head_names):
+#     gear_head.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="head: "+k,enable_events=True)])
 
-neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks]
-neck_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in necks])
-for k in sorted(neck_names):
-    gear_neck.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="neck: "+k,enable_events=True)])
+# neck_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in necks]
+# neck_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in necks])
+# for k in sorted(neck_names):
+#     gear_neck.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="neck: "+k,enable_events=True)])
 
-ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears]
-ear1_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ears])
-for k in sorted(ear1_names):
-    gear_ear1.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ear1: "+k,enable_events=True)])
+# ear1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears]
+# ear1_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ears])
+# for k in sorted(ear1_names):
+#     gear_ear1.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ear1: "+k,enable_events=True)])
 
-ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2]
-ear2_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ears2])
-for k in sorted(ear2_names):
-    gear_ear2.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ear2: "+k,enable_events=True)])
+# ear2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ears2]
+# ear2_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in ears2])
+# for k in sorted(ear2_names):
+#     gear_ear2.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ear2: "+k,enable_events=True)])
 
-body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies]
-body_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in bodies])
-for k in sorted(body_names):
-    gear_body.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="body: "+k,enable_events=True)])
+# body_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in bodies]
+# body_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in bodies])
+# for k in sorted(body_names):
+#     gear_body.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="body: "+k,enable_events=True)])
 
-hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands]
-hands_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in hands])
-for k in sorted(hands_names):
-    gear_hands.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="hands: "+k,enable_events=True)])
+# hands_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in hands]
+# hands_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in hands])
+# for k in sorted(hands_names):
+#     gear_hands.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="hands: "+k,enable_events=True)])
 
-ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings]
-ring1_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in rings])
-for k in sorted(ring1_names):
-    gear_ring1.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ring1: "+k,enable_events=True)])
+# ring1_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings]
+# ring1_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in rings])
+# for k in sorted(ring1_names):
+#     gear_ring1.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ring1: "+k,enable_events=True)])
 
-ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2]
-ring2_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in rings2])
-for k in sorted(ring2_names):
-    gear_ring2.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ring2: "+k,enable_events=True)])
+# ring2_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in rings2]
+# ring2_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in rings2])
+# for k in sorted(ring2_names):
+#     gear_ring2.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="ring2: "+k,enable_events=True)])
 
-back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes]
-back_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in capes])
-for k in sorted(back_names):
-    gear_back.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="back: "+k,enable_events=True)])
+# back_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in capes]
+# back_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in capes])
+# for k in sorted(back_names):
+#     gear_back.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="back: "+k,enable_events=True)])
 
-waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists]
-waist_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in waists])
-for k in sorted(waist_names):
-    gear_waist.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="waist: "+k,enable_events=True)])
+# waist_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in waists]
+# waist_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in waists])
+# for k in sorted(waist_names):
+#     gear_waist.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="waist: "+k,enable_events=True)])
 
-legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs]
-legs_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in legs])
-for k in sorted(legs_names):
-    gear_legs.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="legs: "+k,enable_events=True)])
+# legs_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in legs]
+# legs_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in legs])
+# for k in sorted(legs_names):
+#     gear_legs.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="legs: "+k,enable_events=True)])
 
-feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet]
-feet_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in feet])
-for k in sorted(feet_names):
-    gear_feet.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="feet: "+k,enable_events=True)])
+# feet_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in feet]
+# feet_names2 = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in feet])
+# for k in sorted(feet_names):
+#     gear_feet.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="feet: "+k,enable_events=True)])
 
 
+# The following 5 lines of code account for the 70 lines of commented code above, but also include all jobs instead of just one job.
 gear_list = {"main":mains,"sub":subs+grips,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
 slots = [k for k in gear_list]
 checkbox_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
 
-
 names = {job: {slot:sorted([k["Name2"] for k in gear_list[slot] if job.lower() in k["Jobs"]]) for slot in slots} for job in main_jobs}
 gear  = {job: {slot:[k for k in gear_list[slot] if job.lower() in k["Jobs"]] for slot in slots} for job in main_jobs}
-
-# gear = {f"{slot}": {f"{job}":[[sg.Checkbox(k,font=font_choice,size=(50,1),key="sub: "+k+";;"+job,enable_events=True)] for k in names[job][slot]] for job in main_jobs} for slot in [l[1] for l in checkbox_slots]}
 
 from tab_inputs import item2image
 framesize = [400,450]
@@ -126,14 +124,14 @@ gear_tab = [
     [sg.Push(),sg.Text("",font=font_choice)],
     [sg.Push(),sg.Button("Select All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all gear",tooltip="Select all items in the displayed list.",enable_events=True),sg.Button("Unselect All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="unselect all gear",tooltip="Unselect all items in the displayed list.",enable_events=True)],
     [sg.Push(),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)]
-  ],vertical_alignment="center",size=[370,450]),]]
+  ],vertical_alignment="center",size=[270,450]),]]
 
     # gear_main.append([sg.Checkbox(k,font=font_choice,size=(50,1),key="main: "+k,enable_events=True)])
 
 checkbox_tab = [[sg.Column([[
-  sg.Frame(f"Select {l[1]} equipment", [[sg.Column([  [sg.Checkbox(k,font=font_choice,size=(50,1),key=f"{l[1]}: {k};;{job}",enable_events=True)] for k in names[job][l[1]]  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True,key=f"{l[1]} display {job}",size=framesize) for l in checkbox_slots for job in main_jobs
+  sg.Frame(f"Select {l[1]} equipment", [[sg.Column([  [sg.Checkbox(k,font=font_choice,size=(50,1),key=f"{l[1]}: {k};;{job}",enable_events=True)] for k in names[job][l[1]]  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True if job=="NIN" and l[1]=="main" else False, key=f"{l[1]} display {job}",size=framesize) for l in checkbox_slots for job in main_jobs
 ]
-])]]
+]),sg.Push()]]
 
 # checkbox_tab = [[sg.Column([[
 

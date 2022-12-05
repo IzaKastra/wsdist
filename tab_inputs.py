@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 27
+# Version date: 2022 December 04
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -25,21 +25,23 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = ["NIN", "DRK","SCH", "RDM", "BLM"]
-sub_jobs = ["WAR", "SAM","SCH", "RDM", "None"]
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
+sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
-  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value=main_jobs[0], readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
-  [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value=sub_jobs[0], readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=False)],
+  [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value="NIN", readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
+  [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value="WAR", readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=False,enable_events=True)],
 ]
 
 ws_list = sorted(
            ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku",
            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
-           "Evisceration",
-           "Savage Blade",
+           "Evisceration", "Exenterator",
+           "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round",
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
-           "Torcleaver","Scourge","Resolution"])
+           "Torcleaver", "Scourge", "Resolution",
+           "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
+           "Black Halo", "Judgment","Hexa Strike","Realmrazer"])
 
 spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
@@ -171,7 +173,6 @@ def item2image(item_name):
     #
     path32 = "icons32/"
     path64 = "icons64/"
-
     use_32x32_icons = False
     if use_32x32_icons:
         try:
@@ -420,7 +421,7 @@ starting_set_tab = [
 # The first element is printed on screen. The 2nd element is used by the code to organize things.
 # Allowing a dynamic radio list required a lot of changes. If things appear unreasonably broken, then simply download the Github versions from 2022 December 03 titled " Better output tab. " which are the save state before this big change.
 radio_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
-radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True,key=f"{l[1]} start radio {k}") if l[1]=="main" and k=="NIN" else sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
+radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True if k=="NIN" and l[1]=="main" else False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
 #radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
 
 # k = main_job

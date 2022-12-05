@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 November 29
+# Version date: 2022 December 04
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -458,6 +458,12 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
 
 def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False):
 
+    for k in starting_gearset:
+        # print(starting_gearset[k])
+        if main_job.lower() not in starting_gearset[k]["Jobs"]:
+            starting_gearset[k] = Empty # Unequip gear you can't wear if it's already equipped.
+
+
     if nuke:
         show_final_plot = False
 
@@ -531,23 +537,29 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                'ring1':Best_Gearset['ring1'],
                                'ring2':Best_Gearset['ring2'],
                                'back':Best_Gearset['back']}
-
+                                        
                     # new_set is the set that's being adjusted/tested.
                     for k in new_set:
                         # Assign a Name2 to all gear to clean up the later code. We did this for "Best_Gearset" already, though...
-                        # Probably best to add "Name2" to all equipment pieces in the gear.py file at the end.  TODO (to do later, just control+F to find this note)
+                        # Probably best to add "Name2" to all equipment pieces in the gear.py file at the end.  TODO (to do later. Already done? Can delete all of these Name checks)
                         name2 = new_set[k].get('Name2','None')
                         if name2 == 'None':
                             new_set[k].update({'Name2': new_set[k]['Name']})
 
 
                     for j,b in enumerate(a): # "j" is a counter (0, 1, 2, etc), "b" is a piece of gear that you said you wanted to be tested in gear slot "a" (a=neck, b=(Caro_Necklace, Fotia_Gorget, Ninja_Nodowa, etc)). "b" is the NEW item to be tested against the old item
-                        if b.get("Name2",'None') == 'None': # Another Name2 declaration here? That's 3 times so far?  TODO
+                        if main_job.lower() not in b["Jobs"]: # Only test items your main job can equip.
+                            continue
+                        if b.get("Name2",'None') == 'None': # Another Name2 declaration here? That's 3 times so far?  TODO. I think I already fixed this by adding Name2 to everything at the end of gear.py
                             b.update({'Name2': b['Name']})
                         for j2,b2 in enumerate(a2): # same thing, but for the 2nd piece of gear being swapped simultaneously
+                            if main_job.lower() not in b2["Jobs"]:
+                                continue
                             if b2.get("Name2",'None') == 'None':
                                 b2.update({'Name2': b2['Name']})
                             for j3,b3 in enumerate(a3): # same thing, but for the 3rd piece of gear being swapped simultaneously
+                                if main_job.lower() not in b2["Jobs"]:
+                                    continue
                                 if b3.get("Name2",'None') == 'None':
                                     b3.update({'Name2': b3['Name']})
 
@@ -578,6 +590,9 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                         continue
 
 
+                                # TODO: A lot of this checking swaps stuff can be placed after we assign stuff to new_set a bit further down?
+                                #       This would make things much easier to read (and write).
+                                #       Put things after the "new_set[slot1]  = b" lines
 
                                 # Now we perform simple checks to save some time and prevent bad results.
                                 # Stuff like making sure we aren't equipping two identical "Rare" items (i.e. one Gere Ring in each ring slot)
@@ -669,6 +684,24 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 new_set[slot1]  = b  # Equip swap_item1 to slot1
                                 new_set[slot2]  = b2 # Equip swap_item2 to slot2
                                 new_set[slot3]  = b3 # Equip swap_item3 to slot3
+
+                                # Do not test 1-handed weapons with grips.
+                                one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"]
+                                if new_set["main"]["Skill Type"] in one_handed and new_set["sub"]["Type"] == "Grip":
+                                    continue
+                                # Do not allow 2-handed weapons with shields or 1-handed weapons.
+                                two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
+                                if new_set["main"]["Skill Type"] in two_handed and (new_set["sub"]["Type"]=="Weapon" or new_set["sub"]["Type"]=="Shield"):
+                                    continue
+                                # Do not allow anything in the off-hand of hand-to-hand weapons.
+                                if new_set["main"]["Skill Type"] == "Hand-to-Hand":
+                                    new_set["sub"] == Empty
+
+                                # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.
+                                if main_job not in ["NIN", "DNC", "THF"] and sub_job not in ["NIN", "DNC", "THF"]:
+                                    if new_set["sub"]["Type"] == "Weapon":
+                                        continue
+
                                 test_Gearset = set_gear(buffs, new_set, main_job, sub_job) # This line turns that gear dictionary into a Python class, formalizing the player stats.
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
                                 # Now test the gearset by calculating its average damage.

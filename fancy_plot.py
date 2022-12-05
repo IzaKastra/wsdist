@@ -26,14 +26,12 @@ def get_image_ids(gearset):
     gear = gearset.equipped
     gear_list = []
     for k in gear:
-        if gear[k] != 'Empty':
-            gear_list.append(gear[k])
+        gear_list.append(gear[k])
 
-    ids = np.zeros(15) # Matrix containing item IDs for each equipped item for plotting. Hard-coded to ignore ranged slot.
+    ids = []
     for i,k in enumerate(gear_list):
         a = np.ravel(np.where(item_names == k.lower()))[-1]
-        # print(a,item_names[a],i,k)
-        ids[i] = item_ids[a]
+        ids.append(item_ids[a])
 
     return(ids)
 
@@ -72,7 +70,7 @@ def plot_final(damage, gearset, tp1, tp2, WS_name):
     ax14 = fig.add_axes([-0.1+0.11+1*0.04, 0.76-3*0.08, 0.15/4, 0.3/4],xticklabels=[],xticks=[],yticks=[],yticklabels=[])
     ax15 = fig.add_axes([-0.1+0.11+2*0.04, 0.76-3*0.08, 0.15/4, 0.3/4],xticklabels=[],xticks=[],yticks=[],yticklabels=[])
     ax16 = fig.add_axes([-0.1+0.11+3*0.04, 0.76-3*0.08, 0.15/4, 0.3/4],xticklabels=[],xticks=[],yticks=[],yticklabels=[])
-    gear_ax = [ax1, ax2, ax4, ax5, ax6, ax7, ax8, ax9, ax10, ax11, ax12, ax13, ax14, ax15, ax16]
+    gear_ax = [ax1, ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9, ax10, ax11, ax12, ax13, ax14, ax15, ax16]
 
     # Obtain player stats to be printed on the plot under the gear set.
     player_str = gearset.playerstats['STR']

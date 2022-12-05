@@ -53,14 +53,14 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 03) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 04) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 # window["main start radio NIN"].update(visible=True)
 
 
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
@@ -256,22 +256,23 @@ while True:
             ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin"],
                        "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
                        "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime"],
-                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Requiescat", "Sanguine Blade", "Seraph Blade"],
+                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade"],
                        "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe"],
                        "Great Sword":["Torcleaver","Scourge","Resolution"],
-                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","True Strike"],
+                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
+                       "Polearm":["Stardiver","Impulse Drive","Penta Thrust"],
                        "Staff":["Cataclysm","Shattersoul"]}
 
             for slot in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                for job in main_jobs:
-                    displayed_equipment_list = gear_map[slot]
-                    for k in values:
-                        if type(k) == str:
+                for job in main_jobs: # So we can turn off all other job gear.
+                    displayed_equipment_list = gear_map[slot] # List of ALL gear in each slot
+                    for k in values: # values is the dictionary of stuff saved in the GUI.
+                        if type(k) == str: # Some of the keys are integers?? skip them here
                             if k.split()[0][:-1] == slot: # sub:  ammo:  main:  etc
                                 for l in displayed_equipment_list:
                                     if job.lower() in l["Jobs"] and main_job==job:
                                         window[f"{slot}: {l['Name2']};;{job}"].update(True)
-                                        if slot == "main" and ws_name not in ws_dict[l["Skill Type"]] and main_job not in ["BLM", "SCH", "RDM"]: # Unselect weapons that can't use the selected weapon skill
+                                        if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect weapons that can't use the selected weapon skill
                                             window[f"{slot}: {l['Name2']};;{job}"].update(False)
                                     else:
                                         if f"{slot}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
@@ -298,10 +299,18 @@ while True:
                         if window[f"{k} start radio {l}"].visible:
                             window[f"{k} start radio {l}"].update(visible=False)
 
+        if event == "subjob":
+            main_job = values["mainjob"]
+            sub_job = values["subjob"]
+            if sub_job == main_job:
+                window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
+
         # Update the radio list if the main job changes.
         if event == "mainjob":
             main_job = values["mainjob"]
-            main_jobs = ["NIN","DRK","SCH","RDM","BLM"]
+            sub_job = values["subjob"]
+            if sub_job == main_job:
+                window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
             gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
                         "sub":subs + grips,
@@ -613,7 +622,9 @@ while True:
             # 
             elif event == "get stats":
                 from set_stats import *
-           
+        
+                # Defining the empty set lets us see the contribution to stats from gear vs base.
+                # It also means it'll call the set_gear() class twice, so expect two print statements if testing with the "Calc sets" button.
                 empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
                 empty_gearset = set_gear({"food":{},"brd":{},"cor":{},"geo":{},"whm":{}},empty_set, main_job, sub_job)
 
@@ -679,26 +690,26 @@ while True:
                 window["mbb2 stat"].update(f"{'Magic Burst Bonus II:':<21s} {magic_burst_bonus2:>3d}")
 
                 wsd = int(gearset.playerstats['Weaponskill Damage'])
-                window["wsd stat"].update(f"{'Weapon skill damage:':<25s} {wsd:>3d}")
+                window["wsd stat"].update(f"{'Weapon skill damage:':<21s} {wsd:>3d}")
                 ws_bonus = int(gearset.playerstats['Weaponskill Bonus'])
-                window["ws bonus stat"].update(f"{'Weapon skill bonus:':<25s} {ws_bonus:>3d}")
+                window["ws bonus stat"].update(f"{'Weapon skill bonus:':<21s} {ws_bonus:>3d}")
                 tp_bonus = int(gearset.playerstats['TP Bonus'])
-                window["tp bonus stat"].update(f"{'TP Bonus:':<24s} {tp_bonus:>4d}")
+                window["tp bonus stat"].update(f"{'TP Bonus:':<20s} {tp_bonus:>4d}")
 
 
-                pdl = int(gearset.playerstats['PDL'])
-                window["pdl gear stat"].update(f"{'PDL (gear):':<25s} {pdl:>3d}")
-                pdl_trait = int(gearset.playerstats['PDL Trait'])
-                window["pdl trait stat"].update(f"{'PDL (trait):':<25s} {pdl_trait:>3d}")
+                pdl = int(gearset.playerstats['PDL'])/100
+                window["pdl gear stat"].update(f"{'PDL (gear):':<20s} {pdl:>4.2f}")
+                pdl_trait = int(gearset.playerstats['PDL Trait'])/100
+                window["pdl trait stat"].update(f"{'PDL (trait):':<20s} {pdl_trait:>4.2f}")
 
                 qa = int(gearset.playerstats['QA'])
-                window["qa stat"].update(f"{'Quad. Attack:':<25s} {qa:>3d}")
+                window["qa stat"].update(f"{'Quad. Attack:':<21s} {qa:>3d}")
                 ta = int(gearset.playerstats['TA'])
-                window["ta stat"].update(f"{'Triple Attack:':<25s} {ta:>3d}")
+                window["ta stat"].update(f"{'Triple Attack:':<21s} {ta:>3d}")
                 da = int(gearset.playerstats['DA'])
-                window["da stat"].update(f"{'Double Attack:':<25s} {da:>3d}")
+                window["da stat"].update(f"{'Double Attack:':<21s} {da:>3d}")
                 crit_rate = int(gearset.playerstats['Crit Rate'])
-                window["crit rate stat"].update(f"{'Crit. Rate:':<25s} {crit_rate:>3d}")
+                window["crit rate stat"].update(f"{'Crit. Rate:':<21s} {crit_rate:>3d}")
 
                 stp = int(gearset.playerstats['Store TP'])
                 window["stp stat"].update(f"{'Store TP:':<16s} {stp:>4d}")
@@ -730,8 +741,8 @@ while True:
                     if "start" == val[:5]:
                         window[val].update(False)
             for slot in best_set:
-                if slot == "ranged" or best_set[slot]["Name"]=="Empty":
-                    continue
+                if slot == "ranged":
+                    continue                    
                 # print(slot, best_set[slot]["Name2"],values[f"start{slot}: {best_set[slot]['Name2']}"])
                 window[f"showstart {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
                 if f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
