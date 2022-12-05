@@ -151,7 +151,7 @@ class set_gear:
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
                      'Zanshin':0, "Fencer":0, # Not sure how to do Zanshin yet. May as well keep track of it now, though.
-                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
@@ -264,6 +264,7 @@ class set_gear:
             wyvern_bonus = True # This represents the +20% attack that will be applied later for having a wyvern out (added with smite and stuff)
             self.playerstats["JA Haste"] += 10
             self.playerstats["DA"] += 15
+            self.playerstats["Weaponskill Bonus"] += 10 # Wyvern bonus
         elif mainjob == "WAR":
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 self.playerstats["Fencer"] += 5 # Fencer V native, plus gear
