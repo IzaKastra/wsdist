@@ -457,7 +457,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
 
 
 def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False):
-
+    tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
         # print(starting_gearset[k])
         if main_job.lower() not in starting_gearset[k]["Jobs"]:
@@ -707,7 +707,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Now test the gearset by calculating its average damage.
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
                                 damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae)) # Test the set and return its damage as a single number
-
+                                tcount += 1
                                 # If the damage returned after swapping those 1~3 pieces is higher than the previous best, then run this next bit of code to print the swap that was performed and the change in damage observed.
                                 if damage > best_damage:
                                     if (swap_item1 == swap_item2) and (swap_item1 == swap_item3):
@@ -747,7 +747,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
     # At this point, the code has run up to 20 iterations and found the gearset that returns the highest average damage. Now we use this best set to create a proper distribution of damage that you'd expect to see in game based on its stats.
     best_set = set_gear(buffs, Best_Gearset, main_job, sub_job) # Create a class from the best gearset
-
+    # print(f"{tcount} valid gear sets checked.")
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
     test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae)
     return(Best_Gearset)

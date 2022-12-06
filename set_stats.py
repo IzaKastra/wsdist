@@ -254,7 +254,7 @@ class set_gear:
                 self.playerstats['Accuracy1'] += 10
                 self.playerstats['Accuracy2'] += 10
         elif mainjob == "DRG":
-            self.playerstats["Weaponskill Bonus"] += 21 # WS Damage Boost trait. Assuming it applies to all hits
+            self.playerstats["Weaponskill Bonus"] += 21 # WS Damage Boost trait. Assuming it applies to all hits. TODO: WSD trait is a third WS term, not combined with rema augments
             self.playerstats["Accuracy1"] += 35 # Accuracy Boost III trait
             self.playerstats["Accuracy2"] += 35 # Accuracy Boost III trait
             self.playerstats["PDL Trait"] += 30  # PDL limit III trait

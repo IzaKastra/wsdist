@@ -75,6 +75,7 @@ Gungnir = {"Name":"Gungnir","Name2":"Gungnir R15","Type":"Weapon","Skill Type":"
 Trishula = {"Name":"Trishula","Name2":"Trishula R15","Type":"Weapon","Skill Type":"Polearm","DMG":345+15,"Delay":492,"Accuracy":0+30,"Magic Accuracy":0+30,"Magic Damage":155,"Magic Accuracy Skill":228,"Polearm Skill":269,"Store TP":10,"TP Bonus":500,"Jobs":["drg"]}
 Ryunohige = {"Name":"Ryunohige","Name2":"Ryunohige R15","Type":"Weapon","Skill Type":"Polearm","DMG":307+32,"Delay":492,"Accuracy":0+30,"Magic Accuracy":0+30,"Magic Damage":155,"Magic Accuracy Skill":228,"Polearm Skill":269,"Jobs":["drg"]}
 Rhongomiant = {"Name":"Rhongomiant","Name2":"Rhongomiant R15","Type":"Weapon","Skill Type":"Polearm","DMG":347+12,"Delay":492,"VIT":50+20,"STR":20,"Magic Damage":155,"Magic Accuracy Skill":228,"Polearm Skill":269,"Jobs":["drg"]}
+Loxotic_Mace = {"Name":"Loxotic Mace +1", "Name2":"Loxotic Mace +1 R15", "DMG":190+33,"Delay":334,"Type":"Weapon","Skill Type":"Club","Club Skill":242,"Accuracy":21+40,"Magic Accuracy":0+40,"Attack":21,"Magic Accuracy Skill":188,"DEX":9,"Weaponskill Damage":10,"Jobs":["war","drk","run"]}
 #Karambit = {"Name": "Karambit" "Skill Type":"Hand-to-Hand", "Type":"Weapon", "DMG":"Base+180","Delay":"base+96", "STR":20, "DEX":20,"VIT":20,"Accuracy":40,"Attack":30,"Magic Accuracy":40,"Hand-to-Hand Skill":250, "Magic Accuracy Skill":250}
 
 Alber_Strap = {"Name": "Alber Strap", "Type": "Grip", "Magic Attack":7, "DA":2,"Jobs":all_jobs}
@@ -82,7 +83,7 @@ Rigorous_Grip = {"Name": "Rigorous Grip +1", "Name2": "Rigorous Grip +1 R15", "T
 Utu_Grip = {"Name": "Utu Grip", "Type": "Grip", "Accuracy":30, "Attack":30,"Jobs":["drk","sam","war","drg","run"]}
 Niobid_Strap = {"Name":"Niobid Strap","Type":"Grip", "Accuracy":5, "Magic Accuracy":5, "Magic Attack":5,"Jobs":all_jobs}
 
-mains = [Rhongomiant,Ryunohige,Trishula,Gungnir,Murgleis,Sequence,Excalibur,Almace,Maxentius,Amanomurakumo,Anguta,Apocalypse,Caladbolg,Crepuscular_Knife,Dojikiri,Gleti_Knife,Gokotai,Hachimonji,Heishi,Kannagi,Kikoku,Kogarasumaru,Kunimitsu,Liberator,Masamune,Naegling,Nagi,Ragnarok,Redemption,Shining_One,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Marin_Staff,Bunzi_Rod]
+mains = [Loxotic_Mace,Rhongomiant,Ryunohige,Trishula,Gungnir,Murgleis,Sequence,Excalibur,Almace,Maxentius,Amanomurakumo,Anguta,Apocalypse,Caladbolg,Crepuscular_Knife,Dojikiri,Gleti_Knife,Gokotai,Hachimonji,Heishi,Kannagi,Kikoku,Kogarasumaru,Kunimitsu,Liberator,Masamune,Naegling,Nagi,Ragnarok,Redemption,Shining_One,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Marin_Staff,Bunzi_Rod]
 subs = [Thibron,Maxentius, Crepuscular_Knife,Gleti_Knife,Gokotai,Hitaki,Kunimitsu,Naegling,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Bunzi_Rod,Ammurapi_Shield,Blurred_Shield,Empty]
 grips = [Rigorous_Grip, Utu_Grip, Enki_Strap, Alber_Strap, Niobid_Strap]
 
