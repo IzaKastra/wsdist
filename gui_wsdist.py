@@ -700,8 +700,11 @@ while True:
                 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
                 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana","Hand-to-Hand"]
                 magic = ["Elemental Magic", "Ninjutsu"]
-
-                for k in sorted(one_handed+two_handed)+magic:
+                ranged = ["Throwing", "Marksmanship", "Archery"]
+                for k in sorted(one_handed+two_handed):
+                    window[f"{k} skill display"].update(f"{k+':':<16s} {gearset.playerstats[f'{k} Skill']:>4d}")
+                    window[f"{k} skill display"].set_tooltip(f"Total {k} skill from gear, excluding main/off-hand weapons.\nMain-hand: +{gearset.gear['main'].get(f'{k} Skill',0)}\nOff-hand: +{gearset.gear['sub'].get(f'{k} Skill',0)}")
+                for k in sorted(ranged+magic):
                     window[f"{k} skill display"].update(f"{k+':':<16s} {gearset.playerstats[f'{k} Skill']:>4d}")
  
                 window["macc skill stat"].update(f"{'Magic Accuracy Skill:':<21s} {gearset.playerstats[f'Magic Accuracy Skill']-gearset.gear['sub'].get('Magic Accuracy Skill',0):>3d}")

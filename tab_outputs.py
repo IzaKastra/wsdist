@@ -56,8 +56,9 @@ tp = sg.vtop(sg.Frame("TP",[
 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana","Hand-to-Hand"]
 magic = ["Elemental Magic", "Ninjutsu"]
+ranged = ["Throwing", "Marksmanship", "Archery"]
 skills = sg.vtop(sg.Frame("Skill Levels",[
-    [sg.Text(f"{k+':':<16s} {'----':>4s}",font=font_choice,size=(22,1),key=f"{k} skill display")] for k in sorted(one_handed+two_handed)+magic
+    [sg.Text(f"{k+':':<16s} {'----':>4s}",font=font_choice,size=(22,1),key=f"{k} skill display")] for k in sorted(one_handed+two_handed)+ranged+magic
 ]))
 
 other = sg.vtop(sg.Frame("Other",[
