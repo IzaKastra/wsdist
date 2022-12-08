@@ -81,7 +81,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, 1.25) # The attack bonus from Blade: Kamu is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
-        enemy_defense *= 0.75 # TODO: This should be additive with Dia, Frailty, etc. Fix it later. See quietus in this same file
+        enemy_defense *= 0.75 # TODO: This should be additive with Dia, Frailty, etc? I think it's fine as is.
     elif ws_name == "Blade: Ku":
         acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -119,6 +119,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.85*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 4
+    elif ws_name == "Mercy Stroke":
+        ftp  = 5.0
+        ftp_rep = False
+        wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
     elif ws_name == "Blade: Chi":
         hybrid    = True
         base_ftp  = [0.5, 1.375, 2.25]

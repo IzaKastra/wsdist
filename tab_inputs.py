@@ -36,7 +36,7 @@ player_column = [
 ws_list = sorted(
            ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku",
            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
-           "Evisceration", "Exenterator",
+           "Evisceration", "Exenterator", "Mercy Stroke",
            "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round",
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
            "Torcleaver", "Scourge", "Resolution",

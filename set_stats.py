@@ -157,7 +157,7 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      }
-        elif mainjob == "BLM":  # Master Level 20 Black Mage stats # TODO: Update the structure of each job to match the 0+16 for skill merits.
+        elif mainjob == "BLM":  # Master Level 20 Black Mage stats.
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104, # Stats are copy/pasted from NIN. TODO: fix
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':320+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
@@ -237,7 +237,7 @@ class set_gear:
             self.playerstats["Magic Accuracy"] += 15 # Assuming 5/5 elemental magic accuracy merits in each element.
             self.playerstats["Magic Accuracy"] += 25 # Assuming 5/5 magic accuracy group2 merits.
             self.playerstats["PDL Trait"] += 10 # PDL limit I trait
-            self.playerstats["TA"] += 20 # Assume Temper2 is always up with only 500 enhancing skill
+            self.playerstats["TA"] += 35 # Assume +35% TA from full-time Temper2 with a good enhancing magic set at ML20 RDM
         elif mainjob == "SCH":
             self.playerstats["Magic Burst Damage II"] += 9 # Magic Burst Bonus III trait
         elif mainjob == "SAM":
@@ -387,11 +387,12 @@ class set_gear:
      
 
         # Count the number of set-bonus gear equipped.
-        self.set_bonuses = {'Crit Rate':0, 'DEX':0, 'AGI':0, 'VIT':0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, 'STR':0, 'VIT':0, "Magic Attack":0}
+        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0}
         adhemar_count = 0    # Adhemar +1 gives Crit Rate
         mummu_count = 0      # Mummu +2 with the Mummu Ring gives DEX/AGI/VIT/CHR
-        regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy
+        regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy.
         flamma_count = 0     # Flamma +2 with the Flamma Ring gives STR/DEX/VIT
+        ayanmo_count = 0     # Flamma +2 with the Flamma Ring gives STR/VIT/MND
         amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
         for slot in gear:
             if "adhemar" in gear[slot]['Name'].lower() and "+1" in gear[slot]['Name'].lower():
@@ -407,6 +408,9 @@ class set_gear:
             if "flamma ring" == gear['ring1']['Name'].lower() or "flamma ring" == gear['ring2']['Name'].lower():
                 if "flamma" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
                     flamma_count += 1
+            if "ayanmo ring" == gear['ring1']['Name'].lower() or "ayanmo ring" == gear['ring2']['Name'].lower():
+                if "ayanmo" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
+                    ayanmo_count += 1
             if "Amalric" in gear[slot]["Name"]:
                 amalric_count += 1
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
@@ -421,6 +425,9 @@ class set_gear:
         self.set_bonuses['VIT'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['STR'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['Magic Attack'] += (amalric_count)*10 if amalric_count >= 2 else 0
+        self.set_bonuses['STR'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
+        self.set_bonuses['VIT'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
+        self.set_bonuses['MND'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
 
         # Add set bonuses to gearstats
         for stat in self.set_bonuses:

@@ -64,6 +64,9 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Aeneas':
         if ws_name == 'Exenterator':
             bonuses['ws_bonus'] += 0.1
+    if main_wpn_name == 'Mandau':
+        if ws_name == 'Mercy Stroke':
+            bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
     elif main_wpn_name == 'Karambit':
         if ws_name == "Asuran Fists":
             bonuses['ws_bonus'] += 0.5
@@ -131,5 +134,8 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Ragnarok":
         if ws_name == "Scourge":
             bonuses["ws_bonus"] += 0.68
+    elif main_wpn_name == "Nandaka":
+        if ws_name == "Ground Strike":
+            bonuses["ws_bonus"] += 0.15
             
     return(bonuses)

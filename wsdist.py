@@ -193,7 +193,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     magical = False # Have not added in magical weapon skill yet. No plans for things like Blade: Yu/Ei yet.
     player_attack1 = scaling['player_attack1']
     player_attack2 = scaling['player_attack2']
-    enemy_def =scaling['enemy_def']
+    enemy_def = scaling['enemy_def']
     crit_rate = scaling['crit_rate']
     ftp_hybrid = scaling['ftp_hybrid']
 
@@ -744,12 +744,13 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                 converge_count = 0 # Reset the converge count. This ensures that only consecutive trials count towards convergence
 
 
-
     # At this point, the code has run up to 20 iterations and found the gearset that returns the highest average damage. Now we use this best set to create a proper distribution of damage that you'd expect to see in game based on its stats.
     best_set = set_gear(buffs, Best_Gearset, main_job, sub_job) # Create a class from the best gearset
     # print(f"{tcount} valid gear sets checked.")
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
+
     test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae)
+    
     return(Best_Gearset)
 
 if __name__ == "__main__":
