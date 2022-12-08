@@ -63,12 +63,13 @@ def get_mv_blm(element, tier, player_int, enemy_int):
 
     # The table on BG wiki does not list negative dINT values.
     # Ninjutsu clearly shows different slopes for negative dINT.
-    # I'm assuming that Black Magic [M,V] is symmetric about dINT=0. This is definitely not true, but there is no information on the true values, so this is better than having negative damage.
+    # I'm currently assuming that the lower dINT limit is 0, such that any negative dINT is converted to 0.
+    # This does not appear to be the case on preliminary testing, but it's better than what I was using previously.
     # BG states 
     #     "With a negative dINT, calculated value for D will be lower than V, potentially even 0."
     #   which is not very helpful.
 
-    dINT = abs(player_int - enemy_int) # Absolute value to force symmetry. TODO: Fix this when somebody figures out how negative dINT affects [M,V]
+    dINT = player_int - enemy_int
     if dINT < 50:
         window = "0"
     elif dINT < 100:

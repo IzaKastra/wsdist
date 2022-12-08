@@ -81,10 +81,10 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
         ninjutsu_skill_potency = 1.0
         m, v, window = get_mv_blm(element, tier, player_INT, enemy_INT)
 
+        dINT = 0 if dINT < 0 else dINT # For now, assume that dINT has an absolute minimum of 0.
+
         d = int(v+mdmg+(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
 
-        if d<0: # negative dINT doesnt work right now. force minimum of 1 to prevent negative damage
-            d=1
 
         # print(m, v, d, dINT, window)
 
