@@ -156,7 +156,7 @@ heads = [Piety_Cap,Bunzi_Hat,Ayanmo_Zucchetto,Vishap_Armet,Pteroslaver_Armet,Pel
 
 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana", "Hand-to-Hand"]
-ranged = ["Throwing", "Marksmanship", "Archery"]
+ranged_skills = ["Throwing", "Marksmanship", "Archery"]
 
 Abyssal_Beads = {"Name": "Abyssal Bead Necklace +2", "Name2":"Abyssal Bead Necklace +2 R25","Accuracy":15,"Magic Accuracy":15,"Attack":40,"Store TP":0+7,"STR":0+25,"Crit Rate":4,"PDL":0+10,"Jobs":["drk"]}
 Baetyl_Pendant = {"Name": "Baetyl Pendant", "Magic Attack":13, "Jobs":all_jobs}
