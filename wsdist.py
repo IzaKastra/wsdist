@@ -28,7 +28,7 @@ import random
 class TP_Error(Exception):
     pass
 
-def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False,):
+def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False):
     #
     # Use the player and enemy stats to calculate weapon skill damage.
     # This function works, but needs to be cleaned up. There is too much going on within it.
@@ -137,7 +137,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             element = spells[spell.split(":")[0]].lower()
             tier = spell.split()[-1]
 
-            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst)
+            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
 
         else:
             # If not Ninjutsu, then assume Elemental Magic
@@ -157,11 +157,22 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                     "Blizzaja": "Ice",
                     "Thundaja": "Thunder",
                     }
-            
+            helixspells = {
+                    "Geohelix II": "Earth",
+                    "Hydrohelix II": "Water",
+                    "Anemohelix II": "Wind",
+                    "Pyrohelix II": "Fire",
+                    "Cryohelix II": "Ice",
+                    "Ionohelix II": "Thunder",
+                    "Luminohelix II": "Light",
+                    "Noctohelix II": "Dark",
+            }
             if spell[-2:] == "ja":
                 element = jaspells[spell].lower()
                 tier = "ja"
-
+            elif "helix" in spell.lower():
+                element = helixspells[spell].lower()
+                tier = "helix"
             elif len(spell.split()) == 1:
                 element = spells[spell.split()[0]].lower()
                 tier = "I"
@@ -169,7 +180,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 element = spells[spell.split()[0]].lower()
                 tier = spell.split()[-1]
 
-            damage = nuking("Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst)
+            damage = nuking("Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
 
         return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
@@ -415,7 +426,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 ==========================================================================================
 '''
 
-def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False):
+def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False):
     damage = []
     tp_return = []
 
@@ -425,7 +436,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae) # values = [damage, TP_return]
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience) # values = [damage, TP_return]
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -451,18 +462,20 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
     else:
         tp = np.average([tp1,tp2])
 
-        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae)
+        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience)
         return(damage)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False):
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
         # print(starting_gearset[k])
         if main_job.lower() not in starting_gearset[k]["Jobs"]:
             starting_gearset[k] = Empty # Unequip gear you can't wear if it's already equipped.
 
+    # Define JSE earrings now. We'll use them later to prevent Balder's Earring+1 and a JSE+2 being equipped at the same time since we ignore right_ear requirement for testing.
+    jse_ears = [k + " Earring +2" for k in ["Hattori", "Heathen's", "Lethargy", "Ebers", "Wicce", "Peltast's", "Boii", "Bhikku", "Skulkers", "Chevalier's", "Nukumi", "Fili", "Amini", "Kasuga", "Beckoner's", "Hashishin", "Chasseur's", "Karagoz", "Maculele", "Arbatel", "Azimuth", "Erilaz"]]
 
     if nuke:
         show_final_plot = False
@@ -485,7 +498,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
     print("---------------")
     nconverge = 2 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
-
+                                
     # Start the code.
     converge_count = 0 # Count for convergence (number of times the change between iterations was <0.1% for example; see near the end of this code for the exact value used)
     best_damage = 0
@@ -509,7 +522,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                     slot2 = check_slots[i2]
                     slot3 = check_slots[i3]
 
-                    fitn = 2
+                    fitn = 2 # Definitely don't change this to 3 now. Each set takes ages to run when this is 3 since we added so much gear.
                     if fitn == 2: # If only fitting two simultaneous slots, then skip all combinations where slot2 is not the same as slot3
                         if slot3 != slot2:
                             continue
@@ -548,18 +561,18 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
 
                     for j,b in enumerate(a): # "j" is a counter (0, 1, 2, etc), "b" is a piece of gear that you said you wanted to be tested in gear slot "a" (a=neck, b=(Caro_Necklace, Fotia_Gorget, Ninja_Nodowa, etc)). "b" is the NEW item to be tested against the old item
-                        if main_job.lower() not in b["Jobs"]: # Only test items your main job can equip.
-                            continue
+                        # if main_job.lower() not in b["Jobs"]: # Only test items your main job can equip. I add this same check later. Commenting it out here. remove it later TODO
+                        #     continue
                         if b.get("Name2",'None') == 'None': # Another Name2 declaration here? That's 3 times so far?  TODO. I think I already fixed this by adding Name2 to everything at the end of gear.py
                             b.update({'Name2': b['Name']})
                         for j2,b2 in enumerate(a2): # same thing, but for the 2nd piece of gear being swapped simultaneously
-                            if main_job.lower() not in b2["Jobs"]:
-                                continue
+                            # if main_job.lower() not in b2["Jobs"]: # Remove this check too TODO
+                            #     continue
                             if b2.get("Name2",'None') == 'None':
                                 b2.update({'Name2': b2['Name']})
                             for j3,b3 in enumerate(a3): # same thing, but for the 3rd piece of gear being swapped simultaneously
-                                if main_job.lower() not in b2["Jobs"]:
-                                    continue
+                                # if main_job.lower() not in b2["Jobs"]: # Remove this check too TODO
+                                #     continue
                                 if b3.get("Name2",'None') == 'None':
                                     b3.update({'Name2': b3['Name']})
 
@@ -576,9 +589,10 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 swap_item3 = b3['Name2']
                                 equipped_item3 = Best_Gearset[slot3]['Name2']
 
-
-                                # If the two swapped pieces are in the same slot, only check the damage if they're the same item
+                                # If the two swapped pieces are in the same slot, only check the damage if they're the same item (don't try to equip two different items in the same slot)
                                 # This is the code block that allows changing only one item, instead of always changing two.
+                                # This bit of code is also very important for preventing the third item equipped from overwriting the second item equipped later.
+                                #   As long as we keep this bit of code here, then the third item WILL overwrite the second item, but they'll be the same thing anyway.
                                 if i2 == i:
                                     if swap_item1 != swap_item2:
                                         continue
@@ -589,101 +603,39 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     if swap_item3 != swap_item2:
                                         continue
 
+                                # Don't try to equip the item if it's already equipped in the same slot.
+                                # This seems bad to include, but trying to equip the same item in the same slot is the same as not changing that slot.
+                                #   This means you're effectively checking one fewer slots for that round.
+                                #   This situation is covered above when slot1==slot2==slot3.
+                                # By skipping this version of this situation, we prevent extra tests that already happened (wasting time)
+                                # if equipped_item1 == swap_item1 or equipped_item2 == swap_item2 or equipped_item3 == swap_item3:
+                                #     continue
 
-                                # TODO: A lot of this checking swaps stuff can be placed after we assign stuff to new_set a bit further down?
-                                #       This would make things much easier to read (and write).
-                                #       Put things after the "new_set[slot1]  = b" lines
-
-                                # Now we perform simple checks to save some time and prevent bad results.
-                                # Stuff like making sure we aren't equipping two identical "Rare" items (i.e. one Gere Ring in each ring slot)
-                                if swap_item1 == equipped_item1 or swap_item1 == equipped_item2 or swap_item1 == equipped_item3: # Don't swap to an item that's already equipped in the same slot (don't compare Mpaca's Cap to Mpaca's Cap)
-                                    continue
-                                if swap_item2 == equipped_item1 or swap_item2 == equipped_item2 or swap_item2 == equipped_item3:
-                                    continue
-                                if swap_item3 == equipped_item1 or swap_item3 == equipped_item2 or swap_item3 == equipped_item3:
-                                    continue
-                                if swap_item1 == swap_item2 and i2 != i: # Don't try to equip two of the same item in different slots at the same time. (Don't try to check Gere Ring in both ring slots simultaneously.)
-                                    continue
-                                if swap_item1 == swap_item3 and i3 != i:
-                                    continue
-                                if swap_item3 == swap_item2 and i3 != i2:
-                                    continue
-
-
-                                # If the item you're trying to place in ring2/ear2 is already in ring1/ear1, then skip it (don't try to equip two copies of a Rare item; I use Mache_EarringA and Mache_EarringB naming to allow one in each ear for non-rare items
-                                if slot1 == 'ring2' or slot1 == 'ear2':
-                                    if swap_item1 in [Best_Gearset["ring1"]['Name2'],Best_Gearset["ear1"]['Name2']]:
-                                        continue
-                                if slot2 == 'ring2' or slot2 == 'ear2':
-                                    if swap_item2 in [Best_Gearset["ring1"]['Name2'],Best_Gearset["ear1"]['Name2']]:
-                                        continue
-                                if slot3 == 'ring2' or slot3 == 'ear2':
-                                    if swap_item3 in [Best_Gearset["ring1"]['Name2'],Best_Gearset["ear1"]['Name2']]:
-                                        continue
-
-                                # If the item you're trying to place in ring1/ear1 is already in ring2/ear2, then skip it (don't try to equip two copies of a Rare item; I use Mache_EarringA and Mache_EarringB naming to allow one in each ear for non-rare items
-                                if check_slots[i] == 'ring1' or check_slots[i] == 'ear1':
-                                    if swap_item1 in [Best_Gearset["ring2"]['Name2'],Best_Gearset["ear2"]['Name2']]:
-                                        continue
-                                if check_slots[i2] == 'ring1' or check_slots[i2] == 'ear1':
-                                    # print(check_slots[i2],swap_item2, Best_Gearset[check_slots[i2+1]]['Name2'], i2)
-                                    if swap_item2 in [Best_Gearset["ring2"]['Name2'],Best_Gearset["ear2"]['Name2']]:
-                                        continue
-                                if check_slots[i3] == 'ring1' or check_slots[i3] == 'ear1':
-                                    if swap_item3 in [Best_Gearset["ring2"]['Name2'],Best_Gearset["ear2"]['Name2']]:
-                                        continue
-
-                                # Don't equip two of the same weapon if one copy is already equipped in the other weapon slot.
-                                # This is over-restricting:
-                                #   if you plan to swap Gokotai for the main slot, but notice it's in the sub slot, then it will skip it.
-                                #   But if another swap_item is trying to swap gokotai out of the sub slot at the same time, then it should be allowed, since gokotai won't be there when it's placed in the main slot.
-                                #   This only affects weapons here, and weapon's are generally unique anyway (we use REMA only) so this doesn't do anything anyway TODO
-                                #   No need to modify it anyway. When the code does it's single-swap iterations, the problem no longer exists.
-                                if check_slots[i] == 'main' or check_slots[i] == 'sub':
-                                    if swap_item1 == Best_Gearset['sub']['Name2']:
-                                        continue
-                                    if swap_item1 == Best_Gearset['main']['Name2']:
-                                        continue
-                                if check_slots[i2] == 'main' or check_slots[i2] == 'sub':
-                                    if swap_item2 == Best_Gearset['sub']['Name2']:
-                                        continue
-                                    if swap_item2 == Best_Gearset['main']['Name2']:
-                                        continue
-                                if check_slots[i3] == 'main' or check_slots[i3] == 'sub':
-                                    if swap_item3 == Best_Gearset['sub']['Name2']:
-                                        continue
-                                    if swap_item3 == Best_Gearset['main']['Name2']:
-                                        continue
-
-
-                                # Don't try to equip an item to a slot it can't go in.
-                                # Items and slots are connected through the check_gear and check_slots lists, so this block should never be caught.
-                                if slot1 != slot2:
-                                    if swap_item1 == swap_item2:
-                                        continue
-                                if slot1 != slot3:
-                                    if swap_item1 == swap_item3:
-                                        continue
-                                if slot2 != slot3:
-                                    if swap_item2 == swap_item3:
-                                        continue
-
-                                # We already covered this special case above, so this below is commented out.
-                                # This isn't deleted just in case it should be uncommented. TODO
-                                # If the code is checking both ring1 and ring2 slots at the same time, make sure it isn't trying the same ring in both slots (don't place the same Rare item in two different slots at the same time)
-                                # if (names[i] == 'main' and names[i2] == 'sub'):
-                                #     if swap_item1 == swap_item2:
-                                #         continue
-                                #
-                                # # If the code is checking both ear1 and ear2 slots at the same time, make sure it isn't trying the same earring in both slots (don't place the same Rare item in two different slots at the same time)
-                                # if (names[i] == 'ear1' and names[i2] == 'ear2') or (names[i2] == 'ear1' and names[i] == 'ear2'):
-                                #     if swap_item1 == swap_item2:
-                                #         continue
-
-                                # The pieces of gear to be equipped have passed the basic checks. Now we're ready to equip them and run a simulation.
+                                # Each piece of gear selected for this iteration will not be equipped.
+                                # We will consider the validity of the set AFTER things have been equipped.
                                 new_set[slot1]  = b  # Equip swap_item1 to slot1
                                 new_set[slot2]  = b2 # Equip swap_item2 to slot2
                                 new_set[slot3]  = b3 # Equip swap_item3 to slot3
+
+                                # Do not equip two of the same item in rings, earrings, and main+sub slots.
+                                # Items in these slots can be placed in either of their pair.
+                                # 1-handed weapons can go in Main+Sub if dual wielding.
+                                # Rings can go in either ring slot.
+                                # Earrings can go in either earring slot.
+                                # I use Mache Earring +1 A and B to get around this for non-rare items.
+                                if new_set["ring1"]["Name2"] == new_set["ring2"]["Name2"]:
+                                    continue
+                                if new_set["ear1"]["Name2"] == new_set["ear2"]["Name2"]:
+                                    continue
+                                if new_set["main"]["Name2"] == new_set["sub"]["Name2"]:
+                                    if new_set["main"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                        continue
+
+                                # Only check gear that your main job can equip.
+                                for new_slot in new_set:
+                                    if main_job.lower() not in new_set[new_slot]["Jobs"]:
+                                        continue
+
 
                                 # Do not test 1-handed weapons with grips.
                                 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"]
@@ -695,19 +647,49 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     continue
                                 # Do not allow anything in the off-hand of hand-to-hand weapons.
                                 if new_set["main"]["Skill Type"] == "Hand-to-Hand":
-                                    new_set["sub"] == Empty
+                                    if new_set["Name"] != Empty:
+                                        continue
 
                                 # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.
-                                if main_job not in ["NIN", "DNC", "THF"] and sub_job not in ["NIN", "DNC", "THF"]:
+                                if main_job not in ["NIN", "DNC", "THF"] and sub_job not in ["NIN", "DNC"]:
                                     if new_set["sub"]["Type"] == "Weapon":
                                         continue
 
+                                # Do not equip an ammo incompatible with your ranged weapon
+                                if new_set["ranged"].get("Type","None")=="Gun" and new_set["ammo"].get("Type","None") not in ["Bullet","None"]:
+                                    continue
+
+                                if new_set["ranged"].get("Type","None")=="Bow" and new_set["ammo"].get("Type","None") not in ["Arrow","None"]:
+                                    continue
+
+                                # Equipping a bullet requires a gun to be equipped. (or a crossbow with a bolt)
+                                if new_set["ammo"].get("Type","None") == "Bullet" and new_set["ranged"].get("Type","None") != "Gun":
+                                    continue
+
+                                # Equipping an arrow requires a bow to be equipped.
+                                if new_set["ammo"].get("Type","None") == "Arrow" and new_set["ranged"].get("Type","None") != "Bow":
+                                    continue
+
+                                # Do not equip Balder Earring +1 and the JSE +2 ears at the same time. They both only work if in the right ear.
+                                if new_set["ear1"]["Name2"] in jse_ears and new_set["ear2"]["Name2"] == "Balder Earring +1":
+                                    continue
+                                if new_set["ear2"]["Name2"] in jse_ears and new_set["ear1"]["Name2"] == "Balder Earring +1":
+                                    continue
+
+                                # At this point, you SHOULD have a valid gear set.
+                                # Now we actually test the approximate damage using averages.
+
                                 test_Gearset = set_gear(buffs, new_set, main_job, sub_job) # This line turns that gear dictionary into a Python class, formalizing the player stats.
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
-                                # Now test the gearset by calculating its average damage.
+
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
-                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae)) # Test the set and return its damage as a single number
+                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience)) # Test the set and return its damage as a single number
                                 tcount += 1
+                                # if slot1==slot2:
+                                #     print(slot1, swap_item1,damage)
+                                # else:
+                                #     print(slot1, slot2, swap_item1, swap_item2, damage)
+
                                 # If the damage returned after swapping those 1~3 pieces is higher than the previous best, then run this next bit of code to print the swap that was performed and the change in damage observed.
                                 if damage > best_damage:
                                     if (swap_item1 == swap_item2) and (swap_item1 == swap_item3):
@@ -744,12 +726,20 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                 converge_count = 0 # Reset the converge count. This ensures that only consecutive trials count towards convergence
 
 
+    # Place JSE+2 earrings in the right_ear to make it look nice.
+    if Best_Gearset["ear1"]["Name2"] in jse_ears:
+        temp_ear2 = Best_Gearset["ear2"]
+        temp_ear1 = Best_Gearset["ear1"]
+        Best_Gearset["ear1"] = temp_ear2
+        Best_Gearset["ear2"] = temp_ear1
+
     # At this point, the code has run up to 20 iterations and found the gearset that returns the highest average damage. Now we use this best set to create a proper distribution of damage that you'd expect to see in game based on its stats.
     best_set = set_gear(buffs, Best_Gearset, main_job, sub_job) # Create a class from the best gearset
     # print(f"{tcount} valid gear sets checked.")
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
 
-    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae)
+
+    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience)
     
     return(Best_Gearset)
 
@@ -799,13 +789,14 @@ if __name__ == "__main__":
     nuke = False # True/False
     spell = "Doton: Ichi" # "Doton: Ichi" etc
     burst = True # True/False
-    futae = False # True/False
+    futae = False # True/False. Only for Ninjutsu
+    ebullience = False # True/False. Only for SCH main with Elemental Magic
 
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae)
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience)
 
     # TODO:
     # 2-handed weapons cap at 95% accuracy. The code currently uses 99% since it was based on NIN dual-wielding two single-handed weapons.

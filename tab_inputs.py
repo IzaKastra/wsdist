@@ -43,14 +43,43 @@ ws_list = sorted(
            "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
            "Black Halo", "Judgment", "Hexa Strike", "Realmrazer"])
 
-spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
-              "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
-              "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
-              "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
-              "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
-              "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
-]
-non_nin_spells = [k for k in spell_list if ":" not in k]
+# spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
+#               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
+#               "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
+#               "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
+#               "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
+#               "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
+#              ]
+
+spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
+              "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
+              "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
+                     "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
+              "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
+                     "Water","Water II","Water III","Water IV","Water V",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
+              "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
+                     "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
+                     "Luminohelix II", "Noctohelix II"],
+              "DRK":["Stone","Stone II","Stone III",
+                     "Water","Water II","Water III",
+                     "Aero","Aero II","Aero III",
+                     "Fire","Fire II","Fire III",
+                     "Blizzard","Blizzard II","Blizzard III",
+                     "Thunder","Thunder II","Thunder III",]
+                     
+             }
 # spell_list = [k for k in spell_list if ":" in k] if main_job == "NIN" else [k for k in spell_list if ":" not in k]
 # Same for weapon skill; filter to only show weapon skills that the selected main weapon can equip
 
@@ -62,16 +91,17 @@ ws_column = [
 
 
 ws_column2 = [
-  [sg.Column([
+  [sg.vtop(sg.Column([
   [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=ws_list, default_value="Blade: Shun", readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
-  ]),sg.Push(),
-  sg.Column([
-  [sg.Text("Spell:",size=(15,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_list, default_value="Doton: San", readonly=True, k="select spell",font=font_choice,enable_events=True)],
+  ])),sg.Push(),
+  sg.vtop(sg.Column([
+  [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
   [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle")],
-  [sg.Checkbox("Futae",font=font_choice,key="futae toggle")],
-  ])
+  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.")],
+  [sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=True,tooltip="Enhance Black Magic damage. SCH only.")],
+  ]))
 
 
 ]]
@@ -244,9 +274,9 @@ random_back = np.random.choice([k for k in capes if "nin" in k["Jobs"]])
 while random_sub["Name2"] == random_main["Name2"]:
     random_sub = np.random.choice([k for k in subs if k["Skill Type"] in ["Katana","Dagger"]])
 while random_ring2["Name2"] == random_ring1["Name2"]:
-    random_ring2 = np.random.choice(rings2)
+    random_ring2 = np.random.choice([k for k in rings2 if "nin" in k["Jobs"]])
 while random_ear2["Name2"] == random_ear1["Name2"]:
-    random_ear2 = np.random.choice(ears2)
+    random_ear2 = np.random.choice([k for k in ears2 if "nin" in k["Jobs"]])
 
 starting_gearset = {
                     'main' : random_main,
@@ -290,7 +320,7 @@ starting_gearset = {
 default_images = dict([[k,starting_gearset[k]["Name"]] for k in starting_gearset] )
 
 def setup_radio_list(main_job):
-    start_main,start_sub,start_ammo,start_head,start_neck,start_ear1,start_ear2,start_body,start_hands,start_ring1,start_ring2,start_back,start_waist,start_legs,start_feet = [[] for k in range(15)]
+    start_main,start_sub,start_ranged,start_ammo,start_head,start_neck,start_ear1,start_ear2,start_body,start_hands,start_ring1,start_ring2,start_back,start_waist,start_legs,start_feet = [[] for k in range(16)]
 
     main_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in mains if main_job.lower() in k["Jobs"]]
     for k in sorted(main_names):
@@ -299,6 +329,10 @@ def setup_radio_list(main_job):
     sub_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in subs+grips if main_job.lower() in k["Jobs"]]
     for k in sorted(sub_names):
         start_sub.append([sg.Radio(k,"sub",font=font_choice,size=(50,1),key="startsub: "+k+";;"+main_job,enable_events=True)])
+
+    ranged_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ranged if main_job.lower() in k["Jobs"]]
+    for k in sorted(ranged_names):
+        start_ranged.append([sg.Radio(k,"ranged",font=font_choice,size=(50,1),key="startranged: "+k+";;"+main_job,enable_events=True)])
 
     ammo_names = [k['Name2'] if 'Name2' in k else k['Name'] for k in ammos if main_job.lower() in k["Jobs"]]
     for k in sorted(ammo_names):
@@ -352,7 +386,7 @@ def setup_radio_list(main_job):
     for k in sorted(feet_names):
         start_feet.append([sg.Radio(k,"feet",font=font_choice,size=(50,1),key="startfeet: "+k+";;"+main_job,enable_events=True)])
 
-    return(start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet)
+    return(start_main, start_sub, start_ranged, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet)
 
 # We can't dynamically update a radio button list with PySimpleGUI without destroying and recreating the window every time.
 # We can, however, create a million frames, one for each situation, and simply hide the ones we don't want to show.
@@ -360,14 +394,14 @@ start_radio = {k:setup_radio_list(k) for k in main_jobs}
 # start_radio = {
 #     "NIN":setup_radio_list("NIN"),
 #     "DRK":setup_radio_list("DRK"),}
-start_main, start_sub, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet = setup_radio_list("DRK")
+# start_main, start_sub, start_ranged, start_ammo, start_head, start_neck, start_ear1, start_ear2, start_body, start_hands, start_ring1, start_ring2, start_back, start_waist, start_legs, start_feet = setup_radio_list("DRK")
 framesize = [300,300]
 
 starting_set_tab = [
-          [sg.Column([
+          [sg.Column([ # TODO: Remove all references to "Name". Everything should have "Name2" by now
             [sg.Button(image_data=item2image(default_images["main"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart main",tooltip=starting_gearset["main"]["Name2"] if "Name2" in starting_gearset["main"] else starting_gearset["main"]["Name"]),
             sg.Button(image_data=item2image(default_images["sub"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart sub",tooltip=starting_gearset["sub"]["Name2"] if "Name2" in starting_gearset["sub"] else starting_gearset["sub"]["Name"]),
-            sg.Button(image_data=item2image(default_images["ranged"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart ---",tooltip="Empty"),
+            sg.Button(image_data=item2image(default_images["ranged"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart ranged",tooltip=starting_gearset["ranged"]["Name2"] if "Name2" in starting_gearset["sub"] else starting_gearset["ranged"]["Name"]),
             sg.Button(image_data=item2image(default_images["ammo"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart ammo",tooltip=starting_gearset["ammo"]["Name2"] if "Name2" in starting_gearset["ammo"] else starting_gearset["ammo"]["Name"]),],
             [sg.Button(image_data=item2image(default_images["head"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart head",tooltip=starting_gearset["head"]["Name2"] if "Name2" in starting_gearset["head"] else starting_gearset["head"]["Name"]),
             sg.Button(image_data=item2image(default_images["neck"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart neck",tooltip=starting_gearset["neck"]["Name2"] if "Name2" in starting_gearset["neck"] else starting_gearset["neck"]["Name"]),
@@ -383,44 +417,10 @@ starting_set_tab = [
             sg.Button(image_data=item2image(default_images["feet"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showstart feet",tooltip=starting_gearset["feet"]["Name2"] if "Name2" in starting_gearset["feet"] else starting_gearset["feet"]["Name"]),],
           ]),]]
 
-# radio_tab = [
-#           sg.Frame("Select starting main-hand", [[sg.Column(start_radio["NIN"][0],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True,key="main start radio NIN"),
-#           sg.Frame("Select starting off-hand",  [[sg.Column(start_radio["NIN"][1],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="sub start radio NIN"),
-#           sg.Frame("Select starting ammo", [[sg.Column(start_radio["NIN"][2],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ammo start radio NIN"),
-#           sg.Frame("Select starting head", [[sg.Column(start_radio["NIN"][3],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="head start radio NIN"),
-#           sg.Frame("Select starting neck", [[sg.Column(start_radio["NIN"][4],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="neck start radio NIN"),
-#           sg.Frame("Select starting left ear", [[sg.Column(start_radio["NIN"][5],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear1 start radio NIN"),
-#           sg.Frame("Select starting ring ear", [[sg.Column(start_radio["NIN"][6],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear2 start radio NIN"),
-#           sg.Frame("Select starting body", [[sg.Column(start_radio["NIN"][7],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="body start radio NIN"),
-#           sg.Frame("Select starting hands", [[sg.Column(start_radio["NIN"][8],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="hands start radio NIN"),
-#           sg.Frame("Select starting left ring", [[sg.Column(start_radio["NIN"][9],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring1 start radio NIN"),
-#           sg.Frame("Select starting right ring", [[sg.Column(start_radio["NIN"][10],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring2 start radio NIN"),
-#           sg.Frame("Select starting back", [[sg.Column(start_radio["NIN"][11],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="back start radio NIN"),
-#           sg.Frame("Select starting waist", [[sg.Column(start_radio["NIN"][12],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="waist start radio NIN"),
-#           sg.Frame("Select starting legs", [[sg.Column(start_radio["NIN"][13],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="legs start radio NIN"),
-#           sg.Frame("Select starting feet", [[sg.Column(start_radio["NIN"][14],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="feet start radio NIN"),
-
-#           sg.Frame("Select starting main-hand", [[sg.Column(start_radio["DRK"][0],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="main start radio DRK"),
-#           sg.Frame("Select starting off-hand",  [[sg.Column(start_radio["DRK"][1],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="sub start radio DRK"),
-#           sg.Frame("Select starting ammo", [[sg.Column(start_radio["DRK"][2],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ammo start radio DRK"),
-#           sg.Frame("Select starting head", [[sg.Column(start_radio["DRK"][3],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="head start radio DRK"),
-#           sg.Frame("Select starting neck", [[sg.Column(start_radio["DRK"][4],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="neck start radio DRK"),
-#           sg.Frame("Select starting left ear", [[sg.Column(start_radio["DRK"][5],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear1 start radio DRK"),
-#           sg.Frame("Select starting ring ear", [[sg.Column(start_radio["DRK"][6],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ear2 start radio DRK"),
-#           sg.Frame("Select starting body", [[sg.Column(start_radio["DRK"][7],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="body start radio DRK"),
-#           sg.Frame("Select starting hands", [[sg.Column(start_radio["DRK"][8],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="hands start radio DRK"),
-#           sg.Frame("Select starting left ring", [[sg.Column(start_radio["DRK"][9],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring1 start radio DRK"),
-#           sg.Frame("Select starting right ring", [[sg.Column(start_radio["DRK"][10],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="ring2 start radio DRK"),
-#           sg.Frame("Select starting back", [[sg.Column(start_radio["DRK"][11],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="back start radio DRK"),
-#           sg.Frame("Select starting waist", [[sg.Column(start_radio["DRK"][12],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="waist start radio DRK"),
-#           sg.Frame("Select starting legs", [[sg.Column(start_radio["DRK"][13],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="legs start radio DRK"),
-#           sg.Frame("Select starting feet", [[sg.Column(start_radio["DRK"][14],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key="feet start radio DRK"),
-#          ]
-
 # The above commented block can be reduced to the following two lines to cover all slots and all jobs at once.
 # The first element is printed on screen. The 2nd element is used by the code to organize things.
 # Allowing a dynamic radio list required a lot of changes. If things appear unreasonably broken, then simply download the Github versions from 2022 December 03 titled " Better output tab. " which are the save state before this big change.
-radio_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
+radio_slots = [["main-hand","main"], ["off-hand","sub"], ["ranged","ranged"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
 radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=True if k=="NIN" and l[1]=="main" else False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
 #radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key=f"{l[1]} start radio {k}") for k in main_jobs for m,l in enumerate(radio_slots)]
 
@@ -438,7 +438,7 @@ radio_tab = [sg.Frame(f"Select starting {l[0]}", [[sg.Column(start_radio[k][m],s
 
 
 input_tab = [
-          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[350,220])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[350,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
           [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
           [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
           [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],

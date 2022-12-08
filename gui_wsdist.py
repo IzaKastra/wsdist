@@ -65,7 +65,6 @@ while True:
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
     # print(event)
-
     # Exit the program if given exit or null command.
     if event in (None, "Exit"):
         break
@@ -195,11 +194,9 @@ while True:
 
         # Setup the buttons which display/hide gear lists on the gear tab.
         if event.split()[0] == "display":
-            if event == "display ---":
-                continue
             slot = event.split()[1] # The slot selected by the user
             main_job = values["mainjob"] # The main job from the inputs tab
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for l in main_jobs:
                     if slot==k and main_job == l:
                         window[f"{k} display {l}"].update(visible=True)
@@ -209,7 +206,7 @@ while True:
         # Setup buttons to automatically select everything in the displayed list.
         if event == "select all gear":
             main_job = values["mainjob"]
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 if window[f"{k} display {main_job}"].visible:
                     slot = k
                     break
@@ -225,7 +222,7 @@ while True:
         # Setup buttons to automatically unselect everything in the displayed list.
         if event == "unselect all gear":
             main_job = values["mainjob"]
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 if window[f"{k} display {main_job}"].visible:
                     slot = k
                     break
@@ -238,6 +235,7 @@ while True:
         if event == "select ALL main":
             gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
                         "sub":subs + grips,
+                        "ranged":ranged,
                         "ammo":ammos,
                         "head":heads,
                         "neck":necks,
@@ -263,7 +261,7 @@ while True:
                        "Polearm":["Stardiver","Impulse Drive","Penta Thrust"],
                        "Staff":["Cataclysm","Shattersoul"]}
 
-            for slot in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for slot in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for job in main_jobs: # So we can turn off all other job gear.
                     displayed_equipment_list = gear_map[slot] # List of ALL gear in each slot
                     for k in values: # values is the dictionary of stuff saved in the GUI.
@@ -287,7 +285,7 @@ while True:
             slot = event.split()[-1]
             if slot == "---":
                 continue
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for l in main_jobs:
                     if k == slot:
                         if l == main_job:
@@ -309,11 +307,69 @@ while True:
         if event == "mainjob":
             main_job = values["mainjob"]
             sub_job = values["subjob"]
+           
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
+            spell_dict = { # This SHOULD be a copy/paste of the spell_dict in tab_inputs.py
+              "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
+              "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
+                     "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
+              "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
+                     "Water","Water II","Water III","Water IV","Water V",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
+              "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
+                     "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
+                     "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
+                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
+                     "Luminohelix II", "Noctohelix II"],
+              "DRK":["Stone","Stone II","Stone III",
+                     "Water","Water II","Water III",
+                     "Aero","Aero II","Aero III",
+                     "Fire","Fire II","Fire III",
+                     "Blizzard","Blizzard II","Blizzard III",
+                     "Thunder","Thunder II","Thunder III"]
+             }
+            # for k in main_jobs:
+            #     if not spell_dict.get(main_job,False):
+            #         spell_dict[main_job] = []
+            
+            if main_job == "NIN": # Enable Futae for NIN main
+                window["futae toggle"].update(disabled=False)
+            else:
+                window["futae toggle"].update(disabled=True)
+
+            if main_job == "SCH": # Enable Ebullience for SCH main
+                window["ebullience toggle"].update(disabled=False)
+            else:
+                window["ebullience toggle"].update(disabled=True)
+
+            if main_job in spell_dict: # Enable magic sets for casting jobs.
+                window["select spell"].update(values=spell_dict[main_job])
+                window["select spell"].update(spell_dict[main_job][0])
+                window["quicklook magic"].update(disabled=False)
+                window["Run Magic"].update(disabled=False)
+            else:
+                window["quicklook magic"].update(disabled=True)
+                window["Run Magic"].update(disabled=True)
+                window["select spell"].update(values=[])
+
+
+
+
+
             gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
                         "sub":subs + grips,
+                        "ranged":ranged,
                         "ammo":ammos,
                         "head":heads,
                         "neck":necks,
@@ -329,7 +385,7 @@ while True:
                         "feet":feet}
 
             # Update the radio and checkbox lists to display only items the main job can equip
-            for k in ["main","sub","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
+            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for job in main_jobs:
                     if window[f"{k} start radio {job}"].visible:
                         slot = k
@@ -569,7 +625,7 @@ while True:
 
             # We need to transfer the list of gear to check into a list of lists now. This will be used by the main code to check each piece, slot by slot.
             check_gear = [] # List of lists, containing dictionaries for items to be checked. This gets appended to later using the items in the GUI with checkboxes marked.
-            check_slots = ["main","sub","ammo","head","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet"] # Slot names to check. This gets filtered later with .remove()
+            check_slots = ["main","sub","ranged","ammo","head","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet"] # Slot names to check. This gets filtered later with .remove()
             remove_slots = []
             for s in check_slots:
                 gear_to_check = []
@@ -590,33 +646,34 @@ while True:
             spell = values["select spell"]
             burst = values["magic burst toggle"]
             futae = values["futae toggle"]
+            ebullience = values["ebullience toggle"]
 
             if event == "quicklook":
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae)[0]
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "quicklook magic":
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae)[0]
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "Run WS":
                 from wsdist import run_weaponskill
 
                 show_final_plot = values["show final plot"]
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience)
                 window["copy best set"].update(disabled=False)
            
             elif event == "Run Magic":
                 from wsdist import run_weaponskill
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience)
                 window["copy best set"].update(disabled=False)
 
             # 
@@ -700,11 +757,11 @@ while True:
                 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
                 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana","Hand-to-Hand"]
                 magic = ["Elemental Magic", "Ninjutsu"]
-                ranged = ["Throwing", "Marksmanship", "Archery"]
+                ranged_skills = ["Throwing", "Marksmanship", "Archery"]
                 for k in sorted(one_handed+two_handed):
                     window[f"{k} skill display"].update(f"{k+':':<16s} {gearset.playerstats[f'{k} Skill']:>4d}")
                     window[f"{k} skill display"].set_tooltip(f"Total {k} skill from gear, excluding main/off-hand weapons.\nMain-hand: +{gearset.gear['main'].get(f'{k} Skill',0)}\nOff-hand: +{gearset.gear['sub'].get(f'{k} Skill',0)}")
-                for k in sorted(ranged+magic):
+                for k in sorted(ranged_skills+magic):
                     window[f"{k} skill display"].update(f"{k+':':<16s} {gearset.playerstats[f'{k} Skill']:>4d}")
  
                 window["macc skill stat"].update(f"{'Magic Accuracy Skill:':<21s} {gearset.playerstats[f'Magic Accuracy Skill']-gearset.gear['sub'].get('Magic Accuracy Skill',0):>3d}")
@@ -728,8 +785,6 @@ while True:
                     if "start" == val[:5]:
                         window[val].update(False)
             for slot in best_set:
-                if slot == "ranged":
-                    continue                    
                 # print(slot, best_set[slot]["Name2"],values[f"start{slot}: {best_set[slot]['Name2']}"])
                 window[f"showstart {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
                 if f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597

@@ -4,7 +4,9 @@
 from get_dint_m_v import *
 import numpy as np
 
-def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, steps=2):
+def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
+
+    steps = 2 # 2-step skillchain
 
     # print(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, ninjutsu_damage, futae, burst, steps)
 
@@ -25,10 +27,10 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
 
     elemental_damage_bonus = 1+gearset.playerstats['Elemental Bonus']/100 + gearset.playerstats[f'{element.capitalize()} Elemental Bonus']/100
 
-    dayweather = 1.0
+    dayweather = 1.0 # This is changed to 1.25 for SCH helix. Maybe also change it 1.10 for /sch for single-weather.
 
     if burst: # Do burst stuff now so we can add +100 Magic Accuracy before calculating magic hit rates
-        magic_accuracy += 100
+        magic_accuracy += 100 + gearset.playerstats["Magic Burst Accuracy"]
         magic_burst_multiplier = 1.35 # Standard +35% damage for magic bursting
         skillchain_steps_bonus = (steps-2)*0.10 # Another +10% for each step in the skillchain after 2
         magic_burst_multiplier += skillchain_steps_bonus
@@ -53,15 +55,17 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
     # print(magic_accuracy, enemy_meva, magic_hit_rate, resist_state)
 
 
-
+    klimaform_bonus = 1.0
+    ebullience_bonus = 1.0
     futae_bonus = 1.0
+    extra_gear_bonus = 1.0 # For now, this is just Akademos +2% damage if spell element = weather
     if spelltype == "Ninjutsu":
         if tier == "Ichi":
-            ninjutsu_skill_potency = (100 + (spelltype_skill-50)/2)/100 if spelltype_skill <= 250 else 2.0
+            ninjutsu_skill_potency = ((100 + (spelltype_skill-50)/2)/100 if spelltype_skill <= 250 else 2.0) if spelltype_skill > 50 else 1.0
         elif tier == "Ni":
-            ninjutsu_skill_potency = (100 + (spelltype_skill-126)/2)/100 if spelltype_skill <= 350 else 2.12
+            ninjutsu_skill_potency = ((100 + (spelltype_skill-126)/2)/100 if spelltype_skill <= 350 else 2.12) if spelltype_skill > 126 else 1.0
         elif tier == "San":
-            ninjutsu_skill_potency = (100 + (spelltype_skill-276)/2)/100 if spelltype_skill <= 500 else 2.12
+            ninjutsu_skill_potency = ((100 + (spelltype_skill-276)/2)/100 if spelltype_skill <= 500 else 2.12) if spelltype_skill > 276 else 1.0
         else:
             ninjutsu_skill_potency = 0 # If something breaks and tier wasn't given, then just give 0 potency (results in zero damage always).
 
@@ -70,18 +74,37 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
 
         if futae: # Futae = False if not Ninjutsu
             futae_bonus = 1.5 # Standard +50% damage when using futae
-            hands = gearset.equipped['hands']
-            if hands == "Hattori Tekko +3":
+            if gearset.equipped['hands'] == "Hattori Tekko +3":
                 futae_bonus += 0.28
-            elif hands == "Hattori Tekko +2":
-                futae_bonus += 0.26
-            elif hands == "Hattori Tekko +1":
-                futae_bonus += 0.24
 
     else: # Else Elemental Magic
         ninjutsu_skill_potency = 1.0
         m, v, window = get_mv_blm(element, tier, player_INT, enemy_INT)
+
         d = int(v+mdmg+(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
+
+        if d<0: # negative dINT doesnt work right now. force minimum of 1 to prevent negative damage
+            d=1
+
+        # print(m, v, d, dINT, window)
+
+
+        if ebullience:
+            ebullience_bonus = 1.2
+            if gearset.equipped["head"] == "Arbatel Bonnet +3":
+                ebullience_bonus += 0.21
+
+
+    # These next few are outside the Elemental Magic block since they apply for "spells with element that matches day/weather", which technically applies to Ninjutsu until proven otherwise.
+    if gearset.equipped["feet"] == "Arbatel Loafers +3": # Only SCH can use these feet
+        klimaform_bonus += 0.25 # Assume full-time klimaform on SCH Main
+
+    if tier=="helix": # Only SCH has access to helix spells. TODO: add /sch helix1 spells and use tier=helix1 and tier=helix2 to distinguish between them
+        dayweather = 1.25 # Helix spells do not need the Obi to gain weather effects. 
+                            # SCH is the only job able to cast Helix2 spells, so if tier="helix", then job=SCH and we can assume double weather is always on.
+
+    if gearset.equipped["main"] == "Akademos": # Technically this applies to Ninjutsu as well, so I've put it outside of the Elemental Magic section
+        extra_gear_bonus += 0.02
 
     d = int(d * ninjutsu_skill_potency)
     d = int(d * (100+player_matk)/(100+enemy_mdb))
@@ -91,6 +114,9 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
     d *= burst_bonus_multiplier # Magic Burst damage bonus from gear. BG lists this as separate from the standard MB multiplier
     d *= elemental_damage_bonus
 
+    d *= klimaform_bonus
+    d *= ebullience_bonus
+    d *= extra_gear_bonus
     d *= futae_bonus
 
     d *= resist_state

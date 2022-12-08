@@ -60,7 +60,15 @@ def get_mv_blm(element, tier, player_int, enemy_int):
     #
     # Using the table from BG wiki
     #
-    dINT = player_int - enemy_int
+
+    # The table on BG wiki does not list negative dINT values.
+    # Ninjutsu clearly shows different slopes for negative dINT.
+    # I'm assuming that Black Magic [M,V] is symmetric about dINT=0. This is definitely not true, but there is no information on the true values, so this is better than having negative damage.
+    # BG states 
+    #     "With a negative dINT, calculated value for D will be lower than V, potentially even 0."
+    #   which is not very helpful.
+
+    dINT = abs(player_int - enemy_int) # Absolute value to force symmetry. TODO: Fix this when somebody figures out how negative dINT affects [M,V]
     if dINT < 50:
         window = "0"
     elif dINT < 100:
@@ -78,6 +86,7 @@ def get_mv_blm(element, tier, player_int, enemy_int):
     else:
         window = "600"
 
+    # print(element, tier, window)
     mv = {
     "I":{"earth":  {"0":[10,2.0],"50":[110,1.0],"100":[160,0],"200":[160,0],"300":[160,0],"400":[160,0],"500":[160,0],"600":[160,0]},
          "water":  {"0":[25,1.8],"50":[115,1.0],"100":[165,0],"200":[165,0],"300":[165,0],"400":[165,0],"500":[165,0],"600":[165,0]},
@@ -121,6 +130,12 @@ def get_mv_blm(element, tier, player_int, enemy_int):
          "fire":    {"0":[ 900,4.8],"50":[1140,4.25],"100":[1737,2.94],"200":[2031,2.0],"300":[2231,1.0],"400":[2331,0.0],"500":[2331,0.0],"600":[2331,0.0]},
          "ice":     {"0":[ 950,4.4],"50":[1170,4.00],"100":[1750,2.92],"200":[2042,2.0],"300":[2242,1.0],"400":[2342,0.0],"500":[2342,0.0],"600":[2342,0.0]},
          "thunder": {"0":[1000,4.0],"50":[1200,3.75],"100":[1762,2.90],"200":[2052,2.0],"300":[2252,1.0],"400":[2352,0.0],"500":[2352,0.0],"600":[2352,0.0]}},
+ "helix":{"earth":  {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},
+         "water":   {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},
+         "wind":    {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},
+         "fire":    {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},
+         "ice":     {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},
+         "thunder": {"0":[ 75,2.0],"50":[175,1.0],"100":[225,0],"200":[225,0],"300":[225,0],"400":[225,0],"500":[225,0],"600":[225,0]},}
     }
     v,m = mv[tier][element][window]
     # print(tier, element, dINT, window, v, m)

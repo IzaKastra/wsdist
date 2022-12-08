@@ -22,9 +22,9 @@ main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
 
 # --------------------------------------------------------------------------------
 # Create the full list of checkboxes for each of 15 gear slots. Lots of hard-coding for now...
-gear_main,gear_sub,gear_ammo,gear_head,gear_neck,gear_ear1,gear_ear2,gear_body,gear_hands,gear_ring1,gear_ring2,gear_back,gear_waist,gear_legs,gear_feet = [[] for k in range(15)]
+gear_main,gear_sub,gear_ranged,gear_ammo,gear_head,gear_neck,gear_ear1,gear_ear2,gear_body,gear_hands,gear_ring1,gear_ring2,gear_back,gear_waist,gear_legs,gear_feet = [[] for k in range(16)]
 
-all_gear = mains+subs+grips+ammos+heads+necks+ears+ears2+bodies+hands+rings+rings2+capes+waists+legs+feet
+all_gear = mains+subs+grips+ranged+ammos+heads+necks+ears+ears2+bodies+hands+rings+rings2+capes+waists+legs+feet
 all_names_map = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for k in all_gear]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
 
 
@@ -104,9 +104,9 @@ all_names_map = dict([[k['Name2'] if 'Name2' in k else k['Name'], k['Name']] for
 
 
 # The following 5 lines of code account for the 70 lines of commented code above, but also include all jobs instead of just one job.
-gear_list = {"main":mains,"sub":subs+grips,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
+gear_list = {"main":mains,"sub":subs+grips,"ranged":ranged,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
 slots = [k for k in gear_list]
-checkbox_slots = [["main-hand","main"], ["off-hand","sub"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
+checkbox_slots = [["main-hand","main"], ["off-hand","sub"], ["ranged","ranged"], ["ammo","ammo"], ["head","head"], ["neck","neck"], ["left ear","ear1"], ["right ear","ear2"], ["body","body"], ["hands","hands"], ["left ring","ring1"], ["right ring","ring2"], ["back","back"], ["waist","waist"], ["legs","legs"], ["feet","feet"]]
 
 names = {job: {slot:sorted([k["Name2"] for k in gear_list[slot] if job.lower() in k["Jobs"]]) for slot in slots} for job in main_jobs}
 gear  = {job: {slot:[k for k in gear_list[slot] if job.lower() in k["Jobs"]] for slot in slots} for job in main_jobs}
@@ -117,7 +117,7 @@ framesize = [400,450]
 # https://stackoverflow.com/questions/68929799/pysimplegui-right-justify-a-button-in-a-frame
 gear_tab = [
   [sg.Column([
-    [sg.Push(),sg.Button("Main",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display main"),sg.Button("Sub",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display sub"),sg.Button("---",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ---"),sg.Button("Ammo",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ammo"),sg.Push()],
+    [sg.Push(),sg.Button("Main",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display main"),sg.Button("Sub",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display sub"),sg.Button("Ranged",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ranged"),sg.Button("Ammo",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ammo"),sg.Push()],
     [sg.Push(),sg.Button("Head",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display head"),sg.Button("Neck",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display neck"),sg.Button("Ear1",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ear1"),sg.Button("Ear2",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ear2"),sg.Push()],
     [sg.Push(),sg.Button("Body",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display body"),sg.Button("Hands",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display hands"),sg.Button("Ring1",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ring1"),sg.Button("Ring2",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ring2"),sg.Push()],
     [sg.Push(),sg.Button("Back",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display back"),sg.Button("Waist",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display waist"),sg.Button("Legs",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display legs"),sg.Button("Feet",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display feet"),sg.Push()],
