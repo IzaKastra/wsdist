@@ -96,7 +96,7 @@ Ammurapi_Shield = {"Name":"Ammurapi Shield", "Type":"Shield", "Skill Type": "Shi
 Blurred_Shield = {"Name":"Blurred Shield +1","Type":"Shield","Skill Type":"Shield","Accuracy":20,"Attack":20,"Fencer":1,"Weaponskill Damage":7,"Jobs":["war","pld","drk"]}
 
 mains = [Mjollnir,Tishtrya,Gambanteinn,Yagrush,Daybreak,Crocea_Mors,Akademos,Montante,Nandaka,Mandau,Loxotic_Mace,Rhongomiant,Ryunohige,Trishula,Gungnir,Murgleis,Sequence,Excalibur,Almace,Maxentius,Amanomurakumo,Anguta,Apocalypse,Caladbolg,Crepuscular_Knife,Dojikiri,Gleti_Knife,Gokotai,Hachimonji,Heishi,Kannagi,Kikoku,Kogarasumaru,Kunimitsu,Liberator,Masamune,Naegling,Nagi,Ragnarok,Redemption,Shining_One,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Marin_Staff,Bunzi_Rod]
-subs = [Sindri,Thibron,Maxentius, Crepuscular_Knife,Gleti_Knife,Gokotai,Hitaki,Kunimitsu,Naegling,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Bunzi_Rod,Ammurapi_Shield,Blurred_Shield,Empty]
+subs = [Daybreak,Sindri,Thibron,Maxentius, Crepuscular_Knife,Gleti_Knife,Gokotai,Hitaki,Kunimitsu,Naegling,Tauret,Ternion,Tsuru,MalevolenceA,MalevolenceB,Bunzi_Rod,Ammurapi_Shield,Blurred_Shield,Empty]
 grips = [Rigorous_Grip, Utu_Grip, Enki_Strap, Alber_Strap, Niobid_Strap]
 
 
