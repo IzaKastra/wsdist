@@ -1,0 +1,9 @@
+
+*.toc
+build/gui_wsdist/base_library.zip
+*.manifest
+*.pkg
+*.pyc
+*.pyz
+*.txt
+*.html
