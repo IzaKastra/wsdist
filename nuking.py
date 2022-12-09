@@ -25,7 +25,7 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
 
     dINT = player_INT - enemy_INT
 
-    elemental_damage_bonus = 1+gearset.playerstats['Elemental Bonus']/100 + gearset.playerstats[f'{element.capitalize()} Elemental Bonus']/100
+    elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
 
     dayweather = 1.0 # This is changed to 1.25 for SCH helix. Maybe also change it 1.10 for /sch for single-weather.
 

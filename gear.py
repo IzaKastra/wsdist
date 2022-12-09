@@ -394,10 +394,15 @@ for job in cape_names:
             continue # Skip stats for jobs that don't use them. (For example: Don't consider ANY capes with CHR, MND, or VIT for NIN)
         for main_stat in ambu_stats[base_stat]:
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} {main_stat}", "Accuracy":20, "Attack":20, f"{base_stat}":30, f"{main_stat}":10}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+        if job in ["NIN", "RDM", "WHM", "BLM", "SCH", "GEO", "DRK"] and base_stat in ["INT","MND","STR","DEX"]: # List of jobs that use magic weapon skills
+            # Add capes with Macc+Mdmg + WSD + STAT
+            capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Magic)", f"{base_stat}":30, "Weaponskill Damage":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+
     if job in ["NIN", "BLM", "RDM", "SCH", "GEO","DRK"]: # The list of jobs with access to nukes get nuke capes
         # add nuking capes with INT+30, Matk+10, Macc/Mdmg+20 for a select few jobs.
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} INT Magic Attack", "INT":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
     
+
     # if job in ["NIN", "RDM", "THF", "COR", "RNG", "SAM"]:
     # # Add ranged attack capes for ranged weapon skills. Only for NIN RDM THF COR RNG SAM.
     # # TODO: Add to wsdist a gear filter: "if ws_name not in ranged_ws then skip sets that use ranged WS ambu capes" (those with the stat 'ranged attack')
