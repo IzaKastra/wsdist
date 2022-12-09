@@ -53,14 +53,14 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 04) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 08) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 # window["main start radio NIN"].update(visible=True)
 
 
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM"]) # If you add jobs here, make sure to add them in the tab_inputs.py and tab_outputs.py files too.
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
@@ -251,13 +251,13 @@ while True:
                         "feet":feet}
             main_job = values["mainjob"]
             ws_name = values["select weaponskill"]
-            ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin"],
+            ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin","Blade: Ei",],
                        "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime"],
-                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade"],
+                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Aeolian Edge",],
+                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
                        "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe"],
                        "Great Sword":["Torcleaver","Scourge","Resolution"],
-                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
+                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
                        "Polearm":["Stardiver","Impulse Drive","Penta Thrust"],
                        "Staff":["Cataclysm","Shattersoul"]}
 

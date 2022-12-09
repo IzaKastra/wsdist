@@ -2,13 +2,13 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2022 December 08
 #
 import numpy as np
 from set_stats import *
 from get_dex_crit import *
 
-def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi):
+def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi, enemy_int):
     #
     # Setup weaponskill statistics (TP scaling, # of hits, ftp replication, WSC, etc)
     # Placed in separate file to reduce clutter in main file.
@@ -27,6 +27,8 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     crit_rate = 0
 
     hybrid = False
+    magical = False
+    ws_dINT = 0
     element = "None"
     ftp_hybrid = 0
 
@@ -37,11 +39,37 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False # Does this WS replicate FTP across all hits?
         wsc  = 0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
+    if ws_name == "Red Lotus Blade":
+        base_ftp = [1.0, 2.3828125, 3.75] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Fire"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    if ws_name == "Seraph Blade":
+        base_ftp = [1.125, 2.625, 4.125] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Light"
+        ws_dINT = 0
     elif ws_name == "Death Blossom":
         ftp  = 4.0
         ftp_rep = False
         wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 3
+    elif ws_name == "Sanguine Blade":
+        ftp  = 2.75
+        ftp_rep = False
+        wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = (player_int - enemy_int)*2
     elif ws_name == "Knights of Round":
         ftp  = 5.0
         ftp_rep = False
@@ -104,6 +132,15 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.8*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Blade: Ei":
+        base_ftp = [1.0, 3.0, 5.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
     elif ws_name == "Evisceration":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.1, 0.25, 0.5]
@@ -124,6 +161,15 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Aeolian Edge":
+        base_ftp = [2.0, 3.0, 4.5] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_dex + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Wind"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
     elif ws_name == "Blade: Chi":
         hybrid    = True
         base_ftp  = [0.5, 1.375, 2.25]
@@ -364,6 +410,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.3*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 6
+    elif ws_name == "Randgrith":
+        ftp  = 4.25
+        ftp_rep = False
+        wsc = 0.4*(player_str+player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
     elif ws_name == "Judgment":
         base_ftp = [3.5, 8.75, 12.0] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -377,9 +428,20 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.85*player_mnd + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 7
+    if ws_name == "Seraph Strike":
+        base_ftp = [2.125, 3.675, 6.125] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Light"
+        ws_dINT = 0
     
 
     scaling = {"hybrid":hybrid,
+               "magical":magical,
+               "ws_dINT":ws_dINT,
                "wsc":wsc,
                "nhits":nhits,
                "element":element,

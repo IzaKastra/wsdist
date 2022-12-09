@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2022 December 08
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -41,23 +41,23 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Save the main and sub weapon names for later.
     # Used to check if giving weapon skill damage bonuses on things like Gokotai (if "Gokotai" in main_wpn_name)
-    main_wpn_name = gearset.equipment()['main']
-    try:
-        sub_wpn_name = gearset.gear['sub']['Name2']
-    except:
-        sub_wpn_name = gearset.gear['sub']['Name']
+    main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
+    sub_wpn_name = gearset.gear['sub']['Name2']
+    rng_wpn_name = gearset.gear['ranged']['Name2']
 
-    sub_type = gearset.gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon or a grip. If the item doesn't have a "Type" Key then return "None"
+    sub_type = gearset.gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon or a grip or shield. If the item doesn't have a "Type" Key then return "None". All items SHOULD have a type.
     dual_wield = sub_type == 'Weapon'
 
     main_type_skill = gearset.gear['main']['Skill Type']
     sub_type_skill = gearset.gear['sub'].get('Skill Type', 'None') # If the sub item doesn't have a skill type (Katana/Dagger/Scythe, etc) then return "None"
+    rng_type_skill = gearset.gear['ranged'].get('Skill Type', 'None') # If the sub item doesn't have a skill type (Katana/Dagger/Scythe, etc) then return "None"
 
     tp += gearset.playerstats['TP Bonus'] # Add TP bonus
     tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
 
     main_dmg = gearset.playerstats['DMG1']
     sub_dmg  = gearset.playerstats['DMG2']
+    rng_dmg  = gearset.playerstats['Ranged DMG']
 
     fotia_ftp = gearset.playerstats['ftp']
     pdl_gear  = gearset.playerstats['PDL']/100.
@@ -74,9 +74,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     player_attack1 = gearset.playerstats['Attack1']
     player_attack2 = gearset.playerstats['Attack2']
     player_attack2 = 0 if not dual_wield else player_attack2
+    player_rangedattack = gearset.playerstats['Ranged Attack']
 
     player_accuracy1 = gearset.playerstats['Accuracy1']
     player_accuracy2 = gearset.playerstats['Accuracy2'] if dual_wield else 0
+    player_rangedaccuracy = gearset.playerstats['Ranged Accuracy']
 
     delay1 = gearset.playerstats['Delay1'] # Main-hand delay.
     delay2 = gearset.playerstats['Delay2'] if dual_wield else delay1 # Off-hand delay if dual wielding
@@ -85,10 +87,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
-    ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments, and /drg
+    ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments. TODO: DRG is different term
 
     crit_dmg = gearset.playerstats['Crit Damage']/100.
-    crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
+    crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
     qa = gearset.playerstats['QA']/100
     ta = gearset.playerstats['TA']/100
@@ -100,7 +102,23 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     player_mab = gearset.playerstats['Magic Attack']
     player_magic_damage = gearset.playerstats['Magic Damage']
+    magic_crit_rate2 = gearset.playerstats["Magic Crit Rate II"]/100 # Magic Crit Rate II is apparently +25% damage x% of the time.
     
+    enemy_int = enemy["INT"]
+    enemy_agi = enemy["AGI"]
+    enemy_vit = enemy["VIT"]
+    enemy_eva = enemy["Evasion"]
+    enemy_def = enemy["Defense"]
+    enemy_mdb = enemy["Magic Defense"]
+    enemy_meva = enemy["Magic Evasion"]
+
+    magic_accuracy_skill = gearset.playerstats["Magic Accuracy Skill"] # Magic Accuracy from Magic Accuracy Skill. Currently includes off-hand weapon stats.
+    magic_accuracy_skill -= gearset.gear["sub"].get("Magic Accuracy Skill",0) # Subtract off the Magic Accuracy Skill from the off-hand slot, since it does not contribute to spell accuracy or main-hand WS damage
+    dstat_macc = get_dstat_macc(player_int, enemy_int) # Get magic accuracy from dINT. I assume this applies to magical weapon skills too
+    magic_accuracy = gearset.playerstats["Magic Accuracy"] # Read base Magic Accuracy from playerstats, including traits and gear with "Magic Accuracy"
+    magic_accuracy += magic_accuracy_skill # Add on the "Magic Accuracy Skill" stat
+    magic_accuracy += dstat_macc # Add on magic accuracy from dINT
+
     ninjutsu_damage = gearset.playerstats['Ninjutsu Damage'] if main_job.lower() == "nin" else 0
      
     dStat = ['STR', 0] # Part of the fix for Crepuscular Knife's CHR bonus. Needed to first assign a base dStat bonus. In this case I just used STR with 0 bonus to apply to all WSs, and Crepsecular just changes this to ['CHR', 0.03]. Utu Grip changes this to ['DEX', 0.10]
@@ -109,14 +127,6 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     elif sub_wpn_name == "Utu Grip":
         dStat = ['DEX', 10]
     dStat[1] /= 100.
-
-    enemy_int = enemy["INT"]
-    enemy_agi = enemy["AGI"]
-    enemy_vit = enemy["VIT"]
-    enemy_eva = enemy["Evasion"]
-    enemy_def = enemy["Defense"]
-    enemy_mdb = enemy["Magic Defense"]
-    enemy_meva = enemy["Magic Evasion"]
 
     # Nuking stuff. Move this to a separate Nuke() function for the Nuke tab to call later. TODO
     if nuke:
@@ -194,19 +204,20 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
-    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi)
+    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
     ftp_rep = scaling['ftp_rep']
     nhits = scaling['nhits']
     element = scaling['element']
     hybrid = scaling['hybrid']
-    magical = False # Have not added in magical weapon skill yet. No plans for things like Blade: Yu/Ei yet.
-    player_attack1 = scaling['player_attack1']
+    magical = scaling['magical']
+    player_attack1 = scaling['player_attack1'] # Some weaponskills enhance/reduce player attack or enemy defense. TODO: add ranged attack (last stand, empyreal arrow)
     player_attack2 = scaling['player_attack2']
     enemy_def = scaling['enemy_def']
     crit_rate = scaling['crit_rate']
     ftp_hybrid = scaling['ftp_hybrid']
+    ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
 
     # Setup replicating ftp for specific WSs.
     ftp += fotia_ftp
@@ -223,10 +234,37 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     fstr_main = get_fstr(main_dmg, player_str, enemy_vit)
     fstr_sub  = get_fstr(sub_dmg, player_str, enemy_vit)
 
-
-
     # Start the damage calculations.
     damage = 0
+
+    if magical:
+        # Magical weapon skills have no physical portion, so they use a different, simpler, damage algorithm.
+        # In this case, we will not make a plot since the damage is always the same.
+        # This is why we exclude "magical" weaponskills from the rest of this function.
+        #
+        # Assuming Magical weapon skills can not multi-attack. TODO: test this in game using heishi + Lv1 dagger. Does damage change when unequipping dagger? (the offhand hit might not exist either)
+        weapon_level = 119
+        magical_damage = int(((152 + int((weapon_level-99)*2.45)+wsc)*ftp) + ws_dINT + player_magic_damage)
+
+        magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
+        resist_state = get_resist_state_average(magic_hit_rate)
+
+        affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
+        dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
+        magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
+        enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
+        ele_dmg_bonus = 1.0 + elemental_damage_bonus # Multiplier from orpheus based on distance.
+        element_magic_attack_bonus = 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
+
+        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus*element_magic_attack_bonus
+        magical_damage *= magic_multiplier
+        magical_damage *= (1+wsd)*(1+ws_bonus) # TODO: *(1+ws_trait)
+        magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
+        if gearset.gear["main"]["Name2"] == "Crocea Mors R25D":
+            magical_damage *= 2.0
+
+        return(magical_damage,0) # Return 0 TP for now.
+
 
     if not final: # If the best set hasn't been determined yet, then just take a simple average. No need to run a bunch of simulations unless you're making a plot.
 
@@ -253,15 +291,17 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if hybrid:
             # Calculate the magic multiplier for the magical part of Hybrid weapon skills
             # https://www.ffxiah.com/forum/topic/51313/tachi-jinpu-set/
+            magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
+            resist_state = get_resist_state_average(magic_hit_rate)
+
             affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
-            resist = 1.0 # 1, 1/2, 1/4, 1/8. Need magic accuracy to counter. Assume no resist since we do not check magic accuracy vs magic evasion yet.
             dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
             magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
             enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
             ele_dmg_bonus = 1.0 + elemental_damage_bonus # Multiplier from orpheus based on distance.
             element_magic_attack_bonus = 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
 
-            magic_multiplier = affinity*resist*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus*element_magic_attack_bonus
+            magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus*element_magic_attack_bonus
             magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
 
             damage += magical_damage
@@ -396,13 +436,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     if hybrid:
         # Calculate the magic multiplier for the magical part of Hybrid weapon skills
         # https://www.ffxiah.com/forum/topic/51313/tachi-jinpu-set/
+        magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
+        resist_state = get_resist_state_average(magic_hit_rate) # TODO: Use a randomizer instead of the average resist state for hybrid simulations.
+
         affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0)
-        resist = 1.0
         dayweather = 1.0
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
         enemy_mdt = 1.0
         ele_dmg_bonus = 1.0 + elemental_damage_bonus
-        magic_multiplier = affinity*resist*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus
+        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus
 
         magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
         damage += magical_damage
@@ -482,7 +524,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
     Best_Gearset =  starting_gearset.copy()
     for k in Best_Gearset:
-        # Assign a Name2 to all gear to allow the later code to be cleaned up.
+        # Assign a Name2 to all gear to allow the later code to be cleaned up. TODO: remove this. we already assign Name2 to everything in gear.py
         name2 = Best_Gearset[k].get('Name2','None')
         if name2 == 'None':
             Best_Gearset[k].update({'Name2': Best_Gearset[k]['Name']})
@@ -518,7 +560,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                     if i3 < i or i3 < i2 or i2 < i: # Skip repeat sets (for example: only do the upper-triangular for 2D)
                         continue
 
-                    slot1 = check_slots[i] # Something like slot1 = "main"
+                    slot1 = check_slots[i] # Something like slot1 = "main"  # TODO: a, a2, a3 are the slots right? just remove these 3 lines and rename a to slot1, a2 to slot2, and a3 to slot3
                     slot2 = check_slots[i2]
                     slot3 = check_slots[i3]
 

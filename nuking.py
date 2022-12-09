@@ -1,5 +1,5 @@
 # Author: Kastra (Asura)
-# Version date: 2022 November 29
+# Version date: 2022 December 08
 
 from get_dint_m_v import *
 import numpy as np
@@ -113,6 +113,8 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
     d *= magic_burst_multiplier # Standard +35% damage for bursts and +10% more for each step in the skillchain after 2
     d *= burst_bonus_multiplier # Magic Burst damage bonus from gear. BG lists this as separate from the standard MB multiplier
     d *= elemental_damage_bonus
+
+    d *= (1 + 0.25 * gearset.playerstats["Magic Crit Rate II"]/100) # Magic Crit Rate II is apparently +25% damage x% of the time.
 
     d *= klimaform_bonus
     d *= ebullience_bonus

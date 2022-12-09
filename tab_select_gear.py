@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2022 December 08
 #
 # This file contains a the GUI tab "Select Gear".
 #
@@ -15,7 +15,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 main_job = "NIN"
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM"])
 
 
 

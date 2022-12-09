@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2022 December 08
 #
 from get_dex_crit import *
 import numpy as np
@@ -41,6 +41,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     if main_wpn_name == 'Mjollnir':
         if ws_name == 'Randgrith':
             bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
+    elif 'Yagrush' in main_wpn_name:
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Mystic Boon':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif 'Kikoku' in main_wpn_name:
         if ws_name == 'Blade: Metsu':
             bonuses['ws_bonus'] += 0.68 # Hidden +40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
@@ -85,7 +90,6 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         if ws_name == 'Tachi: Kaiten':
             bonuses['ws_bonus'] += 0.68
     elif main_wpn_name == 'Shining One':
-
         # Shining One allows all weapon skills to crit. Seems pretty OP, but here we are...
         # https://www.bg-wiki.com/ffxi/Shining_One
         crit_rate = gearset.playerstats['Crit Rate']/100

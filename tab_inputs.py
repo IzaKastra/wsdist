@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2022 December 08
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG"])
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM"])
 sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
@@ -34,14 +34,14 @@ player_column = [
 ]
 
 ws_list = sorted(
-           ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku",
+           ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku","Blade: Ei",
            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
-           "Evisceration", "Exenterator", "Mercy Stroke",
-           "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round",
+           "Evisceration", "Exenterator", "Mercy Stroke","Aeolian Edge",
+           "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Red Lotus Blade", "Seraph Blade",
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
            "Torcleaver", "Scourge", "Resolution",
            "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
-           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer"])
+           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer","Seraph Strike", "Randgrith"])
 
 # spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
 #               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
