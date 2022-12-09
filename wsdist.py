@@ -244,7 +244,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         #
         # Assuming Magical weapon skills can not multi-attack. TODO: test this in game using heishi + Lv1 dagger. Does damage change when unequipping dagger? (the offhand hit might not exist either)
         weapon_level = 119
-        magical_damage = int(((152 + int((weapon_level-99)*2.45)+wsc)*ftp) + ws_dINT + player_magic_damage)
+        crocea = True if gearset.gear["main"]["Name2"] == "Crocea Mors R25C" else False
+
+        magical_damage = int(((152 + int((weapon_level-99)*2.45)+wsc)*ftp)*(1+crocea) + ws_dINT + player_magic_damage)
 
         magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
         resist_state = get_resist_state_average(magic_hit_rate)
@@ -260,8 +262,6 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         magical_damage *= magic_multiplier
         magical_damage *= (1+wsd)*(1+ws_bonus) # TODO: *(1+ws_trait)
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
-        if gearset.gear["main"]["Name2"] == "Crocea Mors R25D":
-            magical_damage *= 2.0
 
         return(magical_damage,0) # Return 0 TP for now.
 
