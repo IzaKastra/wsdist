@@ -227,8 +227,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Define elemental damage bonuses now that we know what element your hybrid/magical weapon skill is.
     if hybrid or magical:
-        elemental_damage_bonus = gearset.playerstats['Elemental Bonus'] + gearset.playerstats.get(element + ' Elemental Bonus', 0)
-        elemental_damage_bonus /= 100.
+        orpheus_bonus = gearset.playerstats['Elemental Bonus']
+        orpheus_bonus /= 100.
+
+        element_magic_attack_bonus = gearset.playerstats.get(element + ' Elemental Bonus', 0)
+        element_magic_attack_bonus /= 100
 
     # fSTR calculation for main-hand and off-hand
     fstr_main = get_fstr(main_dmg, player_str, enemy_vit)
@@ -245,7 +248,6 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         # Assuming Magical weapon skills can not multi-attack. TODO: test this in game using heishi + Lv1 dagger. Does damage change when unequipping dagger? (the offhand hit might not exist either)
         weapon_level = 119
         crocea = True if gearset.gear["main"]["Name2"] == "Crocea Mors R25C" else False
-
         magical_damage = int(((152 + int((weapon_level-99)*2.45)+wsc)*ftp)*(1+crocea) + ws_dINT + player_magic_damage)
 
         magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
@@ -255,10 +257,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
         enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
-        ele_dmg_bonus = 1.0 + elemental_damage_bonus # Multiplier from orpheus based on distance.
-        element_magic_attack_bonus = 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
+        orpheus_bonus += 1.0  # Multiplier from orpheus based on distance. Treated separately to Elemental magic attack bonus
+        element_magic_attack_bonus += 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
 
-        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus*element_magic_attack_bonus
+        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*orpheus_bonus*element_magic_attack_bonus
         magical_damage *= magic_multiplier
         magical_damage *= (1+wsd)*(1+ws_bonus) # TODO: *(1+ws_trait)
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
@@ -298,10 +300,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
             magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
             enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
-            ele_dmg_bonus = 1.0 + elemental_damage_bonus # Multiplier from orpheus based on distance.
-            element_magic_attack_bonus = 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
+            orpheus_bonus += 1.0  # Multiplier from orpheus based on distance. Treated separately to Elemental magic attack bonus
+            element_magic_attack_bonus += 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
 
-            magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus*element_magic_attack_bonus
+            magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*orpheus_bonus*element_magic_attack_bonus
             magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
 
             damage += magical_damage
@@ -443,8 +445,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         dayweather = 1.0
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
         enemy_mdt = 1.0
-        ele_dmg_bonus = 1.0 + elemental_damage_bonus
-        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*ele_dmg_bonus
+        orpheus_bonus += 1.0  # Multiplier from orpheus based on distance. Treated separately to Elemental magic attack bonus
+        element_magic_attack_bonus += 1.0 # Archon Ring, Pixie Hairpin +1, etc get added here.
+        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*orpheus_bonus*element_magic_attack_bonus
 
         magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
         damage += magical_damage
