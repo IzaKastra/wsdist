@@ -486,11 +486,13 @@ for job in cape_names:
             continue # Skip stats for jobs that don't use them. (For example: Don't consider ANY capes with CHR, MND, or VIT for NIN)
         for main_stat in ambu_stats[base_stat]:
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} {main_stat}", "Accuracy":20, "Attack":20, f"{base_stat}":30, f"{main_stat}":10}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
-        if job in ["NIN", "RDM", "WHM", "BLM", "SCH", "GEO", "DRK","WAR"] and base_stat in ["INT","MND","STR","DEX"]: # List of jobs that use magic weapon skills
+        if job in ["NIN", "RDM", "WHM", "BLM", "SCH", "GEO", "DRK", "WAR", "SAM"] and base_stat in ["INT","MND","STR","DEX"]: # List of jobs that use magic weapon skills
+            if job=="SAM" and base_stat!="STR": # SAM only needs STR+WSD (probably)
+                continue
             # Add capes with Macc+Mdmg + WSD + STAT
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Magic)", f"{base_stat}":30, "Weaponskill Damage":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
-        if job in ["NIN", "RDM", "COR", "RNG"] and base_stat in ["AGI","STR"]: # The list of jobs that might build physical ranged WS sets.
+        if job in ["NIN", "RDM", "COR", "RNG", "SAM"] and base_stat in ["AGI","STR"]: # The list of jobs that might build physical ranged WS sets.
             # add ranged WS sets with stat+30, WSD+10, Racc/Ratk+20 for a select few jobs. Only RNG gets a DEX cape, but it should use crit rate for jishnus
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Ranged)", f"{base_stat}":30, "Weaponskill Damage":10, "Ranged Accuracy":20, "Ranged Attack":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
@@ -499,7 +501,6 @@ for job in cape_names:
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} INT Magic Attack", "INT":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
     if job in ["COR"]: # COR needs an AGI+Matk cape for quick draw
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} AGI Magic Attack (Magic)", "AGI":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
-
     
 
     # if job in ["NIN", "RDM", "THF", "COR", "RNG", "SAM"]:
