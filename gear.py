@@ -461,7 +461,7 @@ cape_names = {"NIN":["Andartia's Mantle",{"Jobs":["nin"]},["STR","DEX","INT","AG
             #   "MNK":["Segomo's Mantle",{"Kick Attacks":10,"Kick Attacks Attack":25,"Jobs":["mnk"]},["STR","DEX","VIT","AGI","INT","MND","CHR"]] Commented out until I add "Kick Attacks" and Kick Attacks Attack" as stats to set_stats.py
               "WHM":["Alaunus's Cape",{"Jobs":["whm"]},["STR","DEX","MND"]],
               "GEO":["Nantosuelta's Cape",{"Jobs":["geo"]},["STR","DEX","MND","INT"]],
-              "BRD":["Intarabus's Cape",{"Jobs":["nrd"]},["STR","DEX","CHR"]],
+              "BRD":["Intarabus's Cape",{"Jobs":["brd"]},["STR","DEX","CHR"]],
               "BLM":["Taranus's Cape",{"Magic Burst Damage":5,"Jobs":["blm"]},["STR","DEX","INT","MND"]],
               "SCH":["Lugh's Cape",{"Skillchain Bonus":10,"Jobs":["sch"]},["STR","DEX","INT","MND"]],
             #   "THF":["Toutatis's Cape",{"Sneak Attack":10,"TA DMG":20,"Jobs":["thf"]},["STR","DEX","VIT","AGI","INT","MND","CHR"]], # Commented out until I add "Sneak Attack" as a stat to set_stats.py
