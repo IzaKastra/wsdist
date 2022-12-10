@@ -44,7 +44,7 @@ ws_list = sorted(
            "Black Halo", "Judgment", "Hexa Strike", "Realmrazer", "Seraph Strike", "Randgrith",
            "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
            "Cloudsplitter","Ruinator","Decimation","Rampage", "Primal Rend",
-           "Empyreal Arrow","Flaming Arrow",
+           "Empyreal Arrow","Flaming Arrow","Namas Arrow",
            "Cataclysm","Shattersoul","Earth Crusher","Vidohunir",
            "Hot Shot","Last Stand","Wildfire","Leaden Salute",
            ])
