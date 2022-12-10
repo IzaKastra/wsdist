@@ -136,6 +136,14 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Nuking stuff. Move this to a separate Nuke() function for the Nuke tab to call later. TODO
     if nuke:
+
+        cor_shots = ["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
+        if spell in cor_shots:
+            player_mab += gearset.playerstats['Ninjutsu Magic Attack']
+            damage = quickdraw(rng_dmg, ammo_dmg, spell.lower().split()[0], gearset, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva)
+            return(damage, 0) # Return 0 TP
+
+
         # Define Ninjutsu specifics: element, tier, bonus damage
         if ": Ichi" in spell or ": Ni" in spell or ": San" in spell:
             # Add Ninjutsu Magic Attack to Ninjutsu nukes
@@ -183,6 +191,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                     "Luminohelix II": "Light",
                     "Noctohelix II": "Dark",
             }
+
             if spell[-2:] == "ja":
                 element = jaspells[spell].lower()
                 tier = "ja"

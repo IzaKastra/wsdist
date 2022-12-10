@@ -162,7 +162,7 @@ Test_Bullet = {"Name":"Bullet","Name2":"Test Bullet", "Type":"Bullet", "DMG":999
 Test_Arrow = {"Name":"Stone Arrow","Name2":"Test Arrow", "Type":"Arrow", "DMG":999,"Delay":999,"MND":150,"INT":150,"Magic Attack":150,"Jobs":all_jobs}
 Beryllium_Arrow = {"Name":"Beryllium Arrow","Type":"Arrow","DMG":77,"Delay":90,"Ranged Accuracy":12,"Jobs":["war","rdm","thf","pld","drk","bst","rng","sam","nin"]}
 Raetic_Arrow = {"Name":"Raetic Arrow","Type":"Arrow","DMG":80,"Delay":90,"Ranged Accuracy":10,"Jobs":["war","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","smn","blu","sch"]}
-Yoichi_Arrow = {"Name":"Yoichi Arrow", "DMG":89, "Delay":90, "Ranged Accuracy":35, "Ranged Attack":25, "Type":"Arrow","Jobs":["rng","sam"]}
+Yoichi_Arrow = {"Name":"Yoichi's Arrow", "DMG":89, "Delay":90, "Ranged Accuracy":35, "Ranged Attack":25, "Type":"Arrow","Jobs":["rng","sam"]}
 Devastating_Bullet = {"Name":"Devastating Bullet","DMG":277,"Delay":240,"Ranged Accuracy":35,"Magic Accuracy":35,"Type":"Bullet","Jobs":["cor","rng"]}
 Chrono_Bullet = {"Name":"Chrono Bullet","DMG":300,"Delay":240,"Ranged Accuracy":20,"Ranged Attack":20,"Type":"Bullet","Jobs":["cor","rng"]}
 ammos = [Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
@@ -301,7 +301,7 @@ Agony_Jerkin = {"Name": "Agony Jerkin +1", "Name2": "Agony Jerkin +1 R15", "STR"
 Ashera_Harness = {"Name": "Ashera Harness", "STR":30, "DEX":40, "VIT":30, "AGI":30, "INT":30, "MND":30, "CHR":40, "Accuracy":45, "Attack":45, "Gear Haste":4, "Store TP":10,"Jobs":["nin","mnk","thf","brd","dnc","run"]}
 Dagon_Breastplate = {"Name": "Dagon Breastplate", "STR":40,"DEX":30,"VIT":40,"AGI":30,"INT":30,"MND":30,"CHR":30,"Accuracy":45,"Attack":45,"Gear Haste":1,"Crit Rate":4, "TA":5,"Jobs":["drk","sam","pld","war","drg"]}
 Flamma_Korazin = {"Name": "Flamma Korazin +2", "STR":43,"DEX":39,"VIT":32,"AGI":20,"INT":20,"MND":20,"CHR":20,"Accuracy":46,"Magic Accuracy":46,"Gear Haste":2,"Store TP":9,"Jobs":["drk","sam","war","pld","drg"]}
-Gyve_Doublet = {"Name": "Gyve Doublet", "STR":19, "DEX":19, "VIT":19, "AGI":19, "INT":39, "MND":33, "CHR":33, "Magic Attack":42, "Gear Haste":3,"Jobs":["nin","drk","blm","rdm","sch","geo","rng"]}
+Gyve_Doublet = {"Name": "Gyve Doublet", "STR":19, "DEX":19, "VIT":19, "AGI":19, "INT":39, "MND":33, "CHR":33, "Magic Attack":42, "Gear Haste":3,"Jobs":["whm","brd","smn","blu","pup","nin","drk","blm","rdm","sch","geo","rng"]}
 Hachiya_Chainmail = {"Name": "Hachiya Chainmail +3", "STR":39, "DEX":35, "VIT":36, "AGI":35, "INT":34, "MND":34, "CHR":34, "Accuracy":50, "Gear Haste":4,"Dual Wield":10,"Crit Rate":8,"Jobs":["nin"]}
 Herculean_Vest = {"Name": "Herculean Vest", "STR":28, "DEX":34, "VIT":24, "AGI":30, "INT":21, "MND":20, "CHR":21, "Accuracy":15, "Ranged Accuracy":15, "Gear Haste":4, "Store TP":3, "Crit Rate":3,"Jobs":["nin","mnk","thf","rng","blu","cor","pup","dnc","run"]}
 Hizamaru_Haramaki = {"Name": "Hizamaru Haramaki +2", "STR":40, "DEX":36, "VIT":34, "AGI":28, "INT":20, "MND":17, "CHR":28, "Accuracy":46, "Attack":28, "Gear Haste":4,"Jobs":["nin","sam","mnk","pup"]}
@@ -498,7 +498,7 @@ for job in cape_names:
         # add nuking capes with INT+30, Matk+10, Macc/Mdmg+20 for a select few jobs.
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} INT Magic Attack", "INT":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
     if job in ["COR"]: # COR needs an AGI+Matk cape for quick draw
-        capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} AGI Magic Attack", "AGI":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+        capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} AGI Magic Attack (Magic)", "AGI":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
     
 
@@ -537,7 +537,7 @@ Adhemar_Kecks_A = {"Name": "Adhemar Kecks +1", "Name2": "Adhemar Kecks +1 A", "S
 Adhemar_Kecks_B = {"Name": "Adhemar Kecks +1", "Name2": "Adhemar Kecks +1 B", "STR":32+12, "DEX":0+12, "VIT":15, "AGI":30, "INT":28, "MND":16, "CHR":8, "Accuracy":34, "Ranged Accuracy":34, "Attack":20, "Gear Haste":6, "Store TP":8,"Jobs":["mnk","thf","rng","nin","blu","cor","dnc","run"]}
 Fallen_Flanchard = {"Name": "Fallen's Flanchard +3", "STR":45,"DEX":0,"VIT":31,"AGI":26,"INT":40,"MND":27,"CHR":20,"Accuracy":39,"Attack":64,"Gear Haste":5,"Weaponskill Damage":10,"Jobs":["drk"]}
 Flamma_Dirs = {"Name": "Flamma Dirs +2", "STR":53,"DEX":11,"VIT":29,"AGI":16,"INT":24,"MND":14,"CHR":11,"Accuracy":45,"Magic Accuracy":45,"Gear Haste":4,"Store TP":8,"Jobs":["drk","sam","war","pld","drg"]}
-Gyve_Trousers = {"Name": "Gyve Trousers", "STR":19, "DEX":12, "VIT":19, "AGI":5, "INT":35, "MND":25, "CHR":23, "Magic Attack":40, "Gear Haste":5,"Jobs":["nin","whm","blm","rdm","brd","rng","blu","pup","sch","geo"]}
+Gyve_Trousers = {"Name": "Gyve Trousers", "STR":19, "DEX":12, "VIT":19, "AGI":5, "INT":35, "MND":25, "CHR":23, "Magic Attack":40, "Gear Haste":5,"Jobs":["whm","brd","smn","blu","pup","nin","drk","blm","rdm","sch","geo","rng"]}
 Hachiya_Hakama = {"Name": "Hachiya Hakama +3", "STR":42, "DEX":0, "VIT":24, "AGI":31, "INT":42, "MND":27, "CHR":20, "Accuracy":56, "Ranged Accuracy":35, "Gear Haste":6, "Store TP":6, "Dual Wield":5,"Jobs":["nin"]}
 Herculean_Trousers = {"Name": "Herculean Trousers", "STR":33, "DEX":0, "VIT":16, "AGI":32, "INT":29, "MND":15, "CHR":10, "Attack":15, "Ranged Attack":15,"Gear Haste":6, "Store TP":4,"Jobs":["nin","mnk","thf","rng","blu","cor","pup","dnc","run"]}
 Hizamaru_Hizayoroi = {"Name": "Hizamaru Hizayoroi +2", "STR":50, "DEX":0, "VIT":32, "AGI":24, "INT":24, "MND":11, "CHR":19, "Accuracy":45, "Attack":27, "Gear Haste":9, "Weaponskill Damage":7,"Jobs":["nin","sam","mnk","pup"]}

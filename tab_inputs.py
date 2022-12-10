@@ -83,8 +83,8 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
                      "Aero","Aero II","Aero III",
                      "Fire","Fire II","Fire III",
                      "Blizzard","Blizzard II","Blizzard III",
-                     "Thunder","Thunder II","Thunder III",]
-                     
+                     "Thunder","Thunder II","Thunder III",],
+              "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
              }
 # spell_list = [k for k in spell_list if ":" in k] if main_job == "NIN" else [k for k in spell_list if ":" not in k]
 # Same for weapon skill; filter to only show weapon skills that the selected main weapon can equip

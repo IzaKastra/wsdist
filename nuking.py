@@ -1,8 +1,45 @@
 # Author: Kastra (Asura)
-# Version date: 2022 December 08
+# Version date: 2022 December 10
 
 from get_dint_m_v import *
 import numpy as np
+
+def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_damage, enemy_int, enemy_mdb, enemy_meva):
+    #
+    # Calculate Quick Draw damage
+    #
+    magic_accuracy = gearset.playerstats["Magic Accuracy"] # Read base Magic Accuracy from playerstats, including traits and gear with "Magic Accuracy"
+
+    magic_accuracy_skill = gearset.playerstats["Magic Accuracy Skill"] # Magic Accuracy from Magic Accuracy Skill. Currently includes off-hand weapon stats.
+    magic_accuracy_skill -= gearset.gear["sub"].get("Magic Accuracy Skill",0) # Subtract off the Magic Accuracy Skill from the off-hand slot, since it does not contribute to spell accuracy.
+    magic_accuracy += magic_accuracy_skill # Add on the "Magic Accuracy Skill" stat
+
+    dstat_macc = gearset.playerstats.get("AGI",0)/2 # Apparently quick draw gets magic accuracy from AGI. No info on BG, but ffxiclopedia suggests 2 AGI = 1 MAcc.
+                                                    # 2:1 seems like a reasonable estimate.
+    magic_accuracy += dstat_macc # Add on magic accuracy from dstat
+
+    if "Death Penalty" in gearset.gear["ranged"]["Name2"]:
+        magic_accuracy += 60
+
+    base_damage = ((rng_dmg+ammo_dmg)*2 + gearset.playerstats["Quick Draw"] + player_magic_damage)
+    damage = base_damage * (1 + gearset.playerstats["Quick Draw II"]/100) # Death Penalty + Empyrean feet.
+
+
+
+    elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
+    damage *= elemental_damage_bonus
+    dayweather = 1.0 # This is changed to 1.25 for SCH helix. Maybe also change it 1.10 for /sch for single-weather.
+
+    magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0 # This is weird for quick draw. I assume my QD macc is incorrect. i recommend always using meva=0 for QD
+    resist_state = get_resist_state_average(magic_hit_rate)
+
+    damage *= (100+player_matk)/(100+enemy_mdb)
+    damage *= dayweather
+    damage *= elemental_damage_bonus
+    damage *= (1 + 0.25 * gearset.playerstats["Magic Crit Rate II"]/100) # Magic Crit Rate II is apparently +25% damage x% of the time. Only Sroda tathlum atm
+    damage *= resist_state
+
+    return(damage)
 
 def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
 
