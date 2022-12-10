@@ -261,7 +261,9 @@ while True:
                        "Polearm":["Stardiver","Impulse Drive","Penta Thrust"],
                        "Staff":["Cataclysm","Shattersoul"],
                        "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
-                       "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage",]}
+                       "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage",],
+                       "Archery":["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow",],
+                       "Marksmanship":["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]}
 
             for slot in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for job in main_jobs: # So we can turn off all other job gear.
@@ -271,12 +273,21 @@ while True:
                             if k.split()[0][:-1] == slot: # sub:  ammo:  main:  etc
                                 for l in displayed_equipment_list:
                                     if job.lower() in l["Jobs"] and main_job==job:
-                                        window[f"{slot}: {l['Name2']};;{job}"].update(True)
-                                        if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect weapons that can't use the selected weapon skill
-                                            window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                        window[f"{slot}: {l['Name2']};;{job}"].update(True) # Turn on all versions of item checkboxes that correspond to your main job (Heishi Shorinken R15;;NIN)
+
+                                        # If you're using a melee weapon skill, then unselect all main weapons that can't use your selected weapon skill.
+                                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                                            if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect main weapons that can't use the selected weapon skill
+                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                            if slot == "ranged" and l.get("Type","None") in ["Bow", "Gun"]: # Do not test ranged weapons with melee WSs (TP Bonus Gun??)
+                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                        # Now, if you're using a ranged weapon skill, then unselect all ranged weapons that can't use your selected weapon skill, but do select all main weapons still.
+                                        else:
+                                            if slot == "ranged" and ws_name not in ws_dict.get(l.get("Skill Type","None"),[]): # l is an item dictionary (Heishi_Shorinken).
+                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
                                     else:
                                         if f"{slot}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
-                                            window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                            window[f"{slot}: {l['Name2']};;{job}"].update(False) # Turn off all versions of item checkboxes corresponding to not your main job (Heishi Shorinken R15;;DRK)
 
 
         # Setup buttons to show/hide radio buttons on the starting gearset tab.

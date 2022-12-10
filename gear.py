@@ -201,7 +201,8 @@ Lissome_Necklace = {"Name":"Lissome Necklace", "Accuracy":8, "Store TP":4, "DA":
 Marked_Gorget = {"Name":"Marked Gorget","AGI":3,"Ranged Accuracy":15,"Ranged Attack":15,"Store TP":2,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Argute_Stole = {"Name":"Argute Stole +2","Name2":"Argute Stole +2 R25","Magic Accuracy":30,"Magic Burst Damage":10,"INT":15,"MND":15,"Magic Damage":25,"Jobs":["sch"]}
 Warrior_Beads = {"Name": "Warrior's Bead Necklace +2", "Name2":"Warrior's Bead Necklace +2 R25","Accuracy":25,"Attack":25,"Fencer":1,"DA":0+7,"STR":0+15,"DEX":0+15,"Jobs":["war"]}
-necks = [Warrior_Beads,Argute_Stole,Dragoon_Collar,Duelist_Torque,Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Samurai_Nodowa,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm,Sorcerers_Stole,Quanpur_Necklace,Mizukage_no_Kubikazari]
+Iskur_Gorget = {"Name":"Iskur Gorget","Ranged Accuracy":30,"Ranged Attack":30,"Store TP":8,"Jobs":["thf","rng","nin","cor"]}
+necks = [Iskur_Gorget,Marked_Gorget,Warrior_Beads,Argute_Stole,Dragoon_Collar,Duelist_Torque,Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Samurai_Nodowa,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm,Sorcerers_Stole,Quanpur_Necklace,Mizukage_no_Kubikazari]
 
 Balder_Earring = {"Name": "Balder Earring +1", "Attack":10, "Store TP":3, "QA":1, "Jobs":all_jobs}
 Brutal_Earring = {"Name": "Brutal Earring", "DA":5,"Store TP":1, "Jobs":all_jobs}
@@ -237,8 +238,8 @@ Kasuga_Earring = {"Name":"Kasuga Earring +2","Store TP":9,"Skillchain Bonus":7,"
 Arbatel_Earring = {"Name":"Arbatel Earring +2","Magic Attack":9,"Magic Damage":9,"Magic Accuracy":18,"INT":11,"MND":11,"Jobs":["sch"]}
 Enervating_Earring = {"Name":"Enervating Earring","Ranged Accuracy":7,"Ranged Attack":7,"Store TP":4,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Boii_Earring = {"Name":"Boii Earring +2","DA":9,"Accuracy":18,"Magic Accuracy":18,"STR":11,"VIT":11,"Crit Rate":7,"Jobs":["war"]}
-ears = [Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
-ears2 = [Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
+ears = [Enervating_Earring,Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
+ears2 = [Enervating_Earring,Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
 # Note that JSE+2 earrings are available in both slots.
 # This is because if the 2nd best earring is coincidentally placed in the right_ear, the JSE+2 earring might not be enough to replace it, even if it is significantly better than the third best option.
 # This results in a set that SHOULD have JSE+2 earring in it, but does not. Just remember that the output should place JSE+2 in the right ear. I'll find a way to force it later. TODO
@@ -312,7 +313,7 @@ Sakpata_Gauntlets = {"Name": "Sakpata's Gauntlets", "Name2": "Sakpata's Gauntlet
 Sulevia_Gauntlets = {"Name": "Sulevia's Gauntlets +2", "STR":23,"DEX":34,"VIT":45,"AGI":0,"INT":6,"MND":32,"CHR":27,"Accuracy":43,"Attack":47,"Gear Haste":3,"DA":6,"Jobs":["drk","war","pld","drg"]}
 Tatenashi_Gote = {"Name": "Tatenashi Gote +1", "Name2": "Tatenashi Gote +1 R15", "STR":8+10, "DEX":40+10, "VIT":32+10, "AGI":7+10, "INT":6+10, "MND":23+10, "CHR":16+10,"Accuracy":21+40,"Gear Haste":4,"Store TP":7,"TA":0+4, "Jobs":["nin","sam","mnk","war","rng"]}
 Hattori_Tekko = {"Name": "Hattori Tekko +3", "STR":27,"DEX":55,"VIT":40,"AGI":24,"INT":27,"MND":40,"CHR":27,"Gear Haste":5,"Accuracy":62,"Attack":62,"Ranged Accuracy":62,"Magic Accuracy":62,"Ninjutsu Magic Attack":18,"Magic Burst Damage":15,"Jobs":["nin"]}
-Heathen_Gauntlets = {"Name": "Heathen's Gauntlets +3", "STR":27,"DEX":43,"VIT":47,"AGI":0,"INT":25,"MND":40,"CHR":35,"Gear Haste":6,"Accuracy":62,"Attack":72,"Magic Accuracy":62,"Great Sword Skill":38, "Jobs":["drk"]}
+Heathen_Gauntlets = {"Name": "Heathen's Gauntlets +3", "STR":27,"DEX":43,"VIT":47,"AGI":0,"INT":25,"MND":40,"CHR":35,"Gear Haste":6,"Accuracy":62,"Attack":72,"Magic Accuracy":62,"Great Sword Skill":28, "Jobs":["drk"]}
 Amalric_Gages = {"Name":"Amalric Gages +1", "Name2":"Amalric Gages +1A",  "STR":3,"DEX":23,"VIT":20,"AGI":2,"INT":24,"MND":34,"CHR":19,"Magic Accuracy":0+20,"Magic Attack":33+20,"Magic Burst Damage":0,"Magic Burst Damage II":6,"Magic Damage":0,"Gear Haste":3,"Jobs":["blm","sch","rdm","geo","blu"]}
 Ea_Cuffs = {"Name":"Ea Cuffs +1","STR":7,"DEX":29,"VIT":30,"AGI":0,"INT":40,"MND":40,"CHR":23,"Magic Accuracy":49,"Magic Attack":35,"Magic Burst Damage":6, "Magic Burst Damage II":6,"Gear Haste":3,"Jobs":["blm", "rdm", "geo"]}
 Agwu_Gages = {"Name":"Agwu's Gages", "Name2": "Agwu's Gages R25", "STR":14,"DEX":38,"VIT":23,"AGI":6,"INT":33,"MND":40,"CHR":25, "Accuracy":40+10, "Magic Accuracy":40+10,"Magic Attack":35+23,"Magic Burst Damage":8,"Magic Burst Damage II":0+5,"Magic Damage":20,"Gear Haste":3,"Jobs":["blm", "sch", "geo", "run"]}
@@ -369,8 +370,8 @@ Stikini_Ring2 = {"Name":"Stikini Ring +1", "MND":8, "Magic Accuracy":8, "Element
 Ayanmo_Ring = {"Name":"Ayanmo Ring", "Accuracy":6, "Magic Accuracy":6, "Jobs":["whm","rdm","brd","blu","run"]}
 Cacoethic_Ring = {"Name":"Cacoethic Ring +1","Name2":"Cacoethic Ring +1 R15","Accuracy":11,"Ranged Accuracy":16,"DEX":0+10,"AGI":0+10,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Ramuh_Ring1 = {"Name": "Ramuh Ring +1", "Name2": "Ramuh Ring +1A", "DEX":9, "Accuracy":5,"Jobs":all_jobs}
-rings = [Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
-rings2 = [Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
+rings = [Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
+rings2 = [Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
 
 Andartia_Critagi = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle AGI Crit Rate", "AGI":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "Jobs":["nin"]}
 # Each job has identical Ambuscade cape augments. Here I define a simple code block to automatically build each possible type of ambu cape for each job.
@@ -412,9 +413,16 @@ for job in cape_names:
             # Add capes with Macc+Mdmg + WSD + STAT
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Magic)", f"{base_stat}":30, "Weaponskill Damage":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
+        if job in ["NIN", "RDM", "COR", "RNG"] and base_stat in ["AGI","STR","DEX"]: # The list of jobs that might build physical ranged WS sets.
+            # add ranged WS sets with stat+30, WSD+10, Racc/Ratk+20 for a select few jobs. Only RNG gets a DEX cape, though (for jishnus)
+            if job in ["NIN","RDM","COR"] and base_stat=="DEX":
+                continue
+            capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Ranged)", f"{base_stat}":30, "Weaponskill Damage":10, "Ranged Accuracy":20, "Ranged Attack":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+
     if job in ["NIN", "BLM", "RDM", "SCH", "GEO","DRK"]: # The list of jobs with access to nukes get nuke capes
         # add nuking capes with INT+30, Matk+10, Macc/Mdmg+20 for a select few jobs.
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} INT Magic Attack", "INT":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+
     
 
     # if job in ["NIN", "RDM", "THF", "COR", "RNG", "SAM"]:
@@ -442,9 +450,9 @@ Skrymir_Cord = {"Name":"Skrymir Cord +1", "Magic Accuracy":7, "Magic Attack":7, 
 Sacro_Cord = {"Name":"Sacro Cord", "INT":8, "MND":8, "Magic Accuracy":8, "Magic Attack":8, "Jobs":["whm","blm","rdm","blu","sch","geo"]}
 Acuity_Belt = {"Name":"Acuity Belt +1","Name2":"Acuity Belt +1 R15", "INT":6+10, "Magic Accuracy":15,"Jobs":["mnk","whm","blm","rdm","pld","brd","rng","blu","pup","sch","geo","run"]}
 Luminary_Sash = {"Name":"Luminary Sash", "MND":10, "Magic Accuracy":10, "Jobs":["mnk","whm","blm","rdm","pld","brd","rng","smn","blu","pup","sch","geo","run"]}
-Yemeya_Belt = {"Name":"Yemeya Belt", "AGI":7, "Ranged Accuracy":10, "Ranged Attack":10, "Store TP":4, "Jobs":["mnk","whm","rdm","thf","bst","brd","rng","sam","nin","blu","cor","dnc","run"]}
+Yemaya_Belt = {"Name":"Yemaya Belt", "AGI":7, "Ranged Accuracy":10, "Ranged Attack":10, "Store TP":4, "Jobs":["mnk","whm","rdm","thf","bst","brd","rng","sam","nin","blu","cor","dnc","run"]}
 Prosilio_Belt = {"Name":"Prosilio Belt +1","STR":10,"Attack":28,"DA":-5,"Weaponskill Accuracy":5,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
-waists = [Luminary_Sash, Sacro_Cord, Acuity_Belt,Eschan_Stone,Fotia_Belt,Grunfeld_Rope,Ioskeha_Belt,Kentarch_Belt,Orpheus_Sash,Reiki_Yotai,Sailfi_Belt,Windbuffet_Belt,Skrymir_Cord,]
+waists = [Prosilio_Belt,Yemaya_Belt,Luminary_Sash,Sacro_Cord,Acuity_Belt,Eschan_Stone,Fotia_Belt,Grunfeld_Rope,Ioskeha_Belt,Kentarch_Belt,Orpheus_Sash,Reiki_Yotai,Sailfi_Belt,Windbuffet_Belt,Skrymir_Cord,]
 
 Adhemar_Kecks_A = {"Name": "Adhemar Kecks +1", "Name2": "Adhemar Kecks +1 A", "STR":32, "DEX":0+12, "VIT":15, "AGI":30+12, "INT":28, "MND":16, "CHR":8, "Accuracy":34+20, "Ranged Accuracy":34, "Gear Haste":6, "Store TP":8,"Jobs":["mnk","thf","rng","nin","blu","cor","dnc","run"]}
 Adhemar_Kecks_B = {"Name": "Adhemar Kecks +1", "Name2": "Adhemar Kecks +1 B", "STR":32+12, "DEX":0+12, "VIT":15, "AGI":30, "INT":28, "MND":16, "CHR":8, "Accuracy":34, "Ranged Accuracy":34, "Attack":20, "Gear Haste":6, "Store TP":8,"Jobs":["mnk","thf","rng","nin","blu","cor","dnc","run"]}

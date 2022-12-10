@@ -158,5 +158,8 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Dolichenus":
         if ws_name == "Decimation":
             bonuses["ws_bonus"] += 1.20
+    elif main_wpn_name == "Ullr":
+        if ws_name == "Empyreal Arrow":
+            bonuses["ws_bonus"] += 0.5
 
     return(bonuses)

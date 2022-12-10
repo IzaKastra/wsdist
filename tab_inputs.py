@@ -44,6 +44,7 @@ ws_list = sorted(
            "Black Halo", "Judgment", "Hexa Strike", "Realmrazer","Seraph Strike", "Randgrith",
            "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
            "Cloudsplitter","Ruinator","Decimation","Rampage",
+           "Empyreal Arrow",
            ])
 
 # spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",

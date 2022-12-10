@@ -39,6 +39,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             print(f'TP must be greater than 1000 to use a Weapon skill; TP = {tp}')
             raise TP_Error
 
+    # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
+    # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
+    phys_rng_ws = ws_name in ["Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow"]
+
     # Save the main and sub weapon names for later.
     # Used to check if giving weapon skill damage bonuses on things like Gokotai (if "Gokotai" in main_wpn_name)
     main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
@@ -58,7 +62,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     main_dmg = gearset.playerstats['DMG1']
     sub_dmg  = gearset.playerstats['DMG2']
     rng_dmg  = gearset.playerstats['Ranged DMG']
-    ammo_rmg = gearset.playerstats.get("Ammo DMG",0)
+    ammo_dmg = gearset.playerstats.get("Ammo DMG",0)
 
     fotia_ftp = gearset.playerstats['ftp']
     pdl_gear  = gearset.playerstats['PDL']/100.
@@ -266,7 +270,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
         magical_damage *= magic_multiplier
-        magical_damage *= (1+wsd)*(1+ws_bonus) # TODO: *(1+ws_trait)
+        magical_damage *= (1+wsd)*(1+ws_bonus)*(1+ws_trait) # TODO: remove this comment. ws_trait is always 0 right now. ive included it in the equation anyway for later
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
 
         return(magical_damage,0) # Return 0 TP for now.
@@ -274,27 +278,44 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     if not final: # If the best set hasn't been determined yet, then just take a simple average. No need to run a bunch of simulations unless you're making a plot.
 
-        # Check hit rates for each hand and for each hit.
-        hitrate11 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main',  True, main_type_skill) # First main-hand hit.
-        hitrate21 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub',  True, sub_type_skill) # First off-hand hit.
-        hitrate12 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill) # Additional main-hand hits. "False" to not gain the +100 accuracy.
-        hitrate22 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
-        hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
+        if not phys_rng_ws: # Do normal melee physical WS stuff here. otherwise skip all of it and do ranged physical WS stuff
+            # Check hit rates for each hand and for each hit.
+            hitrate11 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main',  True, main_type_skill) # First main-hand hit.
+            hitrate21 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub',  True, sub_type_skill) # First off-hand hit.
+            hitrate12 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill) # Additional main-hand hits. "False" to not gain the +100 accuracy.
+            hitrate22 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
+            hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
-        hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
-        hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
+            # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
+            main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
 
-        # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
-        main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
+            # Calculate average damage dealt per hit for each hand.
+            avg_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Main-hand average PDIF
+            avg_pdif2 = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)  # Off-hand average PDIF
 
-        # Calculate average damage dealt per hit for each hand.
-        avg_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Main-hand average PDIF
-        avg_pdif2 = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)  # Off-hand average PDIF
-        main_hit_damage =    get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp,  crit_rate, crit_dmg, wsd, ws_bonus) # Calculate the physical damage dealt by the first main hit.
-        sub_hit_damage =     get_avg_phys_damage( sub_dmg,  fstr_sub, wsc, avg_pdif2, ftp2, crit_rate, crit_dmg,   0, ws_bonus) # Calculate the physical damage dealt by the off-hand hits separately, no weapon skill damage provided here.
-        main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus) # Calculate the physical damage dealt by extra main-hand hits
+            main_hit_damage =    get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # Calculate the physical damage dealt by the first main hit.
+            sub_hit_damage =     get_avg_phys_damage( sub_dmg,  fstr_sub, wsc, avg_pdif2, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by the off-hand hits separately, no weapon skill damage provided here.
+            main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits
 
-        phys = main_hit_damage + (main_hits-1)*main_hit_ma_damage + sub_hits*sub_hit_damage
+            phys = main_hit_damage + (main_hits-1)*main_hit_ma_damage + sub_hits*sub_hit_damage
+        else:
+            hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
+            hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
+
+            avg_pdif_rng = get_avg_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
+
+            ranged_hit_damage = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # The amount of damage done by the first hit of the WS if it does not miss
+            ranged_hit_damage2 = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp2,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # Hits after the first main hit (jishnu hits 2+3. Last stand hit 2, etc)
+            phys = ranged_hit_damage*hitrate_ranged1 + ranged_hit_damage2*hitrate_ranged2*(nhits-1)
+
+            # print(f"Ranged Accuracy: {player_rangedaccuracy}")
+            # print(f"Ranged Attack: {player_rangedattack}")
+            # print(f"Ranged Hit rates: {hitrate_ranged1}  {hitrate_ranged2}")
+            # print(f"Ranged PDIF: {avg_pdif_rng}")
+            # print(f"Ranged Hit Damage: {ranged_hit_damage}  {ranged_hit_damage2}")
+            # print(f"Ranged Average Phys Damage: {phys}")
+            
+
         damage += phys
 
         if hybrid:
@@ -315,8 +336,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         return(damage, 0) # Return the average damage dealt and 0 TP return.
 
-    # This marks the end of the damage calculation for average estimates.
-
+    # This marks the end of the damage calculation for average estimates. We'll start the proper simulations next.
 
 
     # Start the actual damage simulations now.
@@ -343,36 +363,52 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if n > 0:
             ftp = ftp2 # After the first hit, use secondary FTP for main-hand hits. This will equal primary FTP if the WS is FTP-replicating, otherwise it's 1.0
 
-        # Calculate hit rates for the natural main- and sub-hits (the first of each get a ~+100 Accuracy bonus).
-        # Future main- and off-hand hits do not get accuracy+100 (n!=0).
-        hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', n==0, main_type_skill)
-        hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', n==0, sub_type_skill)
+        if not phys_rng_ws:
+            # Calculate hit rates for the natural main- and sub-hits (the first of each get a ~+100 Accuracy bonus).
+            # Future main- and off-hand hits do not get accuracy+100 (n!=0).
+            hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', n==0, main_type_skill)
+            hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', n==0, sub_type_skill)
 
-        # Check if your hit lands
-        if np.random.uniform() < hitrate1:
-            if n > 0: # If your hit landed successfully (n>0 so youre checking AFTER the first main+sub hits here), then add 1 to the number of additional hits that provide TP
-                ma_tp_hits += 1
-            else:
-                mainhit = True # The first main hit successfully landed so it provides full TP. (n=0 is the first main hit)
-            pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
-            physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg, wsd, ws_bonus, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
-            damage += physical_damage
+            # Check if your hit lands
+            if np.random.uniform() < hitrate1:
+                if n == 0:
+                    mainhit = True # The first main hit successfully landed so it provides full TP. (n=0 is the first main hit)
+                else:
+                    ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
 
-        # Bonus hit for dual-wielding.
-        # The dual-wielding hit occurs immediately after first main-hit. This can be confirmed by watching your in-game TP return.
-        if total_hits < 8 and dual_wield and n == 0: # By necessity of order-of-operations, total_hits==1 right now, so we can remove the "total_hits < 8" bit. TODO
-            total_hits += 1 # You are starting to try to hit with your off-hand weapon, add one to the total hits.
-            if np.random.uniform() < hitrate2:
-                subhit = True # For TP return. The successful sub-hit gets full TP
-                pdif2, crit = get_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the pdif for this off-hand hit. Return whether or not it was a crit.
-                physical_damage = get_phys_damage(sub_dmg, fstr_sub, wsc, pdif2, ftp2, crit, crit_dmg, 0, ws_bonus, 1) # Calculate its damage. Notice that subhit uses ftp2 and wsd=0.
+                pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
+                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg, wsd, ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
                 damage += physical_damage
 
-        # This is the last line of the natural main/sub-hit for-loop
+            # Bonus hit for dual-wielding.
+            # The dual-wielding hit occurs immediately after first main-hit. This can be confirmed by watching your in-game TP return.
+            if total_hits < 8 and dual_wield and n == 0: # By necessity of order-of-operations, total_hits==1 right now, so we can remove the "total_hits < 8" bit. TODO
+                total_hits += 1 # You are starting to try to hit with your off-hand weapon, add one to the total hits.
+                if np.random.uniform() < hitrate2:
+                    subhit = True # For TP return. The successful sub-hit gets full TP
+                    pdif2, crit = get_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the pdif for this off-hand hit. Return whether or not it was a crit.
+                    physical_damage = get_phys_damage(sub_dmg, fstr_sub, wsc, pdif2, ftp2, crit, crit_dmg, 0, ws_bonus, ws_trait, 1) # Calculate its damage. Notice that subhit uses ftp2 and wsd=0.
+                    damage += physical_damage
+
+        else:
+            hitrate_ranged = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", n==0, rng_type_skill)
+
+            if np.random.uniform() < hitrate_ranged:
+                if n == 0:
+                    mainhit = True # The first main hit successfully landed so it provides full TP. (n=0 is the first main hit)
+                else:
+                    ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
+
+                pdif_rng, crit = get_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this shot of the ranged weapon. Return whether or not that hit was a crit.
+                physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd, ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
+                damage += physical_damage
+
+
+            # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
 
 
     # This part checks for multi-attack procs. It does so after all of the natural main-hits and the one sub-hit
-    if total_hits < 8:
+    if total_hits < 8 and not phys_rng_ws: # Don't bother with this section at all if using a physical ranged WS
 
         # The main hand gets 1 MA check if dual-wielding, 1+0 MA checks if single-wielding and using a 1-hit weaponskill, or 1+1 MA checks if single-wielding and using a 2+ hit weapon skill
         # Single-wielding weapons (including 2-handed weapons):
@@ -397,23 +433,23 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             if np.random.uniform() < qa and ma_count_limit < 2:
                 # If you rolled lower than your quadruple attack %, then you perform a quadruple attack.
                 ma_count_limit += 1 # This counts as one of your two allowed multi-attack procs, even if you can only swing once out of the whole QA proc due to the 8-hit limit
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
             elif np.random.uniform() < ta and ma_count_limit < 2: # If you failed the quadruple attack check, then you get to try to roll lower than your triple attack value.
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
             elif np.random.uniform() < da and ma_count_limit < 2: # If you failed the triple attack check, then you get to try a double attack roll
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
             elif np.random.uniform() < oa3 and ma_count_limit < 2: # If you failed double attack, then you get to try OA3 roll (skipping Oa8, OA7, OA6, etc)
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
             elif np.random.uniform() < oa2 and ma_count_limit < 2: # If you failed OA3, try OA2.
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
 
         # Now check multi-attacks for the off-hand.
@@ -424,15 +460,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if dual_wield: # If you have an off-hand weapon equipped, then it gets one of your two multi-attack procs. Check that multi-attack proc now.
             if np.random.uniform() < qa and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
             elif np.random.uniform() < ta and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
             elif np.random.uniform() < da and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack2,   sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack2,   sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
 
     phys = damage
@@ -452,7 +488,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         enemy_mdt = 1.0
         magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
 
-        magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
+        magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)*(1+ws_trait)
         damage += magical_damage
 
     # damage = 99999 if damage > 99999 else damage  # Cap damage at 99999. This ruins the scale of the plots for high-buff situations. Better to leave damage uncapped.
@@ -696,6 +732,17 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Do not allow anything in the off-hand of hand-to-hand weapons.
                                 if new_set["main"]["Skill Type"] == "Hand-to-Hand":
                                     if new_set["Name"] != Empty:
+                                        continue
+
+                                # Require that a ranged weapon that matches your selected ranged weapon skill be equipped IF you're using a ranged weapon skill.
+                                # This prevents something like Seething Bomblet +1 R15 from being BiS for Empyreal Arrow for some reason.
+                                archery = ["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow",]
+                                marksmanship = ["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]
+                                if ws_name in archery:
+                                    if new_set["ranged"]["Skill Type"] != "Archery":
+                                        continue
+                                if ws_name in marksmanship:
+                                    if new_set["ranged"]["Skill Type"] != "Marksmanship":
                                         continue
 
                                 # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.

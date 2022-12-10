@@ -321,9 +321,6 @@ class set_gear:
         elif mainjob == "WAR":
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 self.playerstats["Fencer"] += 5 # Fencer V native, plus gear
-                fencer_bonus = get_fencer_bonus(self.playerstats["Fencer"])
-                self.playerstats["TP Bonus"] += fencer_bonus[0] + self.playerstats["Fencer TP Bonus"]
-                self.playerstats["Crit Rate"] += fencer_bonus[1]
             self.playerstats["DA"] += 18
             smite_bonus = 204/1024
             self.playerstats['Attack1'] += 35 # Attack Bonus III trait
@@ -492,41 +489,57 @@ class set_gear:
         self.set_bonuses['VIT'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
         self.set_bonuses['MND'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
 
+        # Details:
+        # Your gear stats start out as all zero. Your player stats start out as whatever base values you have from traits/gifts/etc
+        # This next code block applies set bonuses to your gearstats and playerstats together, but skips accuracy since that gets treated specifically later.
+        # This should also skip attack, but there are no set bonuses that give attack added to the code yet.
+
+        # TODO: We should just ignore playerstats until just before adding buffs. Only add to gear stats together, then loop over gearstats, adding to playerstats right before we add buffs.
+        # We kind of already do this, just it looks bad.
+
         # Add set bonuses to gearstats
         for stat in self.set_bonuses:
-            self.gearstats[stat] += self.set_bonuses[stat]
+            self.gearstats[stat] += self.set_bonuses[stat] # Stats from gear get set bonuses from gear
             if stat == 'Accuracy': # Skip the Accuracy stat for the "playerstats." Accuracy is added to "gearstats" on the line above, then converted to Accuracy1 and Accuracy2 in "playerstats" later.
                 continue
             else:
                 self.playerstats[stat] += self.set_bonuses[stat]
 
+
+        # Now loop over all of the gear equipped and add the stats to the gearstats dictionary. Set bonuses were already added to both gearstats and playerstats above.
+
         # Build the gearstat dictionary from the provided gear set.
         for stat in self.gearstats: # stat = stat name as seen in the gearstats dictionary: "STR", "TA", "Crit Rate", etc
-            for k in self.gear.values(): # k = Dictionary containing the stats for a single piece of gear for all slots one slot at a time: {'Name': 'Gere Ring', 'STR': 10, 'Attack': 16, 'TA': 5}
+            for k in self.gear.values(): # k = Dictionary containing the stats for a single piece of gear for all slots one slot at a time: {'Name': 'Gere Ring', 'STR': 10, 'Attack': 16, 'TA': 5}. key=slot, value=item
                 if stat in k.keys(): # If the stat in gearstats exists on the piece of gear being checked.
                     self.gearstats[stat] += k[stat] # Add the stat from the gear to the gearstats dictionary.
+
+
+
+
+        main_wpn_skill = self.gear['main'].get('Skill Type', 'None') + ' Skill' # Record the type of weapon being used in the main hand. "Katana Skill" for example # TODO we redefine this later for some reason
+        sub_wpn_skill = self.gear['sub'].get('Skill Type', 'None') + ' Skill' # Same for off-hand
+        rng_wpn_skill = self.gear['ranged'].get('Skill Type', 'None') + ' Skill' # Same for ranged slot
 
         # Increase playerstats dictionary values by the amount listed on gear.
         for slot in self.gear: # slot = 'head', 'neck', 'ear1', etc
             for stat in gear[slot]: # stat = The stats on a piece of gear: "STR", "Double Attack", etc
-                if stat not in self.gearstats or stat not in self.playerstats: # Skill stats on gear that I haven't yet added to the playerstats dictionary. Things like "Accuracy" and "Attack" in gearstats are called "Accuracy1" "Accuracy2" "Attack1" and "Attack2" in the playerstats and won't be found on gear, which uses "Accuracy." Skip them here
+                if stat not in self.gearstats or stat not in self.playerstats: # Skill stats on gear that I haven't yet added to the playerstats dictionary. Things like "Accuracy" and "Attack" in gearstats are called "Accuracy1" "Accuracy2" "Attack1" and "Attack2" in the playerstats and won't be found on gear. Skip them here
+                    continue # Keep in mind, "Jobs" and "Type" etc are all stats that need to be skipped here
+                if (slot == "main" and stat == main_wpn_skill) or (slot == "sub" and stat == sub_wpn_skill): # Skip adding skill+ stats from main+sub weapons for now. These get converted into attack and accuracy later. This skips skill from grips too, but only a few relatively useless grips have skill+ on them, so we'll ignore this issue for now.
+                    # If we add "Katana Skill" from main and sub now, then they'll get confused later when we need ONLY main katana skill to calculate main katana accuracy/attack.
                     continue
-                main_wpn_skill = self.gear['main'].get('Skill Type', 'None') + ' Skill' # Record the type of weapon being used in the main hand. "Katana Skill" for example
-                sub_wpn_skill = self.gear['sub'].get('Skill Type', 'None') + ' Skill' # Same for off-hand
-                rng_wpn_skill = self.gear['ranged'].get('Skill Type', 'None') + ' Skill' # Same for ranged slot
-                if (slot == "main" and stat == main_wpn_skill) or (slot == "sub" and stat == sub_wpn_skill): # Skip adding skill+ stats from weapons for now. These get converted into attack and accuracy later. This skips skill from grips too, but only a few relatively useless grips have skill+ on them, so we'll ignore this issue for now.
-                    continue
-                self.playerstats[stat] += self.gear[slot][stat]
-                # self.gearstats[stat] += self.gear[slot][stat] # This line is re-adding stuff already added above. Commenting it out for now.
+                self.playerstats[stat] += self.gear[slot][stat] # This line already adds gear stat skills "Scythe Skill" from Empyrean +3 head for example is added here
+                # self.gearstats[stat] += self.gear[slot][stat] # This line is adding stats to gearstats. but i dont think i even use gearstats anymore i could probably delete it entirely TODO
 
         # print(self.playerstats)
-        # At this point, the playerstats dictionary should have all the player's gear stats except attack1, attack2, accuracy1, and accuracy2
+        # At this point, the playerstats dictionary should have all the player's gear stats added to the player's base stats, except attack1, attack2, accuracy1, and accuracy2
 
         # Stats from gear have now been applied to playerstats.
         # Check for trait enhancements from gear now (Fencer+1 for example)
         if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed: # Apply Fencer bonuses based on Fencer+ gear.
             fencer_bonus = get_fencer_bonus(self.playerstats["Fencer"])
-            self.playerstats["TP Bonus"] += fencer_bonus[0]
+            self.playerstats["TP Bonus"] += fencer_bonus[0] + self.playerstats["Fencer TP Bonus"]
             self.playerstats["Crit Rate"] += fencer_bonus[1]
 
         # Stats from food are used to calculate Attack and Accuracy before any % bonuses such as Chaos Roll or GEO's Fury bubble
@@ -555,23 +568,20 @@ class set_gear:
         # Add skill levels from armor. See Hachiya Tekko +3: "Throwing Skill +14"
         main_weapon_skill_type = self.gear['main'].get('Skill Type','None') + ' Skill'
         sub_weapon_skill_type = self.gear['sub'].get('Skill Type','None')  + ' Skill' if dual_wield else False
+        ranged_weapon_skill_type = self.gear['ranged'].get('Skill Type','None')  + ' Skill' # TODO: this is already defined as rng_wpn_skill
         ammo_weapon_skill_type = self.gear['ammo'].get('Skill Type','None') + ' Skill'
-        main_gear_skill, sub_gear_skill, ammo_gear_skill = [0 for k in range(3)]
-        for slot in self.gear:
-            if slot == 'main' or slot == 'sub':
-                continue
-            main_gear_skill += self.gear[slot].get(main_weapon_skill_type, 0)
-            if dual_wield:
-                sub_gear_skill += self.gear[slot].get(sub_weapon_skill_type, 0)
-            ammo_gear_skill += self.gear[slot].get(ammo_weapon_skill_type, 0)
-
+    
         # Increase player Attack and Ranged Attack based on gear and base character stats.
         # Main hand =  Attack1 = 8+GearSkill+STR+Attack+MainWeaponSkill
         # Sub hand = Attack2 = 8+GearSkill+0.5*STR+Attack+SubWeaponSkill
-        # Ranged attack = 8+skill + STR + RangedAttack  ~ Assume only using Shuriken so only check Ammo skill and ignore Ranged slot. I'm not interested in NIN Empyreal Arrow sets.
-        self.playerstats['Attack1'] += 8 + self.playerstats.get(self.gear['main'].get('Skill Type','None') + ' Skill', 0) + self.playerstats['STR'] + self.gearstats['Attack'] + self.gear['main'].get(self.gear['main'].get('Skill Type','None') + ' Skill', 0) + main_gear_skill
-        self.playerstats['Attack2'] += 8 + self.playerstats.get(self.gear['sub'].get('Skill Type','None')  + ' Skill', 0) + int(0.5*(self.playerstats['STR'])) + self.gearstats['Attack'] + self.gear['sub'].get(self.gear['sub'].get('Skill Type','None')  + ' Skill', 0) + sub_gear_skill if dual_wield else 0
-        self.playerstats['Ranged Attack'] += 8 + self.playerstats.get(self.gear['ammo'].get('Skill Type','None') + ' Skill',0) + self.playerstats['STR'] + ammo_gear_skill # Ranged attack DOES exist in gearstats, so no need to add it on here.
+        # Ranged attack = 8 + skill + STR + RangedAttack. Ranged/Ammo slot skill was already counted just above. no need to add it separately here.
+        self.playerstats['Attack1'] += 8 + self.playerstats.get(self.gear['main'].get('Skill Type','None') + ' Skill', 0) + self.playerstats['STR'] + self.gearstats['Attack'] + self.gear['main'].get(self.gear['main'].get('Skill Type','None') + ' Skill', 0)
+        self.playerstats['Attack2'] += 8 + self.playerstats.get(self.gear['sub'].get('Skill Type','None')  + ' Skill', 0) + int(0.5*(self.playerstats['STR'])) + self.gearstats['Attack'] + self.gear['sub'].get(self.gear['sub'].get('Skill Type','None')  + ' Skill', 0) if dual_wield else 0
+        if self.gear["ranged"].get("Skill Type", "None") in ["Marksmanship","Archery"]:
+            self.playerstats['Ranged Attack'] += 8 + self.playerstats.get(self.gear['ranged'].get('Skill Type','None') + ' Skill',0) + self.playerstats['STR'] # Ranged attack DOES exist in gearstats, so no need to add it on here.
+        elif self.gear["ammo"].get("Skill Type", "None") == "Throwing": # For Shuriken
+            self.playerstats['Ranged Attack'] += 8 + self.playerstats.get(self.gear['ammo'].get('Skill Type','None') + ' Skill',0) + self.playerstats['STR'] # Ranged attack DOES exist in gearstats, so no need to add it on here.
+
 
         # Now add in the additive buffs from BRD songs
         if buffs['brd']:
@@ -616,8 +626,8 @@ class set_gear:
         # Now work on accuracy1, accuracy2, and ranged accuracy stats
 
         # Define the accuracy case statement from BG wiki
-        def get_skill_accuracy(wpn, slot, gear_skill):
-            skill = self.playerstats.get(wpn.get('Skill Type','None') + ' Skill',0) + wpn.get(wpn.get('Skill Type','None')+' Skill',0)*(slot != "ammo") + gear_skill # Example: skill = "Katana_Skill_(armor) + Katana_Skill_(weapon)"; "wpn" == off-hand OR main-hand
+        def get_skill_accuracy(wpn, slot):
+            skill = self.playerstats.get(wpn.get('Skill Type','None') + ' Skill',0) + wpn.get(wpn.get('Skill Type','None') + ' Skill',0)*(slot != "ammo")*(slot != "ranged") # We've already added skill from ranged+ammo slots. Do not add them again.
             if skill >= 601:
                 skill_accuracy = int((skill-600)*0.9)+540
             elif skill >= 401:
@@ -629,9 +639,12 @@ class set_gear:
             return(skill_accuracy)
 
         # Increase player Accuracy and Ranged Accuracy based on gear and base character stats.
-        self.playerstats['Accuracy1'] += int(0.75*(self.playerstats['DEX'])) + self.gearstats['Accuracy'] + get_skill_accuracy(self.gear['main'], 'main', main_gear_skill)
-        self.playerstats['Accuracy2'] += int(0.75*(self.playerstats['DEX'])) + self.gearstats['Accuracy'] + get_skill_accuracy(self.gear['sub'], 'sub', sub_gear_skill) if dual_wield else 0
-        self.playerstats['Ranged Accuracy'] += int(0.75*(self.playerstats['AGI'])) + get_skill_accuracy(self.gear['ammo'], 'ammo', ammo_gear_skill)
+        self.playerstats['Accuracy1'] += int(0.75*(self.playerstats['DEX'])) + self.gearstats['Accuracy'] + get_skill_accuracy(self.gear['main'], 'main')
+        self.playerstats['Accuracy2'] += int(0.75*(self.playerstats['DEX'])) + self.gearstats['Accuracy'] + get_skill_accuracy(self.gear['sub'], 'sub') if dual_wield else 0
+        if self.gear["ranged"].get("Skill Type", "None") in ["Marksmanship","Archery"]:
+            self.playerstats['Ranged Accuracy'] += int(0.75*(self.playerstats['AGI'])) + get_skill_accuracy(self.gear["ranged"], "ranged")
+        elif self.gear["ammo"].get("Skill Type", "None") == "Throwing": # For Shuriken
+            self.playerstats['Ranged Accuracy'] += int(0.75*(self.playerstats['AGI'])) + get_skill_accuracy(self.gear['ammo'], 'ammo')
 
 
         # Add in the additive accuracy buffs, which includes things like BRD madrigals, COR Hunter's Roll, GEO Precision, and Mjollnir Aftermath
@@ -678,9 +691,12 @@ class set_gear:
             self.playerstats['Magic Attack'] += buffs['food'].get('Magic Attack',0)
             self.playerstats['Store TP'] += buffs['food'].get('Store TP',0)
 
-
+        if gear["ranged"].get("Skill Type","None") not in ["Marksmanship","Archery"] and gear["ammo"].get("Skill Type","None") != "Throwing":
+            self.playerstats["Ranged Attack"] = 0   
+            self.playerstats["Ranged Accuracy"] = 0 
 
         base_delay = 480 # Before any Martial Arts traits
+        base_DMG = 3 # Base weapon damage for H2H
 
         # Adjust main/sub/ammo weapon delays and damage
         self.playerstats['Delay1'] += self.gear['main']['Delay']
