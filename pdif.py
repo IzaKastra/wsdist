@@ -86,7 +86,7 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
     # Calculate PDIF for physical melee hits using the process described on BG wiki, but assuming the average random value is drawn.
     # https://www.bg-wiki.com/ffxi/PDIF
     #
-    if wpn_type_skill=='Katana' or wpn_type_skill=="Dagger" or wpn_type_skill=="Sword" or wpn_type_skill=="Axe" or wpn_type_skill=="Club":
+    if wpn_type_skill=='Katana' or wpn_type_skill=="Dagger" or wpn_type_skill=="Sword" or wpn_type_skill=="Axe" or wpn_type_skill=="Club": # TODO: "if_wpn_skill in [a,b,c,]"
         pdif_base_cap = 3.25
     elif wpn_type_skill=="Great Katana" or wpn_type_skill=="Hand-to-Hand":
         pdif_base_cap = 3.5
@@ -149,9 +149,9 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
 
 
 @njit
-def get_pdif_ranged(player_ranged_attack, pdl_trait, pdl_gear=0, enemy_defense=1300, crit_rate=0):
+def get_pdif_ranged(player_ranged_attack, wpn_type_skill, pdl_trait, pdl_gear, enemy_defense=1300, crit_rate=0):
 
-    pdif_base_cap = 3.25 # Assume always throwing, not archery or marksmanship.
+    pdif_base_cap = 3.5 if wpn_type_skill=="Marksmanship" else 3.25
 
     crit = random.uniform(0,1) < crit_rate
 
@@ -159,7 +159,7 @@ def get_pdif_ranged(player_ranged_attack, pdl_trait, pdl_gear=0, enemy_defense=1
 
     cratio = ratio # Ignore Level Differences for now
 
-    wratio = cratio
+    wratio = cratio # There is no wratio term for ranged.
 
     if wratio >= 0.0 and wratio < 0.9:
         upper_qlim = wratio * (10./9.)
@@ -189,3 +189,43 @@ def get_pdif_ranged(player_ranged_attack, pdl_trait, pdl_gear=0, enemy_defense=1
         pdif *= 1.25
 
     return(pdif, crit)
+
+@njit
+def get_avg_pdif_ranged(player_ranged_attack, wpn_type_skill, pdl_trait, pdl_gear, enemy_defense=1300, crit_rate=0):
+
+    pdif_base_cap = 3.5 if wpn_type_skill=="Marksmanship" else 3.25
+
+    ratio = player_ranged_attack / enemy_defense
+
+    cratio = ratio # Ignore Level Differences for now
+
+    wratio = cratio # There is no wratio term for ranged.
+
+    if wratio >= 0.0 and wratio < 0.9:
+        upper_qlim = wratio * (10./9.)
+    elif wratio >= 0.9 and wratio < 1.1:
+        upper_qlim = 1
+    elif wratio >= 1.1:
+        upper_qlim = wratio
+
+    if wratio >= 0.0 and wratio < 0.9:
+        lower_qlim = wratio
+    elif wratio >= 0.9 and wratio < 1.1:
+        lower_qlim = 1
+    elif wratio >= 1.1:
+        lower_qlim = wratio*(20./19) - (3./19)
+
+    qratio = 0.5*(lower_qlim+upper_qlim)
+
+    pdif_cap = (pdif_base_cap+pdl_trait)*(1+pdl_gear)
+    if qratio <= 0:
+        pdif = 0
+    elif qratio >= pdif_cap:
+        pdif = pdif_cap
+    else:
+        pdif = qratio
+
+    crit_rate = 1.0 if crit_rate > 1.0 else crit_rate # Limit crit rate to 100% so we don't over-multiply
+    pdif *= (1+0.25*crit_rate)
+
+    return(pdif)

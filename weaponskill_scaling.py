@@ -31,6 +31,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     ws_dINT = 0
     element = "None"
     ftp_hybrid = 0
+    acc_bonus = 0
 
     base_tp = [1000,2000,3000]
     if ws_name == "Savage Blade":
@@ -111,7 +112,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         player_attack2 = special_set.playerstats["Attack2"]
         enemy_defense *= 0.75 # TODO: This should be additive with Dia, Frailty, etc? I think it's fine as is.
     elif ws_name == "Blade: Ku":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known.
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.25
         ftp_rep = True
@@ -204,7 +205,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc       = 0.6*player_dex + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits     = 2
     elif ws_name == "Asuran Fists":
-        acc_boost = [1.0, 1.1, 1.2] # Made these numbers up, same as Blade: Ku (see above)
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp       = 1.25
         ftp_rep   = True
@@ -248,7 +249,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, 0.8125 - 1.0) # Recalculate the player attack using a negative multiplier bonus
         player_attack1 = special_set.playerstats["Attack1"]
     elif ws_name == "Penta Thrust":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.00
         ftp_rep = False
@@ -257,7 +258,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, -0.125) # Recalculate the player attack using a negative multiplier bonus
         player_attack1 = special_set.playerstats["Attack1"]
     elif ws_name == "Tachi: Rana":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.0
         ftp_rep = False
@@ -422,7 +423,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.5*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1 # Savage is a 2-hit weaponskill (+1 for offhand)
     elif ws_name == "Realmrazer":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 0.9
         ftp_rep = True
@@ -465,7 +466,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Ruinator":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.08
         ws_atk_bonus = 0.1
@@ -477,7 +478,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc  = 0.85*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 4
     elif ws_name == "Decimation":
-        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.75
         ftp = 1.0
@@ -517,5 +518,6 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
                "player_attack2":player_attack2,
                "enemy_def":enemy_defense,
                "crit_rate":crit_rate,
-               "ftp_hybrid":ftp_hybrid}
+               "ftp_hybrid":ftp_hybrid,
+               "acc_bonus":acc_bonus}
     return(scaling)

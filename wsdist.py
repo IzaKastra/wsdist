@@ -58,6 +58,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     main_dmg = gearset.playerstats['DMG1']
     sub_dmg  = gearset.playerstats['DMG2']
     rng_dmg  = gearset.playerstats['Ranged DMG']
+    ammo_rmg = gearset.playerstats.get("Ammo DMG",0)
 
     fotia_ftp = gearset.playerstats['ftp']
     pdl_gear  = gearset.playerstats['PDL']/100.
@@ -88,6 +89,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
     ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments. TODO: DRG is different term
+    ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100
 
     crit_dmg = gearset.playerstats['Crit Damage']/100.
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
@@ -218,6 +220,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     crit_rate = scaling['crit_rate']
     ftp_hybrid = scaling['ftp_hybrid']
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
+    acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
+
+    player_accuracy1 += acc_bonus
+    player_accuracy2 += acc_bonus
+    player_rangedaccuracy += acc_bonus
 
     # Setup replicating ftp for specific WSs.
     ftp += fotia_ftp
@@ -233,11 +240,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     # fSTR calculation for main-hand and off-hand
     fstr_main = get_fstr(main_dmg, player_str, enemy_vit)
     fstr_sub  = get_fstr(sub_dmg, player_str, enemy_vit)
+    fstr_rng = get_fstr2(rng_dmg, player_str, enemy_vit)
+
 
     # Start the damage calculations.
     damage = 0
 
-    if magical:
+    if magical: # TODO: move magical/hybrid/ranged/physical into their own functions
         # Magical weapon skills have no physical portion, so they use a different, simpler, damage algorithm.
         # In this case, we will not make a plot since the damage is always the same.
         # This is why we exclude "magical" weaponskills from the rest of this function.
@@ -266,11 +275,14 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     if not final: # If the best set hasn't been determined yet, then just take a simple average. No need to run a bunch of simulations unless you're making a plot.
 
         # Check hit rates for each hand and for each hit.
-        hitrate11 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main',  True) # First main-hand hit.
-        hitrate21 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub',  True) # First off-hand hit.
-        hitrate12 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False) # Additional main-hand hits. "False" to not gain the +100 accuracy.
-        hitrate22 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False) # Additional off-hand hits.
+        hitrate11 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main',  True, main_type_skill) # First main-hand hit.
+        hitrate21 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub',  True, sub_type_skill) # First off-hand hit.
+        hitrate12 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill) # Additional main-hand hits. "False" to not gain the +100 accuracy.
+        hitrate22 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
         hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
+
+        hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
+        hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
 
         # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
         main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
@@ -333,8 +345,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         # Calculate hit rates for the natural main- and sub-hits (the first of each get a ~+100 Accuracy bonus).
         # Future main- and off-hand hits do not get accuracy+100 (n!=0).
-        hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', n==0)
-        hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', n==0)
+        hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', n==0, main_type_skill)
+        hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', n==0, sub_type_skill)
 
         # Check if your hit lands
         if np.random.uniform() < hitrate1:
@@ -375,8 +387,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         main_ma_checks = 1 if dual_wield else 1+(nhits>1)
         # Start by checking if the main-hit multi-attacks.
         for i in range(main_ma_checks):
-            hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False)
-            hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False)
+            hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill)
+            hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill)
 
             # Check multi-attacks in order:
             # Quad > Triple > Double > OA3 > OA2 > Single
@@ -783,7 +795,7 @@ if __name__ == "__main__":
 
     main_job = "DRK"
     sub_job = "WAR"
-    ws_name = "Blade: Shun"
+    ws_name = "Catastrophe"
     min_tp = 1000
     max_tp = 1500
     n_iter = 10
@@ -819,7 +831,7 @@ if __name__ == "__main__":
                 'ear2' : Lugra_Earring_Aug,
                 'ring1' : Regal_Ring,
                 'ring2' : Gere_Ring,
-                'back' : Andartia_Critdex}
+                'back' : Empty}
     show_final_plot = True
 
     nuke = False # True/False

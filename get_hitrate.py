@@ -2,31 +2,33 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 January 22
+# Version date: 2022 December 09
 #
 # This code contains the function used to hit rates using the equation on BG Wiki
 #
 from numba import njit
 
 @njit
-def get_hitrate(player_accuracy, ws_acc, enemy_eva, weaponslot, first, two_hand=False):
+def get_hitrate(player_accuracy, ws_acc, enemy_eva, weaponslot, first, skill_type):
     #
     # Calculate hit rates based on player and enemy stats. Uses equation from BG wiki
     # https://www.bg-wiki.com/ffxi/Hit_Rate
     # The first main- and sub-hits gain +100 accuracy (https://www.bg-wiki.com/ffxi/Category:Weapon_Skills)
     #
-    if weaponslot == 'main': # Main hits caps at 99% hit rate
-        accuracy_cap = 0.99 if not two_hand else 0.95
-    elif weaponslot == 'sub': # Sub hits cap at 95% hit rate
-        accuracy_cap = 0.95
-
-    acc_check = (75 + 0.5*(player_accuracy + ws_acc + 100*first - enemy_eva))/10
-
-    if acc_check > accuracy_cap:
-        hitrate = accuracy_cap
-    elif acc_check < 0.2: # Minimum hit rate is 20%
-        hitrate = 0.2
+    if weaponslot in ["ranged", "sub"] or skill_type in ["Great Sword", "Great Axe", "Great Katana", "Scythe", "Staff", "Polearm"]: # off-hand, 2-handed, and ranged hits cap at 95% hit rate
+        hitrate_cap = 0.95
     else:
-        hitrate = acc_check
+        hitrate_cap = 0.99 # TODO: call this hitrate_cap instead
+        
+    hitrate_check = (75 + 0.5*(player_accuracy + ws_acc + 100*first - enemy_eva))/10
+
+    hitrate_floor = 0 if weaponslot=="ranged" else 0.2 # 20% melee hit rate minimum. 0% for ranged
+
+    if hitrate_check > hitrate_cap:
+        hitrate = hitrate_cap
+    elif hitrate_check < hitrate_floor:
+        hitrate = hitrate_floor
+    else:
+        hitrate = hitrate_check
 
     return(hitrate)
