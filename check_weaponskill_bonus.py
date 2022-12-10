@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2022 December 10
 #
 from get_dex_crit import *
 import numpy as np
@@ -155,11 +155,32 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Bravura":
         if ws_name == "Metatron Torment ":
             bonuses["ws_bonus"] += 0.68
+    elif main_wpn_name == "Yoichinoyumi":
+        if ws_name == "Namas Arrow ":
+            bonuses["ws_bonus"] += 0.68
     elif main_wpn_name == "Dolichenus":
         if ws_name == "Decimation":
             bonuses["ws_bonus"] += 1.20
     elif main_wpn_name == "Ullr":
         if ws_name == "Empyreal Arrow":
             bonuses["ws_bonus"] += 0.5
+    elif main_wpn_name == "Fomalhaut":
+        if ws_name == "Last Stand":
+            bonuses["ws_bonus"] += 0.1
+    if main_wpn_name == 'Death Penalty':
+        # No OA2/OA3 for DP
+        if ws_name == 'Leaden Salute':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    if main_wpn_name == 'Armageddon':
+        if ws_name == "Wildfire":
+            bonuses['ws_bonus'] += 0.1
+    if main_wpn_name == 'Twashtar':
+        if ws_name == "Rudra's Storm":
+            bonuses['ws_bonus'] += 0.1
+    if main_wpn_name == 'Carnwenhan':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Mordant Rime':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
 
     return(bonuses)

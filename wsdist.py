@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2022 December 10
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -764,6 +764,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Equipping an arrow requires a bow to be equipped.
                                 if new_set["ammo"].get("Type","None") == "Arrow" and new_set["ranged"].get("Type","None") != "Bow":
                                     continue
+
+                                # Do not equip ammo if you equip an instrument (Linos).
+                                if new_set["ranged"].get("Type","None") == "Instrument" and new_set["ammo"].get("Type","None") != "None":
+                                    continue
+
 
                                 # Do not equip Balder Earring +1 and the JSE +2 ears at the same time. They both only work if in the right ear.
                                 if new_set["ear1"]["Name2"] in jse_ears and new_set["ear2"]["Name2"] == "Balder Earring +1":

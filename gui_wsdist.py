@@ -53,14 +53,14 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 09) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 10) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 # window["main start radio NIN"].update(visible=True)
 
 
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM","WAR"]) # If you add jobs here, make sure to add them in the tab_inputs.py and tab_outputs.py files too.
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the tab_inputs.py and tab_outputs.py files too.
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
@@ -253,15 +253,15 @@ while True:
             ws_name = values["select weaponskill"]
             ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin","Blade: Ei",],
                        "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Aeolian Edge",],
+                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime", "Aeolian Edge",],
                        "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
-                       "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe"],
-                       "Great Sword":["Torcleaver","Scourge","Resolution"],
+                       "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
+                       "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
                        "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
-                       "Polearm":["Stardiver","Impulse Drive","Penta Thrust"],
-                       "Staff":["Cataclysm","Shattersoul"],
+                       "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
+                       "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
                        "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
-                       "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage",],
+                       "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
                        "Archery":["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow",],
                        "Marksmanship":["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]}
 
@@ -276,14 +276,17 @@ while True:
                                         window[f"{slot}: {l['Name2']};;{job}"].update(True) # Turn on all versions of item checkboxes that correspond to your main job (Heishi Shorinken R15;;NIN)
 
                                         # If you're using a melee weapon skill, then unselect all main weapons that can't use your selected weapon skill.
-                                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]: # If you're testing a melee WS
                                             if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect main weapons that can't use the selected weapon skill
                                                 window[f"{slot}: {l['Name2']};;{job}"].update(False)
                                             if slot == "ranged" and l.get("Type","None") in ["Bow", "Gun"]: # Do not test ranged weapons with melee WSs (TP Bonus Gun??)
-                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                                if job not in ["COR","RNG"]:
+                                                    window[f"{slot}: {l['Name2']};;{job}"].update(False)
                                         # Now, if you're using a ranged weapon skill, then unselect all ranged weapons that can't use your selected weapon skill, but do select all main weapons still.
-                                        else:
-                                            if slot == "ranged" and ws_name not in ws_dict.get(l.get("Skill Type","None"),[]): # l is an item dictionary (Heishi_Shorinken).
+                                        else: # Else you're testing a ranged WS
+                                            if slot == "ranged" and ws_name not in ws_dict.get(l.get("Skill Type","None"),[]): # Turn off guns for bow weapon skills and bows for gun weapon skills
+                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                            if slot == "ammo" and l.get("Type","None") not in ["Bullet", "Arrow"]: # Do not test ranged weapons with equipment ammos. You can't shoot a seething bomblet
                                                 window[f"{slot}: {l['Name2']};;{job}"].update(False)
                                     else:
                                         if f"{slot}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
@@ -350,8 +353,9 @@ while True:
                      "Aero","Aero II","Aero III",
                      "Fire","Fire II","Fire III",
                      "Blizzard","Blizzard II","Blizzard III",
-                     "Thunder","Thunder II","Thunder III"]
-             }
+                     "Thunder","Thunder II","Thunder III"],
+              "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
+            }
             # for k in main_jobs:
             #     if not spell_dict.get(main_job,False):
             #         spell_dict[main_job] = []

@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR"])
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
 sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
@@ -34,17 +34,19 @@ player_column = [
 ]
 
 ws_list = sorted(
-           ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku","Blade: Ei",
+           ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku","Blade: Ei","Blade: Yu",
            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
-           "Evisceration", "Exenterator", "Mercy Stroke","Aeolian Edge",
+           "Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Mordant Rime", "Rudra's Storm", "Dancing Edge", "Shark Bite",
            "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Red Lotus Blade", "Seraph Blade",
-           "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
-           "Torcleaver", "Scourge", "Resolution",
-           "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
-           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer","Seraph Strike", "Randgrith",
+           "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe", "Shadow of Death", "Infernal Scythe", "Dark Harvest",
+           "Torcleaver", "Scourge", "Resolution", "Herculean Slash", "Freezebite",
+           "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment", "Raiden Thrust", "Thunder Thrust",
+           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer", "Seraph Strike", "Randgrith",
            "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
-           "Cloudsplitter","Ruinator","Decimation","Rampage",
-           "Empyreal Arrow",
+           "Cloudsplitter","Ruinator","Decimation","Rampage", "Primal Rend",
+           "Empyreal Arrow","Flaming Arrow",
+           "Cataclysm","Shattersoul","Earth Crusher","Vidohunir",
+           "Hot Shot","Last Stand","Wildfire","Leaden Salute",
            ])
 
 # spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",

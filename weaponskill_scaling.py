@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2022 December 10
 #
 import numpy as np
 from set_stats import *
@@ -123,6 +123,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.8*player_dex
         nhits = 1
+    elif ws_name == "Namas Arrow":
+        ftp  = 2.75
+        ftp_rep = False
+        wsc = 0.4*(player_str + player_agi)
+        nhits = 1
     elif ws_name == "Blade: Hi":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.15, 0.2, 0.25]
@@ -142,6 +147,14 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         magical = True
         element = "Dark"
         ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Blade: Yu":
+        ftp = 3.0
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_dex + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Water"
+        ws_dINT = 0
     elif ws_name == "Evisceration":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.1, 0.25, 0.5]
@@ -480,8 +493,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Decimation":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
-        ftp  = 1.75
-        ftp = 1.0
+        ftp = 1.75
         ftp_rep = True
         wsc  = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 3
@@ -515,6 +527,196 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc  = 0.5*player_agi + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 1
+    elif ws_name == "Hot Shot":
+        hybrid    = True
+        base_ftp  = [0.5, 1.55, 2.1]
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
+        ftp       = 1.0
+        ftp_rep   = False
+        wsc       = 0.7*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits     = 1
+        element   = "Fire"
+    elif ws_name == "Flaming Arrow":
+        hybrid    = True
+        base_ftp  = [0.5, 1.55, 2.1]
+        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
+        ftp       = 1.0
+        ftp_rep   = False
+        wsc       = 0.5*player_agi + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits     = 1
+        element   = "Fire"
+    elif ws_name == "Last Stand":
+        base_ftp  = [2.0, 3.0, 4.0]
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep   = True
+        wsc       = 0.85*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits     = 2
+    elif ws_name == "Leaden Salute":
+        base_ftp = [4.0,6.7,10.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 1.0*player_agi + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = (player_agi - enemy_int)*2 # No known cap.
+    elif ws_name == "Shadow of Death":
+        base_ftp = [1.0, 4.17, 8.6] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Wildfire":
+        ftp = 5.5
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.6*player_agi + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Fire"
+        ws_dINT = 1276 if (player_agi - enemy_int)*2 > 1276 else (player_agi - enemy_int)*2 
+    elif ws_name == "Trueflight":
+        base_ftp = [3.890625,6.4921875,9.671875] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Light"
+        ws_dINT = (player_agi - enemy_int)*2 # No known cap.
+    elif ws_name == "Infernal Scythe":
+        ftp = 3.5
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.7*player_int + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = 0 # TODO: rename dINT to dSTAT
+    elif ws_name == "Raiden Thrust":
+        base_ftp = [1.0, 2.0, 3.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Thunder"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Thunder Thrust":
+        base_ftp = [1.5, 2.0, 2.5] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Thunder"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Primal Rend":
+        base_ftp = [3.0625,5.8359375,7.5625 ] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.6*player_chr + 0.3*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Light"
+        ws_dINT = 651 if (player_chr - enemy_int)*1.5 > 651 else (player_chr - enemy_int)*1.5
+    elif ws_name == "Herculean Slash":
+        ftp = 3.5
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.8*player_vit + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Ice"
+        ws_dINT = 0 # TODO: rename dINT to dSTAT
+    elif ws_name == "Freezebite":
+        base_ftp = [1.5, 3.5, 6.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Ice"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Dark Harvest":
+        base_ftp = [1.0, 2.0, 2.5] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Earth Crusher":
+        base_ftp = [1.0, 2.3125, 3.625] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Earth"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Cataclysm":
+        base_ftp = [2.75, 4.0, 5.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.3*(player_str + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = 32 if (player_int - enemy_int)/2 + 8 > 32 else (player_int - enemy_int)/2 + 8
+    elif ws_name == "Vidohunir":
+        ftp = 1.75
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.8*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = (player_int - enemy_int)*2 # No known cap
+    elif ws_name == "Mordant Rime":
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 5.0
+        ftp_rep = False
+        wsc  = 0.7*player_chr + 0.3*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 2
+    elif ws_name == "Dancing Edge":
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 1.1875 
+        ftp_rep = False
+        wsc  = 0.4*(player_chr + player_dex) + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 5
+    elif ws_name == "Shark Bite":
+        base_ftp = [4.5, 6.8, 8.5] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_agi + player_dex) + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 2
+    elif ws_name == "Rudra's Storm":
+        base_ftp = [5.0, 10.19, 13.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 1
+    elif ws_name == "Shattersoul":
+        ftp = 1.375
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.85*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 3
+
+
+
+
+    # I don't record enemy_MND, so let's just ignore Omniscience for now... 
+    # elif ws_name == "Omniscience":
+    #     ftp = 2.0
+    #     ftp_rep = False # Does this WS replicate FTP across all hits?
+    #     wsc  = 0.8*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+    #     nhits = 1
+    #     magical = True
+    #     element = "Dark"
+    #     ws_dINT = (player_mnd - enemy_mnd)*2 # No known cap
 
 
     scaling = {"hybrid":hybrid, # TODO. I'm not even using acc_bonus from Ku and stuff??
