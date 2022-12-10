@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 08
+# Version date: 2022 December 09
 #
 # This code holds the methods for building a player's stats.
 #
@@ -66,7 +66,7 @@ class set_gear:
                  'Store TP':0,
                  'PDL':0,
                  'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                 'Zanshin':0,"Fencer":0,
+                 'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                  'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                  'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -93,7 +93,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':5, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -114,7 +114,28 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':50,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
+                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     "Magic Crit Rate II":0
+                     }
+        elif mainjob == "WAR":  # Master Level 20 Warrior stats TODO: set WAR stats
+            self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
+                     'Scythe Skill':424+16, 'Dagger Skill':408+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':334+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':354+16,
+                     'Katana Skill':0+16, 'Axe Skill':437+16,'Great Axe Skill':444+16,'Polearm Skill':408+16,'Staff Skill':418+16,'Great Sword Skill':424+16,'Archery Skill':354+16,'Marksmanship Skill':354+16,
+                     'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Accuracy1':26, 'Accuracy2':26, 'Attack1':70, 'Attack2':70,
+                     'Ranged Accuracy':26, 'Ranged Attack':70,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':10, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,
+                     'Crit Rate':10+5, 'Crit Damage':10, 'DA DMG':0, 'TA DMG':0, # TODO remove crit rate merits from all job dictionaries, just add it later with traits
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':0,
+                     'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":180,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -135,7 +156,7 @@ class set_gear:
                      'Store TP':8,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':18, "Fencer":0, # Not sure how to do Zanshin yet. May as well keep track of it now, though.
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -156,7 +177,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0, # Not sure how to do Zanshin yet. May as well keep track of it now, though.
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -177,7 +198,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -198,7 +219,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -219,7 +240,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -240,7 +261,7 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
-                     'Zanshin':0, "Fencer":0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -301,8 +322,15 @@ class set_gear:
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 self.playerstats["Fencer"] += 5 # Fencer V native, plus gear
                 fencer_bonus = get_fencer_bonus(self.playerstats["Fencer"])
-                self.playerstats["TP Bonus"] += fencer_bonus[0]
+                self.playerstats["TP Bonus"] += fencer_bonus[0] + self.playerstats["Fencer TP Bonus"]
                 self.playerstats["Crit Rate"] += fencer_bonus[1]
+            self.playerstats["DA"] += 18
+            smite_bonus = 204/1024
+            self.playerstats['Attack1'] += 35 # Attack Bonus III trait
+            self.playerstats['Attack2'] += 35 # Attack Bonus III trait
+            self.playerstats['Ranged Attack'] += 35 # Attack Bonus III trait TODO Main job traits maybe go in dictionaries, subjob traits stay out here
+            self.playerstats["Crit Damage"] += 8 
+            self.playerstats["PDL Trait"] += 20
 
         # Add stats in from your subjob
         # This can get complicated if your main job has a better version of a trait that your subjob would give. For example: DRK main job has a higher "Attack Bonus" trait than subjob WAR. So when DRK/WAR, don't add the Attack bonus from /WAR traits.

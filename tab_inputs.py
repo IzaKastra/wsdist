@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM"])
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR"])
 sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
@@ -41,7 +41,10 @@ ws_list = sorted(
            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe",
            "Torcleaver", "Scourge", "Resolution",
            "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment",
-           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer","Seraph Strike", "Randgrith"])
+           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer","Seraph Strike", "Randgrith",
+           "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
+           "Cloudsplitter","Ruinator","Decimation","Rampage",
+           ])
 
 # spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
 #               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",

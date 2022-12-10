@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 08
+# Version date: 2022 December 09
 #
 from get_dex_crit import *
 import numpy as np
@@ -141,5 +141,22 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Nandaka":
         if ws_name == "Ground Strike":
             bonuses["ws_bonus"] += 0.15
-            
+    elif main_wpn_name == "Conqueror":
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == "King's Justice":
+            bonuses["ws_bonus"] += 0.495
+    elif main_wpn_name == "Ukonvasara":
+        if ws_name == "Ukko's Fury":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Chango":
+        if ws_name == "Upheaval":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Bravura":
+        if ws_name == "Metatron Torment ":
+            bonuses["ws_bonus"] += 0.68
+    elif main_wpn_name == "Dolichenus":
+        if ws_name == "Decimation":
+            bonuses["ws_bonus"] += 1.20
+
     return(bonuses)

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 08
+# Version date: 2022 December 09
 #
 import numpy as np
 from set_stats import *
@@ -428,7 +428,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.85*player_mnd + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 7
-    if ws_name == "Seraph Strike":
+    elif ws_name == "Seraph Strike":
         base_ftp = [2.125, 3.675, 6.125] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
@@ -437,9 +437,75 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         magical = True
         element = "Light"
         ws_dINT = 0
-    
+    elif ws_name == "Upheaval":
+        base_ftp = [1.0, 3.5, 6.5] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.85*player_vit + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 4
+    elif ws_name == "Ukko's Fury":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0.2, 0.35, 0.55] # Middle value unknown. I just picked the half-way point to force linear scaling.
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 2.0
+        ftp_rep = False
+        wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 2
+    elif ws_name == "King's Justice":
+        base_ftp = [1.0, 3.0, 5.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 3
+    elif ws_name == "Metatron Torment":
+        ftp  = 2.75
+        ftp_rep = False
+        wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Ruinator":
+        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 1.08
+        ws_atk_bonus = 0.1
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
+        player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        ftp = 1.0
+        ftp_rep = True
+        wsc  = 0.85*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 4
+    elif ws_name == "Decimation":
+        acc_boost = [1.0, 1.05, 1.1] # Made these numbers up since it isnt known. It"s probably just something like "accuracy+0/20/40".
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 1.75
+        ftp = 1.0
+        ftp_rep = True
+        wsc  = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 3
+    elif ws_name == "Cloudsplitter":
+        base_ftp = [3.75, 6.69921875, 8.5 ] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.4*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
+        magical = True
+        element = "Thunder"
+        ws_dINT = 0
+    elif ws_name == "Rampage":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0, 20, 40] # Middle value unknown. I just picked the half-way point to force linear scaling.
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.0
+        ftp_rep = True
+        wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 5
 
-    scaling = {"hybrid":hybrid,
+
+    scaling = {"hybrid":hybrid, # TODO. I'm not even using acc_bonus from Ku and stuff??
                "magical":magical,
                "ws_dINT":ws_dINT,
                "wsc":wsc,
