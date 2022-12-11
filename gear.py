@@ -165,7 +165,9 @@ Raetic_Arrow = {"Name":"Raetic Arrow","Type":"Arrow","DMG":80,"Delay":90,"Ranged
 Yoichi_Arrow = {"Name":"Yoichi's Arrow", "DMG":89, "Delay":90, "Ranged Accuracy":35, "Ranged Attack":25, "Type":"Arrow","Jobs":["rng","sam"]}
 Devastating_Bullet = {"Name":"Devastating Bullet","DMG":277,"Delay":240,"Ranged Accuracy":35,"Magic Accuracy":35,"Type":"Bullet","Jobs":["cor","rng"]}
 Chrono_Bullet = {"Name":"Chrono Bullet","DMG":300,"Delay":240,"Ranged Accuracy":20,"Ranged Attack":20,"Type":"Bullet","Jobs":["cor","rng"]}
-ammos = [Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
+Hauksbok_Bullet = {"Name":"Hauksbok Bullet","DMG":300,"Delay":240,"AGI":10,"Magic Attack":40,"Type":"Bullet","Jobs":["cor","rng"]}
+Hauksbok_Arrow = {"Name":"Hauksbok Arrow","DMG":110,"Delay":90,"STR":10,"Weaponskill Damage":20,"Ranged Accuracy":20,"Type":"Arrow","Jobs":["rng"]}
+ammos = [Hauksbok_Bullet,Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
 # Raetic Arrow does not proc for weapon skills.
 
 
@@ -435,6 +437,8 @@ Regal_Ring = {"Name": "Regal Ring", "STR":10, "DEX":10, "VIT":10, "AGI":10, "Att
 Rufescent_Ring = {"Name": "Rufescent Ring", "STR":6, "MND":6, "Weaponskill Accuracy": 7,"Jobs":all_jobs}
 Shiva_Ring1 = {"Name": "Shiva Ring +1", "Name2": "Shiva Ring +1A", "INT":9, "Magic Attack":3,"Jobs":all_jobs}
 Shiva_Ring2 = {"Name": "Shiva Ring +1", "Name2": "Shiva Ring +1B", "INT":9, "Magic Attack":3,"Jobs":all_jobs}
+Fenrir_Ring1 = {"Name": "Fenrir Ring +1", "Name2": "Fenrir Ring +1A", "Magic Accuracy":3, "Magic Attack":3, "Magic Damage":3,"Jobs":all_jobs}
+Fenrir_Ring2 = {"Name": "Fenrir Ring +1", "Name2": "Fenrir Ring +1B", "Magic Accuracy":3, "Magic Attack":3, "Magic Damage":3,"Jobs":all_jobs}
 Shukuyu_Ring = {"Name": "Shukuyu Ring", "STR":7, "Attack":15,"Jobs":all_jobs}
 Sroda_Ring = {"Name": "Sroda Ring", "STR":15, "DEX":-20, "PDL":3,"Jobs":all_jobs}
 Weatherspoon_Ring = {"Name": "Weatherspoon Ring +1", "Light Elemental Bonus":11, "Magic Accuracy":13,"Jobs":all_jobs}
@@ -444,8 +448,13 @@ Stikini_Ring2 = {"Name":"Stikini Ring +1", "MND":8, "Magic Accuracy":8, "Element
 Ayanmo_Ring = {"Name":"Ayanmo Ring", "Accuracy":6, "Magic Accuracy":6, "Jobs":["whm","rdm","brd","blu","run"]}
 Cacoethic_Ring = {"Name":"Cacoethic Ring +1","Name2":"Cacoethic Ring +1 R15","Accuracy":11,"Ranged Accuracy":16,"DEX":0+10,"AGI":0+10,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Ramuh_Ring1 = {"Name": "Ramuh Ring +1", "Name2": "Ramuh Ring +1A", "DEX":9, "Accuracy":5,"Jobs":all_jobs}
-rings = [Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
-rings2 = [Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
+Ifrit_Ring1 = {"Name": "Ifrit Ring +1", "Name2": "Ifrit Ring +1A", "STR":9, "Attack":5,"Jobs":all_jobs}
+Leviathan_Ring1 = {"Name": "Leviathan Ring +1", "Name2": "Leviathan Ring +1A", "MND":9, "Magic Accuracy":3,"Jobs":all_jobs}
+Titan_Ring1 = {"Name": "Titan Ring +1", "Name2": "Titan Ring +1A", "VIT":9,"Jobs":all_jobs}
+Carbuncle_Ring1 = {"Name": "Carbuncle Ring +1", "Name2": "Carbuncle Ring +1A", "CHR":9,"Magic Accuracy":4,"Jobs":all_jobs}
+Garuda_Ring1 = {"Name": "Garuda Ring +1", "Name2": "Garuda Ring +1A", "AGI":9,"Ranged Accuracy":5,"Jobs":all_jobs}
+rings = [Garuda_Ring1,Titan_Ring1,Carbuncle_Ring1,Ifrit_Ring1,Fenrir_Ring1,Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
+rings2 = [Garuda_Ring1,Titan_Ring1,Carbuncle_Ring1,Ifrit_Ring1,Fenrir_Ring1,Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
 
 Andartia_Critagi = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle AGI Crit Rate", "AGI":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "Jobs":["nin"]}
 # Each job has identical Ambuscade cape augments. Here I define a simple code block to automatically build each possible type of ambu cape for each job.
