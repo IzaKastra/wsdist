@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD", "THF"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
 sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
@@ -33,26 +33,26 @@ player_column = [
   [sg.Text("Sub Job:",size=(10,1),font=font_choice), sg.Combo(values=sub_jobs, default_value="WAR", readonly=True, key="subjob",size=(10,1),font=font_choice,tooltip="Select sub job.",disabled=False,enable_events=True)],
 ]
 
-ws_list = sorted(
-           ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku","Blade: Ei","Blade: Yu",
-           "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
-           "Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Mordant Rime", "Rudra's Storm", "Dancing Edge", "Shark Bite",
-           "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Red Lotus Blade", "Seraph Blade",
-           "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe", "Shadow of Death", "Infernal Scythe", "Dark Harvest",
-           "Torcleaver", "Scourge", "Resolution", "Herculean Slash", "Freezebite",
-           "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment", "Raiden Thrust", "Thunder Thrust",
-           "Black Halo", "Judgment", "Hexa Strike", "Realmrazer", "Seraph Strike", "Randgrith",
-           "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
-           "Cloudsplitter","Ruinator","Decimation","Rampage", "Primal Rend",
-           "Empyreal Arrow","Flaming Arrow","Namas Arrow",
-           "Cataclysm","Shattersoul","Earth Crusher","Vidohunir",
-           "Hot Shot","Last Stand","Wildfire","Leaden Salute",
-           ])
+# ws_list = sorted(
+#            ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku","Blade: Ei","Blade: Yu",
+#            "Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",
+#            "Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Mordant Rime", "Rudra's Storm", "Dancing Edge", "Shark Bite","Mandalic Stab",
+#            "Savage Blade", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Red Lotus Blade", "Seraph Blade",
+#            "Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe", "Shadow of Death", "Infernal Scythe", "Dark Harvest",
+#            "Torcleaver", "Scourge", "Resolution", "Herculean Slash", "Freezebite",
+#            "Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment", "Raiden Thrust", "Thunder Thrust",
+#            "Black Halo", "Judgment", "Hexa Strike", "Realmrazer", "Seraph Strike", "Randgrith",
+#            "Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",
+#            "Cloudsplitter","Ruinator","Decimation","Rampage", "Primal Rend",
+#            "Empyreal Arrow","Flaming Arrow","Namas Arrow",
+#            "Cataclysm","Shattersoul","Earth Crusher","Vidohunir",
+#            "Hot Shot","Last Stand","Wildfire","Leaden Salute",
+#            ])
 
 # Copy pasted from gui_wsdist.py. This will be used to filter the selectable WSs based on main+ranged types.
 ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-            "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime",],
+            "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab",],
             "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
             "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
@@ -112,9 +112,9 @@ ws_column2 = [
   ])),sg.Push(),
   sg.vtop(sg.Column([
   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
-  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle")],
-  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.")],
-  [sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=True,tooltip="Enhance Black Magic damage. SCH only.")],
+  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True)],
+  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False)],
+  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False)],
   ]))
 
 

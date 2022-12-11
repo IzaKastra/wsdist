@@ -63,11 +63,12 @@ skills = sg.vtop(sg.Frame("Skill Levels",[
 
 other = sg.vtop(sg.Frame("Other",[
     [sg.Text(f"{'Crit. Rate:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="crit rate stat",tooltip="Crit. Rate only applies for Critical Hit weapon skills or when Shining One is equipped.")],
+    [sg.Text(f"{'Crit. Damage:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="crit damage stat",)],
     [sg.Text(f"{'Double Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="da stat")],
     [sg.Text(f"{'Triple Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ta stat")],
     [sg.Text(f"{'Quad. Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="qa stat")],
     [sg.Text(f"{'Weapon skill damage:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="wsd stat",tooltip="Weapon skill damage generally only applies to the first hit of a weapon skill.")],
-    [sg.Text(f"{'Weapon skill bonus:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ws bonus stat",tooltip="Weaponskill damage from DRG or /DRG. Applies to all hits.\nAlso hidden are Ambuscade WS damage bonus, Relic/Mythic WS damage bonuses, REMA augments, etc")],
+    [sg.Text(f"{'Weapon skill trait:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ws bonus stat",tooltip="Weaponskill damage from DRG or /DRG. Applies to all hits.\nDoes not include Ambuscade WS, Relic/Mythic or REMA augment bonuses")],
     [sg.Text(f"{'PDL (gear):':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="pdl gear stat",tooltip="Multiplicative with PDIF cap for (weapon_base_PDIF + PDL_trait).")],
     [sg.Text(f"{'PDL (trait):':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="pdl trait stat", tooltip="Additive with weapon base PDIF value.")],
     [sg.Text(f"{'TP Bonus:':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="tp bonus stat")],

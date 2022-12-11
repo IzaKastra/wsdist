@@ -63,7 +63,7 @@ class set_gear:
                  'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                  "Quick Draw":0,"Quick Draw II":0,
                  'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                 'Crit Rate':0, 'Crit Damage':0,'DA DMG':0, 'TA DMG':0,
+                 'Crit Rate':0, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                  'Store TP':0,
                  'PDL':0,
                  'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -91,7 +91,7 @@ class set_gear:
                      'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':0+5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -113,7 +113,7 @@ class set_gear:
                      'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':0+5, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':16, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':50,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -135,7 +135,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':10+5, 'Crit Damage':10, 'DA DMG':0, 'TA DMG':0, # TODO remove crit rate merits from all job dictionaries, just add it later with traits
+                     'Crit Rate':10+10, 'Crit Damage':10, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -157,7 +157,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':0+5, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':8,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -179,7 +179,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':0+5, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -201,7 +201,7 @@ class set_gear:
                      'Magic Accuracy':62, 'Magic Attack':50, 'Magic Damage':43, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':43, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -223,7 +223,7 @@ class set_gear:
                      'Magic Accuracy':70, 'Magic Attack':22, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -245,7 +245,7 @@ class set_gear:
                      'Magic Accuracy':90, 'Magic Attack':48, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':43, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -267,7 +267,7 @@ class set_gear:
                      'Magic Accuracy':27, 'Magic Attack':36, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':13, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5+5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -289,7 +289,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet, death penalty is treated separately)
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -311,7 +311,29 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet, death penalty is treated separately)
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
-                     'Crit Rate':5, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':0,
+                     'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     "Magic Crit Rate II":0
+                     }
+        elif mainjob == "THF":  # Master Level 20 Ninja stats # TODO: THF stats
+            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+                     'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
+                     'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':388+16,'Marksmanship Skill':398+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Accuracy1':36, 'Accuracy2':36, 'Attack1':50, 'Attack2':50,
+                     'Ranged Accuracy':36, 'Ranged Attack':50,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     "Quick Draw":0,"Quick Draw II":0,
+                     'Daken':0, 'QA':0, 'TA':8, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,
@@ -372,6 +394,11 @@ class set_gear:
             self.playerstats["JA Haste"] += 10
             self.playerstats["DA"] += 15
             self.playerstats["Weaponskill Bonus"] += 10 # Wyvern bonus
+        elif mainjob == "THF":
+            self.playerstats["Dual Wield"] += 30
+            self.playerstats["Crit Damage"] += 14
+            self.playerstats["TA"] += 6
+            self.playerstats["PDL Trait"] += 10
         elif mainjob == "WAR":
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 self.playerstats["Fencer"] += 5 # Fencer V native, plus gear
@@ -504,13 +531,14 @@ class set_gear:
 
         # Do set bonuses!
         # Count the number of set-bonus gear equipped.
-        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0}
+        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0, "Weaponskill Damage":0}
         adhemar_count = 0    # Adhemar +1 gives Crit Rate
         mummu_count = 0      # Mummu +2 with the Mummu Ring gives DEX/AGI/VIT/CHR
         regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy.
         flamma_count = 0     # Flamma +2 with the Flamma Ring gives STR/DEX/VIT
         ayanmo_count = 0     # Flamma +2 with the Flamma Ring gives STR/VIT/MND
         amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
+        lustratio_count = 0    # +2 WSD for every piece of Amalric equipped after the first
         for slot in gear:
             if "adhemar" in gear[slot]['Name'].lower() and "+1" in gear[slot]['Name'].lower():
                 adhemar_count += 1
@@ -530,6 +558,8 @@ class set_gear:
                     ayanmo_count += 1
             if "Amalric" in gear[slot]["Name"]:
                 amalric_count += 1
+            if "Lustratio" in gear[slot]["Name"]:
+                lustratio_count += 1
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
         self.set_bonuses['DEX'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
@@ -545,6 +575,7 @@ class set_gear:
         self.set_bonuses['STR'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
         self.set_bonuses['VIT'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
         self.set_bonuses['MND'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
+        self.set_bonuses['Weaponskill Damage'] += (lustratio_count)*2 if lustratio_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
 
         # Details:
         # Your gear stats start out as all zero. Your player stats start out as whatever base values you have from traits/gifts/etc

@@ -15,7 +15,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 main_job = "NIN"
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_inputs.py files too.
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_inputs.py files too.
 
 
 

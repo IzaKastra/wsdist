@@ -99,6 +99,7 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
 
     cratio = ratio # Ignore Level Differences
 
+    crit_rate = 1.0 if crit_rate > 1.0 else crit_rate # Limit crit rate to 100%
     wratio = cratio + 1.0*crit_rate
 
     # qRatio stuff taken from BG
@@ -138,9 +139,7 @@ def get_avg_pdif_melee(player_attack, wpn_type_skill, pdl_trait, pdl_gear=0, ene
         pdif = qratio
 
     # Add 1.0 to PDIF value if crit.
-    crit_rate = 1.0 if crit_rate > 1.0 else crit_rate # Limit crit rate to 100%
     pdif += 1.0*crit_rate
-
     # Average multiplier to final PDIF value
     pdif *= 1.025
 

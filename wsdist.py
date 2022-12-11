@@ -28,7 +28,7 @@ import random
 class TP_Error(Exception):
     pass
 
-def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False):
+def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False):
     #
     # Use the player and enemy stats to calculate weapon skill damage.
     # This function works, but needs to be cleaned up. There is too much going on within it.
@@ -97,6 +97,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     crit_dmg = gearset.playerstats['Crit Damage']/100.
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
+
+    sneak_attack_bonus = (gearset.playerstats["DEX"] * (1+gearset.playerstats["Sneak Attack"]/100))*sneak_attack
+    trick_attack_bonus = (gearset.playerstats["AGI"] * (1+gearset.playerstats["Trick Attack"]/100))*trick_attack
+    vajra_equipped = gearset.gear["main"]["Name"]=="Vajra" # We use this to enhance crit damage by 30% only for the first hit in get_phys_dmg later.
 
     qa = gearset.playerstats['QA']/100
     ta = gearset.playerstats['TA']/100
@@ -293,18 +297,24 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             hitrate21 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub',  True, sub_type_skill) # First off-hand hit.
             hitrate12 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill) # Additional main-hand hits. "False" to not gain the +100 accuracy.
             hitrate22 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
+
+            if sneak_attack or trick_attack:
+                hitrate11 = 1.0
+                hitrate21 = 1.0
+                
             hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
             # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
             main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
 
             # Calculate average damage dealt per hit for each hand.
+            avg_pdif01 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max(crit_rate,sneak_attack,trick_attack)) # First main hit PDIF. Must be calculated separately because Sneak/Trick attack force crits for that ONE hit
             avg_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Main-hand average PDIF
             avg_pdif2 = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)  # Off-hand average PDIF
 
-            main_hit_damage =    get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # Calculate the physical damage dealt by the first main hit.
+            main_hit_damage =    get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif01, ftp,  (1.0 if sneak_attack or trick_attack else crit_rate), (crit_dmg+0.3*vajra_equipped), wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus) # Calculate the physical damage dealt by the first main hit. This gets the fancy SA/TA bonuses
             sub_hit_damage =     get_avg_phys_damage( sub_dmg,  fstr_sub, wsc, avg_pdif2, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by the off-hand hits separately, no weapon skill damage provided here.
-            main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits
+            main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits. again, no WSD stat
 
             phys = main_hit_damage + (main_hits-1)*main_hit_ma_damage + sub_hits*sub_hit_damage
         else:
@@ -378,6 +388,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', n==0, main_type_skill)
             hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', n==0, sub_type_skill)
 
+            if sneak_attack or trick_attack and n==0: # only the first hit gets 100% hit rate with SA/TA
+                hitrate1 = 1.0
+                hitrate2 = 1.0
+
             # Check if your hit lands
             if np.random.uniform() < hitrate1:
                 if n == 0:
@@ -385,8 +399,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 else:
                     ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
 
-                pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
-                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg, wsd, ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
+                pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max(sneak_attack*(n==0),trick_attack*(n==0),crit_rate)) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
+                if sneak_attack or trick_attack and n==0:
+                    crit_dmg2 = crit_dmg + 0.3*vajra_equipped
+                else:
+                    crit_dmg2 = crit_dmg
+
+                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, ) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
                 damage += physical_damage
 
             # Bonus hit for dual-wielding.
@@ -434,6 +453,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         for i in range(main_ma_checks):
             hitrate1 = get_hitrate(player_accuracy1, ws_acc, enemy_eva, 'main', False, main_type_skill)
             hitrate2 = get_hitrate(player_accuracy2, ws_acc, enemy_eva,  'sub', False, sub_type_skill)
+
+            # Sneak and Trick attacks do not affect accuracy of the multi-attack hits
 
             # Check multi-attacks in order:
             # Quad > Triple > Double > OA3 > OA2 > Single
@@ -519,7 +540,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 ==========================================================================================
 '''
 
-def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False):
+def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False):
     damage = []
     tp_return = []
 
@@ -529,7 +550,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience) # values = [damage, TP_return]
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack) # values = [damage, TP_return]
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -555,12 +576,12 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
     else:
         tp = np.average([tp1,tp2])
 
-        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience)
+        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)
         return(damage)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False,sneak_attack=False, trick_attack=False):
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
         # print(starting_gearset[k])
@@ -572,6 +593,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
     if nuke:
         show_final_plot = False
+        # TODO: Don't show final plot if using magical WS either. Maybe just compare ws_name to a list of magical WSs
 
     Best_Gearset =  starting_gearset.copy()
     for k in Best_Gearset:
@@ -813,7 +835,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
 
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
-                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience)) # Test the set and return its damage as a single number
+                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience, sneak_attack, trick_attack)) # Test the set and return its damage as a single number
                                 # print(b["Name2"], b2["Name2"], damage)
 
                                 tcount += 1
@@ -871,7 +893,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
 
 
-    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience)
+    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)
     
     return(Best_Gearset)
 
@@ -923,18 +945,11 @@ if __name__ == "__main__":
     burst = True # True/False
     futae = False # True/False. Only for Ninjutsu
     ebullience = False # True/False. Only for SCH main with Elemental Magic
+    sneak_attack = False
+    trick_attack = False
 
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience)
-
-    # TODO:
-    # 2-handed weapons cap at 95% accuracy. The code currently uses 99% since it was based on NIN dual-wielding two single-handed weapons.
-    #   Maybe use something like
-    # 
-    #       if sub_type == "grip":
-    #           hit_rate = 0.95 if hit_rate > 0.95 else hit rate
-    #
-    # Add Magic Accuracy and resistance ranks to magic calculations.
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)

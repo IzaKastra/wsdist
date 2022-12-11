@@ -60,12 +60,12 @@ window = sg.Window(f"Kastra WS Damage Simulator (2022 December 11) - Theme:{rand
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
 
 
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
                 "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime",],
+                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab"],
                 "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
                 "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
@@ -358,19 +358,42 @@ while True:
                      "Thunder","Thunder II","Thunder III"],
               "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
             }
-            # for k in main_jobs:
-            #     if not spell_dict.get(main_job,False):
-            #         spell_dict[main_job] = []
             
-            if main_job == "NIN": # Enable Futae for NIN main
-                window["futae toggle"].update(disabled=False)
+            # Show/hide checkboxes based on main job selected
+            if main_job == "NIN": # Show Futae for NIN main
+                window["futae toggle"].update(visible=True) # Show Futae
+                window["futae toggle"].update(False) # Make sure it's reset to False
+                window["magic burst toggle"].update(visible=True) # Show Magic Burst
+                window["magic burst toggle"].update(False) # Make sure it's reset to False
             else:
-                window["futae toggle"].update(disabled=True)
+                window["futae toggle"].update(visible=False) # Not NIN? Hide Futae
+                window["futae toggle"].update(False) # Disable Futae if not NIN so it's hidden and disabled.
 
             if main_job == "SCH": # Enable Ebullience for SCH main
-                window["ebullience toggle"].update(disabled=False)
+                window["ebullience toggle"].update(visible=True)
+                window["ebullience toggle"].update(False)
+                window["magic burst toggle"].update(visible=True)
+                window["magic burst toggle"].update(False)
             else:
-                window["ebullience toggle"].update(disabled=True)
+                window["ebullience toggle"].update(visible=False)
+                window["ebullience toggle"].update(False)
+
+            if main_job == "THF": # Enable Ebullience for SCH main
+                window["sa toggle"].update(visible=True)
+                window["sa toggle"].update(False)
+                window["ta toggle"].update(visible=True)
+                window["ta toggle"].update(False)
+            else:
+                window["sa toggle"].update(visible=False)
+                window["sa toggle"].update(False)
+                window["ta toggle"].update(visible=False)
+                window["ta toggle"].update(False)
+
+            # Hide the magic burst button if not on one of the nuking jobs.
+            if main_job not in ["NIN","SCH","BLM","WHM","RDM","GEO","DRK"]:
+                window["magic burst toggle"].update(visible=False)
+                window["magic burst toggle"].update(False)
+
 
             if main_job in spell_dict: # Enable magic sets for casting jobs.
                 window["select spell"].update(values=spell_dict[main_job])
@@ -666,33 +689,35 @@ while True:
             burst = values["magic burst toggle"]
             futae = values["futae toggle"]
             ebullience = values["ebullience toggle"]
+            sneak_attack = values["sa toggle"]
+            trick_attack = values["ta toggle"]
 
             if event == "quicklook":
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience)[0]
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience, sneak_attack, trick_attack)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "quicklook magic":
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience)[0]
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience, sneak_attack, trick_attack)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "Run WS":
                 from wsdist import run_weaponskill
 
                 show_final_plot = values["show final plot"]
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience, sneak_attack, trick_attack)
                 window["copy best set"].update(disabled=False)
            
             elif event == "Run Magic":
                 from wsdist import run_weaponskill
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience, sneak_attack, trick_attack)
                 window["copy best set"].update(disabled=False)
 
             # 
@@ -743,7 +768,7 @@ while True:
                 wsd = int(gearset.playerstats['Weaponskill Damage'])
                 window["wsd stat"].update(f"{'Weapon skill damage:':<21s} {wsd:>3d}")
                 ws_bonus = int(gearset.playerstats['Weaponskill Bonus'])
-                window["ws bonus stat"].update(f"{'Weapon skill bonus:':<21s} {ws_bonus:>3d}")
+                window["ws bonus stat"].update(f"{'Weapon skill trait:':<21s} {ws_bonus:>3d}")
                 tp_bonus = int(gearset.playerstats['TP Bonus'])
                 window["tp bonus stat"].update(f"{'TP Bonus:':<20s} {tp_bonus:>4d}")
 
@@ -761,6 +786,8 @@ while True:
                 window["da stat"].update(f"{'Double Attack:':<21s} {da:>3d}")
                 crit_rate = int(gearset.playerstats['Crit Rate'])
                 window["crit rate stat"].update(f"{'Crit. Rate:':<21s} {crit_rate:>3d}")
+                crit_damage = int(gearset.playerstats['Crit Damage'])
+                window["crit damage stat"].update(f"{'Crit. Damage:':<21s} {crit_damage:>3d}")
 
                 stp = int(gearset.playerstats['Store TP'])
                 window["stp stat"].update(f"{'Store TP:':<16s} {stp:>4d}")

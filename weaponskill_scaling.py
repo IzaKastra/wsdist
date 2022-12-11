@@ -726,6 +726,16 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Mandalic Stab":
+        base_ftp = [4.0, 6.09, 8.5]
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = False
+        ws_atk_bonus = 0.75
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
+        player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        wsc = 0.6*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
 
 
 
