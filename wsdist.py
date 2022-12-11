@@ -710,6 +710,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 new_set[slot2]  = b2 # Equip swap_item2 to slot2
                                 new_set[slot3]  = b3 # Equip swap_item3 to slot3
 
+                                # print(b["Name2"], b2["Name2"])
+
                                 # Do not equip two of the same item in rings, earrings, and main+sub slots.
                                 # Items in these slots can be placed in either of their pair.
                                 # 1-handed weapons can go in Main+Sub if dual wielding.
@@ -717,30 +719,39 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Earrings can go in either earring slot.
                                 # I use Mache Earring +1 A and B to get around this for non-rare items.
                                 if new_set["ring1"]["Name2"] == new_set["ring2"]["Name2"]:
-                                    continue
+                                    if new_set["ring1"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                        # print("test1")
+                                        continue
                                 if new_set["ear1"]["Name2"] == new_set["ear2"]["Name2"]:
-                                    continue
+                                    if new_set["ear1"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                        # print("test2")
+                                        continue
                                 if new_set["main"]["Name2"] == new_set["sub"]["Name2"]:
                                     if new_set["main"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                        # print("test3")
                                         continue
 
                                 # Only check gear that your main job can equip.
                                 for new_slot in new_set:
                                     if main_job.lower() not in new_set[new_slot]["Jobs"]:
+                                        # print("test4")
                                         continue
 
 
                                 # Do not test 1-handed weapons with grips.
                                 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"]
                                 if new_set["main"]["Skill Type"] in one_handed and new_set["sub"]["Type"] == "Grip":
+                                    # print("test5")
                                     continue
                                 # Do not allow 2-handed weapons with shields or 1-handed weapons.
                                 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
                                 if new_set["main"]["Skill Type"] in two_handed and (new_set["sub"]["Type"]=="Weapon" or new_set["sub"]["Type"]=="Shield"):
+                                    # print("test6")
                                     continue
                                 # Do not allow anything in the off-hand of hand-to-hand weapons.
                                 if new_set["main"]["Skill Type"] == "Hand-to-Hand":
                                     if new_set["Name"] != Empty:
+                                        # print("test7")
                                         continue
 
                                 # Require that a ranged weapon that matches your selected ranged weapon skill be equipped IF you're using a ranged weapon skill.
@@ -749,40 +760,50 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 marksmanship = ["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]
                                 if ws_name in archery:
                                     if new_set["ranged"]["Skill Type"] != "Archery":
+                                        # print("test8")
                                         continue
                                 if ws_name in marksmanship:
                                     if new_set["ranged"]["Skill Type"] != "Marksmanship":
+                                        # print("test9")
                                         continue
 
                                 # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.
                                 if main_job not in ["NIN", "DNC", "THF"] and sub_job not in ["NIN", "DNC"]:
                                     if new_set["sub"]["Type"] == "Weapon":
+                                        # print("test10")
                                         continue
 
                                 # Do not equip an ammo incompatible with your ranged weapon
                                 if new_set["ranged"].get("Type","None")=="Gun" and new_set["ammo"].get("Type","None") not in ["Bullet","None"]:
+                                    # print("test11")
                                     continue
 
                                 if new_set["ranged"].get("Type","None")=="Bow" and new_set["ammo"].get("Type","None") not in ["Arrow","None"]:
+                                    # print("test12")
                                     continue
 
                                 # Equipping a bullet requires a gun to be equipped. (or a crossbow with a bolt)
                                 if new_set["ammo"].get("Type","None") == "Bullet" and new_set["ranged"].get("Type","None") != "Gun":
+                                    # print("test13")
                                     continue
 
                                 # Equipping an arrow requires a bow to be equipped.
                                 if new_set["ammo"].get("Type","None") == "Arrow" and new_set["ranged"].get("Type","None") != "Bow":
+                                    # print("test14")
                                     continue
 
                                 # Do not equip ammo if you equip an instrument (Linos).
                                 if new_set["ranged"].get("Type","None") == "Instrument" and new_set["ammo"].get("Type","None") != "None":
+                                    # print("test15")
                                     continue
 
 
                                 # Do not equip Balder Earring +1 and the JSE +2 ears at the same time. They both only work if in the right ear.
                                 if new_set["ear1"]["Name2"] in jse_ears and new_set["ear2"]["Name2"] == "Balder Earring +1":
+                                    # print("test16")
                                     continue
                                 if new_set["ear2"]["Name2"] in jse_ears and new_set["ear1"]["Name2"] == "Balder Earring +1":
+                                    # print("test17")
                                     continue
 
                                 # At this point, you SHOULD have a valid gear set.
@@ -793,6 +814,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
                                 damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience)) # Test the set and return its damage as a single number
+                                # print(b["Name2"], b2["Name2"], damage)
+
                                 tcount += 1
                                 # if slot1==slot2:
                                 #     print(slot1, swap_item1,damage)

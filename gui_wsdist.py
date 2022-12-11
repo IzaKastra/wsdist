@@ -435,6 +435,9 @@ while True:
 
             # Now update the WS list:
             if slot in ["main","ranged"]:
+                skill_type_main0 = starting_gearset["main"].get("Skill Type","None")
+                skill_type_ranged0 = starting_gearset["ranged"].get("Skill Type","None")
+
                 item_dictionary = name2dictionary(item, all_gear)
                 starting_gearset[slot] = item_dictionary
 
@@ -445,11 +448,13 @@ while True:
                 skill_type_ranged = starting_gearset["ranged"].get("Skill Type","None") # Ranged skill type might be "Instrument"
                 ranged_ws_list = ws_dict.get(skill_type_ranged,[])
 
-                updated_ws_list = sorted(main_ws_list + ranged_ws_list)
-                # print(skill_type_main,skill_type_ranged)
+                if (slot=="ranged" and (skill_type_ranged0 != skill_type_ranged)) or (slot=="main" and (skill_type_main0 != skill_type_main)):
 
-                window["select weaponskill"].update(values=updated_ws_list)
-                window["select weaponskill"].update(updated_ws_list[0])
+                    updated_ws_list = sorted(main_ws_list + ranged_ws_list)
+                    # print(skill_type_main,skill_type_ranged)
+
+                    window["select weaponskill"].update(values=updated_ws_list)
+                    window["select weaponskill"].update(updated_ws_list[0])
 
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.
