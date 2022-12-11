@@ -21,7 +21,7 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     if main_wpn_name == 'Naegling':
         if ws_name == 'Savage Blade':
             bonuses['ws_bonus'] += 0.15
-    if main_wpn_name == 'Murgleis':
+    elif main_wpn_name == 'Murgleis':
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Death Blossom':
@@ -31,19 +31,19 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == "Expiacion":
             bonuses["ws_bonus"] += 0.495
-    if main_wpn_name == 'Almace':
+    elif main_wpn_name == 'Almace':
         if ws_name == "Chant du Cygne":
             bonuses['ws_bonus'] += 0.1
-    if main_wpn_name == 'Excalibur':
+    elif main_wpn_name == 'Excalibur':
         if ws_name == 'Knights of Round':
             bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
-    if main_wpn_name == 'Maxentius':
+    elif main_wpn_name == 'Maxentius':
         if ws_name == 'Black Halo':
             bonuses['ws_bonus'] += 0.5
-    if main_wpn_name == 'Tishtrya':
+    elif main_wpn_name == 'Tishtrya':
         if ws_name == 'Realmrazer':
             bonuses['ws_bonus'] += 0.1
-    if main_wpn_name == 'Mjollnir':
+    elif main_wpn_name == 'Mjollnir':
         if ws_name == 'Randgrith':
             bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
     elif 'Yagrush' in main_wpn_name:
@@ -74,7 +74,7 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Aeneas':
         if ws_name == 'Exenterator':
             bonuses['ws_bonus'] += 0.1
-    if main_wpn_name == 'Mandau':
+    elif main_wpn_name == 'Mandau':
         if ws_name == 'Mercy Stroke':
             bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
     elif main_wpn_name == 'Karambit':
@@ -172,26 +172,29 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Fomalhaut":
         if ws_name == "Last Stand":
             bonuses["ws_bonus"] += 0.1
-    if main_wpn_name == 'Death Penalty':
+    elif main_wpn_name == 'Death Penalty':
         # No OA2/OA3 for DP
         if ws_name == 'Leaden Salute':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
-    if main_wpn_name == 'Armageddon':
+    elif main_wpn_name == 'Armageddon':
         if ws_name == "Wildfire":
             bonuses['ws_bonus'] += 0.1
-    if main_wpn_name == 'Twashtar':
+    elif main_wpn_name == 'Twashtar':
         if ws_name == "Rudra's Storm":
             bonuses['ws_bonus'] += 0.1
-    if main_wpn_name == 'Carnwenhan':
+    elif main_wpn_name == 'Carnwenhan':
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Mordant Rime':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
-    if main_wpn_name == 'Drepanum':
-        if ws_name == 'Spriral Hell':
+    elif main_wpn_name == 'Drepanum':
+        if ws_name == 'Spiral Hell':
             bonuses['ws_bonus'] += 1.0
-    if main_wpn_name == 'Xoanon':
+    elif main_wpn_name == 'Xoanon':
         if ws_name == 'Retribution':
             bonuses['ws_bonus'] += 0.2
+    elif main_wpn_name == 'Khatvanga':
+        if ws_name == 'Shattersoul':
+            bonuses['ws_bonus'] += 0.1
             
     return(bonuses)
