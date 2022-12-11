@@ -40,6 +40,12 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False # Does this WS replicate FTP across all hits?
         wsc  = 0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
+    if ws_name == "Expiacion":
+        base_ftp = [3.796875,9.390625,12.1875] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.3*(player_str + player_int) + 0.2*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
     if ws_name == "Red Lotus Blade":
         base_ftp = [1.0, 2.3828125, 3.75] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use

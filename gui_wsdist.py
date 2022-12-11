@@ -62,6 +62,21 @@ while True:
     # Then wait for the user to perform an event before running another loop.
     main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the tab_inputs.py and tab_outputs.py files too.
 
+
+    ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
+                "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
+                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime",],
+                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
+                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
+                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
+                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
+                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
+                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
+                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
+                "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
+                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"]}
+
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
     # print(event)
@@ -251,19 +266,6 @@ while True:
                         "feet":feet}
             main_job = values["mainjob"]
             ws_name = values["select weaponskill"]
-            ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu", "Blade: Jin","Blade: Ei",],
-                       "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                       "Dagger": ["Evisceration", "Exenterator", "Mandalic Stab", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime", "Aeolian Edge",],
-                       "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
-                       "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
-                       "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
-                       "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
-                       "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
-                       "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
-                       "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
-                       "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
-                       "Archery":["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow",],
-                       "Marksmanship":["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]}
 
             for slot in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
                 for job in main_jobs: # So we can turn off all other job gear.
@@ -422,37 +424,32 @@ while True:
         
 
         # Setup fancy pictures on the buttons when you select a radio button on starting set tab.
+        # The pictures and the WS list will update based on your selection.
         if event[:5] == "start":
+            # First update the gear picture:
             slot = event.split(":")[0][5:]
             item = event.split(":")[1].split(";;")[0][1:] # Had to append "NIN" to the end of the NIN list to distinguish it from the DRK, BLM, etc lists. I simply remove that bit here or it'll say something like "Heishi Shorinken R15;;NIN" and yell at us
             item_name = all_names_map[item]
             window[f"showstart {slot}"].update(image_data=item2image(item_name))
             window[f"showstart {slot}"].set_tooltip(item)
 
+            # Now update the WS list:
+            if slot in ["main","ranged"]:
+                item_dictionary = name2dictionary(item, all_gear)
+                starting_gearset[slot] = item_dictionary
 
-        # if event == "check magic": # Only enable the "Run Magic" button if the magic checkbox is checked.
-        #     if values["check magic"]:
-        #         window["Run Magic"].update(disabled=False)
-        #         window["quicklook magic"].update(disabled=False)
-        #     else:
-        #         window["Run Magic"].update(disabled=True)
-        #         window["quicklook magic"].update(disabled=True)
+                skill_type_main = starting_gearset["main"].get("Skill Type","None") # None is possible in a weird edge case the user has to be trying to make happen.
+                main_ws_list = ws_dict.get(skill_type_main,[])
+                # print(skill_type_main, starting_gearset)
 
-        # Modify lists to only display items related to the currently selected main job.
-        # if event == "mainjob":
-        #     spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
-        #       "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
-        #       "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
-        #       "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
-        #       "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
-        #       "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
-        #     ]
-        #     if values["mainjob"] != "NIN":
-        #         non_nin_spells = [k for k in spell_list if ":" not in k]
-        #         window["select spell"].update(values=non_nin_spells)
-        #     else:
-        #         nin_spells = [k for k in spell_list if ":" in k]
-        #         window["select spell"].update(values=nin_spells)
+                skill_type_ranged = starting_gearset["ranged"].get("Skill Type","None") # Ranged skill type might be "Instrument"
+                ranged_ws_list = ws_dict.get(skill_type_ranged,[])
+
+                updated_ws_list = sorted(main_ws_list + ranged_ws_list)
+                # print(skill_type_main,skill_type_ranged)
+
+                window["select weaponskill"].update(values=updated_ws_list)
+                window["select weaponskill"].update(updated_ws_list[0])
 
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.

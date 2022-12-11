@@ -49,13 +49,21 @@ ws_list = sorted(
            "Hot Shot","Last Stand","Wildfire","Leaden Salute",
            ])
 
-# spell_list = ["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja","Doton: Ichi","Doton: Ni","Doton: San",
-#               "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja","Suiton: Ichi","Suiton: Ni","Suiton: San",
-#               "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja","Huton: Ichi","Huton: Ni","Huton: San",
-#               "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja","Katon: Ichi","Katon: Ni","Katon: San",
-#               "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja","Hyoton: Ichi","Hyoton: Ni","Hyoton: San",
-#               "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja","Raiton: Ichi","Raiton: Ni","Raiton: San",
-#              ]
+# Copy pasted from gui_wsdist.py. This will be used to filter the selectable WSs based on main+ranged types.
+ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
+            "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
+            "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime",],
+            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
+            "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
+            "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
+            "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
+            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
+            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
+            "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
+            "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
+            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"]}
+
 
 spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
               "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
@@ -98,7 +106,7 @@ ws_column = [
 
 ws_column2 = [
   [sg.vtop(sg.Column([
-  [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=ws_list, default_value="Blade: Shun", readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
+  [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=ws_dict["Katana"], default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
   ])),sg.Push(),

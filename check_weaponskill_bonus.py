@@ -26,6 +26,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == 'Death Blossom':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == "Tizona":
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == "Expiacion":
+            bonuses["ws_bonus"] += 0.495
     if main_wpn_name == 'Almace':
         if ws_name == "Chant du Cygne":
             bonuses['ws_bonus'] += 0.1

@@ -36,7 +36,7 @@ Amanomurakumo = {"Name": "Amanomurakumo", "Name2": "Amanomurakumo R15", "Skill T
 Anguta = {"Name": "Anguta", "Name2": "Anguta R15", "Skill Type": "Scythe", "Type":"Weapon", "DMG":370+17, "Delay":528, "Magic Damage":186, "Scythe Skill":269, "TP Bonus": 500, "Magic Accuracy Skill":242, "Accuracy":0+30, "Magic Accuracy":0+30, "Store TP":10,"Jobs":["drk"]}
 Apocalypse = {"Name": "Apocalypse", "Name2": "Apocalypse R15", "Skill Type": "Scythe", "Type":"Weapon", "DMG":362+21, "Delay":513, "Magic Damage":217, "Scythe Skill":269, "Magic Accuracy Skill":242, "Accuracy":60+15, "JA Haste":10,"Jobs":["drk"]}
 Caladbolg = {"Name": "Caladbolg", "Name2": "Caladbolg R15", "Skill Type": "Great Sword", "Type":"Weapon", "DMG":303+11, "Delay":430, "Magic Damage":155, "Great Sword Skill":269, "Magic Accuracy Skill":242,"VIT":50+20,"STR":0+20,"Jobs":["drk"]}
-Crepuscular_Knife = {"Name": "Twilight Knife", "Name2": "Crepuscular Knife", "Skill Type": "Dagger", "Type":"Weapon", "DMG":133, "Delay":190, "DEX":15, "AGI":15, "CHR":15, "Accuracy":40, "Magic Accuracy":40, "Dagger Skill":248, "Magic Accuracy Skill":248, "QA":5, "Jobs":["nin","rdm","war","thf","dnc","cor"]}
+Crepuscular_Knife = {"Name": "Crepuscular Knife", "Name2": "Crepuscular Knife", "Skill Type": "Dagger", "Type":"Weapon", "DMG":133, "Delay":190, "DEX":15, "AGI":15, "CHR":15, "Accuracy":40, "Magic Accuracy":40, "Dagger Skill":248, "Magic Accuracy Skill":248, "QA":5, "Jobs":["nin","rdm","war","thf","dnc","cor"]}
 Dojikiri = {"Name": "Dojikiri Yasutsuna","Name2": "Dojikiri Yasutsuna R15", "Skill Type": "Great Katana", "Type":"Weapon", "DMG": 315+15, "Delay": 450, "Store TP": 10, "Accuracy": 0+30, "Magic Accuracy":0+30, "TP Bonus": 500, "Great Katana Skill": 269, "Magic Accuracy Skill": 228, "Magic Damage": 155, "Jobs":["sam"]}
 Gleti_Knife = {"Name": "Gleti's Knife", "Name2": "Gleti's Knife R25", "Skill Type": "Dagger", "Type":"Weapon", "DMG":133+10, "Delay":200, "DEX":15, "AGI":15, "Accuracy":40+10, "Attack":30+40, "Magic Accuracy":40+10, "Dagger Skill":255, "Magic Accuracy Skill":242,"Crit Rate":5,"TA":6, "Jobs":["nin","thf","dnc","rdm","brd","cor"]}
 Gokotai = {"Name": "Gokotai", "Name2": "Gokotai", "Skill Type": "Katana", "Type":"Weapon", "DMG": 157, "Delay": 227, "Katana Skill": 250, "Magic Accuracy Skill": 250, "Magic Damage": 217, "DEX": 15, "AGI":15, "INT":15, "Accuracy": 40, "Attack": 30, "Ranged Accuracy": 40, "Magic Accuracy": 40, "Magic Attack": 16, "Jobs":["nin"]}
@@ -493,24 +493,15 @@ for job in cape_names:
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Magic)", f"{base_stat}":30, "Weaponskill Damage":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
         if job in ["NIN", "RDM", "COR", "RNG", "SAM"] and base_stat in ["AGI","STR"]: # The list of jobs that might build physical ranged WS sets.
-            # add ranged WS sets with stat+30, WSD+10, Racc/Ratk+20 for a select few jobs. Only RNG gets a DEX cape, but it should use crit rate for jishnus
+            # add ranged WS sets with stat+30, WSD+10, Racc/Ratk+20 for a select few jobs. Only RNG gets a DEX cape, but it should use crit rate for jishnus  TODO
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Ranged)", f"{base_stat}":30, "Weaponskill Damage":10, "Ranged Accuracy":20, "Ranged Attack":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
-    if job in ["NIN", "BLM", "RDM", "SCH", "GEO","DRK"]: # The list of jobs with access to nukes get nuke capes
+    if job in ["NIN", "BLM", "RDM", "SCH", "GEO", "DRK"]: # The list of jobs with access to nukes get nuke capes
         # add nuking capes with INT+30, Matk+10, Macc/Mdmg+20 for a select few jobs.
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} INT Magic Attack", "INT":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
     if job in ["COR"]: # COR needs an AGI+Matk cape for quick draw
         capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} AGI Magic Attack (Magic)", "AGI":30, "Magic Attack":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
     
-
-    # if job in ["NIN", "RDM", "THF", "COR", "RNG", "SAM"]:
-    # # Add ranged attack capes for ranged weapon skills. Only for NIN RDM THF COR RNG SAM.
-    # # TODO: Add to wsdist a gear filter: "if ws_name not in ranged_ws then skip sets that use ranged WS ambu capes" (those with the stat 'ranged attack')
-    #     for base_stat in ["STR","DEX","AGI"]:
-    #         for main_stat in ["Crit Rate", "Weaponskill Damage"]:
-    #     # add ranged capes with STAT+30, Crit/WSD+10, Racc/Ratk+20 for a few jobs. 
-    #     capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} {main_stat}", f"{base_stat}":30, f"{main_stat}":10, "Ranged Accuracy":20, "Ranged Attack":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
-
 # We now have a cape for all jobs with all combinations of stats that we care about.
 
 
