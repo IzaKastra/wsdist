@@ -69,7 +69,7 @@ while True:
                 "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
                 "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
-                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Seraph Strike"],
+                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
                 "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
                 "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
                 "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
