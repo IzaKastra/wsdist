@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 10
+# Version date: 2022 December 11
 #
 from get_dex_crit import *
 import numpy as np
@@ -187,5 +187,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == 'Mordant Rime':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
-
+    if main_wpn_name == 'Drepanum':
+        if ws_name == 'Spriral Hell':
+            bonuses['ws_bonus'] += 1.0
+    if main_wpn_name == 'Xoanon':
+        if ws_name == 'Retribution':
+            bonuses['ws_bonus'] += 0.2
+            
     return(bonuses)

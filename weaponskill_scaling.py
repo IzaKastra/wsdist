@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 10
+# Version date: 2022 December 11
 #
 import numpy as np
 from set_stats import *
@@ -710,6 +710,18 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False # Does this WS replicate FTP across all hits?
         wsc  = 0.85*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 3
+    elif ws_name == "Spiral Hell":
+        base_ftp = [1.375,2.75,4.75]
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = False
+        wsc = 0.5*(player_str+player_int) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Retribution":
+        base_ftp = [2.0,2.5,3.0]
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = False
+        wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
 
 
 

@@ -53,25 +53,25 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 10) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra WS Damage Simulator (2022 December 11) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 # window["main start radio NIN"].update(visible=True)
 
 
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the tab_inputs.py and tab_outputs.py files too.
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
 
 
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
                 "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
                 "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime",],
                 "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
-                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest"],
+                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
                 "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
                 "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
-                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir"],
+                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
                 "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
