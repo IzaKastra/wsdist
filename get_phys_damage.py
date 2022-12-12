@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2022 December 12
 #
 # This code contains the function used to calculate physical damage dealt from a single weapon swing.
 #
@@ -14,7 +14,7 @@ def get_phys_damage(wpn_dmg, fstr_wpn, wsc, pdif, ftp, crit, crit_dmg, wsd, ws_b
     # Calculate physical damage dealt for a single attack of a weapon skill. Uses equation from BG wiki
     # https://www.bg-wiki.com/ffxi/Weapon_Skill_Damage
     #
-    phys = int(  ((wpn_dmg + fstr_wpn + wsc)*ftp + sneak_attack_bonus + trick_attack_bonus) * pdif * (1 + crit*min(crit_dmg,1.0)) * (1+wsd*(n==0)) * (1+ws_bonus) * (1+ws_trait) ) # crit = True/False
+    phys = int(  ((wpn_dmg + fstr_wpn + wsc)*ftp + sneak_attack_bonus*(n==0) + trick_attack_bonus*(n==0)) * pdif * (1 + crit*min(crit_dmg,1.0)) * (1+wsd*(n==0)) * (1+ws_bonus) * (1+ws_trait) ) # crit = True/False
     
     return(phys)
 

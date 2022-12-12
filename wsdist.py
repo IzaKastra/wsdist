@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 10
+# Version date: 2022 December 12
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -423,12 +423,12 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                     ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
 
                 pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max(sneak_attack*(n==0),trick_attack*(n==0),crit_rate)) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
-                if sneak_attack or trick_attack and n==0:
+                if (sneak_attack or trick_attack) and n==0:
                     crit_dmg2 = crit_dmg + 0.3*vajra_equipped
                 else:
                     crit_dmg2 = crit_dmg
 
-                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, ) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
+                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, sneak_attack_bonus, trick_attack_bonus) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
                 damage += physical_damage
 
             # Bonus hit for dual-wielding.
