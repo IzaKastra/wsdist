@@ -201,5 +201,20 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == 'Mandalic Stab':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
-            
+    elif main_wpn_name == "Glanzfaust":
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == "Ascetic's Fury":
+            bonuses["ws_bonus"] += 0.495
+    elif main_wpn_name == "Verethragna":
+        if ws_name == "Victory Smite":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Godhands":
+        if ws_name == "Shijin Spiral":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Spharai":
+        if ws_name == "Final Heaven ":
+            bonuses["ws_bonus"] += 0.68
+
+
     return(bonuses)

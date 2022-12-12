@@ -28,7 +28,7 @@ import random
 class TP_Error(Exception):
     pass
 
-def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False):
+def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
     #
     # Use the player and enemy stats to calculate weapon skill damage.
     # This function works, but needs to be cleaned up. There is too much going on within it.
@@ -42,7 +42,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
     phys_rng_ws = ws_name in ["Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow"]
-
+    kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
+    
     # Save the main and sub weapon names for later.
     # Used to check if giving weapon skill damage bonuses on things like Gokotai (if "Gokotai" in main_wpn_name)
     main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
@@ -59,7 +60,20 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     tp += gearset.playerstats['TP Bonus'] # Add TP bonus
     tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
 
-    main_dmg = gearset.playerstats['DMG1']
+    if gearset.gear["main"]["Skill Type"] != "Hand-to-Hand":
+        main_dmg = gearset.playerstats['DMG1']
+        delay1 = gearset.playerstats['Delay1'] # Main-hand delay.
+    else:
+        base_dmg = 3 + int((gearset.playerstats["Hand-to-Hand Skill"]+gearset.gear["main"]["Hand-to-Hand Skill"])*0.11) # Base damage for no H2H with no weapon equipped.
+        main_dmg =  base_dmg + gearset.playerstats['DMG1'] # Add the "+damage" from H2H weapons
+        if kick_ws_footwork: # Kick attacks usually only use base_damage without weapon, but footwork increases this by 20 + weapon_damage and lets kick-based WSs use kick damage instead of weapon damage for its duration
+            main_dmg += 20 + 20 + gearset.playerstats["Kick Attacks Attack"] # +20 footwork base, +20 from JP, and +x from gear: https://www.ffxiah.com/forum/topic/55864/new-monk-questions/#3600604
+                                                                              # See also: https://www.ffxiah.com/forum/topic/36705/iipunch-monk-guide/213/#3368961
+                                                                              # and this official post saying kick attacks use weapon damage with footwork: https://forum.square-enix.com/ffxi/threads/52969-August.-3-2017-%28JST%29-Version-Update
+        base_delay = 480
+        delay1 = (base_delay + gearset.playerstats['Delay1']) - gearset.playerstats["Martial Arts"] # The value in parenthesis is your delay and is limited by the -80% delay reduction
+        minimum_delay = (base_delay + gearset.playerstats['Delay1'])*0.2 # We won'  t use this until TP sets become a thing again.
+
     sub_dmg  = gearset.playerstats['DMG2']
     rng_dmg  = gearset.playerstats['Ranged DMG']
     ammo_dmg = gearset.playerstats.get("Ammo DMG",0)
@@ -85,17 +99,20 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     player_accuracy2 = gearset.playerstats['Accuracy2'] if dual_wield else 0
     player_rangedaccuracy = gearset.playerstats['Ranged Accuracy']
 
-    delay1 = gearset.playerstats['Delay1'] # Main-hand delay.
     delay2 = gearset.playerstats['Delay2'] if dual_wield else delay1 # Off-hand delay if dual wielding
     dw = gearset.playerstats['Dual Wield']/100 if dual_wield else 0
     mdelay = (delay1+delay2)/2.*(1.-dw) if dual_wield else delay1 # Modified delay based on weapon delays and dual wield
 
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
+    if phys_rng_ws and main_job == "SAM":
+        wsd -= 19 # Undo the Overwhelm merits for ranged weapon skills
+        # TODO: also remove from ranged magical/hybrid WSs
+
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
     ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments. TODO: DRG is different term
     ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100
 
-    crit_dmg = gearset.playerstats['Crit Damage']/100.
+    crit_dmg = gearset.playerstats['Crit Damage']/100
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
     sneak_attack_bonus = (gearset.playerstats["DEX"] * (1+gearset.playerstats["Sneak Attack"]/100))*sneak_attack
@@ -221,9 +238,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     crit_rate += bonuses['crit_rate']
     oa3 += bonuses['oa3'] ; oa2 += bonuses['oa2']
 
+
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
-    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int)
+    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, kick_ws_footwork)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
     ftp_rep = scaling['ftp_rep']
@@ -231,13 +249,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     element = scaling['element']
     hybrid = scaling['hybrid']
     magical = scaling['magical']
-    player_attack1 = scaling['player_attack1'] # Some weaponskills enhance/reduce player attack or enemy defense. TODO: add ranged attack (last stand, empyreal arrow)
+    player_attack1 = scaling['player_attack1'] # Some weaponskills enhance/reduce player attack or enemy defense.
     player_attack2 = scaling['player_attack2']
+    player_rangedattack = scaling['player_rangedattack']
     enemy_def = scaling['enemy_def']
     crit_rate = scaling['crit_rate']
     ftp_hybrid = scaling['ftp_hybrid']
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
+
 
     player_accuracy1 += acc_bonus
     player_accuracy2 += acc_bonus
@@ -317,6 +337,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits. again, no WSD stat
 
             phys = main_hit_damage + (main_hits-1)*main_hit_ma_damage + sub_hits*sub_hit_damage
+            # print(avg_pdif01, main_dmg, fstr_main, wsd, ftp, wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus, main_hit_damage, main_hit_ma_damage)
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
             hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
@@ -540,7 +561,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 ==========================================================================================
 '''
 
-def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False):
+def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
     damage = []
     tp_return = []
 
@@ -550,7 +571,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack) # values = [damage, TP_return]
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -576,12 +597,12 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
     else:
         tp = np.average([tp1,tp2])
 
-        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)
+        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
         return(damage)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False,sneak_attack=False, trick_attack=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False,sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
         # print(starting_gearset[k])
@@ -770,11 +791,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 if new_set["main"]["Skill Type"] in two_handed and (new_set["sub"]["Type"]=="Weapon" or new_set["sub"]["Type"]=="Shield"):
                                     # print("test6")
                                     continue
-                                # Do not allow anything in the off-hand of hand-to-hand weapons.
-                                if new_set["main"]["Skill Type"] == "Hand-to-Hand":
-                                    if new_set["Name"] != Empty:
-                                        # print("test7")
-                                        continue
+
+                                # Do not equip H2H weapon with an off-hand item.
+                                if new_set["main"]["Skill Type"] == "Hand-to-Hand" and new_set["sub"]["Name"] != "Empty":
+                                    # print("test18")
+                                    continue
 
                                 # Require that a ranged weapon that matches your selected ranged weapon skill be equipped IF you're using a ranged weapon skill.
                                 # This prevents something like Seething Bomblet +1 R15 from being BiS for Empyreal Arrow for some reason.
@@ -831,11 +852,12 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # At this point, you SHOULD have a valid gear set.
                                 # Now we actually test the approximate damage using averages.
 
-                                test_Gearset = set_gear(buffs, new_set, main_job, sub_job) # This line turns that gear dictionary into a Python class, formalizing the player stats.
+                                test_Gearset = set_gear(buffs, new_set, main_job, sub_job, impetus=impetus) # This line turns that gear dictionary into a Python class, formalizing the player stats.
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
 
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
-                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience, sneak_attack, trick_attack)) # Test the set and return its damage as a single number
+                                # Test the set and return its damage as a single number
+                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork))
                                 # print(b["Name2"], b2["Name2"], damage)
 
                                 tcount += 1
@@ -888,12 +910,12 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
         Best_Gearset["ear2"] = temp_ear1
 
     # At this point, the code has run up to 20 iterations and found the gearset that returns the highest average damage. Now we use this best set to create a proper distribution of damage that you'd expect to see in game based on its stats.
-    best_set = set_gear(buffs, Best_Gearset, main_job, sub_job) # Create a class from the best gearset
+    best_set = set_gear(buffs, Best_Gearset, main_job, sub_job,impetus=impetus) # Create a class from the best gearset
     # print(f"{tcount} valid gear sets checked.")
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
 
 
-    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)
+    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
     
     return(Best_Gearset)
 
@@ -947,9 +969,11 @@ if __name__ == "__main__":
     ebullience = False # True/False. Only for SCH main with Elemental Magic
     sneak_attack = False
     trick_attack = False
+    impetus = False
+    footwork = False
 
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack)
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)

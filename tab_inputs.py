@@ -25,7 +25,7 @@ w, h = sg.Window.get_screen_size()
 fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD", "THF"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD", "THF","MNK"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
 sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
 
 player_column = [
@@ -62,7 +62,8 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
-            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"]}
+            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"],
+            "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury",]}
 
 
 spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
@@ -113,8 +114,8 @@ ws_column2 = [
   sg.vtop(sg.Column([
   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
   [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True)],
-  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False)],
-  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False)],
+  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False)],
+  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 80% Impetus bonus:\nCrit Rate +40%\nAttack+80\nCrit Damage +40% (if using Bhikku Body)",visible=False)],
   ]))
 
 

@@ -60,12 +60,12 @@ window = sg.Window(f"Kastra WS Damage Simulator (2022 December 11) - Theme:{rand
 while True:
     # Run the code within this while True block once.
     # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
+    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
 
 
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
                 "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab"],
+                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab",],
                 "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
                 "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
@@ -75,7 +75,8 @@ while True:
                 "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
-                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"]}
+                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"],
+                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury",]}
 
     # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
@@ -389,6 +390,17 @@ while True:
                 window["ta toggle"].update(visible=False)
                 window["ta toggle"].update(False)
 
+            if main_job == "MNK": # Enable Ebullience for SCH main
+                window["footwork toggle"].update(visible=True)
+                window["footwork toggle"].update(False)
+                window["impetus toggle"].update(visible=True)
+                window["impetus toggle"].update(False)
+            else:
+                window["footwork toggle"].update(visible=False)
+                window["footwork toggle"].update(False)
+                window["impetus toggle"].update(visible=False)
+                window["impetus toggle"].update(False)
+
             # Hide the magic burst button if not on one of the nuking jobs.
             if main_job not in ["NIN","SCH","BLM","WHM","RDM","GEO","DRK"]:
                 window["magic burst toggle"].update(visible=False)
@@ -691,33 +703,39 @@ while True:
             ebullience = values["ebullience toggle"]
             sneak_attack = values["sa toggle"]
             trick_attack = values["ta toggle"]
+            footwork = values["footwork toggle"]
+            impetus = values["impetus toggle"]
+
+            
+            kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
+            
 
             if event == "quicklook":
                 from wsdist import weaponskill
                 from set_stats import *
-                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience, sneak_attack, trick_attack)[0]
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job,impetus=impetus)
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "quicklook magic":
                 from wsdist import weaponskill
                 from set_stats import *
-                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience, sneak_attack, trick_attack)[0]
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job,impetus=impetus)
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
             elif event == "Run WS":
                 from wsdist import run_weaponskill
 
                 show_final_plot = values["show final plot"]
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience, sneak_attack, trick_attack)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
                 window["copy best set"].update(disabled=False)
            
             elif event == "Run Magic":
                 from wsdist import run_weaponskill
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience, sneak_attack, trick_attack)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
                 window["copy best set"].update(disabled=False)
 
             # 
@@ -729,7 +747,7 @@ while True:
                 empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
                 empty_gearset = set_gear({"food":{},"brd":{},"cor":{},"geo":{},"whm":{}},empty_set, main_job, sub_job)
 
-                gearset = set_gear(buffs, starting_gearset, main_job, sub_job)
+                gearset = set_gear(buffs, starting_gearset, main_job, sub_job, impetus=impetus) # put impetus here, otherwise it's effect won't show up
                 dual_wield = gearset.gear['sub'].get('Type', 'None') == "Weapon"
 
                 window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
