@@ -379,7 +379,7 @@ while True:
                 window["ebullience toggle"].update(visible=False)
                 window["ebullience toggle"].update(False)
 
-            if main_job == "THF": # Enable Ebullience for SCH main
+            if main_job == "THF": # Enable SA/TA for THF main
                 window["sa toggle"].update(visible=True)
                 window["sa toggle"].update(False)
                 window["ta toggle"].update(visible=True)
@@ -390,7 +390,7 @@ while True:
                 window["ta toggle"].update(visible=False)
                 window["ta toggle"].update(False)
 
-            if main_job == "MNK": # Enable Ebullience for SCH main
+            if main_job == "MNK": # Enable Impetus/Footwork for MNK main
                 window["footwork toggle"].update(visible=True)
                 window["footwork toggle"].update(False)
                 window["impetus toggle"].update(visible=True)

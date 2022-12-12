@@ -239,6 +239,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     oa3 += bonuses['oa3'] ; oa2 += bonuses['oa2']
 
 
+    # print("Before: ",player_rangedattack)
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
     scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, kick_ws_footwork)
@@ -257,6 +258,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ftp_hybrid = scaling['ftp_hybrid']
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
+    # print("After: ",player_rangedattack)
 
 
     player_accuracy1 += acc_bonus
@@ -345,9 +347,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             avg_pdif_rng = get_avg_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
 
             ranged_hit_damage = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # The amount of damage done by the first hit of the WS if it does not miss
-            ranged_hit_damage2 = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp2,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # Hits after the first main hit (jishnu hits 2+3. Last stand hit 2, etc)
+            ranged_hit_damage2 = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp2,  crit_rate, crit_dmg, 0, ws_bonus, ws_trait) # Hits after the first main hit (jishnu hits 2+3. Last stand hit 2, etc)
             phys = ranged_hit_damage*hitrate_ranged1 + ranged_hit_damage2*hitrate_ranged2*(nhits-1)
-
+  
             # print(f"Ranged Accuracy: {player_rangedaccuracy}")
             # print(f"Ranged Attack: {player_rangedattack}")
             # print(f"Ranged Hit rates: {hitrate_ranged1}  {hitrate_ranged2}")
@@ -449,10 +451,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                     ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
 
                 pdif_rng, crit = get_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this shot of the ranged weapon. Return whether or not that hit was a crit.
-                physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd, ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
+                physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd*(n==0), ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
                 damage += physical_damage
-
-
+            
             # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
 
 
