@@ -194,7 +194,7 @@ stat_length = [5,1]
 bwidth = 1
 nopad = [1,2]
 
-default_enemy = "Apex Toad" # Just a default value so the fields are populated on start up.
+default_enemy = "Apex Bat" # Just a default value so the fields are populated on start up.
 enemy_stat_column = [
   [sg.Text("Enemy:", font=font_choice, size=[6,2],justification="r"), sg.Column([[sg.Combo(values=tuple(list(preset_enemies.keys())+["Custom"]), default_value=preset_enemies[default_enemy]["Name"], readonly=True, k="enemy_name", size=[20,1],font=font_choice,enable_events=True)],
   [sg.Text(f"({preset_enemies[default_enemy]['Location']})",font=font_choice,key="enemy_location")]])],
