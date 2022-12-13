@@ -125,8 +125,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "WAR":  # Master Level 20 Warrior stats TODO: set WAR stats
-            self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "WAR":  # Master Level 20 Warrior stats.
+            self.playerstats = {'STR':117, 'DEX':113, 'VIT':110, 'AGI':113, 'INT':104, 'MND':104, 'CHR':107,
                      'Scythe Skill':424+16, 'Dagger Skill':408+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':334+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':354+16,
                      'Katana Skill':0+16, 'Axe Skill':437+16,'Great Axe Skill':444+16,'Polearm Skill':408+16,'Staff Skill':418+16,'Great Sword Skill':424+16,'Archery Skill':354+16,'Marksmanship Skill':354+16,
                      'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16,
@@ -147,8 +147,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "SAM":  # Master Level 20 Dark Knight stats. Update to SAM later
-            self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "SAM":  # Master Level 20 Samurai stats.
+            self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':398+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':444+16, 'Club Skill':320+16, 'Throwing Skill':398+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':408+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':398+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0, "Elemental Magic Skill":0,
@@ -169,8 +169,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "DRG":  # Master Level 20 Dragoon stats. copied from SAM, which was copied from DRK
-            self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "DRG":  # Master Level 20 Dragoon stats.
+            self.playerstats = {'STR':115, 'DEX':110, 'VIT':113, 'AGI':110, 'INT':104, 'MND':107, 'CHR':113,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':0+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':444+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0, "Elemental Magic Skill":0,
@@ -213,8 +213,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0,
                      }
-        elif mainjob == "WHM":  # Master Level 20 White Mage stats. Copied from ML20 BLM stats: TODO: use real WHM stats
-            self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':117, 'CHR':110,
+        elif mainjob == "WHM":  # Master Level 20 White Mage stats.
+            self.playerstats = {'STR':110, 'DEX':104, 'VIT':110, 'AGI':107, 'INT':107, 'MND':117, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':424+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -236,7 +236,7 @@ class set_gear:
                      "Magic Crit Rate II":0,
                      }
         elif mainjob == "RDM":  # Master Level 20 Red Mage stats
-            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104, # Stats are copy/pasted from NIN. TODO: fix
+            self.playerstats = {'STR':110, 'DEX':110, 'VIT':107, 'AGI':107, 'INT':113, 'MND':113, 'CHR':110,
                      'Katana Skill':0+16, 'Dagger Skill':418+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':285+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':354+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":398+16,
@@ -279,8 +279,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "COR":  # Master Level 20 Ninja stats # TODO: COR stats
-            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+        elif mainjob == "COR":  # Master Level 20 Corsair stats.
+            self.playerstats = {'STR':107, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':113, 'MND':107, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':424+16, 'Sword Skill':408+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':398+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':418+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -301,8 +301,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "BRD":  # Master Level 20 Ninja stats # TODO: COR stats
-            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+        elif mainjob == "BRD":  # Master Level 20 Bard stats.
+            self.playerstats = {'STR':110, 'DEX':110, 'VIT':110, 'AGI':104, 'INT':110, 'MND':110, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':358+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -323,8 +323,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "THF":  # Master Level 20 Ninja stats # TODO: THF stats
-            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+        elif mainjob == "THF":  # Master Level 20 Thief stats.
+            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
                      'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':388+16,'Marksmanship Skill':398+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -345,8 +345,8 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "MNK":  # Master Level 20 Ninja stats # TODO: MNK stats
-            self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
+        elif mainjob == "MNK":  # Master Level 20 Monk stats.
+            self.playerstats = {'STR':113, 'DEX':115, 'VIT':117, 'AGI':104, 'INT':101, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':418+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -355,7 +355,29 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':8, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
-                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,
+                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':0,
+                     'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     "Magic Crit Rate II":0
+                     }
+        elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits and skills and stuff
+            self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
+                     'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':320+16,
+                     'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':418+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Accuracy1':41, 'Accuracy2':41, 'Attack1':40, 'Attack2':40,
+                     'Ranged Accuracy':41, 'Ranged Attack':40,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     "Quick Draw":0,"Quick Draw II":0,
+                     'Daken':0, 'QA':0, 'TA':8, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
+                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,

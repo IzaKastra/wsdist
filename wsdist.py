@@ -338,7 +338,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             sub_hit_damage =     get_avg_phys_damage( sub_dmg,  fstr_sub, wsc, avg_pdif2, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by the off-hand hits separately, no weapon skill damage provided here.
             main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits. again, no WSD stat
 
-            phys = main_hit_damage + (main_hits-1)*main_hit_ma_damage + sub_hits*sub_hit_damage
+            phys = main_hit_damage*hitrate11 + (main_hits-1*hitrate11)*main_hit_ma_damage + sub_hits*sub_hit_damage
             # print(avg_pdif01, main_dmg, fstr_main, wsd, ftp, wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus, main_hit_damage, main_hit_ma_damage)
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...

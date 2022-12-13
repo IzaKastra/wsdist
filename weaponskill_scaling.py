@@ -112,7 +112,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Kamu":
         ftp  = 1.0
         ftp_rep = False
-        wsc = 0.6*(player_int+player_str)
+        wsc = 0.6*(player_int+player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
         special_set = set_gear(buffs, equipment, main_job, sub_job, 1.25) # The attack bonus from Blade: Kamu is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -128,12 +128,12 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Metsu":
         ftp  = 5.0
         ftp_rep = False
-        wsc = 0.8*player_dex
+        wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Namas Arrow":
         ftp  = 2.75
         ftp_rep = False
-        wsc = 0.4*(player_str + player_agi)
+        wsc = 0.4*(player_str + player_agi) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Blade: Hi":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
@@ -358,15 +358,6 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc       = 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits     = 2
         element   = "Wind"
-    elif ws_name == "Tachi: Jinpu":
-        hybrid    = True
-        base_ftp  = [0.5, 1.5, 2.5]
-        ftp_hybrid = np.interp(tp, base_tp, base_ftp)
-        ftp       = 1.0
-        ftp_rep   = False
-        wsc       = 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits     = 2
-        element   = "Wind"
     elif ws_name == "Insurgency":
         base_ftp = [0.5, 3.25, 6.0]
         ftp = np.interp(tp, base_tp, base_ftp)
@@ -388,7 +379,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Quietus":
         ftp  = 3.0
         ftp_rep = False
-        wsc = 0.6*(player_mnd+player_str)
+        wsc = 0.6*(player_mnd+player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
         base_enemy_def_scaling = [0.10, 0.30, 0.50]
         enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
@@ -685,31 +676,31 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 5.0
         ftp_rep = False
-        wsc  = 0.7*player_chr + 0.3*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        wsc  = 0.7*player_chr + 0.3*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 2
     elif ws_name == "Dancing Edge":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.1875 
         ftp_rep = False
-        wsc  = 0.4*(player_chr + player_dex) + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        wsc  = 0.4*(player_chr + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
     elif ws_name == "Shark Bite":
         base_ftp = [4.5, 6.8, 8.5] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
-        wsc  = 0.4*(player_agi + player_dex) + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        wsc  = 0.4*(player_agi + player_dex) + dStat[1]*gearset.playerstats[dStat[0]] 
         nhits = 2
     elif ws_name == "Rudra's Storm":
         base_ftp = [5.0, 10.19, 13.0] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
-        wsc  = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        wsc  = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Shattersoul":
         ftp = 1.375
         ftp_rep = False # Does this WS replicate FTP across all hits?
-        wsc  = 0.85*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        wsc  = 0.85*player_int + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 3
     elif ws_name == "Spiral Hell":
         base_ftp = [1.375,2.75,4.75]
@@ -812,7 +803,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Tornado Kick":
         # This is a kick weaponskill that may benefit from Footwork. We re-calculate player attack if footwork is up to deal with Empy+3 feet: Footwork+16%
-        base_ftp = [1.68, 2.8, 4.575]
+        base_ftp = [1.7, 2.8, 4.5]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.4*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
@@ -820,6 +811,45 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, impetus) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
+    elif ws_name == "Minstrel Axe":
+        base_ftp = [4.0, 10.5, 13.625]
+        ftp      = np.interp(tp, base_tp, base_ftp)
+        ftp_rep  = False
+        wsc      = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits    = 1
+    elif ws_name == "Ground Strike":
+        base_ftp = [1.5, 1.75, 3.0]
+        ftp      = np.interp(tp, base_tp, base_ftp)
+        ftp_rep  = False
+        wsc      = 0.5*(player_int + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits    = 1
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.75)
+        player_attack1 = special_set.playerstats["Attack1"]
+        player_attack2 = special_set.playerstats["Attack2"]
+    elif ws_name == "Raging Rush":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_boost = [0.15, 0.30, 0.50]
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.0
+        ftp_rep = True
+        wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 3
+    elif ws_name == "Wheeling Thrust":
+        ftp  = 1.75
+        ftp_rep = False
+        wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]] # TODO: remove all these utu/crep dSTAT things from WSs and put one single line at the end: wsc += dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+        base_enemy_def_scaling = [0.50, 0.625, 0.75]
+        enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
+        enemy_defense *= (1-enemy_def_scaling)
+    elif ws_name == "Sonic Thrust":
+        base_ftp = [3.0, 3.7, 4.5]
+        ftp      = np.interp(tp, base_tp, base_ftp)
+        ftp_rep  = False
+        wsc      = 0.4*(player_dex + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits    = 1
 
 
 

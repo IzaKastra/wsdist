@@ -68,12 +68,12 @@ while True:
                 "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab",],
                 "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
                 "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
-                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash",],
+                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike",],
                 "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
-                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust"],
+                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
                 "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice",],
-                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend",],
+                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
+                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Minstrel Axe"],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
                 "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"],
                 "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury",]}
@@ -230,7 +230,11 @@ while True:
                 if type(k) == str:
                     if k.split()[0][:-1] == slot:
                         if k.split(";;")[-1] == main_job:
-                            window[k].update(True)
+                            item_name2 = k.split(":")[-1].split(";;")[0].strip()
+                            if "Nyame" in item_name2 and item_name2[-1]=="A": # Uncheck Nyame Path A.
+                                window[k].update(False)
+                            else:
+                                window[k].update(True)
                         else:
                             window[k].update(False)
                         
@@ -275,9 +279,11 @@ while True:
                         if type(k) == str: # Some of the keys are integers?? skip them here
                             if k.split()[0][:-1] == slot: # sub:  ammo:  main:  etc
                                 for l in displayed_equipment_list:
+                                    if "Nyame" in l["Name2"] and l["Name2"][-1]=="A": # Uncheck Nyame Path A
+                                        window[f"{slot}: {l['Name2']};;{job}"].update(False)
+                                        continue
                                     if job.lower() in l["Jobs"] and main_job==job:
-                                        window[f"{slot}: {l['Name2']};;{job}"].update(True) # Turn on all versions of item checkboxes that correspond to your main job (Heishi Shorinken R15;;NIN)
-
+                                        window[f"{slot}: {l['Name2']};;{job}"].update(True) # Turn on all versions of item checkboxes that correspond to your main job (Heishi Shorinken R15;;NIN), but disable other job versions (Heishi Shorinken R15;;DRK)
                                         # If you're using a melee weapon skill, then unselect all main weapons that can't use your selected weapon skill.
                                         if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]: # If you're testing a melee WS
                                             if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect main weapons that can't use the selected weapon skill
