@@ -354,7 +354,7 @@ class set_gear:
                      'Ranged Accuracy':41, 'Ranged Attack':40,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':8, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
@@ -381,6 +381,29 @@ class set_gear:
                      'Store TP':0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,
+                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
+                     'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
+                     'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
+                     'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
+                     "Magic Crit Rate II":0
+                     }
+
+        elif mainjob == "DNC":  # Master Level 20 Ranger stats # Copy/pasted from THF TODO: Dancer stats
+            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+                     'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':354+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':444+16,
+                     'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
+                     'Ranged Accuracy':0, 'Ranged Attack':0,
+                     'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     "Quick Draw":0,"Quick Draw II":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,
+                     'Store TP':0,
+                     'PDL':0, 'PDL Trait':0,
+                     'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
