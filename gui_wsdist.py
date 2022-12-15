@@ -347,8 +347,9 @@ while True:
                         if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A": # Uncheck Nyame Path A
                             window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                             continue
-                        if str(equipment.get("Rank",odyrank)) == odyrank: # If the item has a "Rank" key, then only select it if it matches the "odyrank" variable.
-                            window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank)) == odyrank else False)
+                            
+                        window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False)
+                            
                     else:
                         window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
 
