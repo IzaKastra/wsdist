@@ -636,7 +636,7 @@ for job in cape_names:
             # Add capes with Macc+Mdmg + WSD + STAT
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Magic)", f"{base_stat}":30, "Weaponskill Damage":10, "Magic Accuracy":20, "Magic Damage":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
-        if job in ["NIN", "RDM", "COR", "RNG", "SAM", "THF"] and base_stat in ["AGI","STR"]: # The list of jobs that might build physical ranged WS sets.
+        if job in ["NIN", "RDM", "COR", "RNG", "SAM", "THF"] and base_stat in ["AGI","STR","DEX"]: # The list of jobs that might build physical ranged WS sets.
             # add ranged WS sets with stat+30, WSD+10, Racc/Ratk+20 for a select few jobs. Only RNG gets a DEX cape, but it should use crit rate for jishnus  TODO
             capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} Weaponskill Damage (Ranged)", f"{base_stat}":30, "Weaponskill Damage":10, "Ranged Accuracy":20, "Ranged Attack":20}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
 
