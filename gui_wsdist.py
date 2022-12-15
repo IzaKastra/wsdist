@@ -53,39 +53,104 @@ window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/commen
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
-window = sg.Window(f"Kastra WS Damage Simulator (2022 December 12) - Theme:{random_theme} - Style:{random_style}",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
-# window["main start radio NIN"].update(visible=True)
+# Build the window.
+window = sg.Window(f"Kastra FFXI Damage Simulator (2022 December 15)",layout,size=(700,900),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
+
+
+
+# Define some variables/lists/dictionaries that the GUI will use.
+all_gear = mains+subs+grips+ranged+ammos+heads+necks+ears+ears2+bodies+hands+rings+rings2+capes+waists+legs+feet
+all_names_map = dict([[k['Name2'], k['Name']] for k in all_gear]) # Dictionary that maps name2s to names for images later. We can't find an image for "Heishi Shorinken R15" so map it to "Heishi Shoriken" here
+
+# Sort the gear lists by name. https://stackoverflow.com/questions/72899/how-do-i-sort-a-list-of-dictionaries-by-a-value-of-the-dictionary
+gear_dict = {"main":mains,"sub":subs+grips,"ranged":ranged,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
+for slot in gear_dict:
+    gear_dict[slot] = sorted(gear_dict[slot], key=lambda d: d['Name2']) 
+
+default_job = "nin"
+# Make sure the gear lists only show NIN gear to start
+for slot in gear_dict:
+    # First loop once to hide everything.
+    for equipment in gear_dict[slot]:
+        window[f"checkbox_{slot}:{equipment['Name2']}"].hide_row()
+        window[f"start{slot}:{equipment['Name2']}"].hide_row()
+    # Now loop once again and unhide things in alphabetical order. Without the first hide all loop, things get thrown in at the bottom and would be out of order.
+    for equipment in gear_dict[slot]:
+        if default_job in equipment["Jobs"]:
+            window[f"checkbox_{slot}:{equipment['Name2']}"].unhide_row()
+            window[f"start{slot}:{equipment['Name2']}"].unhide_row()
+
+
+# Dictionary of spells that each job has access to. This should be a copy/paste of the spell_dict in tab_inputs.py
+spell_dict = {
+    "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
+    "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
+            "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
+            "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
+            "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
+            "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
+    "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
+            "Water","Water II","Water III","Water IV","Water V",
+            "Aero","Aero II","Aero III","Aero IV","Aero V",
+            "Fire","Fire II","Fire III","Fire IV","Fire V",
+            "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
+    "GEO":["Stone","Stone II","Stone III","Stone IV","Stone V",
+            "Water","Water II","Water III","Water IV","Water V",
+            "Aero","Aero II","Aero III","Aero IV","Aero V",
+            "Fire","Fire II","Fire III","Fire IV","Fire V",
+            "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
+    "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
+            "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
+            "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
+            "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
+            "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
+            "Luminohelix II", "Noctohelix II"],
+    "DRK":["Stone","Stone II","Stone III",
+            "Water","Water II","Water III",
+            "Aero","Aero II","Aero III",
+            "Fire","Fire II","Fire III",
+            "Blizzard","Blizzard II","Blizzard III",
+            "Thunder","Thunder II","Thunder III"],
+    "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
+}
+            
+
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK","DNC","BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
+
+ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
+            "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
+            "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
+            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
+            "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
+            "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
+            "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
+            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
+            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
+            "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Minstrel Axe","Onslaught","Calamity",],
+            "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow"],
+            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
+            "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"]}
 
 while True:
-    # Run the code within this while True block once.
-    # Then wait for the user to perform an event before running another loop.
-    main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
 
-
-    ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
-                "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab",],
-                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
-                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
-                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike",],
-                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment"],
-                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
-                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
-                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Minstrel Axe"],
-                "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow",],
-                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire"],
-                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury",]}
-
-    # Read the window. Record the action that triggered the window to refresh as well as the key-value pairs associated with all variables throughout the window.
     event, values = window.read()
-    # print(event)
+
     # Exit the program if given exit or null command.
     if event in (None, "Exit"):
         break
 
-    # # Allow the user to define their font size (lazy way of having the user try to fix their own UI formatting issues). Currently broken. Can't find a way to update all text programmatically yet
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+    # # Allow the user to define their font size. Currently broken for some UI elements.
     if event[1:] in [k[2:] for k in font_size_options]:
         # This is not well-written yet. Some GUI elements do not have a font keyword in their .update() method.
         # Input.update() was just recently updated to include it, but Button (and others) are missing it still.
@@ -100,7 +165,18 @@ while True:
                 except:
                     window[value].Widget.configure(font=new_font)    # state is 'normal', 'readonly' or 'disabled'
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+    # Inside this try: block are all of the possible events the user can cause by interacting with the GUI.
+    # If something fails, then it runs the "except:" block at the end of the code.
     try:
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # If the user selects a new enemy from the enemy drop down list, then automatically update the enemy stats.
         if event == "enemy_name":
             enemy = values["enemy_name"]
@@ -116,6 +192,9 @@ while True:
                 window["enemy_int"].update(f"{preset_enemies[enemy]['INT']}")
                 window["enemy_location"].update(f"({preset_enemies[enemy]['Location']})")
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
 
         # Update the drop down menus for BRD songs when the user selects a song that is already selected somewhere else.
@@ -130,6 +209,10 @@ while True:
                 if songs[f"song{i}"] == songs[f"song{j}"]:
                     window[f"song{j}"].update(value="None")
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # Update the drop down menus for COR rolls when the user selects a roll that is already selected in the other slot.
         if event in ["roll1","roll2"]:
             rolls = {"roll1":values["roll1"], "roll2":values["roll2"]}
@@ -139,6 +222,10 @@ while True:
             for j in [k+1 for k in range(2) if (k+1)!=i]:
                 if rolls[f"roll{i}"] == rolls[f"roll{j}"]:
                     window[f"roll{j}"].update(value="None")
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Update the drop down menus for GEO entrusts when the user selects an entrust bubble that is already selected as an indi- or geo-bubble.
         if event in ["entrust","indibuff","geobuff"]:
@@ -155,7 +242,9 @@ while True:
                 if geobubble == indibubble:
                     window["indibuff"].update(value="None")
 
-
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Unlock Light Shot if COR is selected.
         if event == "cor_on":
@@ -168,6 +257,10 @@ while True:
                 window["Crooked Cards"].update(False)
                 window["Crooked Cards"].update(disabled=True)
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # Unlock Bolster and Blaze of Glory if GEO is selected.
         if event == "geo_on":
             if values["geo_on"]:
@@ -179,6 +272,10 @@ while True:
                 window["geo_bog"].update(False)
                 window["geo_bog"].update(disabled=True)
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # Automatically turn off and disable Blaze of Glory if Bolster is turned on.
         if event == "bolster":
             if values["bolster"]:
@@ -187,6 +284,10 @@ while True:
                 window["geo_bog"].update(disabled=True)
             else:
                 window["geo_bog"].update(disabled=False)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Unlock Soul Voice if BRD is selected.
         if event == "brd_on":
@@ -199,6 +300,10 @@ while True:
                 window["marcato"].update(False)
                 window["marcato"].update(disabled=True)
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # Automatically turn off Marcato if Soul Voice is turned on.
         if event == "soulvoice":
             if values["soulvoice"]:
@@ -208,127 +313,120 @@ while True:
             else:
                 window["marcato"].update(disabled=False)
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
         # Setup the buttons which display/hide gear lists on the gear tab.
+        # This is triggered when clicking on a gear slot grid point in the "Select Gear" tab.
+        # The event format is "display head" for example.
         if event.split()[0] == "display":
-            slot = event.split()[1] # The slot selected by the user
-            main_job = values["mainjob"] # The main job from the inputs tab
-            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                for l in main_jobs:
-                    if slot==k and main_job == l:
-                        window[f"{k} display {l}"].update(visible=True)
-                    else:
-                        window[f"{k} display {l}"].update(visible=False)
+            selected_slot = event.split()[1]
+            for slot in gear_dict:
+                window[f"{slot} display"].update(visible=True if selected_slot==slot else False)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Setup buttons to automatically select everything in the displayed list.
-        if event == "select all gear":
+        if event in ["select all gear", "unselect all gear"]:
             main_job = values["mainjob"]
-            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if window[f"{k} display {main_job}"].visible:
-                    slot = k
+            odyrank = values["odyssey rank"]
+            
+            # First figure out which list is currently displayed.
+            for slot in gear_dict:
+                if window[f"{slot} display"].visible:
+                    selected_slot = slot
                     break
-            for k in values:
-                if type(k) == str:
-                    if k.split()[0][:-1] == slot:
-                        if k.split(";;")[-1] == main_job:
-                            item_name2 = k.split(":")[-1].split(";;")[0].strip()
-                            if "Nyame" in item_name2 and item_name2[-1]=="A": # Uncheck Nyame Path A.
-                                window[k].update(False)
-                            else:
-                                window[k].update(True)
-                        else:
-                            window[k].update(False)
-                        
+            
+            # Loop over all gear in the selected slot and select everything that the main job can equip. This SHOULD be identical to everything visible in that list.
+            if event == "select all gear":
+                for equipment in gear_dict[selected_slot]:
+                    if main_job.lower() in equipment["Jobs"]:
+                        if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A": # Uncheck Nyame Path A
+                            window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+                            continue
+                        if str(equipment.get("Rank",odyrank)) == odyrank: # If the item has a "Rank" key, then only select it if it matches the "odyrank" variable.
+                            window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank)) == odyrank else False)
+                    else:
+                        window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
 
-        # Setup buttons to automatically unselect everything in the displayed list.
-        if event == "unselect all gear":
-            main_job = values["mainjob"]
-            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                if window[f"{k} display {main_job}"].visible:
-                    slot = k
-                    break
-            for k in values:
-                if type(k) == str:
-                    if k.split()[0][:-1] == slot and k.split(";;")[-1] == main_job:
-                        window[k].update(False)
+
+            # Unselect everything in the selected slot.
+            elif event == "unselect all gear":
+                for equipment in gear_dict[selected_slot]: # No need for a job check here. We're unselecting everything in this slot anyway.
+                    window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # select every piece of equipment in all slots that your main job can equip.
         if event == "select ALL main":
-            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
-                        "sub":subs + grips,
-                        "ranged":ranged,
-                        "ammo":ammos,
-                        "head":heads,
-                        "neck":necks,
-                        "ear1":ears,
-                        "ear2":ears2,
-                        "body":bodies,
-                        "hands":hands,
-                        "ring1":rings,
-                        "ring2":rings2,
-                        "back":capes,
-                        "waist":waists,
-                        "legs":legs,
-                        "feet":feet}
             main_job = values["mainjob"]
+            odyrank = values["odyssey rank"]
             ws_name = values["select weaponskill"]
 
-            for slot in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                for job in main_jobs: # So we can turn off all other job gear.
-                    displayed_equipment_list = gear_map[slot] # List of ALL gear in each slot
-                    for k in values: # values is the dictionary of stuff saved in the GUI.
-                        if type(k) == str: # Some of the keys are integers?? skip them here
-                            if k.split()[0][:-1] == slot: # sub:  ammo:  main:  etc
-                                for l in displayed_equipment_list:
-                                    if "Nyame" in l["Name2"] and l["Name2"][-1]=="A": # Uncheck Nyame Path A
-                                        window[f"{slot}: {l['Name2']};;{job}"].update(False)
-                                        continue
-                                    if job.lower() in l["Jobs"] and main_job==job:
-                                        window[f"{slot}: {l['Name2']};;{job}"].update(True) # Turn on all versions of item checkboxes that correspond to your main job (Heishi Shorinken R15;;NIN), but disable other job versions (Heishi Shorinken R15;;DRK)
-                                        # If you're using a melee weapon skill, then unselect all main weapons that can't use your selected weapon skill.
-                                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]: # If you're testing a melee WS
-                                            if slot == "main" and ws_name not in ws_dict[l["Skill Type"]]: # Unselect main weapons that can't use the selected weapon skill
-                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
-                                            if slot == "ranged" and l.get("Type","None") in ["Bow", "Gun"]: # Do not test ranged weapons with melee WSs (TP Bonus Gun??)
-                                                if job not in ["COR","RNG"]:
-                                                    window[f"{slot}: {l['Name2']};;{job}"].update(False)
-                                        # Now, if you're using a ranged weapon skill, then unselect all ranged weapons that can't use your selected weapon skill, but do select all main weapons still.
-                                        else: # Else you're testing a ranged WS
-                                            if slot == "ranged" and ws_name not in ws_dict.get(l.get("Skill Type","None"),[]): # Turn off guns for bow weapon skills and bows for gun weapon skills
-                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
-                                            if slot == "ammo" and l.get("Type","None") not in ["Bullet", "Arrow"]: # Do not test ranged weapons with equipment ammos. You can't shoot a seething bomblet
-                                                window[f"{slot}: {l['Name2']};;{job}"].update(False)
-                                    else:
-                                        if f"{slot}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
-                                            window[f"{slot}: {l['Name2']};;{job}"].update(False) # Turn off all versions of item checkboxes corresponding to not your main job (Heishi Shorinken R15;;DRK)
+            for slot in gear_dict:
+                for equipment in gear_dict[slot]:
+                    if main_job.lower() in equipment["Jobs"]:
+                        # First turn off Nyame Path A,
+                        if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A":
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
 
+                        # If using a melee WS, then unselect weapons that can't use it (this is annoying when testing magic since it unselects stuff)
+                        elif ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                            if slot == "main" and ws_name not in ws_dict[equipment["Skill Type"]]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            else:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False) # This line selects everything that passed all the previous checks as long as Odyssey rank requirement is met
 
-        # Setup buttons to show/hide radio buttons on the starting gearset tab.
-        # Clicking the "main" slot will show the radio buttons for the "main" gear on the right while hiding all other slot radio buttons
-        # Modified to only show gear that your main job can use.
-        if event.split()[0] == "showstart":
-            main_job = values["mainjob"]
-            slot = event.split()[-1]
-            if slot == "---":
-                continue
-            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                for l in main_jobs:
-                    if k == slot:
-                        if l == main_job:
-                            if not window[f"{k} start radio {l}"].visible:
-                                window[f"{k} start radio {l}"].update(visible=True)
-                        elif window[f"{k} start radio {l}"].visible:
-                            window[f"{k} start radio {l}"].update(visible=False)
+                        # If using a ranged WS, then unselect guns for bow WSs and bows for gun WSs. Also unselect equipment ammo since you can't shoot equipment (like seething bomblet)
+                        elif ws_name in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                            if slot == "ranged" and ws_name not in ws_dict.get(equipment.get("Skill Type","None"),[]):
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            if slot == "ammo" and equipment.get("Type","None") not in ["Bullet", "Arrow", "Bolt"]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+
+                            # Select all items except Odyssey gear with rank different than "odyrank"
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False) # This line selects everything that passed all the previous checks as long as Odyssey rank requirement is met
                     else:
-                        if window[f"{k} start radio {l}"].visible:
-                            window[f"{k} start radio {l}"].update(visible=False)
+                        window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
 
+                        # Keeping the following line commented because it has a link to something useful.
+                        # if X in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+        # Update which radio gear slot is displayed on the inputs tab based on the equipment slot clicked from the 4x4 grid.
+        # This event is triggers when clicking on an equipment slot in the inputs tab.
+        # The event format is "showradio legs", which would hide all radio-button frames except the legs slot.
+        if event.split()[0] == "showradio":
+            selected_slot = event.split()[-1]
+            for slot in gear_dict:
+                window[f"radiobox_{slot}"].update(visible=True if selected_slot==slot else False)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+        # The user selected a new sub job. 
         if event == "subjob":
             main_job = values["mainjob"]
             sub_job = values["subjob"]
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
-        # Update the radio list if the main job changes.
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+        # The user selected a new main job.
+        # Gear lists and job abilities need to be updated when the main job changes.
         if event == "mainjob":
             main_job = values["mainjob"]
             sub_job = values["subjob"]
@@ -336,84 +434,43 @@ while True:
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
-            spell_dict = { # This SHOULD be a copy/paste of the spell_dict in tab_inputs.py
-              "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
-              "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
-                     "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
-                     "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
-                     "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
-                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
-                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
-              "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
-                     "Water","Water II","Water III","Water IV","Water V",
-                     "Aero","Aero II","Aero III","Aero IV","Aero V",
-                     "Fire","Fire II","Fire III","Fire IV","Fire V",
-                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
-                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
-              "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
-                     "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
-                     "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
-                     "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
-                     "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
-                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
-                     "Luminohelix II", "Noctohelix II"],
-              "DRK":["Stone","Stone II","Stone III",
-                     "Water","Water II","Water III",
-                     "Aero","Aero II","Aero III",
-                     "Fire","Fire II","Fire III",
-                     "Blizzard","Blizzard II","Blizzard III",
-                     "Thunder","Thunder II","Thunder III"],
-              "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
-            }
-            
-            # Show/hide checkboxes based on main job selected
-            if main_job == "NIN": # Show Futae for NIN main
-                window["futae toggle"].update(visible=True) # Show Futae
-                window["futae toggle"].update(False) # Make sure it's reset to False
-                window["magic burst toggle"].update(visible=True) # Show Magic Burst
-                window["magic burst toggle"].update(False) # Make sure it's reset to False
-            else:
-                window["futae toggle"].update(visible=False) # Not NIN? Hide Futae
-                window["futae toggle"].update(False) # Disable Futae if not NIN so it's hidden and disabled.
+            # Update the radio and checkbox buttons to only show items that the main job can use.
+            for slot in gear_dict:
+                # First loop once to hide everything.
+                for equipment in gear_dict[slot]:
+                    window[f"checkbox_{slot}:{equipment['Name2']}"].hide_row()
+                    window[f"start{slot}:{equipment['Name2']}"].hide_row()
+                # Now loop once again and unhide things in alphabetical order. Without the first hide all loop, things get thrown in at the bottom and would be out of order.
+                for equipment in gear_dict[slot]:
+                    if main_job.lower() in equipment["Jobs"]:
+                        window[f"checkbox_{slot}:{equipment['Name2']}"].unhide_row()
+                        window[f"start{slot}:{equipment['Name2']}"].unhide_row()
 
-            if main_job == "SCH": # Enable Ebullience for SCH main
-                window["ebullience toggle"].update(visible=True)
-                window["ebullience toggle"].update(False)
-                window["magic burst toggle"].update(visible=True)
-                window["magic burst toggle"].update(False)
-            else:
-                window["ebullience toggle"].update(visible=False)
-                window["ebullience toggle"].update(False)
+            # Show/hide job abilities based on the main job selected
+            window["futae toggle"].update(visible=True if main_job.lower()=="nin" else False)
+            window["magic burst toggle"].update(visible=True if main_job.lower() in ["whm","blm","rdm","sch","geo","drk","nin"] else False)
+            window["ebullience toggle"].update(visible=True if main_job.lower()=="sch" else False)
+            window["sa toggle"].update(visible=True if main_job.lower()=="thf" else False)
+            window["ta toggle"].update(visible=True if main_job.lower()=="thf" else False)
+            window["building toggle"].update(visible=True if main_job.lower()=="dnc" else False)
+            window["select flourish"].update(visible=True if main_job.lower()=="dnc" else False)
+            window["footwork toggle"].update(visible=True if main_job.lower()=="mnk" else False)
+            window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
 
-            if main_job == "THF": # Enable SA/TA for THF main
-                window["sa toggle"].update(visible=True)
-                window["sa toggle"].update(False)
-                window["ta toggle"].update(visible=True)
-                window["ta toggle"].update(False)
-            else:
-                window["sa toggle"].update(visible=False)
-                window["sa toggle"].update(False)
-                window["ta toggle"].update(visible=False)
-                window["ta toggle"].update(False)
+            # Deselect Job abilities so they arent enabled while hidden.
+            window["magic burst toggle"].update(False)
+            window["futae toggle"].update(False)
+            window["ebullience toggle"].update(False)
+            window["building toggle"].update(False)
+            window["select flourish"].update("No Flourish")
+            window["sa toggle"].update(False)
+            window["ta toggle"].update(False)
+            window["impetus toggle"].update(False)
+            window["footwork toggle"].update(False)
 
-            if main_job == "MNK": # Enable Impetus/Footwork for MNK main
-                window["footwork toggle"].update(visible=True)
-                window["footwork toggle"].update(False)
-                window["impetus toggle"].update(visible=True)
-                window["impetus toggle"].update(False)
-            else:
-                window["footwork toggle"].update(visible=False)
-                window["footwork toggle"].update(False)
-                window["impetus toggle"].update(visible=False)
-                window["impetus toggle"].update(False)
-
-            # Hide the magic burst button if not on one of the nuking jobs.
-            if main_job not in ["NIN","SCH","BLM","WHM","RDM","GEO","DRK"]:
-                window["magic burst toggle"].update(visible=False)
-                window["magic burst toggle"].update(False)
-
-
-            if main_job in spell_dict: # Enable magic sets for casting jobs.
+            # Enable magic sets for casting jobs.
+            if main_job in spell_dict: 
+                window["select spell"].update(disabled=False)
                 window["select spell"].update(values=spell_dict[main_job])
                 window["select spell"].update(spell_dict[main_job][0])
                 window["quicklook magic"].update(disabled=False)
@@ -421,58 +478,22 @@ while True:
             else:
                 window["quicklook magic"].update(disabled=True)
                 window["Run Magic"].update(disabled=True)
+                window["select spell"].update(disabled=True)
                 window["select spell"].update(values=[])
 
-
-
-
-
-            gear_map = {"main":mains, # Map the slot name to the list of gear to be considered in that slot.
-                        "sub":subs + grips,
-                        "ranged":ranged,
-                        "ammo":ammos,
-                        "head":heads,
-                        "neck":necks,
-                        "ear1":ears,
-                        "ear2":ears2,
-                        "body":bodies,
-                        "hands":hands,
-                        "ring1":rings,
-                        "ring2":rings2,
-                        "back":capes,
-                        "waist":waists,
-                        "legs":legs,
-                        "feet":feet}
-
-            # Update the radio and checkbox lists to display only items the main job can equip
-            for k in ["main","sub","ranged","ammo","head","body","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet",]:
-                for job in main_jobs:
-                    if window[f"{k} start radio {job}"].visible:
-                        slot = k
-                    window[f"{k} start radio {job}"].update(visible=False)
-                    window[f"{k} display {job}"].update(visible=False)
-
-                    displayed_equipment_list = gear_map[k] # Start checkbox part (copy pasted from select ALL)
-                    for k2 in values:
-                        if type(k2) == str:
-                            if k2.split()[0][:-1] == k: # sub:  ammo:  main:  etc
-                                for l in displayed_equipment_list:
-                                    if f"{k}: {l['Name2']};;{job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
-                                        window[f"{k}: {l['Name2']};;{job}"].update(False)
-
-            window[f"{slot} start radio {main_job}"].update(visible=True)
-            window[f"{slot} display {main_job}"].update(visible=True)
-        
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Setup fancy pictures on the buttons when you select a radio button on starting set tab.
         # The pictures and the WS list will update based on your selection.
         if event[:5] == "start":
             # First update the gear picture:
             slot = event.split(":")[0][5:]
-            item = event.split(":")[1].split(";;")[0][1:] # Had to append "NIN" to the end of the NIN list to distinguish it from the DRK, BLM, etc lists. I simply remove that bit here or it'll say something like "Heishi Shorinken R15;;NIN" and yell at us
+            item = event.split(":")[1]
             item_name = all_names_map[item]
-            window[f"showstart {slot}"].update(image_data=item2image(item_name))
-            window[f"showstart {slot}"].set_tooltip(item)
+            window[f"showradio {slot}"].update(image_data=item2image(item_name))
+            window[f"showradio {slot}"].set_tooltip(item)
 
             # Now update the WS list:
             if slot in ["main","ranged"]:
@@ -497,6 +518,9 @@ while True:
                     window["select weaponskill"].update(values=updated_ws_list)
                     window["select weaponskill"].update(updated_ws_list[0])
 
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.
         if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic", "quicklook tp", "get stats"]:
@@ -504,16 +528,10 @@ while True:
             main_job = values["mainjob"]
             sub_job = values["subjob"]
 
-
             # Define weapon skill and TP range.
             ws_name = values["select weaponskill"]
-            min_tp = int(values["mintp"])
-            max_tp = int(values["maxtp"])
-
-
-            # New window to show output?
-            # window2 = sg.Window(f"{main_job}/{sub_job}  {ws_name}  {min_tp}-{max_tp}",[[[sg.Push(),sg.Output(size=(150, 60),font=font_choice),sg.Push()]]],size=(800 ,500),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
-
+            min_tp = int(values["mintp"]) if int(values["mintp"]) > 1000 else 1000
+            max_tp = int(values["maxtp"]) if int(values["maxtp"]) < 3000 else 3000
 
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
 
@@ -522,20 +540,18 @@ while True:
 
 
             # How many maximum iterations before assuming converged? Currently hard-coded to 10 and 0. 0 means "do not find best set."
+            # Usually it should finish with 3~5 iterations, but more doesn't hurt since the code will end earlier if it finds the best set earlier.
             n_iter = 10 if values["find set"] else 0
 
+            # Update the starting gearset with the selections the user supplied using the radio buttons.
+            useful_values = [k for k in values if "start"==k[:5] and ":" in k]
+            for k in useful_values:
+                if values[k]: # if the start item is set to true. This is only true for items with radio buttons selected on the input tab.
+                    slot = k.split(":")[0][5:] # The slot is recorded in the key
+                    item_name2 = k.split(":")[1] # The item name is also recorded in the key, separated by a ":" without a space
+                    starting_gearset[slot] = name2dictionary(item_name2,all_gear)
 
-            # Define the starting gearset.
-            for k in values:
-                if type(k)==str:
-                    if k[:5] == "start" and ":" in k: # If the key is a "start_____: " key for a starting item
-                        if values[k]: # if the start item is set to true
-                            slot = k.split(":")[0][5:] # The slot is recorded in the key
-                            item_name2 = k.split(":")[1].split(";;")[0][1:] # The item name is also recorded in the key, but there is one item per job that can equip it, so we must remove the ";;NIN" bit. This is because we can't dynamically alter radio lists in PySimpleGUI...
-                            starting_gearset[slot] = name2dictionary(item_name2,all_gear)
-
-
-            # Define buffs
+            # Import the buff potencies.
             from buffs import *
 
             # Define BRD buffs
@@ -677,7 +693,7 @@ while True:
                      "AGI":int(values["enemy_agi"]),
                     }
 
-            # Decrease enemy stats based on debuffs selected.
+            # Decrease enemy stats based on debuffs selected. TODO: "Ignores Enemy DEF" WSs need to be added here somehow... Might be easier to pass the FULL enemy defense and apply debuffs in the main code.
             enemy["Defense"] *= (1-(dia_potency + frailty_potency)) if (1-(dia_potency + frailty_potency)) > 0.01 else 0.01
             enemy["Magic Defense"] = (enemy["Magic Defense"] - malaise_potency) if (enemy["Magic Defense"]- malaise_potency) > -50 else -50
             enemy["Evasion"] -= torpor_potency
@@ -687,21 +703,20 @@ while True:
             check_gear = [] # List of lists, containing dictionaries for items to be checked. This gets appended to later using the items in the GUI with checkboxes marked.
             check_slots = ["main","sub","ranged","ammo","head","neck","ear1","ear2","body","hands","ring1","ring2","back","waist","legs","feet"] # Slot names to check. This gets filtered later with .remove()
             remove_slots = []
-            for s in check_slots:
+            for slot in check_slots:
                 gear_to_check = []
-                for val in values: # Format: value = <slot>: <itemname>
-                    if type(val) == str:
-                        # print(slot, val, val.split(":")[0],values[val])
-                        if val.split(":")[0] == s and values[val]:
-                            item_name = " ".join(val.split()[1:]).split(";;")[0]
-                            gear_to_check.append(name2dictionary(item_name,all_gear))
-                            # print(s,item_name) # Print gear to be checked
+                for val in [k for k in values if "checkbox_" in k and ":" in k]: # value = checkbox_<slot>:<itemname>
+                    # print(slot,"|", val,"|", val.split(":")[0],"|",values[val])
+                    if val.split(":")[0] == f"checkbox_{slot}" and values[val]:
+                        item_name = val.split(":")[-1]
+                        gear_to_check.append(name2dictionary(item_name,all_gear))
+                        # print(slot,"|",item_name) # Print gear to be checked
                 if len(gear_to_check) > 0:
                     check_gear.append(gear_to_check)
                 else:
-                    remove_slots.append(s)
-            for s in remove_slots:
-                check_slots.remove(s)
+                    remove_slots.append(slot)
+            for slot in remove_slots:
+                check_slots.remove(slot)
 
             spell = values["select spell"]
             burst = values["magic burst toggle"]
@@ -711,40 +726,80 @@ while True:
             trick_attack = values["ta toggle"]
             footwork = values["footwork toggle"]
             impetus = values["impetus toggle"]
+            building_flourish = values["building toggle"]
+            climactic_flourish = True if values["select flourish"] == "Climactic Flourish" else False
+            striking_flourish = True if values["select flourish"] == "Striking Flourish" else False
+            ternary_flourish = True if values["select flourish"] == "Ternary Flourish" else False
 
-            
+
+            # Define a dictionary so we can just pass this one thing in instead of passing 10 things to the WS function later
+            job_abilities = {"Ebullience":ebullience,
+                             "Futae":futae,
+                             "Sneak Attack":sneak_attack,
+                             "Trick Attack":trick_attack,
+                             "Footwork":footwork,
+                             "Impetus":impetus,
+                             "Building Flourish":building_flourish,
+                             "Climactic Flourish":climactic_flourish,
+                             "Striking Flourish":striking_flourish,
+                             "Ternary Flourish":ternary_flourish}
+
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
             
 
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Perform an average damage weapon skill. Print the result below the gear set.
             if event == "quicklook":
                 from wsdist import weaponskill
                 from set_stats import *
-                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job,impetus=impetus)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, False, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)[0]
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, spell, job_abilities, burst, False)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Perform an average damage spell. Print the result below the gear set.
             elif event == "quicklook magic":
                 from wsdist import weaponskill
                 from set_stats import *
-                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job,impetus=impetus)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, True, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)[0]
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
+                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, True, spell, job_abilities, burst, False)[0]
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
 
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Perform proper weapon skill simulations. Find the best set if the user requested it through the checkbox.
             elif event == "Run WS":
                 from wsdist import run_weaponskill
 
-                show_final_plot = values["show final plot"]
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+                show_final_plot = values["show final plot"] # TODO: Show final plot = false for magical WSs too
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, job_abilities, burst)
                 window["copy best set"].update(disabled=False)
            
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Perform proper magic damage simulations. Find the best set if the user requested it through the checkbox.
             elif event == "Run Magic":
                 from wsdist import run_weaponskill
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, job_abilities, burst)
                 window["copy best set"].update(disabled=False)
 
-            # 
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Simply print player stats for the supplied gearset to the Outputs tab.
             elif event == "get stats":
                 from set_stats import *
         
@@ -753,7 +808,7 @@ while True:
                 empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
                 empty_gearset = set_gear({"food":{},"brd":{},"cor":{},"geo":{},"whm":{}},empty_set, main_job, sub_job)
 
-                gearset = set_gear(buffs, starting_gearset, main_job, sub_job, impetus=impetus) # put impetus here, otherwise it's effect won't show up
+                gearset = set_gear(buffs, starting_gearset, main_job, sub_job, job_abilities=job_abilities) # put impetus here, otherwise it's effect won't show up
                 dual_wield = gearset.gear['sub'].get('Type', 'None') == "Weapon"
 
                 window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
@@ -843,9 +898,13 @@ while True:
 
                 delay = (1-total_haste/100)*(1-dw/100)
                 delay_min = 0.2
-                delay_reduction = 1-delay_min if delay < delay_min else 1-delay
+                delay_reduction = 1-delay_min if delay < delay_min else 1-delay # TODO: Martial Arts goes here too
 
                 window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {delay_reduction*100:>4.1f}")
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
         # Copy the best set to the initial set tab for convenience:
         if event == "copy best set":
@@ -855,16 +914,31 @@ while True:
                     if "start" == val[:5]:
                         window[val].update(False)
             for slot in best_set:
-                # print(slot, best_set[slot]["Name2"],values[f"start{slot}: {best_set[slot]['Name2']}"])
-                window[f"showstart {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
-                if f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
-                    window[f"start{slot}: {best_set[slot]['Name2']+';;'+main_job}"].update(True)
-                window[f"showstart {slot}"].set_tooltip(best_set[slot]["Name2"])
+                window[f"showradio {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
+                if f"start{slot}:{best_set[slot]['Name2']}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
+                    window[f"start{slot}:{best_set[slot]['Name2']}"].update(True)
+                window[f"showradio {slot}"].set_tooltip(best_set[slot]["Name2"])
 
+
+            # Update the WS list if the weapons changed.
+            skill_type_main = best_set["main"].get("Skill Type","None")
+            skill_type_ranged = best_set["ranged"].get("Skill Type","None")
+
+            main_ws_list = ws_dict.get(skill_type_main,[])
+            ranged_ws_list = ws_dict.get(skill_type_ranged,[])
+            updated_ws_list = sorted(main_ws_list + ranged_ws_list)
+            original_ws_selection = values["select weaponskill"]
+
+            window["select weaponskill"].update(values=updated_ws_list)
+            window["select weaponskill"].update(original_ws_selection)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+
+    # This is the except block that runs if any of the above events throws an error.
     except Exception as err:
-
-        # Automatically move to the "Output" if something returns an error.
-        # window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
 
         traceback.print_exc() # print the most recent error to the output tab.
                               # this is only the most recent. if you have a chain of errors, then you'll have to work your way up one at a time.

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 January 22
+# Version date: 2022 December 15
 #
 # This code contains the function used to estimate the average number of attacks per attack round given multi-attack stats and accuracy.
 #
@@ -240,8 +240,52 @@ def get_ma_rate2(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix):
 
     return(main_hits, sub_hits)
 
+# @njit
+# def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix):
+#     dual_wield = True if dual_wield_type == 'Weapon' else False # Check if the item equipped in the dual_wield slot is a weapon. If this line returns an error, check the "gear.py" file to see if the item in the dual_wield slot has a "Type" key. Python is case-sensitive too
+
+#     main_hits = 0
+#     sub_hits = 0
+
+#     hitrate11 = hitrate_matrix[0][0] # Main hand hit rate with the bonus +100 accuracy. Caps at 99%
+#     hitrate21 = hitrate_matrix[0][1] # Off hand hit rate with the bonus +100 accuracy. Caps at 95%
+
+#     hitrate12 = hitrate_matrix[1][0] # Main hand hit rate. Caps at 99%
+#     hitrate22 = hitrate_matrix[1][1] # Off hand hit rate. Caps at 95%
+
+
+#     main_hits += 1*hitrate11 # Add the first main hit (gets bonus accuracy)
+#     main_hits += (nhits-1)*(hitrate12) # Add the remaining natural main hits
+
+#     if dual_wield and main_hits+sub_hits < 8:
+#         sub_hits += 1*hitrate21 # Add the first sub hit (gets bonus accuracy)
+
+#     # Add main-hand multi-hits to the first natural hit.
+#     main_hits += (max(0,min(3, 8-(main_hits + sub_hits))*qa) + \
+#                   max(0,min(2, 8-(main_hits + sub_hits))*(1-qa)*ta) + \
+#                   max(0,min(1, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*da) + \
+#                   max(0,min(2, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*(1-da)*oa3) + \
+#                   max(0,min(1, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2))*hitrate12
+
+#     if dual_wield:
+#         # Add off-hand multi-hits to the first sub hit.
+#         sub_hits += (max(0,min(3, 8-(sub_hits + main_hits)))*qa + \
+#                      max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*ta + \
+#                      max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*da + \
+#                      max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3 + \
+#                      max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2)*hitrate22
+#     elif nhits>1:
+#         # Add main-hand multi-hits to the second natural hit if not dual wield and if nhits>1
+#         main_hits += (max(0,min(3, 8-(sub_hits + main_hits)))*qa + \
+#                       max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*ta + \
+#                       max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*da + \
+#                       max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3 + \
+#                       max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2)*hitrate12
+
+#     return(main_hits, sub_hits)
+
 @njit
-def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix):
+def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix, striking_flourish=False, ternary_flourish=False):
     dual_wield = True if dual_wield_type == 'Weapon' else False # Check if the item equipped in the dual_wield slot is a weapon. If this line returns an error, check the "gear.py" file to see if the item in the dual_wield slot has a "Type" key. Python is case-sensitive too
 
     main_hits = 0
@@ -260,12 +304,28 @@ def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix):
     if dual_wield and main_hits+sub_hits < 8:
         sub_hits += 1*hitrate21 # Add the first sub hit (gets bonus accuracy)
 
+
+    # Striking flourish seems to set QA=0, TA=0, and DA=1.0 for the first MA hit only
+    if striking_flourish:
+        qa_main = 0 
+        ta_main = 0
+        da_main = 1
+    elif ternary_flourish:
+        qa_main = 0 
+        ta_main = 1
+        da_main = 0
+    else:
+        qa_main = qa
+        ta_main = ta
+        da_main = da
+
+
     # Add main-hand multi-hits to the first natural hit.
-    main_hits += (max(0,min(3, 8-(main_hits + sub_hits))*qa) + \
-                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa)*ta) + \
-                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*da) + \
-                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*(1-da)*oa3) + \
-                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2))*hitrate12
+    main_hits += (max(0,min(3, 8-(main_hits + sub_hits))*qa_main) + \
+                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa_main)*ta_main) + \
+                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*da_main) + \
+                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*oa3) + \
+                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3)*oa2))*hitrate12
 
     if dual_wield:
         # Add off-hand multi-hits to the first sub hit.

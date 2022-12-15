@@ -8,7 +8,7 @@ import numpy as np
 from set_stats import *
 from get_dex_crit import *
 
-def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi, enemy_int, kick_ws_footwork=False, impetus=False):
+def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi, enemy_int, job_abilities, kick_ws_footwork=False):
     #
     # Setup weaponskill statistics (TP scaling, # of hits, ftp replication, WSC, etc)
     # Placed in separate file to reduce clutter in main file.
@@ -96,7 +96,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Blade: Shun":
         atk_boost = [1.0, 2.0, 3.0]
         ws_atk_bonus = np.interp(tp, base_tp, atk_boost) - 1.0
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         ftp = 1.0
@@ -114,7 +114,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.6*(player_int+player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.25) # The attack bonus from Blade: Kamu is similar to Blade: Shun (see above)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.25, job_abilities=job_abilities) # The attack bonus from Blade: Kamu is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
         enemy_defense *= 0.75 # TODO: This should be additive with Dia, Frailty, etc? I think it's fine as is.
@@ -129,6 +129,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp  = 5.0
         ftp_rep = False
         wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+    elif ws_name == "Coronach":
+        ftp  = 3.0
+        ftp_rep = False
+        wsc = 0.4*(player_dex + player_agi) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Namas Arrow":
         ftp  = 2.75
@@ -266,7 +271,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 4
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.8125 - 1.0) # Recalculate the player attack using a negative multiplier bonus
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.8125 - 1.0, job_abilities=job_abilities) # Recalculate the player attack using a negative multiplier bonus
         player_attack1 = special_set.playerstats["Attack1"]
     elif ws_name == "Penta Thrust":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
@@ -275,7 +280,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.2*(player_str+player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
-        special_set = set_gear(buffs, equipment, main_job, sub_job, -0.125) # Recalculate the player attack using a negative multiplier bonus
+        special_set = set_gear(buffs, equipment, main_job, sub_job, -0.125, job_abilities=job_abilities) # Recalculate the player attack using a negative multiplier bonus
         player_attack1 = special_set.playerstats["Attack1"]
     elif ws_name == "Tachi: Rana":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
@@ -299,7 +304,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_ftp = [1.375, 2.1875, 2.6875]
         ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.375) # The attack bonus from Tachi: Shoha is similar to Blade: Shun (see above)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.375, job_abilities=job_abilities) # The attack bonus from Tachi: Shoha is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
         wsc = 0.85*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -308,7 +313,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_ftp = [1.5625, 2.6875, 4.125]
         ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.65) # The attack bonus from Tachi: Kasha is similar to Blade: Shun (see above)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 1.65, job_abilities=job_abilities) # The attack bonus from Tachi: Kasha is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
         wsc = 0.75*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -317,7 +322,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_ftp = [1.5625, 2.6875, 4.125]
         ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 2.0) # The attack bonus from Tachi: Gekko is similar to Blade: Shun (see above)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 2.0, job_abilities=job_abilities) # The attack bonus from Tachi: Gekko is similar to Blade: Shun (see above)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
         wsc = 0.75*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -427,6 +432,16 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.4*(player_str+player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Exudation":
+        atk_boost = [1.5, 3.625, 4.750]
+        ws_atk_bonus = np.interp(tp, base_tp, atk_boost) - 1.0
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
+        player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        ftp = 2.8
+        ftp_rep = False
+        wsc  = 0.5*(player_mnd + player_int) + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 1
     elif ws_name == "Judgment":
         base_ftp = [3.5, 8.75, 12.0] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -481,7 +496,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         acc_bonus = np.interp(tp, base_tp, acc_boost)
         ftp  = 1.08
         ws_atk_bonus = 0.1
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         ftp = 1.0
@@ -495,6 +510,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc  = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 3
+    elif ws_name == "Onslaught":
+        ftp  = 2.75
+        ftp_rep = False
+        wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
     elif ws_name == "Cloudsplitter":
         base_ftp = [3.75, 6.69921875, 8.5 ] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -506,7 +526,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ws_dINT = 0
     elif ws_name == "Rampage":
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
-        crit_boost = [0, 20, 40] # Middle value unknown. I just picked the half-way point to force linear scaling.
+        crit_boost = [0, 0.20, 0.40] # Middle value unknown. I just picked the half-way point to force linear scaling.
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
         crit_rate += crit_bonus
         crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
@@ -514,9 +534,19 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
+    elif ws_name == "Jishnu's Radiance":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100
+        crit_boost = [0.15, 0.2, 0.25] # No values are known for Jishu's crits. I copied these values from Blade: Hi
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += ((player_agi - enemy_agi)/10)/100 # Ranged attacks gain crit rate from AGI, not DEX
+        ftp = 1.75
+        ftp_rep = True
+        wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 3
     elif ws_name == "Empyreal Arrow":
         ws_atk_bonus = 1.0 # +100% attack, or a 2.0 multiplier. Gets added to percent_attack_buff in set_stats.py
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         player_rangedattack = special_set.playerstats["Ranged Attack"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
@@ -525,6 +555,14 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc  = 0.5*player_agi + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 1
+    elif ws_name == "Apex Arrow":
+        ftp  = 3.0
+        ftp_rep = False
+        wsc = 0.85*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+        base_enemy_def_scaling = [0.15, 0.30, 0.45] # First number is known. I made up the other two
+        enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
+        enemy_defense *= (1-enemy_def_scaling)
     elif ws_name == "Hot Shot":
         hybrid    = True
         base_ftp  = [0.5, 1.55, 2.1]
@@ -619,6 +657,12 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         magical = True
         element = "Light"
         ws_dINT = 651 if (player_chr - enemy_int)*1.5 > 651 else (player_chr - enemy_int)*1.5
+    elif ws_name == "Calamity":
+        base_ftp = [2.5, 6.5, 10.375] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False # Does this WS replicate FTP across all hits?
+        wsc  = 0.5*(player_str + player_vit) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        nhits = 1
     elif ws_name == "Herculean Slash":
         ftp = 3.5
         ftp_rep = False # Does this WS replicate FTP across all hits?
@@ -685,6 +729,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc  = 0.4*(player_chr + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
+    elif ws_name == "Pyrrhic Kleos":
+        ftp  = 1.75
+        ftp_rep = True
+        wsc  = 0.4*(player_str + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 4
     elif ws_name == "Shark Bite":
         base_ftp = [4.5, 6.8, 8.5] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -713,17 +762,27 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         ws_atk_bonus = 0.5
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, impetus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         wsc = 0.5*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
+    elif ws_name == "Dimidiation":
+        base_ftp = [2.25, 4.5, 6.75]
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = False
+        ws_atk_bonus = 0.25
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
+        player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 2
     elif ws_name == "Mandalic Stab":
         base_ftp = [4.0, 6.09, 8.5]
         ftp = np.interp(tp, base_tp, base_ftp)
         ftp_rep = False
         ws_atk_bonus = 0.75
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
         player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
         wsc = 0.6*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
@@ -754,7 +813,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.5*(player_str+player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
         ws_atk_bonus = 1.0
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus,impetus)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Shijin Spiral":
@@ -765,9 +824,19 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc  = 0.85*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 5
         ws_atk_bonus = 0.05
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus,impetus)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
+    elif ws_name == "Stringing Pummel":
+        crit_rate +=  gearset.playerstats["Crit Rate"]/100 
+        crit_boost = [0.15, 0.30, 0.45] # Upper limits. Middle value was made up to force linear scaling
+        crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
+        crit_rate += crit_bonus
+        crit_rate += get_dex_crit(player_dex, enemy_agi) # Bonus crit rate from the player"s DEX stat vs enemy AGI stat
+        ftp = 1.0
+        ftp_rep = True
+        wsc = 0.32*(player_str+player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 6
     elif ws_name == "Asuran Fists":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -788,7 +857,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc      = 0.5*player_vit + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 2
         ws_atk_bonus = 0.5
-        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus,impetus)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Dragon Kick":
@@ -798,7 +867,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep  = True
         wsc      = 0.5*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 2
-        special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, impetus) # 100/1024 base footwork bonus plus 16% from empy+3 feet
+        special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Tornado Kick":
@@ -808,7 +877,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep  = True
         wsc      = 0.4*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 3
-        special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, impetus) # 100/1024 base footwork bonus plus 16% from empy+3 feet
+        special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Minstrel Axe":
@@ -823,7 +892,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep  = False
         wsc      = 0.5*(player_int + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 1
-        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.75)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, 0.75, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Raging Rush":

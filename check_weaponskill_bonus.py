@@ -7,7 +7,7 @@
 from get_dex_crit import *
 import numpy as np
 
-def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
+def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     #
     # Check main-hand weapon and weapon skill for synergy.
     # Example: Using Blade: Shun with an augmented Heishi will provide bonus damage.
@@ -18,6 +18,9 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
                'oa2':0,
                'crit_rate':0}
 
+    main_wpn_name = ws_weapons[0]
+    rng_wpn_name = ws_weapons[1]
+
     if main_wpn_name == 'Naegling':
         if ws_name == 'Savage Blade':
             bonuses['ws_bonus'] += 0.15
@@ -26,6 +29,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == 'Death Blossom':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == 'Burtgang':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Atonement':
+            bonuses['ws_bonus'] += 0.3 # Hidden +30% Mythic WS damage
     elif main_wpn_name == "Tizona":
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
@@ -51,6 +59,16 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa2'] += 0.4
         if ws_name == 'Mystic Boon':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif 'Idris' in main_wpn_name:
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Exudation':
+            bonuses['ws_bonus'] += 0.15 # BG Wiki has no mention of a hidden +30% for this weapon+WS combo
+    elif main_wpn_name == 'Epeolatry':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Dimidiation':
+            bonuses['ws_bonus'] += 0.15 # BG Wiki has no mention of a hidden +30% for this weapon+WS combo
     elif 'Kikoku' in main_wpn_name:
         if ws_name == 'Blade: Metsu':
             bonuses['ws_bonus'] += 0.68 # Hidden +40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
@@ -61,6 +79,11 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Blade: Kamu':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif 'Kenkonken' in main_wpn_name:
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Stringing Pummel':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif 'Heishi' in main_wpn_name:
         if ws_name == 'Blade: Shun':
@@ -158,27 +181,28 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         if ws_name == "Upheaval":
             bonuses["ws_bonus"] += 0.1
     elif main_wpn_name == "Bravura":
-        if ws_name == "Metatron Torment ":
-            bonuses["ws_bonus"] += 0.68
-    elif main_wpn_name == "Yoichinoyumi":
-        if ws_name == "Namas Arrow ":
+        if ws_name == "Metatron Torment":
             bonuses["ws_bonus"] += 0.68
     elif main_wpn_name == "Dolichenus":
         if ws_name == "Decimation":
             bonuses["ws_bonus"] += 1.20
-    elif main_wpn_name == "Ullr":
-        if ws_name == "Empyreal Arrow":
-            bonuses["ws_bonus"] += 0.5
-    elif main_wpn_name == "Fomalhaut":
-        if ws_name == "Last Stand":
-            bonuses["ws_bonus"] += 0.1
-    elif main_wpn_name == 'Death Penalty':
-        # No OA2/OA3 for DP
-        if ws_name == 'Leaden Salute':
+    elif main_wpn_name == "Guttler":
+        if ws_name == "Onslaught":
+            bonuses["ws_bonus"] += 0.68
+    elif main_wpn_name == 'Aymur':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Primal Rend':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
-    elif main_wpn_name == 'Armageddon':
-        if ws_name == "Wildfire":
+    elif main_wpn_name == 'Farsha':
+        if ws_name == "Cloudsplitter":
             bonuses['ws_bonus'] += 0.1
+    elif main_wpn_name == "Tri-edge":
+        if ws_name == "Ruinator":
+            bonuses["ws_bonus"] += 0.1
+    elif main_wpn_name == "Lionheart":
+        if ws_name == "Resolution":
+            bonuses["ws_bonus"] += 0.1
     elif main_wpn_name == 'Twashtar':
         if ws_name == "Rudra's Storm":
             bonuses['ws_bonus'] += 0.1
@@ -196,10 +220,15 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Khatvanga':
         if ws_name == 'Shattersoul':
             bonuses['ws_bonus'] += 0.1
-    elif main_wpn_name == 'Vajra':
+    elif main_wpn_name == 'Terpsichore':
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Mandalic Stab':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == 'Vajra':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Pyrrhic Kleos':
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif main_wpn_name == "Glanzfaust":
         bonuses['oa3'] += 0.2
@@ -213,8 +242,38 @@ def check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi):
         if ws_name == "Shijin Spiral":
             bonuses["ws_bonus"] += 0.1
     elif main_wpn_name == "Spharai":
-        if ws_name == "Final Heaven ":
+        if ws_name == "Final Heaven":
             bonuses["ws_bonus"] += 0.68
+
+
+    # Do the same with ranged WSs now.
+    if rng_wpn_name == "Yoichinoyumi":
+        if ws_name == "Namas Arrow":
+            bonuses["ws_bonus"] += 0.68
+    elif rng_wpn_name == "Annihilator":
+        if ws_name == "Coronach":
+            bonuses["ws_bonus"] += 0.68
+    elif rng_wpn_name == 'Gandiva':
+        if ws_name == "Jishnu's Radiance":
+            bonuses['ws_bonus'] += 0.1
+    elif rng_wpn_name == 'Death Penalty':
+        if ws_name == 'Leaden Salute':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif rng_wpn_name == 'Armageddon':
+        if ws_name == "Wildfire":
+            bonuses['ws_bonus'] += 0.1
+    elif rng_wpn_name == 'Gastraphetes':
+        if ws_name == 'Trueflight':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif rng_wpn_name == "Ullr":
+        if ws_name == "Empyreal Arrow":
+            bonuses["ws_bonus"] += 0.5
+    elif rng_wpn_name == "Fomalhaut":
+        if ws_name == "Last Stand":
+            bonuses["ws_bonus"] += 0.1
+    elif rng_wpn_name == "Fail-not":
+        if ws_name == "Apex Arrow":
+            bonuses["ws_bonus"] += 0.1
 
 
     return(bonuses)

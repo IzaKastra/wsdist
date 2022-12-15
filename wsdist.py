@@ -28,7 +28,7 @@ import random
 class TP_Error(Exception):
     pass
 
-def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
+def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, nuke, spell, job_abilities, burst=False, final=False,):
     #
     # Use the player and enemy stats to calculate weapon skill damage.
     # This function works, but needs to be cleaned up. There is too much going on within it.
@@ -39,16 +39,31 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             print(f'TP must be greater than 1000 to use a Weapon skill; TP = {tp}')
             raise TP_Error
 
+    # Break apart the job abilities dictionary # TODO: this isnt necessary if we write the rest of the code better...
+
+    footwork = job_abilities["Footwork"]
+    futae = job_abilities["Futae"]
+    ebullience = job_abilities["Ebullience"]
+    building_flourish = job_abilities["Building Flourish"]
+    climactic_flourish = job_abilities["Climactic Flourish"]
+    striking_flourish = job_abilities["Striking Flourish"]
+    ternary_flourish = job_abilities["Ternary Flourish"]
+    sneak_attack = job_abilities["Sneak Attack"]
+    trick_attack = job_abilities["Trick Attack"]
+    impetus = job_abilities["Impetus"]
+    hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not included yet.
+
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
     phys_rng_ws = ws_name in ["Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow"]
+
     kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
     
     # Save the main and sub weapon names for later.
     # Used to check if giving weapon skill damage bonuses on things like Gokotai (if "Gokotai" in main_wpn_name)
     main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
     sub_wpn_name = gearset.gear['sub']['Name2']
-    rng_wpn_name = gearset.gear['ranged']['Name2']
+    rng_wpn_name = gearset.gear['ranged']['Name'] # Use name1 so we don't have to deal with " R15" in the check_weaponskill_bonuses.py file
 
     sub_type = gearset.gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon or a grip or shield. If the item doesn't have a "Type" Key then return "None". All items SHOULD have a type.
     dual_wield = sub_type == 'Weapon'
@@ -106,7 +121,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
     if phys_rng_ws and main_job == "SAM":
         wsd -= 19 # Undo the Overwhelm merits for ranged weapon skills
-        # TODO: also remove from ranged magical/hybrid WSs
+        # TODO: also remove from magical/hybrid ranged WSs
 
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
     ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments. TODO: DRG is different term
@@ -115,9 +130,18 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     crit_dmg = gearset.playerstats['Crit Damage']/100
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
+    true_shot = gearset.playerstats['True Shot']/100
+
+
     sneak_attack_bonus = (gearset.playerstats["DEX"] * (1+gearset.playerstats["Sneak Attack"]/100))*sneak_attack
     trick_attack_bonus = (gearset.playerstats["AGI"] * (1+gearset.playerstats["Trick Attack"]/100))*trick_attack
-    vajra_equipped = gearset.gear["main"]["Name"]=="Vajra" # We use this to enhance crit damage by 30% only for the first hit in get_phys_dmg later.
+    climactic_flourish_bonus = (0.5*gearset.playerstats["CHR"] * (1+gearset.playerstats["Flourish Bonus"]/100))*climactic_flourish
+    striking_flourish_bonus = (1.0*gearset.playerstats["CHR"] * (1+gearset.playerstats["Flourish Bonus"]/100))*striking_flourish
+    ternary_flourish_bonus = (1.0*gearset.playerstats["CHR"] * (1+gearset.playerstats["Flourish Bonus"]/100))*ternary_flourish
+
+    vajra_bonus = gearset.gear["main"]["Name"]=="Vajra" and (sneak_attack or trick_attack) # We use this to enhance crit damage by 30% only for the first hit in get_phys_dmg later.
+    dnc_empy_head_bonus = gearset.gear["head"]["Name"]=="Maculele Tiara +3" and climactic_flourish # We use this to enhance crit damage by 31% only for the first hit in get_phys_dmg later.
+    dnc_empy_body_bonus = gearset.gear["body"]["Name"]=="Maculele Casaque +3" and striking_flourish # We use this to enhance crit rate by 70% only for the first hit in get_phys_dmg later.
 
     qa = gearset.playerstats['QA']/100
     ta = gearset.playerstats['TA']/100
@@ -154,6 +178,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     elif sub_wpn_name == "Utu Grip":
         dStat = ['DEX', 10]
     dStat[1] /= 100.
+
 
     # Nuking stuff. Move this to a separate Nuke() function for the Nuke tab to call later. TODO
     if nuke:
@@ -233,16 +258,16 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Check weapon + weapon skill synergy for things like bonus weapon skill damage. (and mythic AM3)
     # See "check_weaponskill_bonuses.py"
-    bonuses = check_weaponskill_bonus(main_wpn_name, ws_name, gearset, tp, enemy_agi)
+    ws_weapons = [main_wpn_name, rng_wpn_name]
+    bonuses = check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi)
     ws_bonus += bonuses['ws_bonus']
     crit_rate += bonuses['crit_rate']
     oa3 += bonuses['oa3'] ; oa2 += bonuses['oa2']
 
-
-    # print("Before: ",player_rangedattack)
+    # print("Before: ",ws_bonus,crit_rate)
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
-    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, kick_ws_footwork)
+    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, job_abilities, kick_ws_footwork,)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
     ftp_rep = scaling['ftp_rep']
@@ -258,7 +283,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ftp_hybrid = scaling['ftp_hybrid']
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
-    # print("After: ",player_rangedattack)
+    # print("After: ",ws_bonus,crit_rate)
 
 
     player_accuracy1 += acc_bonus
@@ -326,20 +351,37 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 
             hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
-            # Determine the number of main- and off-hand hits that actually land. Ignore TP return here.
-            main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix)
 
-            # Calculate average damage dealt per hit for each hand.
-            avg_pdif01 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max(crit_rate,sneak_attack,trick_attack)) # First main hit PDIF. Must be calculated separately because Sneak/Trick attack force crits for that ONE hit
-            avg_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Main-hand average PDIF
-            avg_pdif2 = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)  # Off-hand average PDIF
+            # Estimate number of hits per weapon, including flourishes.
+            main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix, striking_flourish, ternary_flourish)
 
-            main_hit_damage =    get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif01, ftp,  (1.0 if sneak_attack or trick_attack else crit_rate), (crit_dmg+0.3*vajra_equipped), wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus) # Calculate the physical damage dealt by the first main hit. This gets the fancy SA/TA bonuses
-            sub_hit_damage =     get_avg_phys_damage( sub_dmg,  fstr_sub, wsc, avg_pdif2, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by the off-hand hits separately, no weapon skill damage provided here.
-            main_hit_ma_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, avg_pdif1, ftp2, crit_rate, crit_dmg,   0, ws_bonus, ws_trait) # Calculate the physical damage dealt by extra main-hand hits. again, no WSD stat
+            # Assuming absolutely zero bonuses, how much damage would the main-hand hits do, all together?
+            main_hit_pdif = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) 
+            main_hit_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, main_hit_pdif, ftp2, crit_rate, crit_dmg, 0, ws_bonus, ws_trait) # No bonuses, so using FTP2, WSD=0, etc
+            phys = main_hits*main_hit_damage
 
-            phys = main_hit_damage*hitrate11 + (main_hits-1*hitrate11)*main_hit_ma_damage + sub_hits*sub_hit_damage
-            # print(avg_pdif01, main_dmg, fstr_main, wsd, ftp, wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus, main_hit_damage, main_hit_ma_damage)
+            # Now calculate the true damage of the first main hit, with all of its bonuses:
+            first_main_hit_crit_rate = (1.0 if sneak_attack or trick_attack or climactic_flourish else (crit_rate+0.7*dnc_empy_body_bonus*(crit_rate>0))) # Special crit rate for SA/TA/Flourishes.
+            adjusted_crit_dmg = (crit_dmg + 0.3*vajra_bonus + 0.31*dnc_empy_head_bonus) # Special crit damage that applies to first hit of SA/TA/ClimacticFlourish
+            first_main_hit_pdif = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, first_main_hit_crit_rate)
+            first_main_hit_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, first_main_hit_pdif, ftp, first_main_hit_crit_rate, adjusted_crit_dmg, wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus, climactic_flourish_bonus, striking_flourish_bonus, ternary_flourish_bonus)
+
+            # Our original damage was assuming ZERO bonuses. This next line just adds the extra damage gained by those bonuses to the first hit.
+            phys += (first_main_hit_damage*hitrate11 - main_hit_damage*hitrate12)
+
+            # Striking Flourish also boosts the crit rate for its double attack hit, but doesn't provide the +100% CHR bonus (probably)
+            if striking_flourish:
+                # Define a new crit rate that adds 70% only if crit_rate>0 already (only for critical hit WSs)
+                striking_flourish_crit_rate = crit_rate+0.7*dnc_empy_body_bonus*(crit_rate>0) # This crit_rate>0 ensures we aren't letting non-crit WSs crit.
+                striking_flourish_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, striking_flourish_crit_rate) 
+                striking_flourish_DA_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, striking_flourish_pdif1, ftp2, striking_flourish_crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
+                phys += (striking_flourish_DA_damage - main_hit_damage)*hitrate12
+
+            # Calculate the damage for off-hand hits, which receive no bonuses anyway.
+            offhand_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) 
+            offhand_damage = get_avg_phys_damage(sub_dmg, fstr_sub, wsc, offhand_pdif, ftp2, crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
+            phys += offhand_damage*sub_hits
+            
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
             hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
@@ -349,14 +391,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             ranged_hit_damage = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # The amount of damage done by the first hit of the WS if it does not miss
             ranged_hit_damage2 = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp2,  crit_rate, crit_dmg, 0, ws_bonus, ws_trait) # Hits after the first main hit (jishnu hits 2+3. Last stand hit 2, etc)
             phys = ranged_hit_damage*hitrate_ranged1 + ranged_hit_damage2*hitrate_ranged2*(nhits-1)
-  
-            # print(f"Ranged Accuracy: {player_rangedaccuracy}")
-            # print(f"Ranged Attack: {player_rangedattack}")
-            # print(f"Ranged Hit rates: {hitrate_ranged1}  {hitrate_ranged2}")
-            # print(f"Ranged PDIF: {avg_pdif_rng}")
-            # print(f"Ranged Hit Damage: {ranged_hit_damage}  {ranged_hit_damage2}")
-            # print(f"Ranged Average Phys Damage: {phys}")
-            
+            phys *= (1+true_shot)
 
         damage += phys
 
@@ -422,13 +457,16 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 else:
                     ma_tp_hits += 1 # Number of hits that provide 10 TP (multiplied by STP later)
 
-                pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max(sneak_attack*(n==0),trick_attack*(n==0),crit_rate)) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
-                if (sneak_attack or trick_attack) and n==0:
-                    crit_dmg2 = crit_dmg + 0.3*vajra_equipped
+
+                if (sneak_attack or trick_attack or climactic_flourish) and n==0:
+                    crit_dmg2 = crit_dmg + 0.3*vajra_bonus + 0.31*dnc_empy_head_bonus # It's unclear to me if DNC Empy+3 head allows a 2nd WS hit to crit. For now I assume not.
                 else:
                     crit_dmg2 = crit_dmg
 
-                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, sneak_attack_bonus, trick_attack_bonus) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
+                pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max( sneak_attack*(n==0), trick_attack*(n==0), climactic_flourish*(n==0), (crit_rate+0.7*dnc_empy_body_bonus*(n==0)*(crit_rate>0)) ) ) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
+
+                # Reminder that crit=True/False and is decided in the pdif function above. 
+                physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, sneak_attack_bonus, trick_attack_bonus, climactic_flourish_bonus, striking_flourish_bonus, ternary_flourish_bonus) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
                 damage += physical_damage
 
             # Bonus hit for dual-wielding.
@@ -454,6 +492,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd*(n==0), ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
                 damage += physical_damage
             
+            damage *= (1+true_shot)
+
             # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
 
 
@@ -482,26 +522,41 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             # Quad > Triple > Double > OA3 > OA2 > Single
             # Kclub is not checked here.
 
-            if np.random.uniform() < qa and ma_count_limit < 2:
+            if striking_flourish and (i==0): # The first main hit is forced to DA. No QA/TA allowed
+                da_main = 1.0
+                ta_main = 0
+                qa_main = 0
+            elif ternary_flourish and (i==0): # The first main hit is forced to TA. No QA/DA allowed
+                da_main = 0
+                ta_main = 1.0
+                qa_main = 0
+            else:
+                da_main = da
+                ta_main = ta
+                qa_main = qa
+
+
+            if np.random.uniform() < qa_main and ma_count_limit < 2:
                 # If you rolled lower than your quadruple attack %, then you perform a quadruple attack.
                 ma_count_limit += 1 # This counts as one of your two allowed multi-attack procs, even if you can only swing once out of the whole QA proc due to the 8-hit limit
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(i, 3, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
-            elif np.random.uniform() < ta and ma_count_limit < 2: # If you failed the quadruple attack check, then you get to try to roll lower than your triple attack value.
+            elif np.random.uniform() < ta_main and ma_count_limit < 2: # If you failed the quadruple attack check, then try a triple attack.
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(i, 2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
-            elif np.random.uniform() < da and ma_count_limit < 2: # If you failed the triple attack check, then you get to try a double attack roll
+            elif np.random.uniform() < da_main and ma_count_limit < 2: # If you failed the triple attack check, then you get to try a double attack roll.
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
+                striking_crit_rate = crit_rate+0.7*dnc_empy_body_bonus*(crit_rate>0)*(i==0) # Calculate the crit rate of this free Double Attack hit if striking flourish and empy body are both equipped.
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(i, 1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, striking_crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1) # Striking Flourish boosts the crit rate with empy+3 head, but does not supply the +100% CHR
                 damage += physical_damage
-            elif np.random.uniform() < oa3 and ma_count_limit < 2: # If you failed double attack, then you get to try OA3 roll (skipping Oa8, OA7, OA6, etc)
+            elif np.random.uniform() < oa3 and ma_count_limit < 2: # If you failed double attack, then you get to try OA3 roll (skipping OA8, OA7, OA6, etc)
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(i, 2, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
             elif np.random.uniform() < oa2 and ma_count_limit < 2: # If you failed OA3, try OA2.
                 ma_count_limit += 1
-                physical_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
+                physical_damage, ma_tp_hits, total_hits = multiattack_check(i, 1, ma_tp_hits, total_hits, player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, main_dmg, fstr_main, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate1)
                 damage += physical_damage
 
         # Now check multi-attacks for the off-hand.
@@ -512,15 +567,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if dual_wield: # If you have an off-hand weapon equipped, then it gets one of your two multi-attack procs. Check that multi-attack proc now.
             if np.random.uniform() < qa and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(3, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(100, 3, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
             elif np.random.uniform() < ta and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(2, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(100, 2, ma_tp_hits, total_hits, player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
             elif np.random.uniform() < da and ma_count_limit < 2:
                 ma_count_limit += 1
-                ma_damage, ma_tp_hits, total_hits = multiattack_check(1, ma_tp_hits, total_hits, player_attack2,   sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
+                ma_damage, ma_tp_hits, total_hits = multiattack_check(100, 1, ma_tp_hits, total_hits, player_attack2,   sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate, sub_dmg, fstr_sub, wsc, ftp2, crit_dmg, ws_bonus, ws_trait, hitrate2)
                 damage += ma_damage
 
     phys = damage
@@ -562,7 +617,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 ==========================================================================================
 '''
 
-def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, final=False, nuke=False, spell=False, burst=False, futae=False, ebullience=False, sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
+def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst=False, final=False):
     damage = []
     tp_return = []
 
@@ -572,7 +627,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, nuke, spell, job_abilities, burst, final)
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -597,13 +652,29 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         return()
     else:
         tp = np.average([tp1,tp2])
-
-        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, final, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+        damage, _ = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment, nuke, spell, job_abilities, burst, final)
         return(damage)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, burst=False, futae=False, ebullience=False,sneak_attack=False, trick_attack=False, impetus=False, footwork=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, burst=False):
+
+    # We use this ws_dict to ensure that the main-hand weapon matches the WS being used.
+    ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
+                "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
+                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
+                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
+                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
+                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
+                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
+                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
+                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
+                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Minstrel Axe","Onslaught","Calamity",],
+                "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow"],
+                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
+                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"]}
+
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
         # print(starting_gearset[k])
@@ -632,8 +703,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
         print(f"Checking:  {spell}")
     else:
         print(f"Checking:  {ws_name}  TP=[{tp1},{tp2}]")
-
     print("---------------")
+
     nconverge = 2 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
                                 
     # Start the code.
@@ -748,7 +819,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # if equipped_item1 == swap_item1 or equipped_item2 == swap_item2 or equipped_item3 == swap_item3:
                                 #     continue
 
-                                # Each piece of gear selected for this iteration will not be equipped.
+                                # Each piece of gear selected for this iteration will now be equipped.
                                 # We will consider the validity of the set AFTER things have been equipped.
                                 new_set[slot1]  = b  # Equip swap_item1 to slot1
                                 new_set[slot2]  = b2 # Equip swap_item2 to slot2
@@ -763,11 +834,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Earrings can go in either earring slot.
                                 # I use Mache Earring +1 A and B to get around this for non-rare items.
                                 if new_set["ring1"]["Name2"] == new_set["ring2"]["Name2"]:
-                                    if new_set["ring1"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                    if new_set["ring1"]["Name2"] != "Empty":
                                         # print("test1")
                                         continue
                                 if new_set["ear1"]["Name2"] == new_set["ear2"]["Name2"]:
-                                    if new_set["ear1"]["Name2"] != "Empty": # Allow both weapons to be Empty. This is to test the bonanza bow later for fun.
+                                    if new_set["ear1"]["Name2"] != "Empty":
                                         # print("test2")
                                         continue
                                 if new_set["main"]["Name2"] == new_set["sub"]["Name2"]:
@@ -812,7 +883,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                         continue
 
                                 # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.
-                                if main_job not in ["NIN", "DNC", "THF"] and sub_job not in ["NIN", "DNC"]:
+                                if main_job not in ["NIN", "DNC", "THF", "BLU"] and sub_job not in ["NIN", "DNC"]:
                                     if new_set["sub"]["Type"] == "Weapon":
                                         # print("test10")
                                         continue
@@ -836,6 +907,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     # print("test14")
                                     continue
 
+                                # Equipping an bolt requires a crossbow to be equipped.
+                                if new_set["ammo"].get("Type","None") == "Bolt" and new_set["ranged"].get("Type","None") != "Crossbow":
+                                    # print("test14 2")
+                                    continue
+
                                 # Do not equip ammo if you equip an instrument (Linos).
                                 if new_set["ranged"].get("Type","None") == "Instrument" and new_set["ammo"].get("Type","None") != "None":
                                     # print("test15")
@@ -850,15 +926,29 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     # print("test17")
                                     continue
 
+                                # "Cannot equip headgear" armor is checked here.
+                                if new_set["body"]["Name2"] in ["Cohort Cloak +1 R15"] and new_set["head"]["Name"] != "Empty":
+                                    # print("test18")
+                                    continue
+
+                                # Do not test main-hand weapons that can't use the selected WS, if they are selected.
+                                # Does not apply if using "Run Magic" or "Quicklook Magic" for nukes.
+                                # Does not apply to ranged weapon skills.
+                                if not nuke:
+                                    if ws_name not in ws_dict[new_set["main"]["Skill Type"]] and ws_name not in ws_dict["Archery"]+ws_dict["Marksmanship"]:
+                                        # print("test19: ",f"{new_set['main']['Name2']} can't use {ws_name}.")
+                                        continue
+
+
                                 # At this point, you SHOULD have a valid gear set.
                                 # Now we actually test the approximate damage using averages.
 
-                                test_Gearset = set_gear(buffs, new_set, main_job, sub_job, impetus=impetus) # This line turns that gear dictionary into a Python class, formalizing the player stats.
+                                test_Gearset = set_gear(buffs, new_set, main_job, sub_job, job_abilities=job_abilities) # This line turns that gear dictionary into a Python class, formalizing the player stats.
                                                                         # This contains the player and gear stats as well as a list of gear equipped in each slot that can be easily printed
 
                                 # Average damage is not necessarily appropriate for multi-peaked distributions.
                                 # Test the set and return its damage as a single number
-                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, False, nuke, spell , burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork))
+                                damage = int(test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False))
                                 # print(b["Name2"], b2["Name2"], damage)
 
                                 tcount += 1
@@ -911,12 +1001,12 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
         Best_Gearset["ear2"] = temp_ear1
 
     # At this point, the code has run up to 20 iterations and found the gearset that returns the highest average damage. Now we use this best set to create a proper distribution of damage that you'd expect to see in game based on its stats.
-    best_set = set_gear(buffs, Best_Gearset, main_job, sub_job,impetus=impetus) # Create a class from the best gearset
+    best_set = set_gear(buffs, Best_Gearset, main_job, sub_job, job_abilities=job_abilities) # Create a class from the best gearset
     # print(f"{tcount} valid gear sets checked.")
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
 
 
-    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, True, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+    test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, True)
     
     return(Best_Gearset)
 
@@ -966,15 +1056,20 @@ if __name__ == "__main__":
     nuke = False # True/False
     spell = "Doton: Ichi" # "Doton: Ichi" etc
     burst = True # True/False
-    futae = False # True/False. Only for Ninjutsu
-    ebullience = False # True/False. Only for SCH main with Elemental Magic
-    sneak_attack = False
-    trick_attack = False
-    impetus = False
-    footwork = False
+    job_abilities = {"Ebullience":False,
+                        "Futae":False,
+                        "Sneak Attack":False,
+                        "Trick Attack":False,
+                        "Footwork":False,
+                        "Impetus":False,
+                        "Building Flourish":False,
+                        "Climactic Flourish":False,
+                        "Striking Flourish":False,
+                        "Ternary Flourish":False,
+                        "Hover Shot":0}
 
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, burst,)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, burst, futae, ebullience, sneak_attack, trick_attack, impetus, footwork)
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, burst)
