@@ -393,6 +393,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             phys = ranged_hit_damage*hitrate_ranged1 + ranged_hit_damage2*hitrate_ranged2*(nhits-1)
             phys *= (1+true_shot)
 
+
         damage += phys
 
         if hybrid:
@@ -490,9 +491,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
                 pdif_rng, crit = get_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this shot of the ranged weapon. Return whether or not that hit was a crit.
                 physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd*(n==0), ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
-                damage += physical_damage
+                damage += physical_damage*(1+true_shot)
             
-            damage *= (1+true_shot)
 
             # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
 
