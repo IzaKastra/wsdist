@@ -880,7 +880,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
-    elif ws_name == "Minstrel Axe":
+    elif ws_name == "Mistral Axe":
         base_ftp = [4.0, 10.5, 13.625]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = False
