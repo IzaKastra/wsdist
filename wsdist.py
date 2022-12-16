@@ -120,7 +120,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
     if phys_rng_ws and main_job == "SAM":
-        wsd -= 19 # Undo the Overwhelm merits for ranged weapon skills
+        wsd -= 19/100 # Undo the Overwhelm merits for ranged weapon skills
         # TODO: also remove from magical/hybrid ranged WSs
 
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
