@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 11
+# Version date: 2022 December 20
 #
 import numpy as np
 from set_stats import *
@@ -563,6 +563,12 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_enemy_def_scaling = [0.15, 0.30, 0.45] # First number is known. I made up the other two
         enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
         enemy_defense *= (1-enemy_def_scaling)
+    elif ws_name == "Refulgent Arrow":
+        base_ftp = [3.0, 4.25, 7.0]
+        ftp      = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = False
+        wsc      = 0.6*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits    = 1 # BG states this is a 1-hit attack. Could use some testing to confirm since the description on BG says "twofold attack"
     elif ws_name == "Hot Shot":
         hybrid    = True
         base_ftp  = [0.5, 1.55, 2.1]
@@ -886,6 +892,13 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep  = False
         wsc      = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits    = 1
+    elif ws_name == "Bora Axe":
+        acc_boost = [0, 20, 40] # Made these numbers up since it isnt known.
+        acc_bonus = np.interp(tp, base_tp, acc_boost)
+        ftp  = 4.5
+        ftp_rep = False
+        wsc = 1.0*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
     elif ws_name == "Ground Strike":
         base_ftp = [1.5, 1.75, 3.0]
         ftp      = np.interp(tp, base_tp, base_ftp)
