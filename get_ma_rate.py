@@ -22,7 +22,7 @@ def get_ma_rate(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix):
     # It's easier for me to just run 50,000 simulations to estimate the true values than sit down and calculate the correction term by hand and then type it out here
     #
     dual_wield = True if sub_type == 'Weapon' else False # Check if the item equipped in the sub slot is a weapon. If this line returns an error, check the "gear.py" file to see if the item in the sub slot has a "Type" key. Python is case-sensitive too
-    
+
     n_sim = 50000
     main_hits_list = np.zeros(n_sim) # List containing number of main hits per simulation. Will take average of this later
     sub_hits_list = np.zeros(n_sim) # List containing number of sub hits per simuation. Will take average of this later
@@ -139,7 +139,7 @@ def get_ma_rate2(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix):
 
         sub_hits += 1*hitrate21 if dual_wield else 0
         total_hits +=1 if dual_wield else 0
-        
+
         for l in range(nhits-1):
 
             if main_hits + sub_hits >= 8:
@@ -307,11 +307,11 @@ def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix, s
 
     # Striking flourish seems to set QA=0, TA=0, and DA=1.0 for the first MA hit only
     if striking_flourish:
-        qa_main = 0 
+        qa_main = 0
         ta_main = 0
         da_main = 1
     elif ternary_flourish:
-        qa_main = 0 
+        qa_main = 0
         ta_main = 1
         da_main = 0
     else:
@@ -348,19 +348,20 @@ def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix, s
 
 if __name__ == "__main__":
 
-    nhits = 5
-    qa = 0.05
+    nhits = 4
+    qa = 0.03
     ta = 0.21
-    da = 0.12
+    da = 0.26
     oa3 = 0
     oa2 = 0
 
     hitrate_matrix = [[0.99,0.95],
                       [0.99,0.95]]
-    dual_wield_type = "Weapon"
+    # hitrate_matrix = np.ones_like(hitrate_matrix)
+    dual_wield_type = "None"
 
-    main_hits, sub_hits = get_ma_rate(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
-    print(main_hits, sub_hits, main_hits+sub_hits)
+    # main_hits, sub_hits = get_ma_rate(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
+    # print(main_hits, sub_hits, main_hits+sub_hits)
     main_hits, sub_hits = get_ma_rate2(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
     print(main_hits, sub_hits, main_hits+sub_hits)
     main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)

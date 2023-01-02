@@ -45,6 +45,9 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Excalibur':
         if ws_name == 'Knights of Round':
             bonuses['ws_bonus'] += 0.68 # Hidden 40% Relic WS damage * R15 +20% WS damage (1.4)*(1.2)
+    elif main_wpn_name == "Sequence":
+        if ws_name == 'Requiescat':
+            bonuses['ws_bonus'] += 0.1
     elif main_wpn_name == 'Maxentius':
         if ws_name == 'Black Halo':
             bonuses['ws_bonus'] += 0.5
@@ -220,7 +223,7 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == 'Khatvanga':
         if ws_name == 'Shattersoul':
             bonuses['ws_bonus'] += 0.1
-    elif main_wpn_name == 'Terpsichore':
+    elif main_wpn_name == 'Vajra':
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == 'Mandalic Stab':

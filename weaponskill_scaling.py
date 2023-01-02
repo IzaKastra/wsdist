@@ -93,6 +93,16 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 3
+    elif ws_name == "Requiescat":
+        atk_boost = [-0.2, -0.1, 0.0] # Requiescat has an attack penalty
+        ws_atk_bonus = np.interp(tp, base_tp, atk_boost)
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
+        player_attack1 = special_set.playerstats["Attack1"]
+        player_attack2 = special_set.playerstats["Attack2"]
+        ftp = 1.0
+        ftp_rep = True
+        wsc  = 0.85*player_mnd + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 5
     elif ws_name == "Blade: Shun":
         atk_boost = [1.0, 2.0, 3.0]
         ws_atk_bonus = np.interp(tp, base_tp, atk_boost) - 1.0
@@ -464,6 +474,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         magical = True
         element = "Light"
         ws_dINT = 0
+    elif ws_name == "Fell Cleave":
+        ftp  = 2.75
+        ftp_rep = False
+        wsc = 0.6*player_str + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
     elif ws_name == "Upheaval":
         base_ftp = [1.0, 3.5, 6.5] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -623,7 +638,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         base_ftp = [3.890625,6.4921875,9.671875] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
         ftp_rep = False # Does this WS replicate FTP across all hits?
-        wsc  = 0.4*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
+        wsc  = 1.0*player_agi + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 1
         magical = True
         element = "Light"

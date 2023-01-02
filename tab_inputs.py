@@ -37,13 +37,13 @@ player_column = [
 ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
             "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
-            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat"],
             "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
             "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush",],
+            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
             "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
@@ -254,7 +254,7 @@ def item2image(item_name):
 
 
 starting_gearset = {
-                'main' : Kikoku,
+                'main' : Heishi,
                 'sub' : Kunimitsu,
                 'ranged' : Empty,
                 'ammo' : Seki,
@@ -279,7 +279,7 @@ default_images = dict([[k,starting_gearset[k]["Name"]] for k in starting_gearset
 
 gear_dict = {"main":mains,"sub":subs+grips,"ranged":ranged,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
 for slot in gear_dict:
-    gear_dict[slot] = sorted(gear_dict[slot], key=lambda d: d['Name2']) 
+    gear_dict[slot] = sorted(gear_dict[slot], key=lambda d: d['Name2'])
 
 
 
@@ -357,25 +357,68 @@ radio_tab = [
     ]
 
 
+# Create a dictionary containing the starting gearset slot: stats in text form for tooltips:
+ignore_stats = ["Jobs","Name","Name2","Type","Skill Type","Rank"]
+base_stats = ["STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR"]
+wpn_stats = ["DMG","Delay"]
+main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
+bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+
+default_tooltips = {}
+for slot in gear_dict:
+    default_tooltips[slot] = f"{starting_gearset[slot]['Name2']}\n" # Just a list of names right now.
+
+    nl = False
+    for k in wpn_stats:
+        if starting_gearset[slot].get(k,False):
+            default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]},"
+            nl = True
+        if k=="Delay" and nl:
+            default_tooltips[slot] += "\n"
+
+    nl = False
+    for k in base_stats:
+        if starting_gearset[slot].get(k,False):
+            default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]},"
+            nl = True
+        if nl and k=="CHR":
+            default_tooltips[slot] += "\n"
+
+    nl = False
+    for k in main_stats:
+        if starting_gearset[slot].get(k,False):
+            default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]},"
+            nl = True
+        if "Attack" in k and nl:
+            default_tooltips[slot] += "\n"
+            nl = False
+    for k in starting_gearset[slot]:
+        if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+            continue
+        default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]}\n"
+
+
+
+
 # This is the grid of images that shows equipped gear.
 starting_set_tab = [
           [sg.Column([
-            [sg.Button(image_data=item2image(default_images["main"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio main",tooltip=starting_gearset["main"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["sub"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio sub",tooltip=starting_gearset["sub"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ranged"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ranged",tooltip=starting_gearset["ranged"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ammo"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ammo",tooltip=starting_gearset["ammo"]["Name2"]),],
-            [sg.Button(image_data=item2image(default_images["head"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio head",tooltip=starting_gearset["head"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["neck"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio neck",tooltip=starting_gearset["neck"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ear1"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ear1",tooltip=starting_gearset["ear1"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ear2"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ear2",tooltip=starting_gearset["ear2"]["Name2"]),],
-            [sg.Button(image_data=item2image(default_images["body"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio body",tooltip=starting_gearset["body"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["hands"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio hands",tooltip=starting_gearset["hands"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ring1"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ring1",tooltip=starting_gearset["ring1"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["ring2"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ring2",tooltip=starting_gearset["ring2"]["Name2"]),],
-            [sg.Button(image_data=item2image(default_images["back"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio back",tooltip=starting_gearset["back"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["waist"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio waist",tooltip=starting_gearset["waist"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["legs"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio legs",tooltip=starting_gearset["legs"]["Name2"]),
-            sg.Button(image_data=item2image(default_images["feet"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio feet",tooltip=starting_gearset["feet"]["Name2"]),],
+            [sg.Button(image_data=item2image(default_images["main"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio main",tooltip=default_tooltips["main"]),
+            sg.Button(image_data=item2image(default_images["sub"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio sub",tooltip=default_tooltips["sub"]),
+            sg.Button(image_data=item2image(default_images["ranged"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ranged",tooltip=default_tooltips["ranged"]),
+            sg.Button(image_data=item2image(default_images["ammo"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ammo",tooltip=default_tooltips["ammo"]),],
+            [sg.Button(image_data=item2image(default_images["head"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio head",tooltip=default_tooltips["head"]),
+            sg.Button(image_data=item2image(default_images["neck"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio neck",tooltip=default_tooltips["neck"]),
+            sg.Button(image_data=item2image(default_images["ear1"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ear1",tooltip=default_tooltips["ear1"]),
+            sg.Button(image_data=item2image(default_images["ear2"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ear2",tooltip=default_tooltips["ear2"]),],
+            [sg.Button(image_data=item2image(default_images["body"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio body",tooltip=default_tooltips["body"]),
+            sg.Button(image_data=item2image(default_images["hands"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio hands",tooltip=default_tooltips["hands"]),
+            sg.Button(image_data=item2image(default_images["ring1"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ring1",tooltip=default_tooltips["ring1"]),
+            sg.Button(image_data=item2image(default_images["ring2"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio ring2",tooltip=default_tooltips["ring2"]),],
+            [sg.Button(image_data=item2image(default_images["back"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio back",tooltip=default_tooltips["back"]),
+            sg.Button(image_data=item2image(default_images["waist"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio waist",tooltip=default_tooltips["waist"]),
+            sg.Button(image_data=item2image(default_images["legs"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio legs",tooltip=default_tooltips["legs"]),
+            sg.Button(image_data=item2image(default_images["feet"]),font=font_choice,pad=(1,1),border_width=0,size=(1,1),key="showradio feet",tooltip=default_tooltips["feet"]),],
           ]),]]
 
 

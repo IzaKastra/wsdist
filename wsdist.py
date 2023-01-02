@@ -58,7 +58,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     phys_rng_ws = ws_name in ["Flaming Arrow", "Hot Shot", "Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow"]
 
     kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
-    
+
     # Save the main and sub weapon names for later.
     # Used to check if giving weapon skill damage bonuses on things like Gokotai (if "Gokotai" in main_wpn_name)
     main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
@@ -154,7 +154,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     player_mab = gearset.playerstats['Magic Attack']
     player_magic_damage = gearset.playerstats['Magic Damage']
     magic_crit_rate2 = gearset.playerstats["Magic Crit Rate II"]/100 # Magic Crit Rate II is apparently +25% damage x% of the time.
-    
+
     enemy_int = enemy["INT"]
     enemy_agi = enemy["AGI"]
     enemy_vit = enemy["VIT"]
@@ -171,7 +171,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     magic_accuracy += dstat_macc # Add on magic accuracy from dINT
 
     ninjutsu_damage = gearset.playerstats['Ninjutsu Damage'] if main_job.lower() == "nin" else 0
-     
+
     dStat = ['STR', 0] # Part of the fix for Crepuscular Knife's CHR bonus. Needed to first assign a base dStat bonus. In this case I just used STR with 0 bonus to apply to all WSs, and Crepsecular just changes this to ['CHR', 0.03]. Utu Grip changes this to ['DEX', 0.10]
     if sub_wpn_name == "Crepuscular Knife":
         dStat = ['CHR', 3]
@@ -194,7 +194,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         if ": Ichi" in spell or ": Ni" in spell or ": San" in spell:
             # Add Ninjutsu Magic Attack to Ninjutsu nukes
             player_mab += gearset.playerstats['Ninjutsu Magic Attack']
-            
+
             spells = {
                     "Katon": "Fire",
                     "Suiton": "Water",
@@ -298,14 +298,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Define elemental damage bonuses now that we know what element your hybrid/magical weapon skill is.
     if hybrid or magical:
-        
+
         element_magic_attack_bonus = 1 + (gearset.playerstats.get(element + ' Elemental Bonus', 0) + gearset.playerstats['Elemental Bonus'])/100 # Archon Ring, Pixie Hairpin +1, Orpheus
 
     # fSTR calculation for main-hand and off-hand
     fstr_main = get_fstr(main_dmg, player_str, enemy_vit)
     fstr_sub  = get_fstr(sub_dmg, player_str, enemy_vit)
     fstr_rng = get_fstr2(rng_dmg, player_str, enemy_vit)
-
 
     # Start the damage calculations.
     damage = 0
@@ -348,7 +347,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             if sneak_attack or trick_attack:
                 hitrate11 = 1.0
                 hitrate21 = 1.0
-                
+
             hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
 
@@ -356,7 +355,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix, striking_flourish, ternary_flourish)
 
             # Assuming absolutely zero bonuses, how much damage would the main-hand hits do, all together?
-            main_hit_pdif = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) 
+            main_hit_pdif = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
             main_hit_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, main_hit_pdif, ftp2, crit_rate, crit_dmg, 0, ws_bonus, ws_trait) # No bonuses, so using FTP2, WSD=0, etc
             phys = main_hits*main_hit_damage
 
@@ -373,15 +372,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             if striking_flourish:
                 # Define a new crit rate that adds 70% only if crit_rate>0 already (only for critical hit WSs)
                 striking_flourish_crit_rate = crit_rate+0.7*dnc_empy_body_bonus*(crit_rate>0) # This crit_rate>0 ensures we aren't letting non-crit WSs crit.
-                striking_flourish_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, striking_flourish_crit_rate) 
+                striking_flourish_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, striking_flourish_crit_rate)
                 striking_flourish_DA_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, striking_flourish_pdif1, ftp2, striking_flourish_crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
                 phys += (striking_flourish_DA_damage - main_hit_damage)*hitrate12
 
             # Calculate the damage for off-hand hits, which receive no bonuses anyway.
-            offhand_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) 
+            offhand_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
             offhand_damage = get_avg_phys_damage(sub_dmg, fstr_sub, wsc, offhand_pdif, ftp2, crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
             phys += offhand_damage*sub_hits
-            
+
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
             hitrate_ranged2 = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", False, rng_type_skill) # Additional ranged hits
@@ -466,7 +465,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
                 pdif1, crit = get_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, max( sneak_attack*(n==0), trick_attack*(n==0), climactic_flourish*(n==0), (crit_rate+0.7*dnc_empy_body_bonus*(n==0)*(crit_rate>0)) ) ) # Calculate the PDIF for this swing of the main-hand weapon. Return whether or not that hit was a crit.
 
-                # Reminder that crit=True/False and is decided in the pdif function above. 
+                # Reminder that crit=True/False and is decided in the pdif function above.
                 physical_damage = get_phys_damage(main_dmg, fstr_main, wsc, pdif1, ftp, crit, crit_dmg2, wsd, ws_bonus, ws_trait, n, sneak_attack_bonus, trick_attack_bonus, climactic_flourish_bonus, striking_flourish_bonus, ternary_flourish_bonus) # Calculate the physical damage dealt by a single hit. The first hit gets WSD and SA/TA bonuses
                 damage += physical_damage
 
@@ -492,7 +491,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 pdif_rng, crit = get_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this shot of the ranged weapon. Return whether or not that hit was a crit.
                 physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd*(n==0), ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
                 damage += physical_damage*(1+true_shot)
-            
+
 
             # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
 
@@ -663,13 +662,13 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
                 "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
                 "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
-                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat"],
                 "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
                 "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
                 "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
                 "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
+                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
                 "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
@@ -706,7 +705,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     print("---------------")
 
     nconverge = 2 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
-                                
+
     # Start the code.
     converge_count = 0 # Count for convergence (number of times the change between iterations was <0.1% for example; see near the end of this code for the exact value used)
     best_damage = 0
@@ -758,7 +757,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                'ring1':Best_Gearset['ring1'],
                                'ring2':Best_Gearset['ring2'],
                                'back':Best_Gearset['back']}
-                                        
+
                     # new_set is the set that's being adjusted/tested.
                     for k in new_set:
                         # Assign a Name2 to all gear to clean up the later code. We did this for "Best_Gearset" already, though...
@@ -1007,7 +1006,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
 
     test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, True)
-    
+
     return(Best_Gearset)
 
 if __name__ == "__main__":

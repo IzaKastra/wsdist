@@ -66,7 +66,7 @@ all_names_map = dict([[k['Name2'], k['Name']] for k in all_gear]) # Dictionary t
 # Sort the gear lists by name. https://stackoverflow.com/questions/72899/how-do-i-sort-a-list-of-dictionaries-by-a-value-of-the-dictionary
 gear_dict = {"main":mains,"sub":subs+grips,"ranged":ranged,"ammo":ammos,"head":heads,"neck":necks,"ear1":ears,"ear2":ears2,"body":bodies,"hands":hands,"ring1":rings,"ring2":rings2,"back":capes,"waist":waists,"legs":legs,"feet":feet}
 for slot in gear_dict:
-    gear_dict[slot] = sorted(gear_dict[slot], key=lambda d: d['Name2']) 
+    gear_dict[slot] = sorted(gear_dict[slot], key=lambda d: d['Name2'])
 
 default_job = "nin"
 # Make sure the gear lists only show NIN gear to start
@@ -90,7 +90,7 @@ spell_dict = {
             "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
             "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
             "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
-            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI","Thundaja"],
     "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
             "Water","Water II","Water III","Water IV","Water V",
             "Aero","Aero II","Aero III","Aero IV","Aero V",
@@ -118,20 +118,20 @@ spell_dict = {
             "Thunder","Thunder II","Thunder III"],
     "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
 }
-            
+
 
 main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK","DNC","BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
 
 ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
             "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
-            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade"],
+            "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat"],
             "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
             "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush"],
+            "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
             "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
@@ -333,13 +333,13 @@ while True:
         if event in ["select all gear", "unselect all gear"]:
             main_job = values["mainjob"]
             odyrank = values["odyssey rank"]
-            
+
             # First figure out which list is currently displayed.
             for slot in gear_dict:
                 if window[f"{slot} display"].visible:
                     selected_slot = slot
                     break
-            
+
             # Loop over all gear in the selected slot and select everything that the main job can equip. This SHOULD be identical to everything visible in that list.
             if event == "select all gear":
                 for equipment in gear_dict[selected_slot]:
@@ -347,9 +347,9 @@ while True:
                         if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A": # Uncheck Nyame Path A
                             window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                             continue
-                            
+
                         window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False)
-                            
+
                     else:
                         window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
 
@@ -415,7 +415,7 @@ while True:
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 
-        # The user selected a new sub job. 
+        # The user selected a new sub job.
         if event == "subjob":
             main_job = values["mainjob"]
             sub_job = values["subjob"]
@@ -431,7 +431,7 @@ while True:
         if event == "mainjob":
             main_job = values["mainjob"]
             sub_job = values["subjob"]
-           
+
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
@@ -470,7 +470,7 @@ while True:
             window["footwork toggle"].update(False)
 
             # Enable magic sets for casting jobs.
-            if main_job in spell_dict: 
+            if main_job in spell_dict:
                 window["select spell"].update(disabled=False)
                 window["select spell"].update(values=spell_dict[main_job])
                 window["select spell"].update(spell_dict[main_job][0])
@@ -494,7 +494,49 @@ while True:
             item = event.split(":")[1]
             item_name = all_names_map[item]
             window[f"showradio {slot}"].update(image_data=item2image(item_name))
-            window[f"showradio {slot}"].set_tooltip(item)
+            # window[f"showradio {slot}"].set_tooltip(item)
+            
+            item_dictionary = name2dictionary(item, all_gear)
+
+            # Update the tooltip to show the gear's stats when changing gear with the radio buttons.
+            tooltip_stats = f"{item}\n"
+            ignore_stats = ["Jobs","Name","Name2","Type","Skill Type","Rank"]
+            base_stats = ["STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR"]
+            wpn_stats = ["DMG","Delay"]
+            main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
+            bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+
+            nl = False # nl = "NewLine". Used to add new lines in specific places in the tooltip text
+            for k in wpn_stats:
+                if item_dictionary.get(k,False):
+                    tooltip_stats += f"{k}:{item_dictionary[k]},"
+                    nl = True
+                if k=="Delay" and nl:
+                    tooltip_stats += "\n"
+
+            nl = False
+            for k in base_stats:
+                if item_dictionary.get(k,False):
+                    tooltip_stats += f"{k}:{item_dictionary[k]},"
+                    nl = True
+                if nl and k=="CHR":
+                    tooltip_stats += "\n"
+
+            nl = False
+            for k in main_stats:
+                if item_dictionary.get(k,False):
+                    tooltip_stats += f"{k}:{item_dictionary[k]},"
+                    nl = True
+                if "Attack" in k and nl:
+                    tooltip_stats += "\n"
+                    nl = False
+            for k in item_dictionary:
+                if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+                    continue
+                tooltip_stats += f"{k}:{item_dictionary[k]}\n"
+            window[f"showradio {slot}"].set_tooltip(tooltip_stats)
+
+
 
             # Now update the WS list:
             if slot in ["main","ranged"]:
@@ -525,7 +567,7 @@ while True:
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.
         if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic", "quicklook tp", "get stats"]:
-            
+
             main_job = values["mainjob"]
             sub_job = values["subjob"]
 
@@ -746,7 +788,7 @@ while True:
                              "Ternary Flourish":ternary_flourish}
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
-            
+
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -758,7 +800,7 @@ while True:
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
                 quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, spell, job_abilities, burst, False)[0]
-                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
+                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -770,7 +812,7 @@ while True:
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
                 quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, True, spell, job_abilities, burst, False)[0]
-                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")   
+                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -783,7 +825,7 @@ while True:
                 show_final_plot = values["show final plot"] # TODO: Show final plot = false for magical WSs too
                 best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, job_abilities, burst)
                 window["copy best set"].update(disabled=False)
-           
+
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -803,7 +845,7 @@ while True:
             # Simply print player stats for the supplied gearset to the Outputs tab.
             elif event == "get stats":
                 from set_stats import *
-        
+
                 # Defining the empty set lets us see the contribution to stats from gear vs base.
                 # It also means it'll call the set_gear() class twice, so expect two print statements if testing/debugging with the "Calc sets" button.
                 empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
@@ -813,7 +855,7 @@ while True:
                 dual_wield = gearset.gear['sub'].get('Type', 'None') == "Weapon"
 
                 window["tab group"].Widget.select(2) # https://github.com/PySimpleGUI/PySimpleGUI/issues/415
-                                
+
                 base_stats = ["STR","DEX","VIT","AGI","INT","MND","CHR"]
                 for k in base_stats:
                     player_value = f"{k}: {int(empty_gearset.playerstats[k]):3d}{'+' + str(int(gearset.playerstats[k])-int(empty_gearset.playerstats[k])):>5s}"
@@ -889,7 +931,7 @@ while True:
                     window[f"{k} skill display"].set_tooltip(f"Total {k} skill from gear, excluding main/off-hand weapons.\nMain-hand: +{gearset.gear['main'].get(f'{k} Skill',0)}\nOff-hand: +{gearset.gear['sub'].get(f'{k} Skill',0)}")
                 for k in sorted(ranged_skills+magic):
                     window[f"{k} skill display"].update(f"{k+':':<16s} {gearset.playerstats[f'{k} Skill']:>4d}")
- 
+
                 window["macc skill stat"].update(f"{'Magic Accuracy Skill:':<21s} {gearset.playerstats[f'Magic Accuracy Skill']-gearset.gear['sub'].get('Magic Accuracy Skill',0):>3d}")
 
                 gear_haste = 25. if gear_haste > 25. else gear_haste
@@ -918,7 +960,44 @@ while True:
                 window[f"showradio {slot}"].update(image_data=item2image(best_set[slot]["Name"]))
                 if f"start{slot}:{best_set[slot]['Name2']}" in window.AllKeysDict: # https://github.com/PySimpleGUI/PySimpleGUI/issues/1597
                     window[f"start{slot}:{best_set[slot]['Name2']}"].update(True)
-                window[f"showradio {slot}"].set_tooltip(best_set[slot]["Name2"])
+                # window[f"showradio {slot}"].set_tooltip(best_set[slot]["Name2"])
+
+                tooltip_stats = f"{best_set[slot]['Name2']}\n"
+                ignore_stats = ["Jobs","Name","Name2","Type","Skill Type","Rank"]
+                base_stats = ["STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR"]
+                wpn_stats = ["DMG","Delay"]
+                main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
+                bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+
+                nl = False
+                for k in wpn_stats:
+                    if best_set[slot].get(k,False):
+                        tooltip_stats += f"{k}:{best_set[slot][k]},"
+                        nl = True
+                    if k=="Delay" and nl:
+                        tooltip_stats += "\n"
+
+                nl = False
+                for k in base_stats:
+                    if best_set[slot].get(k,False):
+                        tooltip_stats += f"{k}:{best_set[slot][k]},"
+                        nl = True
+                    if nl and k=="CHR":
+                        tooltip_stats += "\n"
+
+                nl = False
+                for k in main_stats:
+                    if best_set[slot].get(k,False):
+                        tooltip_stats += f"{k}:{best_set[slot][k]},"
+                        nl = True
+                    if "Attack" in k and nl:
+                        tooltip_stats += "\n"
+                        nl = False
+                for k in best_set[slot]:
+                    if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+                        continue
+                    tooltip_stats += f"{k}:{best_set[slot][k]}\n"
+                window[f"showradio {slot}"].set_tooltip(tooltip_stats)
 
 
             # Update the WS list if the weapons changed.
