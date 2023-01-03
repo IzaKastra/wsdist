@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 15
+# Version date: 2023 January 02
 #
 # This code holds the methods for building a player's stats.
 #

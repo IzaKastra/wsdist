@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 20
+# Version date: 2023 January 02
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -58,7 +58,7 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
                      "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
                      "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
                      "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
-                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thundaja"],
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI", "Thundaja"],
               "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
                      "Water","Water II","Water III","Water IV","Water V",
                      "Aero","Aero II","Aero III","Aero IV","Aero V",
@@ -205,7 +205,7 @@ def item2image(item_name):
 
     path32 = "icons32/"
     path64 = "icons64/"
-    use_32x32_icons = False
+    use_32x32_icons = False if h > 900 else True
     if use_32x32_icons:
         try:
             id = items[0][np.where(np.array([k.lower() for k in items[1]])==item_name.lower())][0]
@@ -422,13 +422,22 @@ starting_set_tab = [
           ]),]]
 
 
+if h > 900: # If screen height is greater than 900 pixels, then use a vertical (tall) layout
+    input_tab = [
+            [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+            [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
+            [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
+            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+            [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
+            ]
 
-
-
-input_tab = [
-          [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
-          [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
-          [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
-          [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
-          [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
-         ]
+else: # Else, use a horizontal (wide) layout
+    input_tab = [[sg.Column([
+            [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+            [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()]]),
+            sg.Push(),
+            sg.Column([
+            [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
+            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+            [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]])
+            ]]

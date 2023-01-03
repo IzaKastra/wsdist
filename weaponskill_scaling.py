@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 20
+# Version date: 2023 January 02
 #
 import numpy as np
 from set_stats import *

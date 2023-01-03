@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 15
+# Version date: 2023 January 02
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
