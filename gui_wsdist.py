@@ -54,7 +54,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 02)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 03)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -134,7 +134,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
-            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
+            "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight","Detonator"],
             "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"]}
 
 while True:
@@ -457,7 +457,7 @@ while True:
             window["select flourish"].update(visible=True if main_job.lower()=="dnc" else False)
             window["footwork toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
-            window["trueshot toggle"].update(visible=True if main_job.lower()=="rng" else False)
+            window["trueshot toggle"].update(visible=True if main_job.lower() in ["rng","cor"] else False)
 
             # Deselect Job abilities so they arent enabled while hidden.
             window["magic burst toggle"].update(False)

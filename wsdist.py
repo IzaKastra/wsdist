@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 02
+# Version date: 2023 January 03
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -56,7 +56,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
-    phys_rng_ws = ws_name in ["Flaming Arrow", "Hot Shot", "Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow"]
+    phys_rng_ws = ws_name in ["Flaming Arrow", "Hot Shot", "Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow", "Detonator"]
 
     kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
 
@@ -125,9 +125,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
         # TODO: also remove from magical/hybrid ranged WSs
 
     ws_acc = gearset.gearstats['Weaponskill Accuracy']
-    ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments. TODO: DRG is different term
-    ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100
+    ws_bonus = gearset.playerstats['Weaponskill Bonus']/100. # Bonus damage multiplier to every hit on the WS. Stuff like Gokotai, Naegling, hidden Relic/Mythic WS damage, REMA augments.
+    ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100 # Only DRG traits go here. DRG main job also gets wyvern bonus 10% here.
 
+    rng_crit_dmg = gearset.playerstats['Ranged Crit Damage']/100
     crit_dmg = gearset.playerstats['Crit Damage']/100
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
@@ -268,6 +269,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     # print("Before: ",ws_bonus,crit_rate)
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
+    print("1 ",player_rangedattack)
     scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, job_abilities, kick_ws_footwork,)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
@@ -285,7 +287,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
     # print("After: ",ws_bonus,crit_rate)
-
+    print("2 ",player_rangedattack)
 
     player_accuracy1 += acc_bonus
     player_accuracy2 += acc_bonus
@@ -330,7 +332,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
         magical_damage *= magic_multiplier
-        magical_damage *= (1+wsd)*(1+ws_bonus)*(1+ws_trait) # TODO: remove this comment. ws_trait is always 0 right now. ive included it in the equation anyway for later
+        magical_damage *= (1+wsd)*(1+ws_bonus)*(1+ws_trait)
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
 
         return(magical_damage,0) # Return 0 TP for now.
@@ -672,7 +674,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                 "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
-                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight"],
+                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight","Detonator"],
                 "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"]}
 
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
@@ -872,7 +874,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 # Require that a ranged weapon that matches your selected ranged weapon skill be equipped IF you're using a ranged weapon skill.
                                 # This prevents something like Seething Bomblet +1 R15 from being BiS for Empyreal Arrow for some reason.
                                 archery = ["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow"]
-                                marksmanship = ["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight"]
+                                marksmanship = ["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight","Detonator"]
                                 if ws_name in archery:
                                     if new_set["ranged"]["Skill Type"] != "Archery":
                                         # print("test8")
@@ -1040,7 +1042,7 @@ if __name__ == "__main__":
                 'ranged' : Empty,
                 'ammo' : Yetshila,
                 'head' : Blistering_Sallet,
-                'body' : Mpaca_Doublet,
+                'body' : Mpaca_Doublet30,
                 'hands' : Ryuo_Tekko_A,
                 'legs' : Jokushu_Haidate,
                 'feet' : Mochizuki_Kyahan,

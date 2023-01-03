@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 02
+# Version date: 2023 January 03
 #
 # This code holds the methods for building a player's stats.
 #
@@ -62,20 +62,23 @@ class set_gear:
                  'Ninjutsu Skill':0, 'Great Sword Skill':0, 'Marksmanship Skill':0, "Elemental Magic Skill":0,
                  'Accuracy':0, 'Attack':0,
                  'Ranged Accuracy':0, 'Ranged Attack':0,
-                 'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                 'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                 'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0,  "Magic Burst Accuracy":0,
                  "Quick Draw":0,"Quick Draw II":0,
-                 'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                 'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                 "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                  'Crit Rate':0, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                  'Store TP':0, "True Shot":0,
                  'PDL':0,"PDL Trait":0,
                  'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                  'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                 'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                 'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                  'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                  'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                  'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                 "Magic Crit Rate II":0}
+                 "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                 }
 
 
         # Initialize base player stats with no gear and no subjob.
@@ -83,27 +86,28 @@ class set_gear:
         # Base 5% crit rate (0+5), +5 for 5/5 crit merits for 0+5+5
 
         if mainjob == "NIN":  # Master Level 20 Ninja stats
-            # Ninja gets +5% WSD from job gifts
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
                      'Katana Skill':444+16, 'Dagger Skill':398+16, 'Sword Skill':393+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':320+16,'Marksmanship Skill':393+16,
                      'Ninjutsu Skill':473+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
-                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':7,  "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':5, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':5, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "DRK":  # Master Level 20 Dark Knight stats
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
@@ -112,86 +116,94 @@ class set_gear:
                      'Ninjutsu Skill':0, 'Dark Magic Skill':473+16, "Elemental Magic Skill":424+16,
                      'Accuracy1':22, 'Accuracy2':22, 'Attack1':202, 'Attack2':202,
                      'Ranged Accuracy':22, 'Ranged Attack':202,
-                     'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':16, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':50,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "WAR":  # Master Level 20 Warrior stats.
+        elif mainjob == "WAR":  # Master Level 20 Warrior stats. Smite and Fencer are added later
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':110, 'AGI':113, 'INT':104, 'MND':104, 'CHR':107,
                      'Scythe Skill':424+16, 'Dagger Skill':408+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':334+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':354+16,
                      'Katana Skill':0+16, 'Axe Skill':437+16,'Great Axe Skill':444+16,'Polearm Skill':408+16,'Staff Skill':418+16,'Great Sword Skill':424+16,'Archery Skill':354+16,'Marksmanship Skill':354+16,
                      'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16,
-                     'Accuracy1':26, 'Accuracy2':26, 'Attack1':70, 'Attack2':70,
-                     'Ranged Accuracy':26, 'Ranged Attack':70,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Accuracy1':26, 'Accuracy2':26, 'Attack1':70+35, 'Attack2':70+35,
+                     'Ranged Accuracy':26, 'Ranged Attack':70+35,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
-                     'Crit Rate':10+10, 'Crit Damage':10, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0+18, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Crit Rate':10+10, 'Crit Damage':10+8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
+                     'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":180,"Hasso":0,
-                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "SAM":  # Master Level 20 Samurai stats.
+        elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso is added later.
             self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':398+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':444+16, 'Club Skill':320+16, 'Throwing Skill':398+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':408+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':398+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0, "Elemental Magic Skill":0,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':8, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
+                     'Store TP':8+40, "True Shot":0,
+                     'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':8, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Zanshin':50, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Weaponskill Damage':8+19, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':8+16, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "DRG":  # Master Level 20 Dragoon stats.
+        elif mainjob == "DRG":  # Master Level 20 Dragoon stats. Smite is added later. Bonuses for having a Wyvern out are added later.
             self.playerstats = {'STR':115, 'DEX':110, 'VIT':113, 'AGI':110, 'INT':104, 'MND':107, 'CHR':113,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':0+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':444+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0, "Elemental Magic Skill":0,
-                     'Accuracy1':64, 'Accuracy2':64, 'Attack1':55, 'Attack2':55,
-                     'Ranged Accuracy':64, 'Ranged Attack':55,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0,'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Accuracy1':64+35, 'Accuracy2':64+35, 'Attack1':55+22, 'Attack2':55+22,
+                     'Ranged Accuracy':64+35, 'Ranged Attack':55,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
+                     'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':8, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":21, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "BLM":  # Master Level 20 Black Mage stats.
             self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':107, 'CHR':110,
@@ -200,20 +212,22 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":480+16,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
-                     'Magic Accuracy':62, 'Magic Attack':50, 'Magic Damage':43, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':43, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':62, 'Magic Attack':50+40+10, 'Magic Damage':43, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':43+13, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "WHM":  # Master Level 20 White Mage stats.
             self.playerstats = {'STR':110, 'DEX':104, 'VIT':110, 'AGI':107, 'INT':107, 'MND':117, 'CHR':113,
@@ -222,64 +236,70 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':14, 'Accuracy2':14, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':14, 'Ranged Attack':0,
-                     'Magic Accuracy':70, 'Magic Attack':22, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':70, 'Magic Attack':22, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "RDM":  # Master Level 20 Red Mage stats
+        elif mainjob == "RDM":  # Master Level 20 Red Mage stats. +15+25 "Magic Accuracy" from assumed merits. +35% TA from Temper2
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':107, 'AGI':107, 'INT':113, 'MND':113, 'CHR':110,
                      'Katana Skill':0+16, 'Dagger Skill':418+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':285+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':354+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":398+16,
                      'Accuracy1':32, 'Accuracy2':32, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':22, 'Ranged Attack':0,
-                     'Magic Accuracy':90, 'Magic Attack':48, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':43, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':90+15+25, 'Magic Attack':48+28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0+7, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':35, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
+                     'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "SCH":  # Master Level 20 Scholar stats
+        elif mainjob == "SCH":  # Master Level 20 Scholar stats. +15 Magic Accuracy from Klimaform.
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':107, 'AGI':110, 'INT':115, 'MND':110, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":460+16,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
-                     'Magic Accuracy':27, 'Magic Attack':36, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':13, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':27+15, 'Magic Attack':36, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':13+9,"Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0, # PDL trait is added in the merits and traits section later
+                     'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "COR":  # Master Level 20 Corsair stats.
             self.playerstats = {'STR':107, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':113, 'MND':107, 'CHR':107,
@@ -288,42 +308,46 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':26, 'Accuracy2':26, 'Attack1':26, 'Attack2':26,
                      'Ranged Accuracy':46, 'Ranged Attack':26,
-                     'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
-                     "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet, death penalty is treated separately)
-                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
+                     "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet here, but death penalty is treated separately)
+                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0+5,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "BRD":  # Master Level 20 Bard stats.
+        elif mainjob == "BRD":  # Master Level 20 Bard stats. Fencer is added later.
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':110, 'AGI':104, 'INT':110, 'MND':110, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':358+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':16, 'Accuracy2':16, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':16, 'Ranged Attack':26,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0,'Magic Burst Damage Trait':0,"Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "THF":  # Master Level 20 Thief stats.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
@@ -332,42 +356,46 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':50, 'Attack2':50,
                      'Ranged Accuracy':36, 'Ranged Attack':50,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':8, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
-                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,"Flourish Bonus":0,"Ranged Crit Damage":0,
+                     'Daken':0, 'QA':0, 'TA':8+6, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Crit Rate':10, 'Crit Damage':8+14, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
-                     'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
+                     'PDL':0, 'PDL Trait':10,
+                     'Dual Wield':30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "MNK":  # Master Level 20 Monk stats.
+        elif mainjob == "MNK":  # Master Level 20 Monk stats. Smite is added later. Kick attacks are zeroed out after adding gear stats later if not using a h2h weapon.
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':117, 'AGI':104, 'INT':101, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':418+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':41, 'Accuracy2':41, 'Attack1':40, 'Attack2':40,
                      'Ranged Accuracy':41, 'Ranged Attack':40,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5 if self.gear["main"]["Skill Type"] == "Hand-to-Hand" else 0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":5+14,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
+                     'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
         elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits
             self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
@@ -376,65 +404,71 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
-                     'Magic Accuracy':26+20, 'Magic Attack':26, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':26+20, 'Magic Attack':26, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-
-        elif mainjob == "DNC":  # Master Level 20 Dancer stats
+        elif mainjob == "DNC":  # Master Level 20 Dancer stats. +15 Accuracy when facing an enemy (5/5 Closed Position merits)
             self.playerstats = {'STR':110, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':104, 'MND':104, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':354+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
-                     'Accuracy1':64+15, 'Accuracy2':64+15, 'Attack1':42, 'Attack2':42,
-                     'Ranged Accuracy':64, 'Ranged Attack':42,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Accuracy1':64+15+35, 'Accuracy2':64+15+35, 'Attack1':42, 'Attack2':42,
+                     'Ranged Accuracy':64+35, 'Ranged Attack':42,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
-                     'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":20,"Ranged Crit Damage":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Crit Rate':10, 'Crit Damage':8+11, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":20,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0, 'PDL Trait':0,
-                     'Dual Wield':5, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
+                     'PDL':0, 'PDL Trait':20,
+                     'Dual Wield':5+30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
                      }
-        elif mainjob == "BST":  # Master Level THF TODO: BST stats
+        elif mainjob == "BST":  # Master Level THF TODO: BST stats. Smite and Fencer are added later. BST gets +50 accuracy from Tandem Strike.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
                      'Katana Skill':0+16, 'Dagger Skill':398+16, 'Sword Skill':320+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':0+16,
                      'Axe Skill':444+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':388+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
-                     'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
+                     'Accuracy1':36+50, 'Accuracy2':36+50, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
-                     'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
-                     'PDL':0,"PDL Trait":0,
+                     'PDL':0,"PDL Trait":20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":230,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Zanshin':0, "Fencer":0, "Fencer TP Bonus":230,"Hasso":0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     }
         elif mainjob == "GEO":  # Master Level 20 Geomancer stats
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':110, 'AGI':107, 'INT':115, 'MND':115, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':424+16, 'Throwing Skill':0+16,
@@ -442,20 +476,22 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":424+16+23,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
-                     'Magic Accuracy':50+20, 'Magic Attack':42+20, 'Magic Damage':13, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':50+20, 'Magic Attack':42+20, 'Magic Damage':13, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,}
         elif mainjob == "PLD":  # Master Level 20 Paladin stats
             self.playerstats = {'STR':115, 'DEX':107, 'VIT':117, 'AGI':101, 'INT':101, 'MND':113, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':437+16, 'Throwing Skill':0+16,
@@ -463,20 +499,23 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':28, 'Accuracy2':28, 'Attack1':28, 'Attack2':28,
                      'Ranged Accuracy':28, 'Ranged Attack':28,
-                     'Magic Accuracy':42, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':42, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     }
         elif mainjob == "RUN":  # Master Level 20 Rune Fencer stats
             self.playerstats = {'STR':113, 'DEX':110, 'VIT':107, 'AGI':115, 'INT':110, 'MND':110, 'CHR':104,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':437+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':388+16, 'Throwing Skill':0+16,
@@ -484,41 +523,47 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':56+35, 'Accuracy2':56+35, 'Attack1':50, 'Attack2':50,
                      'Ranged Accuracy':56+35, 'Ranged Attack':50,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
-        elif mainjob == "RNG":  # Master Level 20 Ranger stats
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     }
+        elif mainjob == "RNG":  # Master Level 20 Ranger stats. +45 Ranged Crit from Dead Aim traits
             self.playerstats = {'STR':107, 'DEX':110, 'VIT':110, 'AGI':117, 'INT':107, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':388+16,
                      'Axe Skill':408+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':444+16,'Marksmanship Skill':444+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
-                     'Accuracy1':70, 'Accuracy2':70, 'Attack1':70, 'Attack2':70,
-                     'Ranged Accuracy':70, 'Ranged Attack':70,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Accuracy1':70+73, 'Accuracy2':70+73, 'Attack1':70, 'Attack2':70,
+                     'Ranged Accuracy':70+73, 'Ranged Attack':70,
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                     'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
-                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":8,
-                     'Store TP':0, "True Shot":8,
-                     'PDL':0,"PDL Trait":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":8+45,
+                     'Store TP':0, "True Shot":8+7,
+                     'PDL':0,"PDL Trait":30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     }
         elif mainjob == "PUP":  # Master Level 20 Puppetmaster stats
             self.playerstats = {'STR':107, 'DEX':115, 'VIT':110, 'AGI':113, 'INT':107, 'MND':104, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':398+16,
@@ -526,143 +571,94 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':30, 'Attack2':30,
                      'Ranged Accuracy':36, 'Ranged Attack':30,
-                     'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
+                     'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
+                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":205,
                      'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
-                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
+                     'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     }
 
+
+
+        # Add job-specific bonuses.
 
         two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff", "Hand-to-Hand"]
-        one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"] # H2H goes here?
+        one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana"] # Excluding H2H since H2H get smite bonuses, it's easier to include them in two_handed in this file.
         ranged_skills = ["Marksmanship","Archery"]
 
         smite_bonus = 0.
         building_flourish = 0.
-        wyvern_bonus = False # This will only apply for DRG main later.
-        # Add special bonuses here, just to keep them separate from the main stats. # TODO: move DRK and NIN traits here. New stuff goes here by default
-        if mainjob == "DRK":
-            smite_bonus = 304./1024
-        elif mainjob == "BLM":
-            self.playerstats["Magic Burst Damage II"] += 13 # Magic Burst Bonus V trait
-            self.playerstats["Magic Attack"] += 40 # Magic Attack Bonus VI trait
-            self.playerstats["Magic Attack"] += 10 # Assuming 5/5 elemental potency merits in each element.
-        elif mainjob == "RDM":
-            self.playerstats["Magic Burst Damage II"] += 7 # Magic Burst Bonus II trait
-            self.playerstats["Magic Attack"] += 28 # Magic Attack Bonus III trait
-            self.playerstats["Magic Accuracy"] += 15 # Assuming 5/5 elemental magic accuracy merits in each element.
-            self.playerstats["Magic Accuracy"] += 25 # Assuming 5/5 magic accuracy group2 merits.
-            self.playerstats["PDL Trait"] += 10 # PDL limit I trait
-            self.playerstats["TA"] += 35 # Assume +35% TA from full-time Temper2 with a good enhancing magic set at ML20 RDM
-        elif mainjob == "SCH":
-            self.playerstats["Magic Burst Damage II"] += 9 # Magic Burst Bonus III trait
-            self.playerstats["Magic Accuracy"] += 15 # Full time Klimaform
-        elif mainjob == "RNG":
+        wyvern_bonus = False # This will only apply for DRG main job later.
+
+        # Add Smite bonuses now. We check for 2-handed weapon later
+        if mainjob in ["DRK","WAR","MNK","DRG","PUP"]:
+            smite_bonuses = {"DRK":304./1024, "WAR":204./1024, "MNK":152./1024, "DRG":152./1024, "PUP":100./1024}
+            smite_bonus = smite_bonuses[mainjob]
+
+        # Add Fencer trait bonuses now.
+        if mainjob in ["WAR","BST","BRD"]:
+            if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
+                fencer_bonuses = {"WAR":5, "BST":3, "BRD":2}
+                self.playerstats["Fencer"] += fencer_bonuses[mainjob]
+
+        if mainjob == "SAM": # Add Hasso stats
+            if self.gear['main'].get('Skill Type', 'None') in two_handed:
+                self.playerstats["STR"] += 14
+                self.playerstats["STR"] += 20 # Job point category while using Hasso
+                self.playerstats['JA Haste'] += 10 
+                self.playerstats['Accuracy1'] += 10
+                self.playerstats['Accuracy2'] += 10
+
+        elif mainjob == "RNG": # Add hover shot and velocity shot bonuses
             if job_abilities.get("Velocity Shot",False):
                 self.playerstats["Ranged Attack"] += 40
-            
             hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not implemented.
             hover_shot = 100 if hover_shot > 100 else (0 if hover_shot < 0 else hover_shot)
             if hover_shot > 0:
                 self.playerstats["Ranged Accuracy"] += hover_shot
                 self.playerstats["Magic Accuracy"] += hover_shot
-            self.playerstats["True Shot"] += 7
-            self.playerstats['Accuracy1'] += 73
-            self.playerstats['Accuracy2'] += 73
-            self.playerstats["Ranged Accuracy"] += 73
-            self.playerstats["PDL Trait"] += 30
-            self.playerstats["Ranged Crit Damage"] += 45
-        elif mainjob == "SAM":
-            self.playerstats["Store TP"] += 30 # Store TP V trait
-            self.playerstats["Store TP"] += 10 # 5/5 Group1 merits
-            self.playerstats["Skillchain Bonus"] += 16 # Skillchain Bonus III trait
-            self.playerstats["PDL Trait"] += 20  # PDL limit II trait
-            self.playerstats["Zanshin"] += 50 # Zanshin V trait
-            self.playerstats["Weaponskill Damage"] += 19 # 5/5 Overwhelm merits TODO: This doesn't apply to ranged WSs apparently
-            if self.gear['main'].get('Skill Type', 'None') in two_handed:
-                self.playerstats["STR"] += 14 # Normal Hasso STR bonus
-                self.playerstats["STR"] += 20 # Job point category while using Hasso
-                self.playerstats['JA Haste'] += 10 # +10 JA haste from Hasso
-                self.playerstats['Accuracy1'] += 10
-                self.playerstats['Accuracy2'] += 10
-        elif mainjob == "MNK":
-            smite_bonus = 152./1024
-            self.playerstats["Kick Attacks"] += 14
-            self.playerstats["Skillchain Bonus"] += 12 
-            self.playerstats["PDL Trait"] += 30
+                # Hover shot direct damage bonus is applied in the main wsdist.py code. This code only adds to the player stats.
+
+        elif mainjob == "MNK": # Add Impetus bonuses
             impetus_potency = 0.9
             self.playerstats["Attack1"] += 100*impetus_potency*impetus # Add 80% of the impetus here. # TODO: Find a better place for it.
             self.playerstats["Attack2"] += 100*impetus_potency*impetus
-            self.playerstats["Crit Rate"] += 50*impetus_potency*impetus # 80% impetus potency = +40% crit rate and +80 attack.
-            self.playerstats["Crit Damage"] += 50*impetus_potency*impetus*("Bhikku Cyclas" in gear["body"]["Name"]) # Impetus on and "Bhikku Cyclas" equipped is an extra 50% crit damage. We use 80% of this for 40% crit damage
-        elif mainjob == "PUP":
-            smite_bonus = 100./1024
-            self.playerstats["PDL Trait"] += 20
-        elif mainjob == "DRG":
-            self.playerstats["Weaponskill Bonus"] += 21 # WS Damage Boost trait. Assuming it applies to all hits. TODO: WSD trait is a third WS term, not combined with rema augments
-            self.playerstats["Accuracy1"] += 35 # Accuracy Boost III trait
-            self.playerstats["Accuracy2"] += 35 # Accuracy Boost III trait
-            self.playerstats["PDL Trait"] += 30  # PDL limit III trait
-            self.playerstats["Attack1"] += 22 # Attack Boost II trait
-            self.playerstats["Attack2"] += 22 # Attack Boost II trait
-            smite_bonus = 152./1024 # Smite II trait. We check if using 2h weapon later.
-            wyvern_bonus = True # This represents the +20% attack that will be applied later for having a wyvern out (added with smite and stuff)
+            self.playerstats["Crit Rate"] += 50*impetus_potency*impetus # 90% impetus potency = +45% crit rate and +90 attack.
+            self.playerstats["Crit Damage"] += 50*impetus_potency*impetus*("Bhikku Cyclas" in gear["body"]["Name"]) # Impetus on and "Bhikku Cyclas" equipped is an extra 50% crit damage. 
+            if self.gear["main"]["Skill Type"] != "Hand-to-Hand": # Kick attacks only proc if using a h2h weapon
+                self.playerstats["Kick Attacks"] = 0
+
+        elif mainjob == "DRG": # DRG bonus stats for having a Wyvern out and fully leveled up.
+            wyvern_bonus = True # This represents the +20% attack that will be applied later for having a wyvern out. Additive bonus with smite, berserk, chaos roll, etc.
+            self.playerstats["Weaponskill Trait"] += 10 # Wyvern bonus. Applies to all WS hits, so it goes in the "Weaponskill Trait" stat.
             self.playerstats["JA Haste"] += 10
             self.playerstats["DA"] += 15
-            self.playerstats["Weaponskill Bonus"] += 10 # Wyvern bonus
-        elif mainjob == "THF":
-            self.playerstats["Dual Wield"] += 30
-            self.playerstats["Crit Damage"] += 14
-            self.playerstats["TA"] += 6
-            self.playerstats["PDL Trait"] += 10
-        elif mainjob == "DNC":
-            self.playerstats["Accuracy1"] += 35
-            self.playerstats["Accuracy2"] += 35
-            self.playerstats["Ranged Accuracy"] += 35
-            self.playerstats["Crit Damage"] += 11
-            self.playerstats["Dual Wield"] += 30
-            self.playerstats["PDL Trait"] += 20
+
+        elif mainjob == "DNC": # Bonus stats from building flourish.
             if job_abilities.get("Building Flourish",False):
                 self.playerstats["Crit Rate"] += 10
                 self.playerstats["Accuracy1"] += 40
                 self.playerstats["Accuracy2"] += 40
                 self.playerstats["Ranged Accuracy"] += 40
                 self.playerstats["Weaponskill Damage"] += 20 # from job point categories
-                building_flourish = 0.25 # TODO: make all job abilities part of this file similar to how DNC is being treated. This file should include stats from base and ALL buffs
-                                         #       these % based buffs need a default value of 0 somewhere above, similar to smite
-        elif mainjob == "WAR":
-            if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
-                self.playerstats["Fencer"] += 5 # Fencer V native, plus gear
-            self.playerstats["DA"] += 18
-            smite_bonus = 204/1024
-            self.playerstats['Attack1'] += 35 # Attack Bonus III trait
-            self.playerstats['Attack2'] += 35 # Attack Bonus III trait
-            self.playerstats['Ranged Attack'] += 35 # Attack Bonus III trait TODO Main job traits maybe go in dictionaries, subjob traits stay out here
-            self.playerstats["Crit Damage"] += 8 
-            self.playerstats["PDL Trait"] += 20
-        elif mainjob == "BST":
-            if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
-                self.playerstats["Fencer"] += 3 # Fencer III native, plus gear
-            self.playerstats["PDL Trait"] += 20
-            self.playerstats["Accuracy1"] += 50 # Tandem Strike trait V
-            self.playerstats["Accuracy2"] += 50 # Tandem Strike trait V
+                building_flourish = 0.25 
 
-        elif mainjob == "BRD":
-            if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
-                self.playerstats["Fencer"] += 2 # Fencer II native
-
+        # Special stats for main jobs are finished now.
 
 
         # Add bonuses from subjob stats
+
         if subjob == "WAR": # Master Level 20 bonus stats from Lv53 WAR subjob
             self.playerstats['STR'] += 15
             self.playerstats['DEX'] += 12
@@ -671,7 +667,6 @@ class set_gear:
             self.playerstats['INT'] += 7
             self.playerstats['MND'] += 7
             self.playerstats['CHR'] += 9
-            self.playerstats['DA']  += 12 # Double Attack II trait
         elif subjob == "MNK":
             self.playerstats["STR"] += 12
             self.playerstats["DEX"] += 13
@@ -729,7 +724,7 @@ class set_gear:
             self.playerstats["MND"] += 6
             self.playerstats["CHR"] += 6
         elif subjob == "BST":
-            self.playerstats["STR"] += 0
+            self.playerstats["STR"] += 0 # I have no idea what stats BST and BRD give. Mine are Lv1
             self.playerstats["DEX"] += 0
             self.playerstats["VIT"] += 0
             self.playerstats["AGI"] += 0
@@ -737,7 +732,7 @@ class set_gear:
             self.playerstats["MND"] += 0
             self.playerstats["CHR"] += 0
         elif subjob == "BRD":
-            self.playerstats["STR"] += 0
+            self.playerstats["STR"] += 0 # I have no idea what stats BST and BRD give. Mine are Lv1
             self.playerstats["DEX"] += 0
             self.playerstats["VIT"] += 0
             self.playerstats["AGI"] += 0
@@ -845,8 +840,6 @@ class set_gear:
 
         # Subjob stats are finished. Now do subjob traits. This organization makes it easier to update subjobs to Lv55 later.
 
-        # TODO: remove main_job in _jobs. add another if statement layer.
-
         smite1_jobs = ["DRK","WAR","MNK","DRG"] # +100/1024 attack
         smite2_jobs = ["DRK"] # +152/1024 attack
         smite3_jobs = ["DRK"] # +204/1024 attack (55drk)
@@ -857,8 +850,8 @@ class set_gear:
 
         pdl1_jobs = ["DRK","MNK","RNG","DRG","WAR","SAM","BST","PUP","DNC","THF","NIN","RDM"] # +0.1 PDL
         pdl2_jobs = ["DRK"] # +0.2 PDL
-        # pdl3_jobs = ["DRK"] # +0.3 PDL (55drk)
-        if subjob in pdl2_jobs and mainjob not in pdl1_jobs:
+        pdl3_jobs = ["DRK"] # +0.3 PDL (55drk)
+        if subjob in pdl2_jobs and mainjob not in pdl1_jobs: # TODO: Rewrite the logic here. Right now PUP/DRK is only getting Smite1, despite /DRK boosting this to Smite2
             self.playerstats["PDL Trait"] += 20
         elif subjob in pdl1_jobs and mainjob not in pdl1_jobs:
             self.playerstats["PDL Trait"] += 10
@@ -903,8 +896,8 @@ class set_gear:
         elif subjob in martialarts2_jobs and mainjob not in martialarts2_jobs:
             self.playerstats["Martial Arts"] = 480-380
 
-        kickattacks1_jobs = ["MNK"] # +10% kick attacks (h2h mainhand only)
-        if subjob in kickattacks1_jobs and self.gear["main"]["Skill Type"] == "Hand-to-Hand" and mainjob not in kickattacks1_jobs:
+        kickattacks1_jobs = ["MNK"] # +10% kick attacks (h2h mainhand only). We zero-out Kick Attacks later if no h2h equipped.
+        if subjob in kickattacks1_jobs and mainjob not in kickattacks1_jobs:
             self.playerstats["Kick Attacks"] += 10
 
         fencer1_jobs = ["WAR"] # +1 Fencer
@@ -936,7 +929,7 @@ class set_gear:
         wstrait1_jobs = ["DRG"] # +7% WSD (all hits)
         # wstrait2_jobs = ["DRG"] # +10% WSD (all hits) (55drg)
         if subjob in wstrait1_jobs and mainjob not in wstrait1_jobs:
-            self.playerstats["Weaponskill Bonus"] += 7
+            self.playerstats["Weaponskill Trait"] += 7
 
         skillchain1_jobs = ["DNC"] # +8% Skill chain damage
         if subjob in skillchain1_jobs and mainjob not in skillchain1_jobs:
@@ -952,27 +945,31 @@ class set_gear:
         ayanmo_count = 0     # Flamma +2 with the Flamma Ring gives STR/VIT/MND
         amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
         lustratio_count = 0    # +2 WSD for every piece of Amalric equipped after the first
+        af_armor = {"war":"pummeler","mnk":"anchorite","whm":"theophany","blm":"spaekona","rdm":"atrophy","thf":"pillager","pld":"reverence","drk":"ignominy","bst":"totomic","brd":"brioso","rng":"orion","sam":"wakido","nin":"hachiya","drg":"vishap","smn":"convoker","blu":"assimilator","cor":"laksamana","pup":"foire","dnc":"maxixi","sch":"academic","geo":"geomancy","run":"runeist"}
         for slot in gear:
             if "adhemar" in gear[slot]['Name'].lower() and "+1" in gear[slot]['Name'].lower():
                 adhemar_count += 1
-            if gear["ring1"]['Name'] == "Mummu Ring" or gear["ring2"]['Name'] == "Mummu Ring":
-                if "mummu" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
-                    mummu_count += 1
+            if "Amalric" in gear[slot]["Name"]:
+                amalric_count += 1
+            if "Lustratio" in gear[slot]["Name"]:
+                lustratio_count += 1
+
             if "regal ring" == gear['ring1']['Name'].lower() or "regal ring" == gear['ring2']['Name'].lower():
-                if "hachiya" in gear[slot]['Name'].lower() or "wakido" in gear[slot]['Name']:
+                if af_armor[mainjob.lower()] in gear[slot]['Name'].lower():
                     if regal_ring_count == 4:
                         continue
                     regal_ring_count += 1
+
             if "flamma ring" == gear['ring1']['Name'].lower() or "flamma ring" == gear['ring2']['Name'].lower():
                 if "flamma" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
                     flamma_count += 1
             if "ayanmo ring" == gear['ring1']['Name'].lower() or "ayanmo ring" == gear['ring2']['Name'].lower():
                 if "ayanmo" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
                     ayanmo_count += 1
-            if "Amalric" in gear[slot]["Name"]:
-                amalric_count += 1
-            if "Lustratio" in gear[slot]["Name"]:
-                lustratio_count += 1
+            if gear["ring1"]['Name'] == "Mummu Ring" or gear["ring2"]['Name'] == "Mummu Ring":
+                if "mummu" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
+                    mummu_count += 1
+                    
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
         self.set_bonuses['DEX'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
@@ -1042,6 +1039,10 @@ class set_gear:
             fencer_bonus = get_fencer_bonus(self.playerstats["Fencer"])
             self.playerstats["TP Bonus"] += fencer_bonus[0] + self.playerstats["Fencer TP Bonus"]
             self.playerstats["Crit Rate"] += fencer_bonus[1]
+
+        # Zero Kick Attacks if not using a Hand-to-Hand weapon. TODO: remove this and treat it the same as daken in the main code
+        if self.gear["main"]["Skill Type"] != "Hand-to-Hand":
+            self.playerstats["Kick Attacks"] = 0
 
         # Stats from food are used to calculate Attack and Accuracy before any % bonuses such as Chaos Roll or GEO's Fury bubble
         # Add food stat bonuses here

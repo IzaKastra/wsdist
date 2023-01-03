@@ -1,5 +1,5 @@
 # Author: Kastra (Asura)
-# Version date: 2022 December 10
+# Version date: 2023 January 03
 
 from get_dint_m_v import *
 import numpy as np
@@ -75,7 +75,8 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
         
         burst_bonus1 = 40 if gearset.playerstats['Magic Burst Damage'] > 40 else gearset.playerstats['Magic Burst Damage']
         burst_bonus2 = gearset.playerstats['Magic Burst Damage II']
-        burst_bonus_multiplier = 1 + burst_bonus1/100 + burst_bonus2/100
+        burst_bonus3 = gearset.playerstats["Magic Burst Damage Trait"]
+        burst_bonus_multiplier = 1 + burst_bonus1/100 + burst_bonus2/100 + burst_bonus3/100
 
         # for i,k in enumerate(gearset.gear):
         #     print(k,gearset.gear[k]['Name2'])

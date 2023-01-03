@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 02
+# Version date: 2023 January 03
 #
 import numpy as np
 from set_stats import *
@@ -608,6 +608,17 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep   = True
         wsc       = 0.85*player_agi + dStat[1]*gearset.playerstats[dStat[0]]
         nhits     = 2
+    elif ws_name == "Detonator":
+        ws_atk_bonus = 1.0 # +100% attack, or a 2.0 multiplier. Gets added to percent_attack_buff in set_stats.py
+        special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
+        player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
+        player_attack2 = special_set.playerstats["Attack2"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        player_rangedattack = special_set.playerstats["Ranged Attack"] # These boosted attack1 and attack2 values do not show up in the player"s stats shown in the final plot.
+        base_ftp = [1.5, 2.5, 5.0] # Base TP bonuses for 1k, 2k, 3k TP
+        ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
+        ftp_rep = False
+        wsc  = 0.7*player_agi + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
+        nhits = 1
     elif ws_name == "Leaden Salute":
         base_ftp = [4.0,6.7,10.0] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
