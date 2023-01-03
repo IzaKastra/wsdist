@@ -194,7 +194,7 @@ class set_gear:
                      "Magic Crit Rate II":0
                      }
         elif mainjob == "BLM":  # Master Level 20 Black Mage stats.
-            self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':117, 'CHR':110,
+            self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':107, 'CHR':110,
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':320+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":480+16,
@@ -260,7 +260,7 @@ class set_gear:
                      "Magic Crit Rate II":0
                      }
         elif mainjob == "SCH":  # Master Level 20 Scholar stats
-            self.playerstats = {'STR':104, 'DEX':110, 'VIT':107, 'AGI':110, 'INT':115, 'MND':110, 'CHR':113, # Stats are copy/pasted from NIN. TODO: fix
+            self.playerstats = {'STR':104, 'DEX':110, 'VIT':107, 'AGI':110, 'INT':115, 'MND':110, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":460+16,
@@ -311,7 +311,7 @@ class set_gear:
                      'Accuracy1':16, 'Accuracy2':16, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':16, 'Ranged Attack':26,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':7, "Magic Burst Accuracy":0,
-                     "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet, death penalty is treated separately)
+                     "Quick Draw":40,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
@@ -356,7 +356,7 @@ class set_gear:
                      'Ranged Accuracy':41, 'Ranged Attack':40,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5 if self.gear["main"]["Skill Type"] == "Hand-to-Hand" else 0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
@@ -369,7 +369,7 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0
                      }
-        elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits and skills and stuff
+        elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits
             self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
@@ -378,7 +378,7 @@ class set_gear:
                      'Ranged Accuracy':36, 'Ranged Attack':70,
                      'Magic Accuracy':26+20, 'Magic Attack':26, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 'Magic Burst Damage':0, 'Magic Burst Damage II':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":5,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,"Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,
                      'PDL':0, 'PDL Trait':0,
@@ -392,8 +392,8 @@ class set_gear:
                      "Magic Crit Rate II":0
                      }
 
-        elif mainjob == "DNC":  # Master Level THF TODO: Dancer stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "DNC":  # Master Level 20 Dancer stats
+            self.playerstats = {'STR':110, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':104, 'MND':104, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':354+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -435,8 +435,8 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0}
-        elif mainjob == "GEO":  # Master Level THF TODO: GEO stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "GEO":  # Master Level 20 Geomancer stats
+            self.playerstats = {'STR':104, 'DEX':110, 'VIT':110, 'AGI':107, 'INT':115, 'MND':115, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':424+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":424+16+23,
@@ -456,8 +456,8 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0}
-        elif mainjob == "PLD":  # Master Level THF TODO: PLD stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "PLD":  # Master Level 20 Paladin stats
+            self.playerstats = {'STR':115, 'DEX':107, 'VIT':117, 'AGI':101, 'INT':101, 'MND':113, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':437+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':320+16,'Scythe Skill':0+16,'Staff Skill':437+16,'Great Sword Skill':418+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -477,8 +477,8 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0}
-        elif mainjob == "RUN":  # Master Level THF TODO: RUN stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "RUN":  # Master Level 20 Rune Fencer stats
+            self.playerstats = {'STR':113, 'DEX':110, 'VIT':107, 'AGI':115, 'INT':110, 'MND':110, 'CHR':104,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':437+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':388+16, 'Throwing Skill':0+16,
                      'Axe Skill':408+16,'Great Axe Skill':418+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':444+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -498,8 +498,8 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0}
-        elif mainjob == "RNG":  # Master Level THF TODO: RNG stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "RNG":  # Master Level 20 Ranger stats
+            self.playerstats = {'STR':107, 'DEX':110, 'VIT':110, 'AGI':117, 'INT':107, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':388+16,
                      'Axe Skill':408+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':444+16,'Marksmanship Skill':444+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -519,8 +519,8 @@ class set_gear:
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0}
-        elif mainjob == "PUP":  # Master Level THF TODO: PUP stats
-            self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
+        elif mainjob == "PUP":  # Master Level 20 Puppetmaster stats
+            self.playerstats = {'STR':107, 'DEX':115, 'VIT':110, 'AGI':113, 'INT':107, 'MND':104, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':398+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
@@ -660,19 +660,10 @@ class set_gear:
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 self.playerstats["Fencer"] += 2 # Fencer II native
 
-        # Add stats in from your subjob
-        # This can get complicated if your main job has a better version of a trait that your subjob would give. For example: DRK main job has a higher "Attack Bonus" trait than subjob WAR. So when DRK/WAR, don't add the Attack bonus from /WAR traits.
+
+
+        # Add bonuses from subjob stats
         if subjob == "WAR": # Master Level 20 bonus stats from Lv53 WAR subjob
-            if mainjob not in ["DRK", "WAR", "DRG", "BLU"]:
-                self.playerstats['Attack1'] += 10 # Attack Bonus I trait
-                self.playerstats['Attack2'] += 10 # Attack Bonus I trait
-                self.playerstats['Ranged Attack'] += 10 # Attack Bonus I trait
-            if mainjob not in ["WAR","BST","BRD"]:
-                if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
-                    self.playerstats["Fencer"] += 1 # Fencer I from subjob WAR. 
-                                                    # Fencer from gear is applied after we've updated playerstats with gear stats.
-                                                    # We'll apply the Fencer bonus stats after we've added up all Fencer+ from gear and traits.
-            self.playerstats['DA']  += 12 # Double Attack II trait
             self.playerstats['STR'] += 15
             self.playerstats['DEX'] += 12
             self.playerstats['VIT'] += 10
@@ -680,40 +671,152 @@ class set_gear:
             self.playerstats['INT'] += 7
             self.playerstats['MND'] += 7
             self.playerstats['CHR'] += 9
-            if mainjob not in ["DRK", "WAR", "DRG", "MNK", "PUP"]:
-                smite_bonus = 100/1024
-            if mainjob not in ["DRK", "MNK", "RNG", "DRG", "WAR", "SAM", "BST", "PUP", "DNC", "THF", "NIN", "RDM"]:
-                self.playerstats["PDL Trait"] += 10  # PDL limit I trait
-                
-        elif subjob == "SAM": # Master Level 20 bonus stats from Lv53 SAM subjob
-            if self.gear['main'].get('Skill Type', 'None') in two_handed:
-                self.playerstats["STR"] += 7 # +7 from full-time Hasso. Remove Hasso for casting on DRK, but keep it on for TP and WS
-                self.playerstats['JA Haste'] += 10 # +10 JA haste from Hasso
-                self.playerstats['Accuracy1'] += 10
-                self.playerstats['Accuracy2'] += 10
-            self.playerstats['STR'] += 12
-            self.playerstats['DEX'] += 12
-            self.playerstats['VIT'] += 12
-            self.playerstats['AGI'] += 10
-            self.playerstats['INT'] += 9
-            self.playerstats['MND'] += 9
-            self.playerstats['CHR'] += 10
-            self.playerstats["Store TP"] += 20 # Store TP III trait
-            if mainjob not in ["DRK","MNK","RNG","DRG","WAR","SAM","BST","PUP","DNC","THF","NIN","RDM"]: # Exclude jobs that get better or equal values TODO: Should also remove weaker values first. This is not an issue right now though
-                self.playerstats["PDL Trait"] += 10
-
-        elif subjob == "RDM": # Master Level 20 bonus stats from Lv53 RDM subjob.
-            self.playerstats['STR'] += 10
-            self.playerstats['DEX'] += 10
-            self.playerstats['VIT'] += 9
-            self.playerstats['AGI'] += 9
-            self.playerstats['INT'] += 12
-            self.playerstats['MND'] += 12
-            self.playerstats['CHR'] += 10
-            if mainjob not in ["BLM","RDM","BLU"]:
-                self.playerstats['Magic Attack'] += 24
-
-        elif subjob == "SCH": # Master Level 20 bonus stats from Lv49 SCH subjob. TODO: /53SCH
+            self.playerstats['DA']  += 12 # Double Attack II trait
+        elif subjob == "MNK":
+            self.playerstats["STR"] += 12
+            self.playerstats["DEX"] += 13
+            self.playerstats["VIT"] += 15
+            self.playerstats["AGI"] += 7
+            self.playerstats["INT"] += 6
+            self.playerstats["MND"] += 10
+            self.playerstats["CHR"] += 9
+        elif subjob == "WHM":
+            self.playerstats["STR"] += 10
+            self.playerstats["DEX"] += 7
+            self.playerstats["VIT"] += 10
+            self.playerstats["AGI"] += 9
+            self.playerstats["INT"] += 9
+            self.playerstats["MND"] += 15
+            self.playerstats["CHR"] += 12
+        elif subjob == "BLM":
+            self.playerstats["STR"] += 7
+            self.playerstats["DEX"] += 12
+            self.playerstats["VIT"] += 7
+            self.playerstats["AGI"] += 12
+            self.playerstats["INT"] += 15
+            self.playerstats["MND"] += 9
+            self.playerstats["CHR"] += 10
+        elif subjob == "RDM":
+            self.playerstats["STR"] += 10
+            self.playerstats["DEX"] += 10
+            self.playerstats["VIT"] += 9
+            self.playerstats["AGI"] += 9
+            self.playerstats["INT"] += 12
+            self.playerstats["MND"] += 12
+            self.playerstats["CHR"] += 10
+        elif subjob == "THF":
+            self.playerstats["STR"] += 10
+            self.playerstats["DEX"] += 15
+            self.playerstats["VIT"] += 10
+            self.playerstats["AGI"] += 13
+            self.playerstats["INT"] += 12
+            self.playerstats["MND"] += 6
+            self.playerstats["CHR"] += 6
+        elif subjob == "PLD":
+            self.playerstats["STR"] += 13
+            self.playerstats["DEX"] += 9
+            self.playerstats["VIT"] += 15
+            self.playerstats["AGI"] += 6
+            self.playerstats["INT"] += 6
+            self.playerstats["MND"] += 12
+            self.playerstats["CHR"] += 12
+        elif subjob == "DRK":
+            self.playerstats["STR"] += 15
+            self.playerstats["DEX"] += 12
+            self.playerstats["VIT"] += 12
+            self.playerstats["AGI"] += 10
+            self.playerstats["INT"] += 12
+            self.playerstats["MND"] += 6
+            self.playerstats["CHR"] += 6
+        elif subjob == "BST":
+            self.playerstats["STR"] += 0
+            self.playerstats["DEX"] += 0
+            self.playerstats["VIT"] += 0
+            self.playerstats["AGI"] += 0
+            self.playerstats["INT"] += 0
+            self.playerstats["MND"] += 0
+            self.playerstats["CHR"] += 0
+        elif subjob == "BRD":
+            self.playerstats["STR"] += 0
+            self.playerstats["DEX"] += 0
+            self.playerstats["VIT"] += 0
+            self.playerstats["AGI"] += 0
+            self.playerstats["INT"] += 0
+            self.playerstats["MND"] += 0
+            self.playerstats["CHR"] += 0
+        elif subjob == "RNG":
+            self.playerstats["STR"] += 9
+            self.playerstats["DEX"] += 10
+            self.playerstats["VIT"] += 10
+            self.playerstats["AGI"] += 15
+            self.playerstats["INT"] += 9
+            self.playerstats["MND"] += 10
+            self.playerstats["CHR"] += 9
+        elif subjob == "SAM":
+            self.playerstats["STR"] += 12
+            self.playerstats["DEX"] += 12
+            self.playerstats["VIT"] += 12
+            self.playerstats["AGI"] += 10
+            self.playerstats["INT"] += 9
+            self.playerstats["MND"] += 9
+            self.playerstats["CHR"] += 10
+        elif subjob == "NIN":
+            self.playerstats["STR"] += 12
+            self.playerstats["DEX"] += 13
+            self.playerstats["VIT"] += 12
+            self.playerstats["AGI"] += 13
+            self.playerstats["INT"] += 10
+            self.playerstats["MND"] += 6
+            self.playerstats["CHR"] += 7
+        elif subjob == "DRG":
+            self.playerstats["STR"] += 13
+            self.playerstats["DEX"] += 10
+            self.playerstats["VIT"] += 12
+            self.playerstats["AGI"] += 10
+            self.playerstats["INT"] += 7
+            self.playerstats["MND"] += 9
+            self.playerstats["CHR"] += 12
+        elif subjob == "SMN":
+            self.playerstats["STR"] += 7
+            self.playerstats["DEX"] += 9
+            self.playerstats["VIT"] += 7
+            self.playerstats["AGI"] += 10
+            self.playerstats["INT"] += 13
+            self.playerstats["MND"] += 13
+            self.playerstats["CHR"] += 13
+        elif subjob == "BLU":
+            self.playerstats["STR"] += 9
+            self.playerstats["DEX"] += 9
+            self.playerstats["VIT"] += 9
+            self.playerstats["AGI"] += 9
+            self.playerstats["INT"] += 9
+            self.playerstats["MND"] += 9
+            self.playerstats["CHR"] += 9
+        elif subjob == "COR":
+            self.playerstats["STR"] += 9
+            self.playerstats["DEX"] += 12
+            self.playerstats["VIT"] += 9
+            self.playerstats["AGI"] += 13
+            self.playerstats["INT"] += 12
+            self.playerstats["MND"] += 9
+            self.playerstats["CHR"] += 9
+        elif subjob == "PUP":
+            self.playerstats["STR"] += 9
+            self.playerstats["DEX"] += 13
+            self.playerstats["VIT"] += 10
+            self.playerstats["AGI"] += 12
+            self.playerstats["INT"] += 9
+            self.playerstats["MND"] += 7
+            self.playerstats["CHR"] += 12
+        elif subjob == "DNC":
+            self.playerstats["STR"] += 10
+            self.playerstats["DEX"] += 12
+            self.playerstats["VIT"] += 9
+            self.playerstats["AGI"] += 13
+            self.playerstats["INT"] += 7
+            self.playerstats["MND"] += 7
+            self.playerstats["CHR"] += 13
+        elif subjob == "SCH": # Lv49 SCH subjob. Need to update to Lv53 TODO
             self.playerstats['STR'] += 7
             self.playerstats['DEX'] += 9
             self.playerstats['VIT'] += 8
@@ -721,60 +824,123 @@ class set_gear:
             self.playerstats['INT'] += 13
             self.playerstats['MND'] += 9
             self.playerstats['CHR'] += 11
-            self.playerstats["Elemental Magic Skill"] = max(self.playerstats["Elemental Magic Skill"], 440+16) # Dark Arts enhances elemental magic skill to B+ rank (then +16 for merits)
+            self.playerstats["Elemental Magic Skill"] = max(self.playerstats["Elemental Magic Skill"], 440+16) # Dark Arts enhances elemental magic skill to B+ rank, plus 16 from merits
             self.playerstats["Magic Accuracy"] += 15 # fulltime klimaform
+        elif subjob == "GEO":
+            self.playerstats["STR"] += 7
+            self.playerstats["DEX"] += 10
+            self.playerstats["VIT"] += 10
+            self.playerstats["AGI"] += 9
+            self.playerstats["INT"] += 13
+            self.playerstats["MND"] += 13
+            self.playerstats["CHR"] += 9
+        elif subjob == "RUN":
+            self.playerstats["STR"] += 12
+            self.playerstats["DEX"] += 10
+            self.playerstats["VIT"] += 9
+            self.playerstats["AGI"] += 13
+            self.playerstats["INT"] += 10
+            self.playerstats["MND"] += 10
+            self.playerstats["CHR"] += 7
 
-        elif subjob == "DRG": # Master Level 20 bonus stats from Lv53 DRG subjob. Not yet implemented; copy/pasted /sam stuff
-            self.playerstats['STR'] += 12
-            self.playerstats['DEX'] += 12
-            self.playerstats['VIT'] += 12
-            self.playerstats['AGI'] += 10
-            self.playerstats['INT'] += 9
-            self.playerstats['MND'] += 9
-            self.playerstats['CHR'] += 10
-            self.playerstats["Weaponskill Bonus"] += 7 # WS Damage Boost I trait. Assuming it applies to all hits.
-            if mainjob not in ["DRK", "WAR", "DRG", "BLU"]:
-                self.playerstats['Attack1'] += 10 # Attack Bonus I trait
-                self.playerstats['Attack2'] += 10 # Attack Bonus I trait
-                self.playerstats['Ranged Attack'] += 10 # Attack Bonus I trait
-            if mainjob not in ["DRK", "WAR", "DRG", "MNK", "PUP"]:
-                smite_bonus = 100./1024 # Smite I trait
-            if mainjob not in ["RNG", "DRG", "DNC", "RUN", "BLU"]:
-                self.playerstats['Accuracy1'] += 10 # Accuracy Bonus I trait
-                self.playerstats['Accuracy2'] += 10 # Accuracy Bonus I trait
-                self.playerstats['Ranged Accuracy'] += 10 # Accuracy Bonus I trait
-            if mainjob not in ["DRK", "MNK", "RNG", "DRG", "WAR", "SAM", "BST", "PUP", "DNC", "THF", "NIN", "RDM"]:
-                self.playerstats["PDL Trait"] += 10  # PDL limit I trait
+        # Subjob stats are finished. Now do subjob traits. This organization makes it easier to update subjobs to Lv55 later.
 
-        elif subjob == "NIN": # Master Level 20 bonus stats from Lv53 NIN subjob. Not yet implemented; copy/pasted /sam stuff
-            self.playerstats['STR'] += 12
-            self.playerstats['DEX'] += 12
-            self.playerstats['VIT'] += 12
-            self.playerstats['AGI'] += 10
-            self.playerstats['INT'] += 9
-            self.playerstats['MND'] += 9
-            self.playerstats['CHR'] += 10
-            if mainjob not in ["DRK", "MNK", "RNG", "DRG", "WAR", "SAM", "BST", "PUP", "DNC", "THF", "NIN", "RDM"]:
-                self.playerstats["PDL Trait"] += 10  # PDL limit I trait
+        # TODO: remove main_job in _jobs. add another if statement layer.
 
-        elif subjob == "DRK": # Master Level 20 bonus stats from Lv53 NIN subjob. Not yet implemented; copy/pasted /sam stuff
-            self.playerstats['STR'] += 12
-            self.playerstats['DEX'] += 12
-            self.playerstats['VIT'] += 12
-            self.playerstats['AGI'] += 10
-            self.playerstats['INT'] += 9
-            self.playerstats['MND'] += 9
-            self.playerstats['CHR'] += 10
-            if mainjob not in ["DRK", "MNK", "RNG", "DRG", "WAR", "SAM", "BST", "PUP", "DNC", "THF", "NIN", "RDM"]:
-                self.playerstats["PDL Trait"] += 20  # PDL limit II trait
-            if mainjob not in ["DRK", "WAR", "DRG", "BLU"]:
-                self.playerstats['Attack1'] += 35 # Attack Bonus I trait
-                self.playerstats['Attack2'] += 35 # Attack Bonus I trait
-                self.playerstats['Ranged Attack'] += 35 # Attack Bonus I trait
-            if mainjob not in ["DRK", "WAR", "DRG", "MNK", "PUP"]:
-                smite_bonus = 152./1024 # Smite II trait
-     
-        # Traits are done now.
+        smite1_jobs = ["DRK","WAR","MNK","DRG"] # +100/1024 attack
+        smite2_jobs = ["DRK"] # +152/1024 attack
+        smite3_jobs = ["DRK"] # +204/1024 attack (55drk)
+        if subjob in smite2_jobs and mainjob not in smite1_jobs:
+            smite_bonus = 152./1024
+        elif subjob in smite1_jobs and mainjob not in smite1_jobs:
+            smite_bonus = 100./1024
+
+        pdl1_jobs = ["DRK","MNK","RNG","DRG","WAR","SAM","BST","PUP","DNC","THF","NIN","RDM"] # +0.1 PDL
+        pdl2_jobs = ["DRK"] # +0.2 PDL
+        # pdl3_jobs = ["DRK"] # +0.3 PDL (55drk)
+        if subjob in pdl2_jobs and mainjob not in pdl1_jobs:
+            self.playerstats["PDL Trait"] += 20
+        elif subjob in pdl1_jobs and mainjob not in pdl1_jobs:
+            self.playerstats["PDL Trait"] += 10
+
+        attack1_jobs = ["DRK","DRG","WAR"] # +10 attack
+        attack3_jobs = ["DRK"] # +35 attack
+        if subjob in attack3_jobs and mainjob not in attack1_jobs:
+            self.playerstats["Attack1"] += 35
+            self.playerstats["Attack2"] += 35
+            self.playerstats["Ranged Attack"] += 35
+        elif subjob in attack1_jobs and mainjob not in attack1_jobs:
+            self.playerstats["Attack1"] += 10
+            self.playerstats["Attack2"] += 10
+            self.playerstats["Ranged Attack"] += 10
+
+        acc1_jobs = ["RNG","DRG","DNC","RUN"] # +10 accuracy
+        acc3_jobs = ["RNG"] # +35 accuracy
+        if subjob in acc3_jobs and mainjob not in acc1_jobs:
+            self.playerstats["Accuracy1"] += 35
+            self.playerstats["Accuracy2"] += 35
+            self.playerstats["Ranged Accuracy"] += 35
+        elif subjob in acc1_jobs and mainjob not in acc1_jobs:
+            self.playerstats["Accuracy1"] += 10
+            self.playerstats["Accuracy2"] += 10
+            self.playerstats["Ranged Accuracy"] += 10
+
+        matk2_jobs = ["BLM","RDM"] # +24 magic attack
+        matk3_jobs = ["BLM"] # +28 magic attack
+        if subjob in matk3_jobs and mainjob not in matk2_jobs:
+            self.playerstats["Magic Attack"] += 28
+        if subjob in matk2_jobs and mainjob not in matk2_jobs:
+            self.playerstats["Magic Attack"] += 24
+
+        burst1_jobs = ["BLM"] # +5% magic burst bonus
+        if subjob in burst1_jobs and mainjob not in burst1_jobs:
+            self.playerstats["Magic Burst Damage II"] += 5 # TODO: rename to magic burst trait
+
+        martialarts2_jobs = ["MNK","PUP"] # Martial Arts = 100
+        martialarts4_jobs = ["MNK"] # Martial Arts = 140
+        if subjob in martialarts4_jobs and mainjob not in martialarts2_jobs:
+            self.playerstats["Martial Arts"] = 480-340
+        elif subjob in martialarts2_jobs and mainjob not in martialarts2_jobs:
+            self.playerstats["Martial Arts"] = 480-380
+
+        kickattacks1_jobs = ["MNK"] # +10% kick attacks (h2h mainhand only)
+        if subjob in kickattacks1_jobs and self.gear["main"]["Skill Type"] == "Hand-to-Hand" and mainjob not in kickattacks1_jobs:
+            self.playerstats["Kick Attacks"] += 10
+
+        fencer1_jobs = ["WAR"] # +1 Fencer
+        if subjob in fencer1_jobs and self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed and mainjob not in fencer1_jobs: # Fencer trait (+1)
+            self.playerstats["Fencer"] += 1 # Fencer I from subjob WAR. 
+                                            # Fencer from gear is applied after we've updated playerstats with gear stats.
+                                            # We'll apply the Fencer bonus stats after we've added up all Fencer+ from gear and traits.
+
+        da2_jobs = ["WAR"] # +12% DA
+        if subjob in da2_jobs and mainjob not in da2_jobs:
+            self.playerstats["DA"] += 12
+
+        # deadaim1_jobs = ["RNG"] # +10% ranged crit damage
+        # if subjob in deadaim1_jobs and mainjob not in deadaim1_jobs:
+        #     self.playerstats["Ranged Crit Damage"] += 10
+
+        zanshin3_jobs = ["SAM"] # +35 zanshin
+        if subjob in zanshin3_jobs and mainjob not in zanshin3_jobs:
+            self.playerstats["Zanshin"] += 35
+
+        # ta1_jobs = ["THF"] # TA+5% (55thf)
+        # if subjob in ta1_jobs and mainjob not in ta1_jobs:
+        #     self.playerstats["TA"] += 5
+
+        storetp3_jobs = ["SAM"] # +20 store tp
+        if subjob in storetp3_jobs and mainjob not in storetp3_jobs:
+            self.playerstats["Store TP"] += 20
+
+        wstrait1_jobs = ["DRG"] # +7% WSD (all hits)
+        # wstrait2_jobs = ["DRG"] # +10% WSD (all hits) (55drg)
+        if subjob in wstrait1_jobs and mainjob not in wstrait1_jobs:
+            self.playerstats["Weaponskill Bonus"] += 7
+
+        skillchain1_jobs = ["DNC"] # +8% Skill chain damage
+        if subjob in skillchain1_jobs and mainjob not in skillchain1_jobs:
+            self.playerstats["Skillchain Bonus"] += 8
 
         # Do set bonuses!
         # Count the number of set-bonus gear equipped.
@@ -934,6 +1100,7 @@ class set_gear:
         # First collect the individual attack% boosts and add them together.
         percent_attack_buff = 0.0
         percent_rangedattack_buff = 0.0
+        naegling_attack_bonus = 0.0
         if buffs['cor']:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
         if buffs['geo']:
@@ -949,14 +1116,14 @@ class set_gear:
             nbuffs += 4 if buffs['brd'] else 0 # If BRD in party, assume +4 buffs from songs
             nbuffs += 2 if buffs['cor'] else 0 # If COR in party, assume +2 buffs from rolls
             nbuffs += 1 if buffs['geo'] else 0 # If GEO in party, assume +1 buff from bubble
-            percent_attack_buff += 10.*nbuffs/1024.
+            naegling_attack_bonus += 10.*nbuffs/1024.
 
         smite_bonus = 0 if self.gear['main'].get('Skill Type','None') not in ["Scythe", "Great Sword", "Hand-to-Hand", "Polearm", "Great Axe", "Great Katana", "Staff"] else smite_bonus
 
         # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
-        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus)
+        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus)
         self.playerstats['Attack2'] *= (1+percent_attack_buff) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
         self.playerstats['Ranged Attack'] *= (1+percent_attack_buff + percent_rangedattack_buff) # Smite does not apply to ranged attacks.
 

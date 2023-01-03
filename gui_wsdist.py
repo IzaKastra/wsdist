@@ -457,6 +457,7 @@ while True:
             window["select flourish"].update(visible=True if main_job.lower()=="dnc" else False)
             window["footwork toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
+            window["trueshot toggle"].update(visible=True if main_job.lower()=="rng" else False)
 
             # Deselect Job abilities so they arent enabled while hidden.
             window["magic burst toggle"].update(False)
@@ -468,6 +469,7 @@ while True:
             window["ta toggle"].update(False)
             window["impetus toggle"].update(False)
             window["footwork toggle"].update(False)
+            window["trueshot toggle"].update(False)
 
             # Enable magic sets for casting jobs.
             if main_job in spell_dict:
@@ -773,6 +775,7 @@ while True:
             climactic_flourish = True if values["select flourish"] == "Climactic Flourish" else False
             striking_flourish = True if values["select flourish"] == "Striking Flourish" else False
             ternary_flourish = True if values["select flourish"] == "Ternary Flourish" else False
+            true_shot_toggle = values["trueshot toggle"]
 
 
             # Define a dictionary so we can just pass this one thing in instead of passing 10 things to the WS function later
@@ -785,7 +788,8 @@ while True:
                              "Building Flourish":building_flourish,
                              "Climactic Flourish":climactic_flourish,
                              "Striking Flourish":striking_flourish,
-                             "Ternary Flourish":ternary_flourish}
+                             "Ternary Flourish":ternary_flourish,
+                             "True Shot":true_shot_toggle}
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
 

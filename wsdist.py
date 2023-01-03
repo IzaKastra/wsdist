@@ -52,6 +52,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     trick_attack = job_abilities["Trick Attack"]
     impetus = job_abilities["Impetus"]
     hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not included yet.
+    true_shot_toggle = job_abilities["True Shot"]
 
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
@@ -130,7 +131,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     crit_dmg = gearset.playerstats['Crit Damage']/100
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
-    true_shot = gearset.playerstats['True Shot']/100
+    true_shot = gearset.playerstats['True Shot']/100 * true_shot_toggle # 0 if False
 
 
     sneak_attack_bonus = (gearset.playerstats["DEX"] * (1+gearset.playerstats["Sneak Attack"]/100))*sneak_attack
@@ -1065,7 +1066,7 @@ if __name__ == "__main__":
                         "Climactic Flourish":False,
                         "Striking Flourish":False,
                         "Ternary Flourish":False,
-                        "Hover Shot":0}
+                        "True Shot":False}
 
     if False:
         import cProfile

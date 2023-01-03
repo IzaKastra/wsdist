@@ -26,7 +26,7 @@ fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
 main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD", "THF", "MNK", "DNC", "BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
-sub_jobs = sorted(["WAR", "SAM", "SCH", "RDM", "NIN", "DRK", "DRG"]) + ["None"]
+sub_jobs = sorted(["WAR","MNK","WHM","BLM","RDM","THF","PLD","DRK","BST","BRD","RNG","SAM","NIN","DRG","SMN","BLU","COR","PUP","DNC","GEO","RUN"]) + ["None"]
 
 player_column = [
   [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value="NIN", readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
@@ -98,7 +98,7 @@ ws_column2 = [
   ])),sg.Push(),
   sg.vtop(sg.Column([
   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
-  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False)],
+  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False),sg.Checkbox("True Shot",font=font_choice,key="trueshot toggle",visible=False)],
   [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False),],
   [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +40%\nAttack+80\nCrit Damage +40% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False)],
   ],))
