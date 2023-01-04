@@ -129,7 +129,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100 # Only DRG traits go here. DRG main job also gets wyvern bonus 10% here.
 
     rng_crit_dmg = gearset.playerstats['Ranged Crit Damage']/100
-    crit_dmg = gearset.playerstats['Crit Damage']/100
+    crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100*phys_rng_ws
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
     true_shot = gearset.playerstats['True Shot']/100 * true_shot_toggle # 0 if False
@@ -269,7 +269,6 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     # print("Before: ",ws_bonus,crit_rate)
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
-    print("1 ",player_rangedattack)
     scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, job_abilities, kick_ws_footwork,)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
@@ -287,7 +286,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
     # print("After: ",ws_bonus,crit_rate)
-    print("2 ",player_rangedattack)
+
 
     player_accuracy1 += acc_bonus
     player_accuracy2 += acc_bonus
@@ -1038,7 +1037,7 @@ if __name__ == "__main__":
 
     starting_gearset1 = {
                 'main' : Heishi,
-                'sub' : Kunimitsu,
+                'sub' : Kunimitsu30,
                 'ranged' : Empty,
                 'ammo' : Yetshila,
                 'head' : Blistering_Sallet,

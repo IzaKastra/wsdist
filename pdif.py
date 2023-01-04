@@ -185,7 +185,7 @@ def get_pdif_ranged(player_ranged_attack, wpn_type_skill, pdl_trait, pdl_gear, e
         pdif = qratio
 
     if crit:
-        pdif *= 1.25
+        pdif *= 1.25 # Dead Aim (crit damage) is applied in get_phys_dmg. This is all multiplied together, so it doesn't matter where it gets applied
 
     return(pdif, crit)
 

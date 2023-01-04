@@ -59,7 +59,7 @@ class set_gear:
                  'STR':0, 'DEX':0, 'VIT':0, 'AGI':0, 'INT':0, 'MND':0, 'CHR':0,
                  'Katana Skill':0, 'Dagger Skill':0, 'Sword Skill':0, 'Hand-to-Hand Skill':0, 'Great Katana Skill':0, 'Club Skill':0, 'Throwing Skill':0,
                  'Axe Skill':0,'Great Axe Skill':0,'Polearm Skill':0,'Scythe Skill':0,'Staff Skill':0,'Great Sword Skill':0,'Archery Skill':0,'Marksmanship Skill':0,
-                 'Ninjutsu Skill':0, 'Great Sword Skill':0, 'Marksmanship Skill':0, "Elemental Magic Skill":0,
+                 'Ninjutsu Skill':0, 'Great Sword Skill':0, 'Marksmanship Skill':0, "Elemental Magic Skill":0, "Evasion Skill":0,
                  'Accuracy':0, 'Attack':0,
                  'Ranged Accuracy':0, 'Ranged Attack':0,
                  'Magic Accuracy':0, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -77,7 +77,7 @@ class set_gear:
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                  'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                  'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                 "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                 "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,"Magic Def":0,
                  }
 
 
@@ -89,7 +89,7 @@ class set_gear:
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':113, 'AGI':115, 'INT':110, 'MND':101, 'CHR':104,
                      'Katana Skill':444+16, 'Dagger Skill':398+16, 'Sword Skill':393+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':320+16,'Marksmanship Skill':393+16,
-                     'Ninjutsu Skill':473+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':473+16, "Elemental Magic Skill":0+16, "Evasion Skill":437+16,
                      'Accuracy1':56, 'Accuracy2':56, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':56, 'Ranged Attack':70,
                      'Magic Accuracy':50, 'Magic Attack':28, 'Magic Damage':40, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -107,13 +107,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,
                      }
         elif mainjob == "DRK":  # Master Level 20 Dark Knight stats
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
                      'Scythe Skill':444+16, 'Dagger Skill':393+16, 'Sword Skill':408+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':388+16, 'Throwing Skill':0+16,
                      'Katana Skill':0+16, 'Axe Skill':408+16,'Great Axe Skill':408+16,'Polearm Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':437+16,'Archery Skill':0+16,'Marksmanship Skill':320+16,
-                     'Ninjutsu Skill':0, 'Dark Magic Skill':473+16, "Elemental Magic Skill":424+16,
+                     'Ninjutsu Skill':0, 'Dark Magic Skill':473+16, "Elemental Magic Skill":424+16, "Evasion Skill":393+16,
                      'Accuracy1':22, 'Accuracy2':22, 'Attack1':202, 'Attack2':202,
                      'Ranged Accuracy':22, 'Ranged Attack':202,
                      'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
@@ -131,13 +131,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
                      }
         elif mainjob == "WAR":  # Master Level 20 Warrior stats. Smite and Fencer are added later
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':110, 'AGI':113, 'INT':104, 'MND':104, 'CHR':107,
                      'Scythe Skill':424+16, 'Dagger Skill':408+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':334+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':354+16,
                      'Katana Skill':0+16, 'Axe Skill':437+16,'Great Axe Skill':444+16,'Polearm Skill':408+16,'Staff Skill':418+16,'Great Sword Skill':424+16,'Archery Skill':354+16,'Marksmanship Skill':354+16,
-                     'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":393+16,
                      'Accuracy1':26, 'Accuracy2':26, 'Attack1':70+35, 'Attack2':70+35,
                      'Ranged Accuracy':26, 'Ranged Attack':70+35,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
@@ -155,13 +155,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
                      }
         elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso is added later.
             self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':398+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':444+16, 'Club Skill':320+16, 'Throwing Skill':398+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':408+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':398+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0, "Elemental Magic Skill":0,
+                     'Ninjutsu Skill':0, "Elemental Magic Skill":0, "Evasion Skill":424+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
@@ -179,13 +179,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
                      }
         elif mainjob == "DRG":  # Master Level 20 Dragoon stats. Smite is added later. Bonuses for having a Wyvern out are added later.
             self.playerstats = {'STR':115, 'DEX':110, 'VIT':113, 'AGI':110, 'INT':104, 'MND':107, 'CHR':113,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':0+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':444+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0, "Elemental Magic Skill":0,
+                     'Ninjutsu Skill':0, "Elemental Magic Skill":0, "Evasion Skill":408+16,
                      'Accuracy1':64+35, 'Accuracy2':64+35, 'Attack1':55+22, 'Attack2':55+22,
                      'Ranged Accuracy':64+35, 'Ranged Attack':55,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
@@ -203,13 +203,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
                      }
         elif mainjob == "BLM":  # Master Level 20 Black Mage stats.
             self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':107, 'CHR':110,
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':320+16,'Staff Skill':408+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":480+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":480+16, "Evasion Skill":320+16,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
                      'Magic Accuracy':62, 'Magic Attack':50+40+10, 'Magic Damage':43, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -227,13 +227,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,
                      }
         elif mainjob == "WHM":  # Master Level 20 White Mage stats.
             self.playerstats = {'STR':110, 'DEX':104, 'VIT':110, 'AGI':107, 'INT':107, 'MND':117, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':424+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":320+16,
                      'Accuracy1':14, 'Accuracy2':14, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':14, 'Ranged Attack':0,
                      'Magic Accuracy':70, 'Magic Attack':22, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -251,13 +251,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":20,
                      }
         elif mainjob == "RDM":  # Master Level 20 Red Mage stats. +15+25 "Magic Accuracy" from assumed merits. +35% TA from Temper2
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':107, 'AGI':107, 'INT':113, 'MND':113, 'CHR':110,
                      'Katana Skill':0+16, 'Dagger Skill':418+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':285+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':354+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":398+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":398+16, "Evasion Skill":354+16,
                      'Accuracy1':32, 'Accuracy2':32, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':22, 'Ranged Attack':0,
                      'Magic Accuracy':90+15+25, 'Magic Attack':48+28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -275,13 +275,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":56,"Evasion":0,"Magic Def":14,
                      }
         elif mainjob == "SCH":  # Master Level 20 Scholar stats. +15 Magic Accuracy from Klimaform.
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':107, 'AGI':110, 'INT':115, 'MND':110, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':354+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':354+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":460+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":460+16, "Evasion Skill":320+16,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
                      'Magic Accuracy':27+15, 'Magic Attack':36, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -299,13 +299,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,
                      }
         elif mainjob == "COR":  # Master Level 20 Corsair stats.
             self.playerstats = {'STR':107, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':113, 'MND':107, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':424+16, 'Sword Skill':408+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':398+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':418+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":354+16,
                      'Accuracy1':26, 'Accuracy2':26, 'Attack1':26, 'Attack2':26,
                      'Ranged Accuracy':46, 'Ranged Attack':26,
                      'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
@@ -323,13 +323,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
                      }
         elif mainjob == "BRD":  # Master Level 20 Bard stats. Fencer is added later.
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':110, 'AGI':104, 'INT':110, 'MND':110, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':388+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':358+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":354+16,
                      'Accuracy1':16, 'Accuracy2':16, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':16, 'Ranged Attack':26,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
@@ -347,13 +347,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
                      }
         elif mainjob == "THF":  # Master Level 20 Thief stats.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
                      'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':320+16, 'Great Katana Skill':388+16, 'Club Skill':320+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':388+16,'Marksmanship Skill':398+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":444+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':50, 'Attack2':50,
                      'Ranged Accuracy':36, 'Ranged Attack':50,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -371,13 +371,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":70+72,"Magic Def":0,
                      }
         elif mainjob == "MNK":  # Master Level 20 Monk stats. Smite is added later. Kick attacks are zeroed out after adding gear stats later if not using a h2h weapon.
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':117, 'AGI':104, 'INT':101, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':398+16, 'Throwing Skill':320+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':418+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":424+16,
                      'Accuracy1':41, 'Accuracy2':41, 'Attack1':40, 'Attack2':40,
                      'Ranged Accuracy':41, 'Ranged Attack':40,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -395,13 +395,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":42,"Magic Def":0,
                      }
         elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits
             self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":388+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
                      'Magic Accuracy':26+20, 'Magic Attack':26, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -419,13 +419,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
                      }
-        elif mainjob == "DNC":  # Master Level 20 Dancer stats. +15 Accuracy when facing an enemy (5/5 Closed Position merits)
+        elif mainjob == "DNC":  # Master Level 20 Dancer stats. +15 Accuracy and Evasion when facing an enemy (5/5 Closed Position merits)
             self.playerstats = {'STR':110, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':104, 'MND':104, 'CHR':115,
                      'Katana Skill':0+16, 'Dagger Skill':444+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':354+16, 'Great Katana Skill':0+16, 'Club Skill':0+16, 'Throwing Skill':444+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":424+16,
                      'Accuracy1':64+15+35, 'Accuracy2':64+15+35, 'Attack1':42, 'Attack2':42,
                      'Ranged Accuracy':64+35, 'Ranged Attack':42,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -443,13 +443,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64+48+15,"Magic Def":0,
                      }
         elif mainjob == "BST":  # Master Level THF TODO: BST stats. Smite and Fencer are added later. BST gets +50 accuracy from Tandem Strike.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
                      'Katana Skill':0+16, 'Dagger Skill':398+16, 'Sword Skill':320+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':0+16,
                      'Axe Skill':444+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':388+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":393+16,
                      'Accuracy1':36+50, 'Accuracy2':36+50, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
                      'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -467,13 +467,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
                      }
         elif mainjob == "GEO":  # Master Level 20 Geomancer stats
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':110, 'AGI':107, 'INT':115, 'MND':115, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':424+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':398+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":424+16+23,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":424+16+23, "Evasion Skill":354+16,
                      'Accuracy1':0, 'Accuracy2':0, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':0, 'Ranged Attack':0,
                      'Magic Accuracy':50+20, 'Magic Attack':42+20, 'Magic Damage':13, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -491,12 +491,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,}
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":0,
+                     }
         elif mainjob == "PLD":  # Master Level 20 Paladin stats
             self.playerstats = {'STR':115, 'DEX':107, 'VIT':117, 'AGI':101, 'INT':101, 'MND':113, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':437+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':320+16,'Scythe Skill':0+16,'Staff Skill':437+16,'Great Sword Skill':418+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":393+16,
                      'Accuracy1':28, 'Accuracy2':28, 'Attack1':28, 'Attack2':28,
                      'Ranged Accuracy':28, 'Ranged Attack':28,
                      'Magic Accuracy':42, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -514,13 +515,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":22,"Magic Def":0,
                      }
         elif mainjob == "RUN":  # Master Level 20 Rune Fencer stats
             self.playerstats = {'STR':113, 'DEX':110, 'VIT':107, 'AGI':115, 'INT':110, 'MND':110, 'CHR':104,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':437+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':388+16, 'Throwing Skill':0+16,
                      'Axe Skill':408+16,'Great Axe Skill':418+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':444+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":424+16,
                      'Accuracy1':56+35, 'Accuracy2':56+35, 'Attack1':50, 'Attack2':50,
                      'Ranged Accuracy':56+35, 'Ranged Attack':50,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -538,13 +539,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":70,"Evasion":56,"Magic Def":22,
                      }
         elif mainjob == "RNG":  # Master Level 20 Ranger stats. +45 Ranged Crit from Dead Aim traits
             self.playerstats = {'STR':107, 'DEX':110, 'VIT':110, 'AGI':117, 'INT':107, 'MND':110, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':408+16, 'Sword Skill':354+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':320+16, 'Throwing Skill':388+16,
                      'Axe Skill':408+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':444+16,'Marksmanship Skill':444+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":320+16,
                      'Accuracy1':70+73, 'Accuracy2':70+73, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':70+73, 'Ranged Attack':70,
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -562,13 +563,13 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":14,"Magic Def":0,
                      }
         elif mainjob == "PUP":  # Master Level 20 Puppetmaster stats
             self.playerstats = {'STR':107, 'DEX':115, 'VIT':110, 'AGI':113, 'INT':107, 'MND':104, 'CHR':113,
                      'Katana Skill':0+16, 'Dagger Skill':388+16, 'Sword Skill':0+16, 'Hand-to-Hand Skill':444+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':398+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
-                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16,
+                     'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":418+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':30, 'Attack2':30,
                      'Ranged Accuracy':36, 'Ranged Attack':30,
                      'Magic Accuracy':36, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
@@ -586,7 +587,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":56+48,"Magic Def":0,
                      }
 
 
@@ -935,9 +936,24 @@ class set_gear:
         if subjob in skillchain1_jobs and mainjob not in skillchain1_jobs:
             self.playerstats["Skillchain Bonus"] += 8
 
+        evasion2_jobs = ["THF","DNC","PUP"] # +22 evasion
+        evasion3_jobs = ["THF"] # +35 evasion
+        if subjob in evasion3_jobs and mainjob not in evasion2_jobs:
+            self.playerstats["Evasion"] += 35
+        elif subjob in evasion2_jobs and mainjob not in evasion2_jobs:
+            self.playerstats["Evasion"] += 22
+
+        mdef2_jobs = ["RUN","WHM","RDM"] # +12 Magic Def
+        mdef3_jobs = ["RUN","WHM"] # +14 Magic Def
+        if subjob in mdef3_jobs and mainjob not in mdef2_jobs:
+            self.playerstats["Magic Def"] += 14
+        elif subjob in mdef2_jobs and mainjob not in mdef2_jobs:
+            self.playerstats["Magic Def"] += 12
+
+
         # Do set bonuses!
         # Count the number of set-bonus gear equipped.
-        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0, "Weaponskill Damage":0}
+        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0, "Weaponskill Damage":0, "Attack":0}
         adhemar_count = 0    # Adhemar +1 gives Crit Rate
         mummu_count = 0      # Mummu +2 with the Mummu Ring gives DEX/AGI/VIT/CHR
         regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy.
@@ -945,6 +961,7 @@ class set_gear:
         ayanmo_count = 0     # Flamma +2 with the Flamma Ring gives STR/VIT/MND
         amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
         lustratio_count = 0    # +2 WSD for every piece of Amalric equipped after the first
+        ryuo_count = 0    # +10 attack for every piece of Ryuo equipped after the first
         af_armor = {"war":"pummeler","mnk":"anchorite","whm":"theophany","blm":"spaekona","rdm":"atrophy","thf":"pillager","pld":"reverence","drk":"ignominy","bst":"totomic","brd":"brioso","rng":"orion","sam":"wakido","nin":"hachiya","drg":"vishap","smn":"convoker","blu":"assimilator","cor":"laksamana","pup":"foire","dnc":"maxixi","sch":"academic","geo":"geomancy","run":"runeist"}
         for slot in gear:
             if "adhemar" in gear[slot]['Name'].lower() and "+1" in gear[slot]['Name'].lower():
@@ -953,6 +970,8 @@ class set_gear:
                 amalric_count += 1
             if "Lustratio" in gear[slot]["Name"]:
                 lustratio_count += 1
+            if "Ryuo" in gear[slot]["Name"]:
+                ryuo_count += 1
 
             if "regal ring" == gear['ring1']['Name'].lower() or "regal ring" == gear['ring2']['Name'].lower():
                 if af_armor[mainjob.lower()] in gear[slot]['Name'].lower():
@@ -975,7 +994,7 @@ class set_gear:
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['VIT'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['CHR'] += (mummu_count)*8 if mummu_count >= 2 else 0
-        self.set_bonuses['Accuracy']        += (regal_ring_count)*15
+        self.set_bonuses['Accuracy'] += (regal_ring_count)*15
         self.set_bonuses['Ranged Accuracy'] += (regal_ring_count)*15
         self.set_bonuses['Magic Accuracy']  += (regal_ring_count)*15
         self.set_bonuses['DEX'] += (flamma_count)*8 if flamma_count >= 2 else 0
@@ -986,6 +1005,7 @@ class set_gear:
         self.set_bonuses['VIT'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0
         self.set_bonuses['MND'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
         self.set_bonuses['Weaponskill Damage'] += (lustratio_count)*2 if lustratio_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
+        self.set_bonuses['Attack'] += (ryuo_count)*10 if ryuo_count >= 2 else 0
 
         # Details:
         # Your gear stats start out as all zero. Your player stats start out as whatever base values you have from traits/gifts/etc
@@ -998,7 +1018,7 @@ class set_gear:
         # Add set bonuses to gearstats
         for stat in self.set_bonuses:
             self.gearstats[stat] += self.set_bonuses[stat] # Stats from gear get set bonuses from gear
-            if stat == 'Accuracy': # Skip the Accuracy stat for the "playerstats." Accuracy is added to "gearstats" on the line above, then converted to Accuracy1 and Accuracy2 in "playerstats" later.
+            if stat in ["Attack","Accuracy"]: # Skip the Accuracy stat for the "playerstats." Accuracy is added to "gearstats" on the line above, then converted to Accuracy1 and Accuracy2 in "playerstats" later.
                 continue
             else:
                 self.playerstats[stat] += self.set_bonuses[stat]
@@ -1043,6 +1063,24 @@ class set_gear:
         # Zero Kick Attacks if not using a Hand-to-Hand weapon. TODO: remove this and treat it the same as daken in the main code
         if self.gear["main"]["Skill Type"] != "Hand-to-Hand":
             self.playerstats["Kick Attacks"] = 0
+        # Zero Daken if not using Shuriken.
+        if self.gear["ammo"]["Type"] != "Shuriken":
+            self.playerstats["Daken"] = 0
+
+        # Calculate evasion. Traits are already included in playerstats, so we just need to add evasion from skill and half of AGI
+
+        def get_skill_evasion(evasion_skill):
+            #
+            # Evasion skill over 300 is only worth 0.8 evasion based on my incredibly incomplete testing.
+            #
+            if evasion_skill >= 300:
+                evasion = 300 + 0.8*(evasion_skill - 300)
+            else:
+                evasion = evasion_skill 
+
+            return(evasion)
+
+        self.playerstats["Evasion"] += int(self.playerstats["AGI"]/2) + get_skill_evasion(self.playerstats["Evasion Skill"])
 
         # Stats from food are used to calculate Attack and Accuracy before any % bonuses such as Chaos Roll or GEO's Fury bubble
         # Add food stat bonuses here
@@ -1136,18 +1174,23 @@ class set_gear:
 
 
         # Now work on accuracy1, accuracy2, and ranged accuracy stats
-
-        # Define the accuracy case statement from BG wiki
         def get_skill_accuracy(wpn, slot):
+            #
+            # Calculate accuracy from weapon-type skill.
+            # The contribution from skill changes with different skill levels. We need to add the contributions separately
+            #
             skill = self.playerstats.get(wpn.get('Skill Type','None') + ' Skill',0) + wpn.get(wpn.get('Skill Type','None') + ' Skill',0)*(slot != "ammo")*(slot != "ranged") # We've already added skill from ranged+ammo slots. Do not add them again.
-            if skill >= 601:
-                skill_accuracy = int((skill-600)*0.9)+540
-            elif skill >= 401:
-                skill_accuracy = int((skill-400)*0.8)+380
-            elif skill >= 201:
-                skill_accuracy = int((skill-200)*0.9)+200
+            skill += 13
+            skill_accuracy = 0
+            if skill > 200:
+                skill_accuracy += int((min(skill,400)-200)*0.9) + 200
             else:
-                skill_accuracy = skill
+                skill_accuracy += skill
+            if skill > 400:
+                skill_accuracy += int((min(skill,600)-400)*0.8)
+            if skill > 600:
+                skill_accuracy += int((skill-600)*0.9)
+
             return(skill_accuracy)
 
         # Increase player Accuracy and Ranged Accuracy based on gear and base character stats.

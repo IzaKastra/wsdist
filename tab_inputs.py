@@ -26,7 +26,7 @@ fontsize = 9
 font_choice = ["Cascadia Mono", fontsize]
 
 main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR","BRD", "THF", "MNK", "DNC", "BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the gui_wsdist.py and tab_select_gear.py files too.
-sub_jobs = sorted(["WAR","MNK","WHM","BLM","RDM","THF","PLD","DRK","BST","BRD","RNG","SAM","NIN","DRG","SMN","BLU","COR","PUP","DNC","GEO","RUN"]) + ["None"]
+sub_jobs = sorted(["WAR","MNK","WHM","BLM","RDM","THF","PLD","DRK","BST","BRD","RNG","SAM","NIN","DRG","SMN","BLU","COR","PUP","DNC","SCH","GEO","RUN"]) + ["None"]
 
 player_column = [
   [sg.Text("Main Job:",size=(10,1),font=font_choice), sg.Combo(values=main_jobs, default_value="NIN", readonly=True, key="mainjob",size=(10,1),font=font_choice,tooltip="Select main job.",disabled=False,enable_events=True)],
@@ -255,7 +255,7 @@ def item2image(item_name):
 
 starting_gearset = {
                 'main' : Heishi,
-                'sub' : Kunimitsu,
+                'sub' : Kunimitsu30,
                 'ranged' : Empty,
                 'ammo' : Seki,
                 'head' : Malignance_Chapeau,
@@ -363,6 +363,7 @@ base_stats = ["STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR"]
 wpn_stats = ["DMG","Delay"]
 main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
 bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+def_stats = ["Evasion","Magic Evasion", "Magic Def","DT","MDT","PDT"]
 
 default_tooltips = {}
 for slot in gear_dict:
@@ -393,9 +394,19 @@ for slot in gear_dict:
             default_tooltips[slot] += "\n"
             nl = False
     for k in starting_gearset[slot]:
-        if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+        if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats or k in def_stats:
             continue
         default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]}\n"
+
+    nl = False
+    for k in def_stats:
+        if starting_gearset[slot].get(k,False):
+            default_tooltips[slot] += f"{k}:{starting_gearset[slot][k]},"
+            nl = True
+        if "Def" in k and nl:
+            default_tooltips[slot] += "\n"
+            nl = False
+
 
 
 
@@ -427,7 +438,7 @@ if h > 900: # If screen height is greater than 900 pixels, then use a vertical (
             [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
             [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
             [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
-            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Show Stats",key="get stats", disabled=False),sg.Push()],
             [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
             ]
 

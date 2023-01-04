@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 04
+# Version date: 2023 January 03
 #
 # This file contains a the GUI tab "Outputs".
 # This will be renamed later to "WS Outputs" when I add TP sets and nuking.
@@ -40,8 +40,9 @@ magical = sg.vtop(sg.Frame("Magical",[
     [sg.Text(f"{'Magic Accuracy Skill:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="macc skill stat", tooltip="Magic Accuracy Skill from gear.")],
     [sg.Text(f"{'Magic Attack:':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="matk stat")],
     [sg.Text(f"{'Magic Damage:':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="mdmg stat")],
-    [sg.Text(f"{'Magic Burst Bonus:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="mbb stat",tooltip="Caps at 40")],
-    [sg.Text(f"{'Magic Burst Bonus II:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="mbb2 stat",tooltip="Includes gear, traits, and job gifts. No cap confirmed.")],
+    [sg.Text(f"{'Magic Burst Bonus:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="mbb stat",tooltip="Caps at 40.\nAdditive with other Magic Burst Damage sources")],
+    [sg.Text(f"{'Magic Burst Bonus II:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="mbb2 stat",tooltip="Only includes gear. No cap confirmed.\nAdditive with other Magic Burst Damage sources.")],
+    [sg.Text(f"{'Magic Burst Traits:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="mbb3 stat",tooltip="Includes Traits, Job Points, and Job Gifts.\nAdditive with other Magic Burst Damage sources.")],
     ]))
 
 tp = sg.vtop(sg.Frame("TP",[
@@ -51,6 +52,13 @@ tp = sg.vtop(sg.Frame("TP",[
     [sg.Text(f"{'Magic Haste:':<15s} {'-----':>5s}",font=font_choice,size=(22,1),key="magic haste stat", tooltip="Caps at 448/1024 = 43.75%")],
     [sg.Text(f"{'JA Haste:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="ja haste stat", tooltip="Caps at 256/1024 = 25%")],
     [sg.Text(f"{'Delay Reduction:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="delay reduction stat", tooltip="Caps at 80%")],
+    [sg.Text(f"{'Daken:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="daken stat", tooltip="Chance to throw a Shuriken while TPing.\nMust have a Shuriken equipped.")],
+    [sg.Text(f"{'Kick Attacks:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="kickattack stat", tooltip="Chance of a bonus kick attack while TPing.\nMust be using a hand-to-hand weapon.")],
+    [sg.Text(f"{'Physical DT:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="pdt stat", tooltip="Physical damage taken. Caps at -50% + Burtgang. \nIncludes \"Damage Taken\" stat bonuses.")],
+    [sg.Text(f"{'Magical DT:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="mdt stat", tooltip="Magical damage taken. Caps at -50%.\nIncludes \"Damage Taken\" stat bonuses.\nShell V provides -29.3%")],
+    [sg.Text(f"{'Evasion:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="eva stat", tooltip="Total player evasion.\nIncludes gear, traits, gifts, etc.")],
+    [sg.Text(f"{'Magic Evasion:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="meva stat", tooltip="Total player magic evasion.\nIncludes gear, traits, gifts, etc.")],
+    [sg.Text(f"{'Magic Def:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="mdef stat", tooltip="Total player magic defense.\nIncludes gear, traits, gifts, etc.")],
     ]))
 
 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]

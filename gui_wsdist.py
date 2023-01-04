@@ -329,6 +329,9 @@ while True:
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 
+        jse_ear_names = {"nin":"Hattori","drk":"Heathen","blm":"Wicce","rdm":"Lethargy","drg":"Peltast","whm":"Ebers","sam":"Kasuga","sch":"Arbatel","war":"Boii","cor":"Chasseur","brd":"Fili","thf":"Skulker","mnk":"Bhikku","dnc":"Maculele","bst":"Nukumi","geo":"Azimuth","pld":"Chevalier","rng":"Amini","blu":"Hashishin","run":"Erilaz","pup":"Karagoz"}
+
+
         # Setup buttons to automatically select everything in the displayed list.
         if event in ["select all gear", "unselect all gear"]:
             main_job = values["mainjob"]
@@ -347,6 +350,15 @@ while True:
                         if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A": # Uncheck Nyame Path A
                             window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                             continue
+
+                        if selected_slot=="neck" and "R20" in equipment["Name2"]: # Unselect JSE+1 necks
+                            window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+                            continue
+
+                        if selected_slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
+                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+1" in equipment["Name2"]:
+                                window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+                                continue
 
                         window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False)
 
@@ -377,8 +389,17 @@ while True:
                             window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                             continue
 
+                        if slot=="neck" and "R20" in equipment["Name2"]: # Do not select JSE+1 necks
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
+
+                        if slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
+                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+1" in equipment["Name2"]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                                continue
+
                         # If using a melee WS, then unselect weapons that can't use it (this is annoying when testing magic since it unselects stuff)
-                        elif ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
                             if slot == "main" and ws_name not in ws_dict[equipment["Skill Type"]]:
                                 window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                             else:
@@ -507,6 +528,7 @@ while True:
             wpn_stats = ["DMG","Delay"]
             main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
             bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+            def_stats = ["Evasion","Magic Evasion", "Magic Def","DT","MDT","PDT"]
 
             nl = False # nl = "NewLine". Used to add new lines in specific places in the tooltip text
             for k in wpn_stats:
@@ -532,10 +554,21 @@ while True:
                 if "Attack" in k and nl:
                     tooltip_stats += "\n"
                     nl = False
+
             for k in item_dictionary:
-                if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+                if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats or k in def_stats:
                     continue
                 tooltip_stats += f"{k}:{item_dictionary[k]}\n"
+
+            nl = False
+            for k in def_stats:
+                if item_dictionary.get(k,False):
+                    tooltip_stats += f"{k}:{item_dictionary[k]}," # item_dictionary = starting_gearset[slot]  when comparing this file to tab_inputs.py
+                    nl = True
+                if "Def" in k and nl:
+                    tooltip_stats += "\n" # tooltip_stats = default_tooltips[slot]
+                    nl = False
+
             window[f"showradio {slot}"].set_tooltip(tooltip_stats)
 
 
@@ -890,6 +923,8 @@ while True:
                 window["mbb stat"].update(f"{'Magic Burst Bonus:':<21s} {magic_burst_bonus:>3d}")
                 magic_burst_bonus2 = int(gearset.playerstats['Magic Burst Damage II'])
                 window["mbb2 stat"].update(f"{'Magic Burst Bonus II:':<21s} {magic_burst_bonus2:>3d}")
+                magic_burst_bonus3 = int(gearset.playerstats['Magic Burst Damage Trait'])
+                window["mbb3 stat"].update(f"{'Magic Burst Trait:':<21s} {magic_burst_bonus3:>3d}")
 
                 wsd = int(gearset.playerstats['Weaponskill Damage'])
                 window["wsd stat"].update(f"{'Weapon skill damage:':<21s} {wsd:>3d}")
@@ -949,6 +984,29 @@ while True:
 
                 window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {delay_reduction*100:>4.1f}")
 
+                daken = int(gearset.playerstats["Daken"])
+                window["daken stat"].update(f"{'Daken:':<16s} {daken:>4d}")
+                kickattack = int(gearset.playerstats["Kick Attacks"])
+                window["kickattack stat"].update(f"{'Kick Attacks:':<16s} {kickattack:>4d}")
+
+                pdt = int(gearset.playerstats["PDT"]) + int(gearset.playerstats["DT"])
+                pdt2 = int(gearset.playerstats["PDT2"])
+                window["pdt stat"].update(f"{'Physical DT:':<16s} {pdt+pdt2:>4d}")
+
+                mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"])
+                window["mdt stat"].update(f"{'Magical DT:':<16s} {mdt:>4d}")
+
+                meva = int(gearset.playerstats["Magic Evasion"])
+                window["meva stat"].update(f"{'Magic Evasion:':<16s} {meva:>4d}")
+
+                mdef = int(gearset.playerstats["Magic Def"])
+                window["mdef stat"].update(f"{'Magic Def:':<16s} {mdef:>4d}")
+
+                eva = int(gearset.playerstats["Evasion"])
+                window["eva stat"].update(f"{'Evasion:':<16s} {eva:>4d}")
+
+
+
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -972,6 +1030,7 @@ while True:
                 wpn_stats = ["DMG","Delay"]
                 main_stats = ["Accuracy","Attack","Ranged Accuracy","Ranged Attack","Magic Accuracy","Magic Damage","Magic Attack"]
                 bonus_stats = ["Blood Pact Damage", "Kick Attacks", "Kick Attacks Attack", "Martial Arts", "Sneak Attack", "Trick Attack", "Double Shot", "True Shot","Zanshin", "Hasso", "Quick Draw", "Quick Draw II", "Triple Shot","Magic Crit Rate II","Magic Burst Accuracy","Fencer","JA Haste","Accuracy", "AGI", "Attack", "Axe Skill", "CHR", "Club Skill", "Crit Damage", "Crit Rate", "DA", "DA DMG", "Dagger Skill", "Daken", "Dark Affinity", "Dark Elemental Bonus", "Delay", "DEX", "DMG", "Dual Wield", "Earth Affinity", "Earth Elemental Bonus", "Elemental Bonus", "Elemental Magic Skill", "Fire Affinity", "Fire Elemental Bonus", "ftp", "Gear Haste", "Great Axe Skill", "Great Katana Skill", "Great Sword Skill", "Hand-to-Hand Skill", "Ice Affinity", "Ice Elemental Bonus", "INT", "Katana Skill", "Light Affinity", "Light Elemental Bonus", "Magic Accuracy Skill", "Magic Accuracy", "Magic Attack", "Magic Burst Damage II", "Magic Burst Damage", "Magic Damage", "MND", "Name", "Name2", "Ninjutsu Damage", "Ninjutsu Magic Attack", "Ninjutsu Skill", "OA2", "OA3", "OA4", "OA5", "OA6", "OA7", "OA8", "PDL", "Polearm Skill", "QA", "Ranged Accuracy", "Ranged Attack", "Scythe Skill", "Skillchain Bonus", "Staff Skill", "Store TP", "STR", "Sword Skill", "TA", "TA DMG", "Throwing Skill", "Thunder Affinity", "Thunder Elemental Bonus", "TP Bonus", "VIT", "Water Affinity", "Water Elemental Bonus", "Weaponskill Accuracy", "Weaponskill Damage", "Weather", "Wind Affinity", "Wind Elemental Bonus","Polearm Skill","Marksmanship Skill","Archery Skill"]
+                def_stats = ["Evasion","Magic Evasion", "Magic Def","DT","MDT","PDT"]
 
                 nl = False
                 for k in wpn_stats:
@@ -998,9 +1057,19 @@ while True:
                         tooltip_stats += "\n"
                         nl = False
                 for k in best_set[slot]:
-                    if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats:
+                    if k in base_stats or k in ignore_stats or k in main_stats or k in wpn_stats or k in def_stats:
                         continue
                     tooltip_stats += f"{k}:{best_set[slot][k]}\n"
+
+                nl = False
+                for k in def_stats:
+                    if best_set[slot].get(k,False):
+                        tooltip_stats += f"{k}:{best_set[slot][k]}," # best_set[slot] = starting_gearset[slot]  when comparing this file to tab_inputs.py
+                        nl = True
+                    if "Def" in k and nl:
+                        tooltip_stats += "\n" # tooltip_stats = default_tooltips[slot]
+                        nl = False
+
                 window[f"showradio {slot}"].set_tooltip(tooltip_stats)
 
 
