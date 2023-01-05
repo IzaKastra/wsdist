@@ -121,13 +121,14 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
         if ws_name == 'Tachi: Kaiten':
             bonuses['ws_bonus'] += 0.68
     elif main_wpn_name == 'Shining One':
-        # Shining One allows all weapon skills to crit. Seems pretty OP, but here we are...
-        # https://www.bg-wiki.com/ffxi/Shining_One
-        crit_rate = gearset.playerstats['Crit Rate']/100
-        crit_boost = [0.05, 0.10, 0.15]
-        crit_bonus = np.interp(tp, [1000,2000,3000], crit_boost)
-        crit_rate += crit_bonus
-        crit_rate += get_dex_crit(gearset.playerstats['DEX'], enemy_agi)
+        # # Shining One allows all weapon skills to crit. Seems pretty OP, but here we are...
+        # # https://www.bg-wiki.com/ffxi/Shining_One
+        # crit_rate = gearset.playerstats['Crit Rate']/100
+        # crit_boost = [0.05, 0.10, 0.15]
+        # crit_bonus = np.interp(tp, [1000,2000,3000], crit_boost)
+        # crit_rate += crit_bonus
+        # crit_rate += get_dex_crit(gearset.playerstats['DEX'], enemy_agi)
+        # bonuses["crit_rate"] = crit_rate
         if ws_name == 'Impulse Drive':
             bonuses['ws_bonus'] += 0.4
     elif main_wpn_name == 'Gungnir':
