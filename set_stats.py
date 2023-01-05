@@ -77,7 +77,7 @@ class set_gear:
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                  'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                  'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                 "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,"Magic Def":0,
+                 "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":0,"Evasion":0,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                  }
 
 
@@ -107,7 +107,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,"Subtle Blow":27,"Subtle Blow II":0,
                      }
         elif mainjob == "DRK":  # Master Level 20 Dark Knight stats
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
@@ -131,7 +131,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "WAR":  # Master Level 20 Warrior stats. Smite and Fencer are added later
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':110, 'AGI':113, 'INT':104, 'MND':104, 'CHR':107,
@@ -155,7 +155,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso is added later.
             self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
@@ -179,7 +179,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "DRG":  # Master Level 20 Dragoon stats. Smite is added later. Bonuses for having a Wyvern out are added later.
             self.playerstats = {'STR':115, 'DEX':110, 'VIT':113, 'AGI':110, 'INT':104, 'MND':107, 'CHR':113,
@@ -203,7 +203,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "BLM":  # Master Level 20 Black Mage stats.
             self.playerstats = {'STR':104, 'DEX':113, 'VIT':104, 'AGI':113, 'INT':117, 'MND':107, 'CHR':110,
@@ -227,7 +227,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "WHM":  # Master Level 20 White Mage stats.
             self.playerstats = {'STR':110, 'DEX':104, 'VIT':110, 'AGI':107, 'INT':107, 'MND':117, 'CHR':113,
@@ -251,7 +251,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":20,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":20,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "RDM":  # Master Level 20 Red Mage stats. +15+25 "Magic Accuracy" from assumed merits. +35% TA from Temper2
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':107, 'AGI':107, 'INT':113, 'MND':113, 'CHR':110,
@@ -275,7 +275,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":56,"Evasion":0,"Magic Def":14,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":56,"Evasion":0,"Magic Def":14,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "SCH":  # Master Level 20 Scholar stats. +15 Magic Accuracy from Klimaform.
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':107, 'AGI':110, 'INT':115, 'MND':110, 'CHR':113,
@@ -299,7 +299,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":0,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "COR":  # Master Level 20 Corsair stats.
             self.playerstats = {'STR':107, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':113, 'MND':107, 'CHR':107,
@@ -323,7 +323,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "BRD":  # Master Level 20 Bard stats. Fencer is added later.
             self.playerstats = {'STR':110, 'DEX':110, 'VIT':110, 'AGI':104, 'INT':110, 'MND':110, 'CHR':115,
@@ -347,7 +347,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "THF":  # Master Level 20 Thief stats.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
@@ -371,7 +371,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":70+72,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":70+72,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "MNK":  # Master Level 20 Monk stats. Smite is added later. Kick attacks are zeroed out after adding gear stats later if not using a h2h weapon.
             self.playerstats = {'STR':113, 'DEX':115, 'VIT':117, 'AGI':104, 'INT':101, 'MND':110, 'CHR':107,
@@ -395,7 +395,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":42,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":42,"Magic Def":0,"Subtle Blow":35,"Subtle Blow II":0,
                      }
         elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits
             self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
@@ -419,7 +419,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "DNC":  # Master Level 20 Dancer stats. +15 Accuracy and Evasion when facing an enemy (5/5 Closed Position merits)
             self.playerstats = {'STR':110, 'DEX':113, 'VIT':107, 'AGI':115, 'INT':104, 'MND':104, 'CHR':115,
@@ -443,7 +443,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64+48+15,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64+48+15,"Magic Def":0,"Subtle Blow":32,"Subtle Blow II":0,
                      }
         elif mainjob == "BST":  # Master Level THF TODO: BST stats. Smite and Fencer are added later. BST gets +50 accuracy from Tandem Strike.
             self.playerstats = {'STR':110, 'DEX':117, 'VIT':110, 'AGI':115, 'INT':113, 'MND':101, 'CHR':101,
@@ -467,7 +467,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "GEO":  # Master Level 20 Geomancer stats
             self.playerstats = {'STR':104, 'DEX':110, 'VIT':110, 'AGI':107, 'INT':115, 'MND':115, 'CHR':107,
@@ -491,7 +491,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":50,"Evasion":0,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "PLD":  # Master Level 20 Paladin stats
             self.playerstats = {'STR':115, 'DEX':107, 'VIT':117, 'AGI':101, 'INT':101, 'MND':113, 'CHR':113,
@@ -515,7 +515,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":22,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":42,"Evasion":22,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "RUN":  # Master Level 20 Rune Fencer stats
             self.playerstats = {'STR':113, 'DEX':110, 'VIT':107, 'AGI':115, 'INT':110, 'MND':110, 'CHR':104,
@@ -539,7 +539,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":70,"Evasion":56,"Magic Def":22,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":70,"Evasion":56,"Magic Def":22,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "RNG":  # Master Level 20 Ranger stats. +45 Ranged Crit from Dead Aim traits
             self.playerstats = {'STR':107, 'DEX':110, 'VIT':110, 'AGI':117, 'INT':107, 'MND':110, 'CHR':107,
@@ -563,7 +563,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":14,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":14,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
         elif mainjob == "PUP":  # Master Level 20 Puppetmaster stats
             self.playerstats = {'STR':107, 'DEX':115, 'VIT':110, 'AGI':113, 'INT':107, 'MND':104, 'CHR':113,
@@ -587,7 +587,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0, 'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0, 'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":56+48,"Magic Def":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":56+48,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
 
 
@@ -950,6 +950,13 @@ class set_gear:
         elif subjob in mdef2_jobs and mainjob not in mdef2_jobs:
             self.playerstats["Magic Def"] += 12
 
+        subtleblow2_jobs = ["MNK","NIN","DNC"] # +10 Subtle Blow
+        subtleblow3_jobs = ["MNK","NIN"] # +15 Subtle Blow
+        if subjob in subtleblow3_jobs and mainjob not in subtleblow2_jobs:
+            self.playerstats["Subtle Blow"] += 15
+        elif subjob in subtleblow2_jobs and mainjob not in subtleblow2_jobs:
+            self.playerstats["Subtle Blow"] += 10
+
 
         # Do set bonuses!
         # Count the number of set-bonus gear equipped.
@@ -1067,8 +1074,12 @@ class set_gear:
         if self.gear["ammo"]["Type"] != "Shuriken":
             self.playerstats["Daken"] = 0
 
-        # Calculate evasion. Traits are already included in playerstats, so we just need to add evasion from skill and half of AGI
+        # Limit Subtle BlowI and II to 50 each.
+        # self.playerstats["Subtle Blow"] = 50 if self.playerstats["Subtle Blow"] > 50 else self.playerstats["Subtle Blow"]
+        # self.playerstats["Subtle Blow II"] = 50 if self.playerstats["Subtle Blow II"] > 50 else self.playerstats["Subtle Blow II"]
 
+
+        # Calculate ron. Traits are already included in playerstats, so we just need to add evasion from skill and half of AGI
         def get_skill_evasion(evasion_skill):
             #
             # Evasion skill over 300 is only worth 0.8 evasion based on my incredibly incomplete testing.
