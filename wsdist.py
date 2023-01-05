@@ -53,6 +53,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     impetus = job_abilities["Impetus"]
     hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not included yet.
     true_shot_toggle = job_abilities["True Shot"]
+    blood_rage = job_abilities["Blood Rage"]
+    mighty_strikes = job_abilities["Mighty Strikes"]
 
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
@@ -257,13 +259,12 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
-
     # Check weapon + weapon skill synergy for things like bonus weapon skill damage. (and mythic AM3)
     # See "check_weaponskill_bonuses.py"
     ws_weapons = [main_wpn_name, rng_wpn_name]
     bonuses = check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi)
     ws_bonus += bonuses['ws_bonus']
-    crit_rate += bonuses['crit_rate']
+    # crit_rate = bonuses['crit_rate'] # Crit rate adjusted for Shining One. Commented out. We'll do this in "weaponskill_scaling" instead.
     oa3 += bonuses['oa3'] ; oa2 += bonuses['oa2']
 
     # print("Before: ",ws_bonus,crit_rate)
@@ -281,12 +282,14 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     player_attack2 = scaling['player_attack2']
     player_rangedattack = scaling['player_rangedattack']
     enemy_def = scaling['enemy_def']
-    crit_rate = scaling['crit_rate']
+    crit_rate = scaling['crit_rate'] # Crit Rate is only enabled if the weapon skill can crit natively, or if using Shining One
     ftp_hybrid = scaling['ftp_hybrid']
     ws_dINT = scaling["ws_dINT"] # dINT used for magical weapon skills. Some WSs have maximum values, some don't even use a dSTAT.
     acc_bonus = scaling["acc_bonus"] # Accuracy varies with TP.
     # print("After: ",ws_bonus,crit_rate)
 
+    crit_rate += 0.2*blood_rage if crit_rate > 0 else 0 # Add 20% crit rate if blood rage is enabled
+    crit_rate = 1.0 if mighty_strikes else crit_rate # Set crit rate to 100% if mighty strikes is enabled.
 
     player_accuracy1 += acc_bonus
     player_accuracy2 += acc_bonus
@@ -649,7 +652,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
             print(f"{ws_name:<15s} | {int(np.min(damage)):>8d} | {int(np.average(damage)):>8d} | {int(np.median(damage)):>8d} | {int(np.max(damage)):>8d}")
 
         if show_final_plot:
-            plot_final(damage, gearset, tp1, tp2, ws_name)
+            plot_final(damage, gearset, tp1, tp2, ws_name, main_job, sub_job)
         return()
     else:
         tp = np.average([tp1,tp2])
@@ -674,7 +677,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
                 "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight","Detonator"],
-                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"]}
+                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"],
+                "None":["This is only used when the weapon slot is Empty. Using this entry to skip sets with empty main hand. Will need to remove it later for the Bonanza bow."]}
 
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
     for k in starting_gearset:
@@ -706,7 +710,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
         print(f"Checking:  {ws_name}  TP=[{tp1},{tp2}]")
     print("---------------")
 
-    nconverge = 2 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
+    nconverge = 1 # Number of consecutive iterations resulting in insignificant damage improvements before code returns the best set.
 
     # Start the code.
     converge_count = 0 # Count for convergence (number of times the change between iterations was <0.1% for example; see near the end of this code for the exact value used)
@@ -1067,7 +1071,9 @@ if __name__ == "__main__":
                         "Climactic Flourish":False,
                         "Striking Flourish":False,
                         "Ternary Flourish":False,
-                        "True Shot":False}
+                        "True Shot":False,
+                        "Blood Rage":False,
+                        "Mighty Strikes":False}
 
     if False:
         import cProfile

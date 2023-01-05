@@ -479,8 +479,10 @@ while True:
             window["footwork toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["trueshot toggle"].update(visible=True if main_job.lower() in ["rng","cor"] else False)
+            window["bloodrage toggle"].update(visible=True if main_job.lower() in ["war"] else False)
+            window["mightystrikes toggle"].update(visible=True if main_job.lower() in ["war"] else False)
 
-            # Deselect Job abilities so they arent enabled while hidden.
+            # Deselect Job abilities when changing jobs so they arent enabled while hidden.
             window["magic burst toggle"].update(False)
             window["futae toggle"].update(False)
             window["ebullience toggle"].update(False)
@@ -491,6 +493,8 @@ while True:
             window["impetus toggle"].update(False)
             window["footwork toggle"].update(False)
             window["trueshot toggle"].update(False)
+            window["bloodrage toggle"].update(False)
+            window["mightystrikes toggle"].update(False)
 
             # Enable magic sets for casting jobs.
             if main_job in spell_dict:
@@ -809,6 +813,8 @@ while True:
             striking_flourish = True if values["select flourish"] == "Striking Flourish" else False
             ternary_flourish = True if values["select flourish"] == "Ternary Flourish" else False
             true_shot_toggle = values["trueshot toggle"]
+            bloodrage_toggle = values["bloodrage toggle"]
+            mightystrikes_toggle = values["mightystrikes toggle"]
 
 
             # Define a dictionary so we can just pass this one thing in instead of passing 10 things to the WS function later
@@ -822,7 +828,9 @@ while True:
                              "Climactic Flourish":climactic_flourish,
                              "Striking Flourish":striking_flourish,
                              "Ternary Flourish":ternary_flourish,
-                             "True Shot":true_shot_toggle}
+                             "True Shot":true_shot_toggle,
+                             "Blood Rage":bloodrage_toggle,
+                             "Mighty Strikes":mightystrikes_toggle}
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
 
@@ -945,7 +953,8 @@ while True:
                 window["ta stat"].update(f"{'Triple Attack:':<21s} {ta:>3d}")
                 da = int(gearset.playerstats['DA'])
                 window["da stat"].update(f"{'Double Attack:':<21s} {da:>3d}")
-                crit_rate = int(gearset.playerstats['Crit Rate'])
+                crit_rate = int(gearset.playerstats['Crit Rate']) + 20*values["bloodrage toggle"] + 100*values["mightystrikes toggle"]
+                crit_rate = 100 if crit_rate > 100 else crit_rate
                 window["crit rate stat"].update(f"{'Crit. Rate:':<21s} {crit_rate:>3d}")
                 crit_damage = int(gearset.playerstats['Crit Damage'])
                 window["crit damage stat"].update(f"{'Crit. Damage:':<21s} {crit_damage:>3d}")
