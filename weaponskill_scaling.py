@@ -25,8 +25,13 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     player_attack2 = gearset.playerstats["Attack2"]
     player_attack2 = 0 if not dual_wield else player_attack2
     player_rangedattack = gearset.playerstats["Ranged Attack"]
-    crit_rate = 0
+    crit_rate = 0 # Start from zero crit rate. We add crit rate if the weapon skill is a crit weapon skill and if Shining One is equipped.
 
+    main_wpn_name = equipment["main"]["Name2"]
+    phys_rng_ws = ws_name in ["Flaming Arrow", "Hot Shot", "Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow", "Detonator"] # Used to ensure Shining One does not let Ranged Weapon skills crit
+
+
+    crit_ws = False # Used with Shining One. If the WS can natively crit, then Shining One should NOT add dDEX or gear crit rate since the WS already did.
     hybrid = False
     magical = False
     ws_dINT = 0
@@ -41,6 +46,12 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False # Does this WS replicate FTP across all hits?
         wsc  = 0.5*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
+    if ws_name == "Fast Blade II":
+        base_ftp = [1.8, 3.5, 5.0] 
+        ftp = np.interp(tp, base_tp, base_ftp)
+        ftp_rep = True 
+        wsc  = 0.8*player_dex + dStat[1]*gearset.playerstats[dStat[0]] 
+        nhits = 2 
     if ws_name == "Expiacion":
         base_ftp = [3.796875,9.390625,12.1875] # Base TP bonuses for 1k, 2k, 3k TP
         ftp = np.interp(tp, base_tp, base_ftp) # Effective TP at WS use
@@ -84,6 +95,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.4*(player_mnd + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Chant du Cygne":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.15, 0.25, 0.40]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -151,6 +163,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.4*(player_str + player_agi) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 1
     elif ws_name == "Blade: Hi":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.15, 0.2, 0.25]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -178,6 +191,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         element = "Water"
         ws_dINT = 0
     elif ws_name == "Evisceration":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.1, 0.25, 0.5]
         crit_bonus = np.interp(tp, base_tp, crit_boost)
@@ -272,6 +286,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         enemy_def_scaling = np.interp(tp, base_tp, base_enemy_def_scaling)
         enemy_defense *= (1-enemy_def_scaling)
     elif ws_name == "Drakesbane":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.1, 0.25, 0.40]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -428,6 +443,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc  = 0.7*player_mnd + 0.3*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 2 # Savage is a 2-hit weaponskill (+1 for offhand)
     elif ws_name == "Hexa Strike":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.1, 0.175, 0.25] # Middle value unknown. I just picked the half-way point to force linear scaling.
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -486,6 +502,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc  = 0.85*player_vit + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
         nhits = 4
     elif ws_name == "Ukko's Fury":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.2, 0.35, 0.55] # Middle value unknown. I just picked the half-way point to force linear scaling.
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -540,6 +557,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         element = "Thunder"
         ws_dINT = 0
     elif ws_name == "Rampage":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0, 0.20, 0.40] # Middle value unknown. I just picked the half-way point to force linear scaling.
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -550,6 +568,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.5*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
     elif ws_name == "Jishnu's Radiance":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.15, 0.2, 0.25] # No values are known for Jishu's crits. I copied these values from Blade: Hi
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -825,6 +844,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.8*player_vit
         nhits = 1
     elif ws_name == "Victory Smite":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.10, 0.25, 0.45]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -835,6 +855,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 4
     elif ws_name == "Ascetic's Fury":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.20, 0.30, 0.50]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -860,6 +881,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Stringing Pummel":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 
         crit_boost = [0.15, 0.30, 0.45] # Upper limits. Middle value was made up to force linear scaling
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -935,6 +957,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Raging Rush":
+        crit_ws = True
         crit_rate +=  gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
         crit_boost = [0.15, 0.30, 0.50]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
@@ -960,6 +983,18 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits    = 1
 
 
+    if main_wpn_name == 'Shining One' and not phys_rng_ws:
+        # # Shining One allows all weapon skills to crit. Seems pretty OP, but here we are...
+        # https://www.bg-wiki.com/ffxi/Shining_One
+
+        if not crit_ws:
+            # Add gear and dDEX crit rate if the selected WS did not already do it.
+            crit_rate += gearset.playerstats['Crit Rate']/100
+            crit_rate += get_dex_crit(gearset.playerstats['DEX'], enemy_agi)
+
+        crit_boost = [0.05, 0.10, 0.15] # Crit rate bonuses based on TP for wielding Shining One
+        crit_bonus = np.interp(tp, [1000,2000,3000], crit_boost)
+        crit_rate += crit_bonus
 
 
     # I don't record enemy_MND, so let's just ignore Omniscience for now... 
