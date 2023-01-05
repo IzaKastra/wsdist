@@ -35,7 +35,7 @@ def get_image_ids(gearset):
 
     return(ids)
 
-def plot_final(damage, gearset, tp1, tp2, WS_name):
+def plot_final(damage, gearset, tp1, tp2, WS_name, main_job, sub_job):
 
     items_file = "item_list.txt"
     icons_path = "icons32/"
@@ -122,7 +122,7 @@ def plot_final(damage, gearset, tp1, tp2, WS_name):
         labelleft=False,
         labelbottom=True)
 
-    ax.set_title(f"{shortname}{output_file_suffix}_{tp1}_{tp2}.png\n{f'TP=[{tp1},{tp2}]':>15s} {'Minimum':>8s} {'Mean':>8s} {'Median':>8s} {'Maximum':>8s}\n{WS_name:>15s} {np.min(damage):>8} {int(np.average(damage)):>8} {int(np.median(damage)):>8} {np.max(damage):>8}",loc="left")
+    ax.set_title(f"{main_job}/{sub_job}\n{f'TP=[{tp1},{tp2}]':>15s} {'Minimum':>8s} {'Mean':>8s} {'Median':>8s} {'Maximum':>8s}\n{WS_name:>15s} {np.min(damage):>8} {int(np.average(damage)):>8} {int(np.median(damage)):>8} {np.max(damage):>8}",loc="left")
     # plt.legend()
 
     savepath = "."
