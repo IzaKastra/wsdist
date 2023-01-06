@@ -92,7 +92,7 @@ ws_column = [
 special_flourishes = ["Climactic Flourish", "Striking Flourish", "Ternary Flourish", "No Flourish"]
 ws_column2 = [
   [sg.vtop(sg.Column([
-  [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=ws_dict["Katana"], default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
+  [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=sorted(ws_dict["Katana"]), default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
   ])),sg.Push(),
