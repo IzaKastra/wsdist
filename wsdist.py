@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 03
+# Version date: 2023 January 05
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -58,7 +58,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
-    phys_rng_ws = ws_name in ["Flaming Arrow", "Hot Shot", "Coronach","Last Stand","Jishnu's Radiance","Namas Arrow","Apex Arrow","Refulgent Arrow","Empyreal Arrow", "Detonator"]
+    phys_rng_ws = ws_name in ["Flaming Arrow", "Namas Arrow", "Apex Arrow", "Refulgent Arrow","Empyreal Arrow", "Sidewinder", "Piercing Arrow", "Jishnu's Radiance", "Blast Arrow", "Hot Shot", "Coronach","Last Stand","Detonator", "Blast Shot", "Slug Shot", "Split Shot", ] # Used to ensure Shining One does not let Ranged Weapon skills crit
 
     kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
 
@@ -664,20 +664,20 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
 def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, burst=False):
 
     # We use this ws_dict to ensure that the main-hand weapon matches the WS being used.
-    ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu",],
-                "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu",],
-                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos"],
-                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat"],
-                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell"],
-                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation"],
-                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation"],
-                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust"],
-                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution",],
-                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave"],
-                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe"],
-                "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow"],
-                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight","Detonator"],
-                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel"],
+    ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu","Blade: Jin","Blade: Teki", "Blade: To"],
+                "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu", "Tachi: Koki", "Tachi: Goten", "Tachi: Kagero","Tachi: Enpi","Tachi: Yukikaze"],
+                "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos", "Viper Bite"],
+                "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat","Circle Blade","Swift Blade","Fast Blade","Burning Blade","Fast Blade II"],
+                "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell","Slice","Spinning Scythe"],
+                "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
+                "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
+                "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
+                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher"],
+                "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave","Steel Cyclone","Iron Tempest"],
+                "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe","Spinning Axe","Raging Axe"],
+                "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow"],
+                "Marksmanship":["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight", "Detonator","Blast Shot","Slug Shot","Split Shot"],
+                "Hand-to-Hand":["Raging Fists","Howling Fist","Dragon Kick","Asuran Fists","Tornado Kick","Shijin Spiral","Final Heaven","Victory Smite","Ascetic's Fury","Stringing Pummel","Spinning Attack","Combo","One Inch Punch"],
                 "None":["This is only used when the weapon slot is Empty. Using this entry to skip sets with empty main hand. Will need to remove it later for the Bonanza bow."]}
 
     tcount = 0 # Total number of valid sets checked. Useless, but interesting to see. A recent Blade: Ten run checked 84,392 sets
@@ -935,6 +935,27 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                 if new_set["body"]["Name2"] in ["Cohort Cloak +1 R15"] and new_set["head"]["Name"] != "Empty":
                                     # print("test18")
                                     continue
+
+                                # Some weapon skills require specific weapons to be equipped for use.
+                                restricted_ws = {"Blade: Metsu":"Kikoku",
+                                                 "Final Heaven":"Spharai",
+                                                 "Mercy Stroke":"Mandau",
+                                                 "Knights of Round":"Excalibur",
+                                                 "Scourge":"Ragnarok",
+                                                 "Onslaught":"Guttler",
+                                                 "Metatron Torment":"Bravura",
+                                                 "Catastrophe":"Apocalypse",
+                                                 "Geirskogul":"Gungnir",
+                                                 "Tachi: Kaiten":"Amanomurakumo",
+                                                 "Randgrith":"Mjollnir",
+                                                 "Gates of Tartarus":"Claustrum",
+                                                 "Namas Arrow":"Yoichinoyumi",
+                                                 "Coronach":"Annihilator",
+                                                 "Fast Blade II":"Onion Sword III"}
+                                if ws_name in restricted_ws:
+                                    if restricted_ws[ws_name] not in new_set["main"]["Name2"] and restricted_ws[ws_name] not in new_set["ranged"]["Name2"]:
+                                        # print("weapon restriction test1")
+                                        continue
 
                                 # Do not test main-hand weapons that can't use the selected WS, if they are selected.
                                 # Does not apply if using "Run Magic" or "Quicklook Magic" for nukes.
