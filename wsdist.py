@@ -131,7 +131,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100 # Only DRG traits go here. DRG main job also gets wyvern bonus 10% here.
 
     rng_crit_dmg = gearset.playerstats['Ranged Crit Damage']/100
-    crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100*phys_rng_ws
+    crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100*phys_rng_ws*0
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
     true_shot = gearset.playerstats['True Shot']/100 * true_shot_toggle # 0 if False
