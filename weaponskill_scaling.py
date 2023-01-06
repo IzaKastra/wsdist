@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 05
+# Version date: 2023 January 06
 #
 import numpy as np
 from set_stats import *
@@ -1182,11 +1182,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
 
     # Hand-to-Hand weapon skills
     elif ws_name == "Combo":
-        base_ftp = [1.0, 3.75, 5.5]
+        base_ftp = [1.0, 2.4, 3.4]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.3*(player_str + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 5
+        nhits    = 3
     elif ws_name == "One Inch Punch":
         ftp  = 1.0
         ftp_rep = True
@@ -1206,7 +1206,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         wsc = 1.0*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 1
     elif ws_name == "Howling Fist":
-        base_ftp = [2.05, 3.58, 5.8]
+        base_ftp = [2.05, 3.55, 5.75]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.5*player_vit + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]]
@@ -1245,7 +1245,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     elif ws_name == "Shijin Spiral":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
-        ftp  = 1.5
+        ftp  = 1.375
         ftp_rep = True
         wsc = 0.85*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
         nhits = 5
@@ -1271,7 +1271,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 4
     elif ws_name == "Ascetic's Fury":
         crit_ws = True
-        crit_rate += gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_rate += gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.20, 0.30, 0.50]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
         crit_rate += crit_bonus
