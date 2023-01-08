@@ -54,7 +54,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 05)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 08)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -130,7 +130,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
-            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher"],
+            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher","Omniscience"],
             "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave","Steel Cyclone","Iron Tempest"],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe","Spinning Axe","Raging Axe"],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow"],
@@ -190,6 +190,7 @@ while True:
                 window["enemy_vit"].update(f"{preset_enemies[enemy]['VIT']}")
                 window["enemy_agi"].update(f"{preset_enemies[enemy]['AGI']}")
                 window["enemy_int"].update(f"{preset_enemies[enemy]['INT']}")
+                window["enemy_mnd"].update(f"{preset_enemies[enemy]['MND']}")
                 window["enemy_location"].update(f"({preset_enemies[enemy]['Location']})")
 
 # --------------------------------------------------------------------------------------------
@@ -773,6 +774,7 @@ while True:
                      "VIT":int(values["enemy_vit"]),
                      "INT":int(values["enemy_int"]),
                      "AGI":int(values["enemy_agi"]),
+                     "MND":int(values["enemy_mnd"]),
                     }
 
             # Decrease enemy stats based on debuffs selected. TODO: "Ignores Enemy DEF" WSs need to be added here somehow... Might be easier to pass the FULL enemy defense and apply debuffs in the main code.

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 05
+# Version date: 2023 January 08
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -162,6 +162,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     enemy_int = enemy["INT"]
     enemy_agi = enemy["AGI"]
     enemy_vit = enemy["VIT"]
+    enemy_mnd = enemy["MND"]
     enemy_eva = enemy["Evasion"]
     enemy_def = enemy["Defense"]
     enemy_mdb = enemy["Magic Defense"]
@@ -270,7 +271,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
     # print("Before: ",ws_bonus,crit_rate)
     # Obtain weapon skill TP scaling. "Damage varies with TP"
     # See "weaponskill_scaling.py"
-    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, job_abilities, kick_ws_footwork,)
+    scaling = weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_def, enemy_agi, enemy_int, enemy_mnd, job_abilities, kick_ws_footwork,)
     wsc = scaling['wsc']
     ftp = scaling['ftp']
     ftp_rep = scaling['ftp_rep']
@@ -672,7 +673,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                 "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
                 "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
                 "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
-                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher"],
+                "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher","Omniscience"],
                 "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave","Steel Cyclone","Iron Tempest"],
                 "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe","Spinning Axe","Raging Axe"],
                 "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow"],

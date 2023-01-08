@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 11
+# Version date: 2023 January 08
 #
 from get_dex_crit import *
 import numpy as np
@@ -248,6 +248,16 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Spharai":
         if ws_name == "Final Heaven":
             bonuses["ws_bonus"] += 0.68
+    elif main_wpn_name == 'Tupsimati':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Omniscience':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == 'Laevateinn':
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == 'Vidohunir':
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
 
 
     # Do the same with ranged WSs now.

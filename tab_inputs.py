@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 05
+# Version date: 2023 January 08
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -42,7 +42,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
-            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher"],
+            "Staff":["Cataclysm","Shattersoul","Earth Crusher","Vidohunir","Retribution","Full Swing","Sunburst","Heavy Swing","Starburst","Gate of Tartarus","Rock Crusher","Omniscience"],
             "Great Axe":["Ukko's Fury", "Upheaval", "Metatron Torment", "King's Justice","Raging Rush","Fell Cleave","Steel Cyclone","Iron Tempest"],
             "Axe":["Cloudsplitter","Ruinator","Decimation","Rampage","Primal Rend","Mistral Axe","Onslaught","Calamity","Bora Axe","Spinning Axe","Raging Axe"],
             "Archery":["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow"],
@@ -187,7 +187,7 @@ enemy_stat_column = [
   [sg.Text("Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_evasion"),sg.Text("AGI:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["AGI"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_agi")],
   [sg.Text("Defense:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Defense"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_defense"),sg.Text("VIT:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["VIT"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_vit")],
   [sg.Text("Magic Defense:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Magic Defense"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mdefense"), sg.Text("INT:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["INT"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_int")],
-  [sg.Text("Magic Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Magic Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mevasion")],
+  [sg.Text("Magic Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Magic Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mevasion"),sg.Text("MND:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["MND"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_mnd")],
 ]
 
 

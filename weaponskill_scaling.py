@@ -2,13 +2,13 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 06
+# Version date: 2023 January 08
 #
 import numpy as np
 from set_stats import *
 from get_dex_crit import *
 
-def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi, enemy_int, job_abilities, kick_ws_footwork=False):
+def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buffs, dStat, dual_wield, enemy_defense, enemy_agi, enemy_int, enemy_mnd, job_abilities, kick_ws_footwork=False):
     #
     # Setup weaponskill statistics (TP scaling, # of hits, ftp replication, WSC, etc)
     # Placed in separate file to reduce clutter in main file.
@@ -1173,6 +1173,14 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         magical = True
         element = "Dark"
         ws_dINT = (player_int - enemy_int)*2 # No known cap
+    elif ws_name == "Omniscience":
+        ftp = 2.0
+        ftp_rep = False
+        wsc = 0.8*player_mnd + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 1
+        magical = True
+        element = "Dark"
+        ws_dINT = (player_mnd - enemy_mnd)*2 # No known cap
     elif ws_name == "Gate of Tartarus":
         ftp = 3.0
         ftp_rep = False # Does this WS replicate FTP across all hits?
@@ -1311,15 +1319,6 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         crit_rate += crit_bonus
 
 
-    # I don't record enemy_MND, so let's just ignore Omniscience for now... 
-    # elif ws_name == "Omniscience":
-    #     ftp = 2.0
-    #     ftp_rep = False # Does this WS replicate FTP across all hits?
-    #     wsc = 0.8*player_int + dStat[1]*gearset.playerstats[dStat[0]] # Stat modifiers, including things like Utu Grip if applicable.
-    #     nhits = 1
-    #     magical = True
-    #     element = "Dark"
-    #     ws_dINT = (player_mnd - enemy_mnd)*2 # No known cap
 
 
     scaling = {"hybrid":hybrid,
