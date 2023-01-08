@@ -327,13 +327,17 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
 
         magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
         resist_state = get_resist_state_average(magic_hit_rate)
+        
+        klimaform_bonus = 1.0 # Klimaform with Empy+3 feet boosts magical WS damage by 25%
+        if gearset.equipped["feet"] == "Arbatel Loafers +3": # Only SCH can use these feet
+            klimaform_bonus += 0.25
 
         affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
         dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
-        enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
+        enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.    
 
-        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
+        magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus*klimaform_bonus
         magical_damage *= magic_multiplier
         magical_damage *= (1+wsd)*(1+ws_bonus)*(1+ws_trait)
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
