@@ -268,6 +268,7 @@ Voluspa_Tathlum = {"Name":"Voluspa Tathlum","Type":"Equipment","STR":5,"DEX":5,"
 Amar_Cluster = {"Name":"Amar Cluster","Type":"Equipment","STR":2,"Accuracy":10,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Floestone = {"Name":"Floestone","Type":"Equipment","STR":3,"INT":5,"Attack":10,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Sroda_Tathlum = {"Name":"Sroda Tathlum","Type":"Equipment","Magic Accuracy":-10,"Magic Crit Rate II":10,"Jobs":["blm","rdm","sch","geo"]}
+Neo_Animator = {"Name":"Neo Animator","Type":"Equipment","Weaponskill Damage":5,"Accuracy":10,"Jobs":["pup"]}
 
 
 Living_Bullet = {"Name":"Living Bullet", "Type":"Bullet", "DMG":245,"Delay":240,"Magic Accuracy":25,"Magic Attack":35,"Jobs":["cor"]}
@@ -284,7 +285,7 @@ Chrono_Arrow = {"Name":"Chrono Arrow","Type":"Arrow","DMG":110,"Delay":90,"Range
 Artemis_Arrow = {"Name":"Artemis's arrow","Type":"Arrow","DMG":101,"Delay":90,"Ranged Accuracy":25,"Ranged Attack":35,"Jobs":["rng"]}
 Eradicating_Bullet = {"Name":"Eradicating bullet","Type":"Bullet","DMG":289,"Delay":240,"Ranged Accuracy":30,"Ranged Attack":30,"Jobs":["rng"]}
 Quelling_Bolt = {"Name":"Quelling Bolt","Type":"Bolt","DMG":145,"Delay":192,"Ranged Accuracy":30,"Ranged Attack":30,"Magic Accuracy":30, "Magic Attack":30, "Jobs":["rng"]}
-ammos = [Eradicating_Bullet,Quelling_Bolt,Chrono_Arrow,Artemis_Arrow,Hauksbok_Arrow,Hauksbok_Bullet,Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar15,Coiste_Bodhar20,Coiste_Bodhar25,Coiste_Bodhar30,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
+ammos = [Neo_Animator,Eradicating_Bullet,Quelling_Bolt,Chrono_Arrow,Artemis_Arrow,Hauksbok_Arrow,Hauksbok_Bullet,Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar15,Coiste_Bodhar20,Coiste_Bodhar25,Coiste_Bodhar30,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
 # Raetic Arrow does not proc for weapon skills.
 
 
@@ -418,7 +419,8 @@ Puppetmaster_Collar = {"Name":"Puppetmaster's Collar +2","Name2":"Puppetmaster's
 Puppetmaster_Collar1 = {"Name":"Puppetmaster's Collar +1","Name2":"Puppetmaster's Collar +1 R20","Accuracy":25, "AGI":0+12, "DEX":0+12,"PDL":0+8, "Jobs":["pup"]}
 Futhark_Torque = {"Name":"Futhark Torque +2", "Name2":"Futhark Torque +2 R25", "STR":0+15, "MND":0+15, "Magic Evasion":30, "DT":-7, "Jobs":["run"]}
 Futhark_Torque1 = {"Name":"Futhark Torque +1", "Name2":"Futhark Torque +1 R20", "STR":0+12, "MND":0+12, "Magic Evasion":25, "DT":-6, "Jobs":["run"]}
-necks = [Futhark_Torque1,Bagua_Charm1,Commodore_Charm1,Etoile_Gorget1,Argute_Stole1,Puppetmaster_Collar1,Mirage_Stole1,Dragoon_Collar1,Ninja_Nodowa1,Samurai_Nodowa1,Scout_Gorget1,Bards_Charm1,Beastmaster_collar1,Knight_bead_necklace1,Assassins_Gorget1,Duelist_Torque1,Sorcerers_Stole1,Clerics_Torque1,Monk_Nodowa1,Warrior_Beads1,Abyssal_Beads1,Futhark_Torque,Puppetmaster_Collar,Mirage_Stole,Scout_Gorget,Knight_bead_necklace,Bagua_Charm,Beastmaster_collar,Etoile_Gorget,Monk_Nodowa,Assassins_Gorget,Bards_Charm,Commodore_Charm,Iskur_Gorget,Marked_Gorget,Warrior_Beads,Argute_Stole,Dragoon_Collar,Duelist_Torque,Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Samurai_Nodowa,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm,Sorcerers_Stole,Quanpur_Necklace,Mizukage_no_Kubikazari]
+Saevus_Pendant = {"Name":"Saevus Pendant +1", "Magic Accuracy":-6,"Magic Attack":18,"Jobs":["whm","blm","smn","pup","sch","geo"]}
+necks = [Saevus_Pendant,Futhark_Torque1,Bagua_Charm1,Commodore_Charm1,Etoile_Gorget1,Argute_Stole1,Puppetmaster_Collar1,Mirage_Stole1,Dragoon_Collar1,Ninja_Nodowa1,Samurai_Nodowa1,Scout_Gorget1,Bards_Charm1,Beastmaster_collar1,Knight_bead_necklace1,Assassins_Gorget1,Duelist_Torque1,Sorcerers_Stole1,Clerics_Torque1,Monk_Nodowa1,Warrior_Beads1,Abyssal_Beads1,Futhark_Torque,Puppetmaster_Collar,Mirage_Stole,Scout_Gorget,Knight_bead_necklace,Bagua_Charm,Beastmaster_collar,Etoile_Gorget,Monk_Nodowa,Assassins_Gorget,Bards_Charm,Commodore_Charm,Iskur_Gorget,Marked_Gorget,Warrior_Beads,Argute_Stole,Dragoon_Collar,Duelist_Torque,Abyssal_Beads,Baetyl_Pendant,Caro_Necklace,Fotia_Gorget,Ninja_Nodowa,Rep_Plat_Medal,Samurai_Nodowa,Sanctity_Necklace,Sibyl_Scarf,Warders_Charm,Sorcerers_Stole,Quanpur_Necklace,Mizukage_no_Kubikazari]
 
 
 Balder_Earring = {"Name": "Balder Earring +1", "Attack":10, "Store TP":3, "QA":1, "Jobs":all_jobs}
@@ -794,7 +796,7 @@ Tellen_Belt15 = {"Name":"Tellen Belt","Name2":"Tellen Belt R15", "Rank":15,"AGI"
 Tellen_Belt20 = {"Name":"Tellen Belt","Name2":"Tellen Belt R20", "Rank":20,"AGI":5, "Ranged Attack":0+5, "Ranged Accuracy":0+15, "True Shot":5, "Jobs":["rng","cor"]}
 Tellen_Belt25 = {"Name":"Tellen Belt","Name2":"Tellen Belt R25", "Rank":25,"AGI":5, "Ranged Attack":0+10, "Ranged Accuracy":0+15, "True Shot":5, "Jobs":["rng","cor"]}
 Tellen_Belt30 = {"Name":"Tellen Belt","Name2":"Tellen Belt R30", "Rank":30,"AGI":5, "Ranged Attack":0+15, "Ranged Accuracy":0+15, "True Shot":5, "Jobs":["rng","cor"]}
-Moonbow_Belt = {"Name":"Moonbow Belt +1","STR":20, "DEX":20, "TA":8, "DT":-6,"Subtle Blow II":15, "Jobs":["mnk"]}
+Moonbow_Belt = {"Name":"Moonbow Belt +1","STR":20, "DEX":20, "TA":8, "DT":-6,"Subtle Blow II":15, "Jobs":["mnk","pup"]}
 Gerdr_Belt = {"Name":"Gerdr Belt +1","DEX":7,"AGI":7,"Store TP":6,"Dual Wield":4,"Crit Rate":4,"Jobs":["war","mnk","rdm","thf","pld","drk","bst","brd","sam","nin","drg","blu","cor","dnc","run"]}
 waists = [Gerdr_Belt,Moonbow_Belt,Tellen_Belt30,Tellen_Belt25,Tellen_Belt20,Tellen_Belt15,Kwahu_Kachina_Belt,Prosilio_Belt,Yemaya_Belt,Luminary_Sash,Sacro_Cord,Acuity_Belt,Eschan_Stone,Fotia_Belt,Grunfeld_Rope,Ioskeha_Belt,Kentarch_Belt,Orpheus_Sash,Reiki_Yotai,Sailfi_Belt,Windbuffet_Belt,Skrymir_Cord,]
 
