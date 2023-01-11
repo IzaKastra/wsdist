@@ -54,7 +54,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 08)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 11)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -126,7 +126,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu", "Tachi: Koki", "Tachi: Goten", "Tachi: Kagero","Tachi: Enpi","Tachi: Yukikaze"],
             "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos", "Viper Bite"],
             "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat","Circle Blade","Swift Blade","Fast Blade","Burning Blade","Fast Blade II"],
-            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell","Slice","Spinning Scythe"],
+            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell","Slice","Spinning Scythe","Guillotine"],
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
@@ -457,10 +457,14 @@ while True:
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
+
             # Update the radio and checkbox buttons to only show items that the main job can use.
             for slot in gear_dict:
                 # First loop once to hide everything.
                 for equipment in gear_dict[slot]:
+                    if main_job.lower() not in equipment["Jobs"]:
+                        window[f"checkbox_{slot}:{equipment['Name2']}"].update(False) # Unselect all items in the Select Gear tab that your new main job cant use.
+
                     window[f"checkbox_{slot}:{equipment['Name2']}"].hide_row()
                     window[f"start{slot}:{equipment['Name2']}"].hide_row()
                 # Now loop once again and unhide things in alphabetical order. Without the first hide all loop, things get thrown in at the bottom and would be out of order.

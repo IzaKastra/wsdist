@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 08
+# Version date: 2023 January 11
 #
 import numpy as np
 from set_stats import *
@@ -574,6 +574,11 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = False
         wsc = 0.6*(player_str + player_mnd) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 2
+    elif ws_name == "Guillotine":
+        ftp = 0.875
+        ftp_rep = False
+        wsc = 0.3*player_str + 0.5*player_mnd + dStat[1]*gearset.playerstats[dStat[0]]
+        nhits = 4
     elif ws_name == "Spiral Hell":
         base_ftp = [1.375,2.75,4.75]
         ftp = np.interp(tp, base_tp, base_ftp)

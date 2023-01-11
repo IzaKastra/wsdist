@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 08
+# Version date: 2023 January 11
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -38,7 +38,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu", "Tachi: Koki", "Tachi: Goten", "Tachi: Kagero","Tachi: Enpi","Tachi: Yukikaze"],
             "Dagger": ["Evisceration", "Exenterator", "Mercy Stroke", "Aeolian Edge", "Rudra's Storm", "Shark Bite", "Dancing Edge", "Mordant Rime","Mandalic Stab","Pyrrhic Kleos", "Viper Bite"],
             "Sword": ["Savage Blade", "Expiacion", "Death Blossom", "Chant du Cygne", "Knights of Round", "Sanguine Blade", "Seraph Blade","Red Lotus Blade","Requiescat","Circle Blade","Swift Blade","Fast Blade","Burning Blade","Fast Blade II"],
-            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell","Slice","Spinning Scythe"],
+            "Scythe": ["Insurgency", "Cross Reaper", "Entropy", "Quietus", "Catastrophe","Infernal Scythe","Shadow of Death","Dark Harvest","Spiral Hell","Slice","Spinning Scythe","Guillotine"],
             "Great Sword":["Torcleaver","Scourge","Resolution","Freezebite", "Herculean Slash","Ground Strike","Dimidiation","Shockwave","Sickle Moon","Spinning Slash","Hard Slash"],
             "Club":["Hexa Strike","Realmrazer","Seraph Strike","Randgrith","Black Halo","Judgment","Exudation","Shining Strike","True Strike","Mystic Boon"],
             "Polearm":["Stardiver", "Impulse Drive", "Penta Thrust", "Geirskogul", "Drakesbane", "Camlann's Torment","Raiden Thrust","Thunder Thrust","Wheeling Thrust", "Sonic Thrust","Double Thrust"],
@@ -169,7 +169,7 @@ buffs_geo_column = [
   [sg.Combo(values=entrustspells, default_value="None", readonly=True, k="entrust",size=(20,1),font=font_choice,enable_events=True,tooltip="Indi/Geo-bubbles overwrite the entrust bubble.")],
   [sg.Checkbox("Blaze of\nGlory*",size=(15,2),font=font_choice,disabled=True,k="geo_bog",tooltip="Blaze of Glory applies to the \"Geo-\" bubble.")],
   [sg.Checkbox("Bolster",size=(15,1),font=font_choice,disabled=True,k="bolster",enable_events=True)],
-  [sg.Text("GEO potency: ",font=font_choice,tooltip="0 = -0% potency\n37 = -37% potency\n100 = -100% potency"),sg.Input("100",size=(4,1),pad=(1,1),font=font_choice,key="geomancy_potency",tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency")],
+  [sg.Text("GEO potency: ",font=font_choice,tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency"),sg.Input("100",size=(4,1),pad=(1,1),font=font_choice,key="geomancy_potency",tooltip="0 = 0% potency\n37 = 37% potency\n100 = 100% potency")],
 
 ]
 

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 05
+# Version date: 2023 January 11
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -621,7 +621,7 @@ Piety_Mitts = {"Name":"Piety Mitts +3","Evasion":42,"Magic Evasion":57,"Magic De
 Gazu_bracelet = {"Name":"Gazu Bracelet +1", "Name2":"Gazu Bracelet +1 R15","Evasion":22,"Magic Evasion":43,"Magic Def":2,"STR":10+10, "DEX":32+10, "VIT":32+10, "AGI":6+10, "INT":14+10, "MND":29+10, "CHR":19+10, "Accuracy":44+50, "Attack":-17, "Gear Haste":5+10, "Jobs":["mnk","whm","blm","rdm","thf","drk","brd","rng","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Arbatel_Bracers = {"Name":"Arbatel Bracers +3","Evasion":69,"Magic Evasion":98,"Magic Def":7,"STR":16, "DEX":40, "VIT":38, "AGI":20, "INT":36, "MND":47, "CHR":32, "Accuracy":62, "Magic Accuracy":62, "Magic Attack":52, "Magic Damage":32, "Gear Haste":3, "Magic Burst Damage":15, "Jobs":["sch"]}
 Agoge_Mufflers = {"Name":"Agoge Mufflers +3","Evasion":42,"Magic Evasion":63,"Magic Def":4, "PDT":-6,"STR":25, "DEX":39, "VIT":47, "AGI":13, "INT":21, "MND":36, "CHR":26, "Accuracy":38, "Attack":86, "Magic Accuracy":38, "Gear Haste":5, "Fencer":1,"Jobs":["war"]}
-Boii_Mufflers = {"Name":"Boii Mufflers +3","Evasion":74,"Magic Evasion":82,"Magic Def":5,"STR":24, "DEX":47, "VIT":47, "AGI":22, "INT":130, "MND":38, "CHR":31, "Accuracy":62, "Attack":62, "Magic Accuracy":62, "Axe Skill":31, "Gear Haste":4, "Weaponskill Damage":12, "Jobs":["war"]}
+Boii_Mufflers = {"Name":"Boii Mufflers +3","Evasion":74,"Magic Evasion":82,"Magic Def":5,"STR":24, "DEX":47, "VIT":47, "AGI":22, "INT":21, "MND":38, "CHR":31, "Accuracy":62, "Attack":62, "Magic Accuracy":62, "Axe Skill":31, "Gear Haste":4, "Weaponskill Damage":12, "Jobs":["war"]}
 Wakido_Kote = {"Name":"Wakido Kote +3","Evasion":42,"Magic Evasion":46,"Magic Def":2,"STR":24, "DEX":40, "VIT":40, "AGI":17, "INT":20, "MND":36, "CHR":30, "Accuracy":48, "Gear Haste":4, "Store TP":7, "JA Haste":4, "Jobs":["sam"]}
 Sakonji_Kote = {"Name":"Sakonji Kote +3","Evasion":42,"Magic Evasion":46,"Magic Def":3,"PDT":-6,"STR":16, "DEX":40, "VIT":40, "AGI":17, "INT":20, "MND":36, "CHR":30, "Accuracy":47, "Attack":81, "Magic Accuracy":38, "Gear Haste":4, "Jobs":["sam"]}
 Kasuga_Kote = {"Name":"Kasuga Kote +3","Evasion":74,"Magic Evasion":82,"Magic Def":5,"STR":24, "DEX":47, "VIT":47, "AGI":23, "INT":21, "MND":39, "CHR":31, "Accuracy":62, "Attack":62, "Ranged Accuracy":62, "Ranged Attack":62, "Magic Accuracy":62, "Gear Haste":4, "Weaponskill Damage":12, "Jobs":["sam"]}
