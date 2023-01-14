@@ -1153,11 +1153,11 @@ class set_gear:
         if mainjob == "RNG":
             if job_abilities.get("Velocity Shot",False):
                 percent_rangedattack_buff += 152./1024
-                percent_attack_buff -= 152./1024
+                # percent_attack_buff -= 152./1024
                 if gear["body"]["Name2"] == "Amini Caban +3":
                     percent_rangedattack_buff += 112./1024
                 if gear["back"]["Name"] == "Belenus's Cape":
-                    percent_rangedattack_buff += 0.02
+                    percent_rangedattack_buff += 20./1024
         naegling_attack_bonus = 0.0
         if buffs['cor']:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
