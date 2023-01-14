@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 03
+# Version date: 2023 January 13
 #
 # This code holds the methods for building a player's stats.
 #
@@ -622,7 +622,7 @@ class set_gear:
                 self.playerstats['Accuracy2'] += 10
 
         elif mainjob == "RNG": # Add hover shot and velocity shot bonuses
-            if job_abilities.get("Velocity Shot",False):
+            if job_abilities.get("Velocity Shot",True):
                 self.playerstats["Ranged Attack"] += 40
             hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not implemented.
             hover_shot = 100 if hover_shot > 100 else (0 if hover_shot < 0 else hover_shot)
@@ -1150,6 +1150,14 @@ class set_gear:
         # First collect the individual attack% boosts and add them together.
         percent_attack_buff = 0.0
         percent_rangedattack_buff = 0.0
+        if mainjob == "RNG":
+            if job_abilities.get("Velocity Shot",False):
+                percent_rangedattack_buff += 152./1024
+                percent_attack_buff -= 152./1024
+                if gear["body"]["Name2"] == "Amini Caban +3":
+                    percent_rangedattack_buff += 112./1024
+                if gear["back"]["Name"] == "Belenus's Cape":
+                    percent_rangedattack_buff += 0.02
         naegling_attack_bonus = 0.0
         if buffs['cor']:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
@@ -1175,7 +1183,7 @@ class set_gear:
 
         self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus)
         self.playerstats['Attack2'] *= (1+percent_attack_buff) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
-        self.playerstats['Ranged Attack'] *= (1+percent_attack_buff + percent_rangedattack_buff) # Smite does not apply to ranged attacks.
+        self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff) # Smite does not apply to ranged attacks.
 
         # Convert the attack values to integers.
         self.playerstats['Attack1'] = int(self.playerstats['Attack1'])

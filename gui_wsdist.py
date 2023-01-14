@@ -54,7 +54,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 11)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 13)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -484,6 +484,7 @@ while True:
             window["footwork toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["trueshot toggle"].update(visible=True if main_job.lower() in ["rng","cor"] else False)
+            window["velocityshot toggle"].update(visible=True if main_job.lower() in ["rng"] else False)
             window["bloodrage toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["mightystrikes toggle"].update(visible=True if main_job.lower() in ["war"] else False)
 
@@ -498,6 +499,7 @@ while True:
             window["impetus toggle"].update(False)
             window["footwork toggle"].update(False)
             window["trueshot toggle"].update(False)
+            window["velocityshot toggle"].update(False)
             window["bloodrage toggle"].update(False)
             window["mightystrikes toggle"].update(False)
 
@@ -819,6 +821,7 @@ while True:
             striking_flourish = True if values["select flourish"] == "Striking Flourish" else False
             ternary_flourish = True if values["select flourish"] == "Ternary Flourish" else False
             true_shot_toggle = values["trueshot toggle"]
+            velocity_shot_toggle = values["velocityshot toggle"]
             bloodrage_toggle = values["bloodrage toggle"]
             mightystrikes_toggle = values["mightystrikes toggle"]
 
@@ -835,6 +838,7 @@ while True:
                              "Striking Flourish":striking_flourish,
                              "Ternary Flourish":ternary_flourish,
                              "True Shot":true_shot_toggle,
+                             "Velocity Shot":velocity_shot_toggle,
                              "Blood Rage":bloodrage_toggle,
                              "Mighty Strikes":mightystrikes_toggle}
 
