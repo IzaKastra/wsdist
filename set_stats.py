@@ -1148,16 +1148,18 @@ class set_gear:
 
         # Now multiply each attack by the sum of the %-based attack boosts like COR GEO and Kikoku's Attack+10%
         # First collect the individual attack% boosts and add them together.
-        percent_attack_buff = 0.0
-        percent_rangedattack_buff = 0.0
+        percent_attack_buff = 0.0 # Kikoku/Guttler AM
+        percent_rangedattack_buff = 0.0 # Annihilator AM
+        velocity_shot_ranged_bonus = 0.0 # Velocity shot exclusive
+        velocity_shot_melee_bonus = 0.0 # Velocity shot exclusive
         if mainjob == "RNG":
             if job_abilities.get("Velocity Shot",False):
-                percent_rangedattack_buff += 152./1024
-                # percent_attack_buff -= 152./1024
+                velocity_shot_ranged_bonus += 152./1024
+                velocity_shot_melee_bonus -= 152./1024
                 if gear["body"]["Name2"] == "Amini Caban +3":
-                    percent_rangedattack_buff += 112./1024
+                    velocity_shot_ranged_bonus += 112./1024
                 if gear["back"]["Name"] == "Belenus's Cape":
-                    percent_rangedattack_buff += 20./1024
+                    velocity_shot_ranged_bonus += 20./1024
         naegling_attack_bonus = 0.0
         if buffs['cor']:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
@@ -1181,9 +1183,9 @@ class set_gear:
         # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
-        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus)
-        self.playerstats['Attack2'] *= (1+percent_attack_buff) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
-        self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff) # Smite does not apply to ranged attacks.
+        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus + velocity_shot_melee_bonus)
+        self.playerstats['Attack2'] *= (1+percent_attack_buff + velocity_shot_melee_bonus) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
+        self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff + velocity_shot_ranged_bonus) # Smite does not apply to ranged attacks.
 
         # Convert the attack values to integers.
         self.playerstats['Attack1'] = int(self.playerstats['Attack1'])
