@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2023 January 21
 #
 # This code contains the function used to hit rates using the equation on BG Wiki
 #
@@ -20,7 +20,7 @@ def get_hitrate(player_accuracy, ws_acc, enemy_eva, weaponslot, first, skill_typ
     else:
         hitrate_cap = 0.99 # TODO: call this hitrate_cap instead
         
-    hitrate_check = (75 + 0.5*(player_accuracy + ws_acc + 100*first - enemy_eva))/10
+    hitrate_check = (75 + 0.5*(player_accuracy + ws_acc + 100*first - enemy_eva))/100
 
     hitrate_floor = 0 if weaponslot=="ranged" else 0.2 # 20% melee hit rate minimum. 0% for ranged
 
