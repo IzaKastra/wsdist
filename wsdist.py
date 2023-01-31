@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 11
+# Version date: 2023 January 31
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -376,7 +376,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             first_main_hit_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, first_main_hit_pdif, ftp, first_main_hit_crit_rate, adjusted_crit_dmg, wsd, ws_bonus, ws_trait, sneak_attack_bonus, trick_attack_bonus, climactic_flourish_bonus, striking_flourish_bonus, ternary_flourish_bonus)
 
             # Our original damage was assuming ZERO bonuses. This next line just adds the extra damage gained by those bonuses to the first hit.
-            phys += (first_main_hit_damage*hitrate11 - main_hit_damage*hitrate12)
+            phys += (first_main_hit_damage*hitrate11 - main_hit_damage*hitrate11)
 
             # Striking Flourish also boosts the crit rate for its double attack hit, but doesn't provide the +100% CHR bonus (probably)
             if striking_flourish:
@@ -384,7 +384,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
                 striking_flourish_crit_rate = crit_rate+0.7*dnc_empy_body_bonus*(crit_rate>0) # This crit_rate>0 ensures we aren't letting non-crit WSs crit.
                 striking_flourish_pdif1 = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, striking_flourish_crit_rate)
                 striking_flourish_DA_damage = get_avg_phys_damage(main_dmg, fstr_main, wsc, striking_flourish_pdif1, ftp2, striking_flourish_crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
-                phys += (striking_flourish_DA_damage - main_hit_damage)*hitrate12
+                phys += (striking_flourish_DA_damage - main_hit_damage)*hitrate11
 
             # Calculate the damage for off-hand hits, which receive no bonuses anyway.
             offhand_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
@@ -417,7 +417,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp, buffs, equipment
             enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
 
             magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
-            magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)
+            magical_damage = (phys*ftp_hybrid + player_magic_damage)*magic_multiplier*(1+wsd)*(1+ws_bonus)*(1+ws_trait)
 
             damage += magical_damage
 
