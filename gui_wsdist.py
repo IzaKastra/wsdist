@@ -910,6 +910,7 @@ while True:
                              "Double Shot":doubleshot_toggle,
                              "Triple Shot":tripleshot_toggle,
                              "metric":values["tp priority"],
+                             "shell v":values["whm_on"]
                              }
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
@@ -1186,7 +1187,7 @@ while True:
                 pdt2 = int(gearset.playerstats["PDT2"])
                 window["pdt stat"].update(f"{'Physical DT:':<16s} {pdt+pdt2:>4d}")
 
-                mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"])
+                mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"]) - 29*values["whm_on"]
                 window["mdt stat"].update(f"{'Magical DT:':<16s} {mdt:>4d}")
 
                 meva = int(gearset.playerstats["Magic Evasion"])

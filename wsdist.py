@@ -1315,7 +1315,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
 
                                     # Don't even test the set if the DT requirement is not met in both PDT and MDT
                                     pdt = 0
-                                    mdt = 0
+                                    mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
                                     for slot in new_set:
                                         pdt += new_set[slot].get("PDT",0) + new_set[slot].get("DT",0)
                                         mdt += new_set[slot].get("MDT",0) + new_set[slot].get("DT",0)
@@ -1435,7 +1435,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
         # Now let's increase those temporary restrictions slightly and rerun the code to find a slightly better set.
         # We'll repeat this until the main conditions are met.
         pdt = 0
-        mdt = 0
+        mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
         for slot in Best_Gearset:
             pdt += Best_Gearset[slot].get("PDT",0) + Best_Gearset[slot].get("DT",0)
             mdt += Best_Gearset[slot].get("MDT",0) + Best_Gearset[slot].get("DT",0)

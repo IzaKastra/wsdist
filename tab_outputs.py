@@ -56,7 +56,7 @@ tp = sg.vtop(sg.Frame("TP",[
     [sg.Text(f"{'Daken:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="daken stat", tooltip="Chance to throw a Shuriken while TPing.\nMust have a Shuriken equipped.")],
     [sg.Text(f"{'Kick Attacks:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="kickattack stat", tooltip="Chance of a bonus kick attack while TPing.\nMust be using a hand-to-hand weapon.")],
     [sg.Text(f"{'Physical DT:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="pdt stat", tooltip="Physical damage taken. Caps at -50% + Burtgang. \nIncludes \"Damage Taken\" stat bonuses.")],
-    [sg.Text(f"{'Magical DT:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="mdt stat", tooltip="Magical damage taken. Caps at -50%.\nIncludes \"Damage Taken\" stat bonuses.\nShell V provides -29.3%")],
+    [sg.Text(f"{'Magical DT:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="mdt stat", tooltip="Magical damage taken. Caps at -50%.\nIncludes \"Damage Taken\" stat bonuses.\nShell V provides -29.3% and is included if WHM is selected.")],
     [sg.Text(f"{'Evasion:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="eva stat", tooltip="Total player evasion.\nIncludes gear, traits, gifts, etc.")],
     [sg.Text(f"{'Magic Evasion:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="meva stat", tooltip="Total player magic evasion.\nIncludes gear, traits, gifts, etc.")],
     [sg.Text(f"{'Magic Def:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="mdef stat", tooltip="Total player magic defense.\nIncludes gear, traits, gifts, etc.")],
