@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 13
+# Version date: 2023 February 14
 #
 # This code holds the methods for building a player's stats.
 #
@@ -68,10 +68,10 @@ class set_gear:
                  'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                  "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                  'Crit Rate':0, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                 'Store TP':0, "True Shot":0,
+                 'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                  'PDL':0,"PDL Trait":0,
                  'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                 'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                 'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                  'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                  'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -98,16 +98,16 @@ class set_gear:
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':5, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,"Subtle Blow":27,"Subtle Blow II":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,"Subtle Blow":27+5,"Subtle Blow II":0,
                      }
         elif mainjob == "DRK":  # Master Level 20 Dark Knight stats
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
@@ -122,10 +122,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':16, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':50,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -146,10 +146,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0+18, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10+10, 'Crit Damage':10+8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":180,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":180,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -157,7 +157,7 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
-        elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso is added later.
+        elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso stuff is added later. Zanshin is +50% from traits, +5% from merits, +10% from job gifts. The additional +10% from gifts are added in the main code for now as "zanhasso"
             self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':398+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':444+16, 'Club Skill':320+16, 'Throwing Skill':398+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':408+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':398+16,'Marksmanship Skill':0+16,
@@ -170,10 +170,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':8+40, "True Shot":0,
+                     'Store TP':8+40, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':50, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':50+5+10, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':8+19, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':8+16, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -194,10 +194,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":21, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -218,10 +218,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -242,10 +242,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -266,10 +266,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':35, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -290,10 +290,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -311,13 +311,13 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet here, but death penalty is treated separately)
-                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":20,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0+5,
+                     'Store TP':0, "True Shot":0+5,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -338,10 +338,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -362,10 +362,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':8+6, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8+14, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -386,10 +386,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":5+14,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0, # TODO: we need +40 flat attack and +20 acc to kicks only somehow
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -410,10 +410,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -434,10 +434,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8+11, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":20,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
-                     'Dual Wield':5+30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Dual Wield':5+30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':10,"Martial Arts":0, # +10 JA Haste assuming haste samba with 5/5 merits
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -458,10 +458,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0, "Fencer TP Bonus":230,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0, "Fencer TP Bonus":230,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -482,10 +482,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -506,10 +506,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -530,10 +530,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -551,13 +551,13 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":20,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":8+45,
-                     'Store TP':0, "True Shot":8+7,
+                     'Store TP':0, "True Shot":8+7,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":30+25,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -578,10 +578,10 @@ class set_gear:
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,
+                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":205,
-                     'Zanshin':0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -601,6 +601,7 @@ class set_gear:
         smite_bonus = 0.
         building_flourish = 0.
         wyvern_bonus = False # This will only apply for DRG main job later.
+        last_resort_bonus = 0. # Currently only for DRK main job
 
         # Add Smite bonuses now. We check for 2-handed weapon later
         if mainjob in ["DRK","WAR","MNK","DRG","PUP"]:
@@ -621,9 +622,17 @@ class set_gear:
                 self.playerstats['Accuracy1'] += 10
                 self.playerstats['Accuracy2'] += 10
 
+        if mainjob == "DRK": # Check for Last Resort
+            if self.gear['main'].get('Skill Type', 'None') in two_handed:            
+                if job_abilities.get("Last Resort",False):
+                    self.playerstats["Attack1"] += 40
+                    self.playerstats["Attack2"] += 40
+                    last_resort_bonus += 356./1024
+                    self.playerstats["JA Haste"] += 25
         elif mainjob == "RNG": # Add hover shot and velocity shot bonuses
             if job_abilities.get("Velocity Shot",True):
                 self.playerstats["Ranged Attack"] += 40
+                self.playerstats["Magic Haste"] -= 0.15
             hover_shot = job_abilities.get("Hover Shot",0) # Hover shot not implemented.
             hover_shot = 100 if hover_shot > 100 else (0 if hover_shot < 0 else hover_shot)
             if hover_shot > 0:
@@ -633,7 +642,7 @@ class set_gear:
 
         elif mainjob == "MNK": # Add Impetus bonuses
             impetus_potency = 0.9
-            self.playerstats["Attack1"] += 100*impetus_potency*impetus # Add 80% of the impetus here. # TODO: Find a better place for it.
+            self.playerstats["Attack1"] += 100*impetus_potency*impetus # Add 90% of the impetus here. # TODO: Find a better place for it.
             self.playerstats["Attack2"] += 100*impetus_potency*impetus
             self.playerstats["Crit Rate"] += 50*impetus_potency*impetus # 90% impetus potency = +45% crit rate and +90 attack.
             self.playerstats["Crit Damage"] += 50*impetus_potency*impetus*("Bhikku Cyclas" in gear["body"]["Name"]) # Impetus on and "Bhikku Cyclas" equipped is an extra 50% crit damage. 
@@ -749,6 +758,11 @@ class set_gear:
             self.playerstats["MND"] += 10
             self.playerstats["CHR"] += 9
         elif subjob == "SAM":
+            if self.gear['main'].get('Skill Type', 'None') in two_handed:
+                self.playerstats["STR"] += 7
+                self.playerstats['JA Haste'] += 10 
+                self.playerstats['Accuracy1'] += 10
+                self.playerstats['Accuracy2'] += 10
             self.playerstats["STR"] += 12
             self.playerstats["DEX"] += 12
             self.playerstats["VIT"] += 12
@@ -805,6 +819,7 @@ class set_gear:
             self.playerstats["MND"] += 7
             self.playerstats["CHR"] += 12
         elif subjob == "DNC":
+            self.playerstats['JA Haste'] += 5 # +5% JA haste from full-time Haste Samba
             self.playerstats["STR"] += 10
             self.playerstats["DEX"] += 12
             self.playerstats["VIT"] += 9
@@ -852,7 +867,7 @@ class set_gear:
         pdl1_jobs = ["DRK","MNK","RNG","DRG","WAR","SAM","BST","PUP","DNC","THF","NIN","RDM"] # +0.1 PDL
         pdl2_jobs = ["DRK"] # +0.2 PDL
         pdl3_jobs = ["DRK"] # +0.3 PDL (55drk)
-        if subjob in pdl2_jobs and mainjob not in pdl1_jobs: # TODO: Rewrite the logic here. Right now PUP/DRK is only getting Smite1, despite /DRK boosting this to Smite2
+        if subjob in pdl2_jobs and mainjob not in pdl1_jobs: # TODO: Rewrite the logic here. Right now PUP/DRK (pup with drk subjob) is only getting Smite1, despite /DRK boosting this to Smite2
             self.playerstats["PDL Trait"] += 20
         elif subjob in pdl1_jobs and mainjob not in pdl1_jobs:
             self.playerstats["PDL Trait"] += 10
@@ -888,7 +903,7 @@ class set_gear:
 
         burst1_jobs = ["BLM"] # +5% magic burst bonus
         if subjob in burst1_jobs and mainjob not in burst1_jobs:
-            self.playerstats["Magic Burst Damage II"] += 5 # TODO: rename to magic burst trait
+            self.playerstats["Magic Burst Damage Trait"] += 5
 
         martialarts2_jobs = ["MNK","PUP"] # Martial Arts = 100
         martialarts4_jobs = ["MNK"] # Martial Arts = 140
@@ -956,6 +971,14 @@ class set_gear:
             self.playerstats["Subtle Blow"] += 15
         elif subjob in subtleblow2_jobs and mainjob not in subtleblow2_jobs:
             self.playerstats["Subtle Blow"] += 10
+
+        dualwield_jobs3 = ["NIN"] # +10 Subtle Blow
+        dualwield_jobs2 = ["DNC","NIN"] # +15 Subtle Blow
+        if subjob in dualwield_jobs3 and mainjob not in dualwield_jobs2:
+            self.playerstats["Dual Wield"] += 25
+        elif subjob in dualwield_jobs2 and mainjob not in dualwield_jobs2:
+            self.playerstats["Dual Wield"] += 15
+
 
 
         # Do set bonuses!
@@ -1104,7 +1127,7 @@ class set_gear:
             self.playerstats['MND'] += buffs["food"].get('MND',0)
             self.playerstats['CHR'] += buffs["food"].get('CHR',0)
 
-        # Add WHM "Boost-STAT" bonus here
+        # Add WHM "Boost-STAT" bonus, BRD etudes, and GEO stats
         if buffs["whm"]:
                 self.playerstats['STR'] += buffs["whm"].get("STR", 0)
                 self.playerstats['DEX'] += buffs["whm"].get("DEX", 0)
@@ -1114,6 +1137,22 @@ class set_gear:
                 self.playerstats['MND'] += buffs["whm"].get("MND", 0)
                 self.playerstats['CHR'] += buffs["whm"].get("CHR", 0)
                 self.playerstats['Magic Haste'] += buffs["whm"].get("Haste",0)
+        if buffs["brd"]:
+                self.playerstats['STR'] += buffs["brd"].get("STR", 0)
+                self.playerstats['DEX'] += buffs["brd"].get("DEX", 0)
+                self.playerstats['VIT'] += buffs["brd"].get("VIT", 0)
+                self.playerstats['AGI'] += buffs["brd"].get("AGI", 0)
+                self.playerstats['INT'] += buffs["brd"].get("INT", 0)
+                self.playerstats['MND'] += buffs["brd"].get("MND", 0)
+                self.playerstats['CHR'] += buffs["brd"].get("CHR", 0)
+        if buffs["geo"]:
+                self.playerstats['STR'] += buffs["geo"].get("STR", 0)
+                self.playerstats['DEX'] += buffs["geo"].get("DEX", 0)
+                self.playerstats['VIT'] += buffs["geo"].get("VIT", 0)
+                self.playerstats['AGI'] += buffs["geo"].get("AGI", 0)
+                self.playerstats['INT'] += buffs["geo"].get("INT", 0)
+                self.playerstats['MND'] += buffs["geo"].get("MND", 0)
+                self.playerstats['CHR'] += buffs["geo"].get("CHR", 0)
 
 
         # Add skill levels from armor. See Hachiya Tekko +3: "Throwing Skill +14"
@@ -1183,8 +1222,8 @@ class set_gear:
         # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
-        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus + velocity_shot_melee_bonus)
-        self.playerstats['Attack2'] *= (1+percent_attack_buff + velocity_shot_melee_bonus) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
+        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus + velocity_shot_melee_bonus + last_resort_bonus)
+        self.playerstats['Attack2'] *= (1+percent_attack_buff + velocity_shot_melee_bonus + last_resort_bonus) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
         self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff + velocity_shot_ranged_bonus) # Smite does not apply to ranged attacks.
 
         # Convert the attack values to integers.
