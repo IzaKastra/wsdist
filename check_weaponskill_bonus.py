@@ -173,6 +173,9 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     elif main_wpn_name == "Nandaka":
         if ws_name == "Ground Strike":
             bonuses["ws_bonus"] += 0.15
+    elif main_wpn_name == "Lycurgos":
+        if ws_name == "Steel Cyclone":
+            bonuses["ws_bonus"] += 0.30
     elif main_wpn_name == "Conqueror":
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
