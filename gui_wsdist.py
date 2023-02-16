@@ -112,7 +112,7 @@ spell_dict = {
             "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
             "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
             "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
-            "Luminohelix II", "Noctohelix II"],
+            "Luminohelix II", "Noctohelix II","Kaustra"],
     "DRK":["Stone","Stone II","Stone III",
             "Water","Water II","Water III",
             "Aero","Aero II","Aero III",
@@ -959,7 +959,7 @@ while True:
                     if priority=="Damage":
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
                     else:
-                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^3)\n{'=':>10s} {tp:6.1f} TP / round")
                 else:
                     window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 

@@ -1,5 +1,5 @@
 # Author: Kastra (Asura)
-# Version date: 2023 January 03
+# Version date: 2023 February 16
 
 from get_dint_m_v import *
 import numpy as np
@@ -41,7 +41,7 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
 
     return(damage)
 
-def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
+def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
 
     steps = 2 # 2-step skillchain
 
@@ -117,15 +117,18 @@ def nuking(spelltype, tier, element, gearset, player_INT, player_matk, mdmg, ene
 
     else: # Else Elemental Magic
         ninjutsu_skill_potency = 1.0
-        m, v, window = get_mv_blm(element, tier, player_INT, enemy_INT)
 
-        dINT = 0 if dINT < 0 else dINT # For now, assume that dINT has an absolute minimum of 0.
+        dINT = 0 if dINT < 0 else dINT # For now, assume that dINT has an absolute minimum of 0. I believe I estimated this to be false as observed in game, but whatever.
+        if spell != "Kaustra":
+            # Kaustra uses a special base damage formula.
 
-        d = int(v+mdmg+(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
-
-
-        # print(m, v, d, dINT, window)
-
+            m, v, window = get_mv_blm(element, tier, player_INT, enemy_INT)
+            d = int(v+mdmg+(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
+        else:
+            player_level = 99
+            dINT = 0 if dINT < 0 else dINT 
+            dINT = 300 if dINT > 300 else dINT 
+            d = int(0.067*player_level)*(37+int(0.67*dINT))
 
         if ebullience:
             ebullience_bonus = 1.2

@@ -333,7 +333,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             if priority=="Damage":
                 metric = phys*phys*tp/1e6
             else:
-                metric = phys*tp*tp/1e5
+                metric = phys*tp*tp*tp/1e6
 
             return(metric,tp)
 
@@ -362,7 +362,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             element = spells[spell.split(":")[0]].lower()
             tier = spell.split()[-1]
 
-            damage = nuking("Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
+            damage = nuking(spell, "Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
 
         else:
             # If not Ninjutsu, then assume Elemental Magic
@@ -393,7 +393,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                     "Noctohelix II": "Dark",
             }
 
-            if spell[-2:] == "ja":
+            if spell=="Kaustra":
+                element="Dark"
+                tier = "None"
+            elif spell[-2:] == "ja":
                 element = jaspells[spell].lower()
                 tier = "ja"
             elif "helix" in spell.lower():
@@ -405,8 +408,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             elif len(spell.split()) == 2:
                 element = spells[spell.split()[0]].lower()
                 tier = spell.split()[-1]
-
-            damage = nuking("Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
+                
+            damage = nuking(spell, "Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
 
         return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 

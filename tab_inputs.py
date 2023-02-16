@@ -72,7 +72,7 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
                      "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
                      "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
                      "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
-                     "Luminohelix II", "Noctohelix II"],
+                     "Luminohelix II", "Noctohelix II","Kaustra"],
               "DRK":["Stone","Stone II","Stone III",
                      "Water","Water II","Water III",
                      "Aero","Aero II","Aero III",
