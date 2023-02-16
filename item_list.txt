@@ -14760,3 +14760,4 @@
 28669;butznar shield +1
 28670;leafkin shield
 28671;butznar shield
+26365;cornelia's belt
