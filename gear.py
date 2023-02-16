@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 14
+# Version date: 2023 February 15
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -71,7 +71,7 @@ MalevolenceA = {"Name": "Malevolence","Name2": "MalevolenceA", "Skill Type":"Dag
 MalevolenceB = {"Name": "Malevolence","Name2": "MalevolenceB", "Skill Type":"Dagger","Type":"Weapon","DMG":94,"Delay":201,"INT":0+10,"Magic Accuracy":25+10, "Magic Attack":34+10, "Magic Damage":118, "Magic Accuracy Skill":201, "Dagger Skill":242,"Jobs":["war","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","sch","geo"]}
 Marin_Staff = {"Name":"Marin Staff +1","Name2":"Marin Staff +1 R15","INT":36,"MND":22,"Magic Accuracy":15+40,"Magic Attack":28+40,"Magic Damage":217,"Staff Skill":242, "Skill Type": "Staff", "Type":"Weapon", "DMG": 199, "Delay": 356,"Magic Accuracy Skill":228,"Jobs":["blm","rdm","sch","geo"]}
 Maxentius = {"Name":"Maxentius","INT":15,"MND":15,"CHR":15,"Accuracy":40,"Magic Accuracy":40,"Magic Attack":21,"Magic Damage":232,"Club Skill":250,"Type":"Weapon","Skill Type":"Club","Magic Accuracy Skill":250,"DMG":200,"Delay":288,"Magic Burst Damage":4,"Jobs":["whm","blm","rdm","blu","sch","geo"]}
-Bunzi_Rod0 = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R15","Rank":0,"INT":15, "MND":15, "DMG":144+8,"Delay":216,"Magic Accuracy":40,"Magic Attack":35,"Magic Damage":248,"Club Skill":242, "Skill Type": "Club", "Type":"Weapon","Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40,"Jobs":["blm","rdm","sch","geo","whm","smn","blu"]}
+Bunzi_Rod0 = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R0","Rank":0,"INT":15, "MND":15, "DMG":144+8,"Delay":216,"Magic Accuracy":40,"Magic Attack":35,"Magic Damage":248,"Club Skill":242, "Skill Type": "Club", "Type":"Weapon","Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40,"Jobs":["blm","rdm","sch","geo","whm","smn","blu"]}
 Bunzi_Rod15 = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R15","Rank":15,"INT":15, "MND":15, "DMG":144+8,"Delay":216,"Magic Accuracy":40,"Magic Attack":35+15,"Magic Damage":248,"Club Skill":242, "Skill Type": "Club", "Type":"Weapon","Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40,"Jobs":["blm","rdm","sch","geo","whm","smn","blu"]}
 Bunzi_Rod20 = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R20","Rank":20,"INT":15, "MND":15, "DMG":144+9,"Delay":216,"Magic Accuracy":40+5,"Magic Attack":35+20,"Magic Damage":248,"Club Skill":242, "Skill Type": "Club", "Type":"Weapon","Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40+5,"Jobs":["blm","rdm","sch","geo","whm","smn","blu"]}
 Bunzi_Rod25 = {"Name":"Bunzi's Rod", "Name2":"Bunzi's Rod R25","Rank":25,"INT":15, "MND":15, "DMG":144+10,"Delay":216,"Magic Accuracy":40+10,"Magic Attack":35+25,"Magic Damage":248,"Club Skill":242, "Skill Type": "Club", "Type":"Weapon","Magic Accuracy Skill":255,"Magic Burst Damage":10, "Accuracy":40+10,"Jobs":["blm","rdm","sch","geo","whm","smn","blu"]}
