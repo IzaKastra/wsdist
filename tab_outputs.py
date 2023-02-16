@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 03
+# Version date: 2023 February 14
 #
 # This file contains a the GUI tab "Outputs".
 # This will be renamed later to "WS Outputs" when I add TP sets and nuking.
@@ -48,6 +48,7 @@ magical = sg.vtop(sg.Frame("Magical",[
 tp = sg.vtop(sg.Frame("TP",[
     [sg.Text(f"{'Store TP:':<16s} {'---':>4s}",font=font_choice,size=(22,1),key="stp stat")],
     [sg.Text(f"{'Dual Wield:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="dw stat",tooltip="Dual wield will reduce TP gain per hit, but increases attack speed.")],
+    [sg.Text(f"{'Martial Arts:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="marts stat", tooltip="Additive delay reduction when using Hand-to-Hand weapons.\nSubtract this value from 480+Weapon_Delay.\nReduces TP gained per hit.")],
     [sg.Text(f"{'Gear Haste:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="gear haste stat", tooltip="Caps at 256/1024 = 25%")],
     [sg.Text(f"{'Magic Haste:':<15s} {'-----':>5s}",font=font_choice,size=(22,1),key="magic haste stat", tooltip="Caps at 448/1024 = 43.75%")],
     [sg.Text(f"{'JA Haste:':<16s} {'----':>4s}",font=font_choice,size=(22,1),key="ja haste stat", tooltip="Caps at 256/1024 = 25%")],
@@ -75,6 +76,7 @@ other = sg.vtop(sg.Frame("Other",[
     [sg.Text(f"{'Double Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="da stat")],
     [sg.Text(f"{'Triple Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ta stat")],
     [sg.Text(f"{'Quad. Attack:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="qa stat")],
+    [sg.Text(f"{'Zanshin:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="zanshin stat",tooltip="Zanshin total from gear and traits.\nHasso provides a 1.25 multiplier to this value if mainjob=SAM.\nSAM mainjob provides an additional +10% from gifts\nCaps at 100%")],
     [sg.Text(f"{'Weapon skill damage:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="wsd stat",tooltip="Weapon skill damage generally only applies to the first hit of a weapon skill.")],
     [sg.Text(f"{'Weapon skill trait:':<21s} {'---':>3s}",font=font_choice,size=(26,1),key="ws bonus stat",tooltip="Weaponskill damage from DRG or /DRG. Applies to all hits.\nDoes not include Ambuscade WS, Relic/Mythic or REMA augment bonuses")],
     [sg.Text(f"{'PDL (gear):':<20s} {'----':>4s}",font=font_choice,size=(26,1),key="pdl gear stat",tooltip="Multiplicative with PDIF cap for (weapon_base_PDIF + PDL_trait).")],
@@ -83,11 +85,12 @@ other = sg.vtop(sg.Frame("Other",[
     ]))
 
 ws_tab = [
-          [sg.Text("Number of simulated weapon skills:",font=font_choice),sg.Input("0",key="n_sims",size=(10,1),tooltip="Number of weapon skill simulations used for the final plot\nAND for calculating damage statistics (min/median/mean/max).\nValues less than 10 are converted to 10.",font=font_choice)],
+          [sg.Text("Number of simulated weapon skills:",font=font_choice),sg.Input("2000",key="n_sims",size=(10,1),tooltip="Number of weapon skill simulations used for the final plot\nAND for calculating damage statistics (min/median/mean/max).\nValues less than 10 are converted to 10.",font=font_choice)],
           [sg.Checkbox("Show final simulated damage distribution plot?",font=font_choice,size=(50,1),key="show final plot",enable_events=False,default=False,tooltip="Uses matplotlib.pyplot to show a final damage distribution.\nMagic simulations will never show plots.")],[sg.Checkbox("Find the best set?",font=font_choice,size=(50,1),key="find set",enable_events=False,default=True,tooltip="Enabled: Check every combination of selected gear (2 at a time) to find the best set automatically.\nDisabled: Calculate damage statistics and plot the initial set from the inputs tab without modifications.")],
-          [sg.Button("Run WS",size=(5,2),tooltip="Run weapon skill damage simulator."),sg.Button("Run Magic",size=(5,2),tooltip="Run magic damage simulator."),sg.Button("Copy best set",size=(6,2),pad=(15,0),key="copy best set",disabled=True,tooltip="Copies best set to the initial set in the inputs tab for quick look.\nUseful for making minor changes to the best set for comparisons.")],
+          [sg.Text(f"{'DT requirement:':<16s}",font=font_choice,size=(16,1)),sg.Input("0",key="dt_req",size=(5,1),tooltip="DT requirement for gearset.\nFinding sets with DT requirements is slow.",font=font_choice)],
+          [sg.Text(f"{'Ranged TP priority:':<16s}",font=font_choice,size=(19,1)),sg.Combo(values=["Damage","Time to WS"], default_value="Time to WS", readonly=True, key="tp priority",size=(11,1),font=font_choice,tooltip="Damage: Maximizes (damage^2)*(tp_return)\nTP Return: Maximizes (damage)*(tp_return^2)",disabled=False,enable_events=False)],
+          [sg.Button("Run WS",size=(5,2),tooltip="Run weapon skill damage simulator."),sg.Button("Run Magic",size=(5,2),tooltip="Run magic damage simulator.\nRanged attacks are included here."),sg.Button("Run TP",size=(5,2),tooltip="Run the TP set finder."),sg.Button("Copy best set",size=(6,2),pad=(15,0),key="copy best set",disabled=True,tooltip="Copies best set to the initial set in the inputs tab for quick look.\nUseful for making minor changes to the best set for comparisons.")],
           [base_stats,physical,magical],[tp,other,skills]
           # Comment out this next line if you want to use the terminal for outputs instead of the GUI. Doing so will prevent the GUI from crashing without any messages explaining why.
         #   [sg.Push(),sg.Output(size=(80, 23),font=font_choice),sg.Push()], # can only have one "sg.Output() since it takes the STDOUT"
-
 ]
