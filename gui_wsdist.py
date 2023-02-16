@@ -651,6 +651,7 @@ while True:
             ws_name = values["select weaponskill"]
             min_tp = int(values["mintp"]) if int(values["mintp"]) > 1000 else 1000
             max_tp = int(values["maxtp"]) if int(values["maxtp"]) < 3000 else 3000
+            starting_tp = int(values["startingtp"]) if int(values["startingtp"]) < 1000 else 1000
 
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
 
@@ -925,7 +926,7 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False)
+                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False)
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 
             # --------------------------------------------------------------------------------------------
@@ -937,7 +938,7 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_time, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False, True)
+                quicklook_time, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False, True)
                 window["quickaverage"].update(f"{'Average =':>10s} {quicklook_time:>6.3f} s / WS\n{'=':>10s} {tp:6.1f} TP / round")
 
             # --------------------------------------------------------------------------------------------
@@ -949,7 +950,7 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
+                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
                 if spell == "Ranged Attack":
                     priority = values["tp priority"]
                     if priority=="Damage":
@@ -987,7 +988,7 @@ while True:
                                 starting_gearset2[slot] = Empty
 
                 show_final_plot = values["show final plot"] # TODO: Show final plot = false for magical WSs too
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, False) # Last False for check_tp_set
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, False) # Last False for check_tp_set
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -1018,7 +1019,7 @@ while True:
                                 starting_gearset2[slot] = Empty
 
                 show_final_plot = False # TODO: Show final plot = false for magical WSs too
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, True)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, True)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -1050,7 +1051,7 @@ while True:
 
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, True, spell, job_abilities, conditions, burst, False)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, True, spell, job_abilities, conditions, burst, False)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------

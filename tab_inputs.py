@@ -89,8 +89,8 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
 
 ws_column = [
   [sg.Text("Weapon skill:",size=(14,1),font=font_choice,justification="r",key="ws label"),sg.Push()],
-  [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
-  [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
+  [sg.Text("Min.TP:",font=font_choice,key="minTP label",size=(13,1)), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
+  [sg.Text("Max.TP:",font=font_choice,key="maxTP label",size=(13,1)), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")],
 ]
 
 special_flourishes = ["Climactic Flourish", "Striking Flourish", "Ternary Flourish", "No Flourish"]
@@ -98,8 +98,9 @@ ws_column2 = [
   [sg.vtop(sg.Column([
 #   [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],
   [sg.Combo(values=sorted(ws_dict["Katana"]), default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
-  [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
-  [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
+  [sg.Text("Min.TP:",font=font_choice,key="minTP label",size=(13,1)), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
+  [sg.Text("Max.TP:",font=font_choice,key="maxTP label",size=(13,1)), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")],
+  [sg.Text("Starting TP:",font=font_choice,key="starttp label",size=(13,1)), sg.Input("0",key="startingtp",size=(5,1),font=font_choice,tooltip="Starting TP value for estimating melee TP sets based on \"Time to WS\"")]
   ])),sg.Push(),
   sg.vtop(sg.Column([
 #   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],

@@ -29,7 +29,7 @@ import random
 class TP_Error(Exception):
     pass
 
-def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, buffs, equipment, nuke, spell, job_abilities, burst=False, final=False, check_tp_set=False):
+def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst=False, final=False, check_tp_set=False):
     #
     # Use the player and enemy stats to calculate weapon skill damage.
     # This function works, but needs to be cleaned up. There is too much going on within it.
@@ -470,7 +470,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, buffs, equ
 
         ws_threshold = tp1
         # print("Average time per WS: ",ws_threshold/tp*tpa)
-        time_to_ws = ws_threshold/tp*tpa
+        time_to_ws = (ws_threshold-tp0)/tp*tpa
 
 
         # print("Main hits: ",main_hits)
@@ -922,7 +922,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, buffs, equ
 ==========================================================================================
 '''
 
-def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst=False, final=False, check_tp_set=False):
+def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst=False, final=False, check_tp_set=False):
     damage = []
     tp_return = []
     if nuke:
@@ -932,7 +932,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set=False)
+            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set=False)
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -957,12 +957,12 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         return()
     else:
         tp = np.average([tp1,tp2])
-        damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set)
+        damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set)
         return(damage, tp)
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, conditions, burst=False, check_tp_set=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, conditions, burst=False, check_tp_set=False):
 
     # We use this ws_dict to ensure that the main-hand weapon matches the WS being used.
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu","Blade: Jin","Blade: Teki", "Blade: To"],
@@ -1329,7 +1329,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     if not check_tp_set: # If not checking TP set (checking WS or Nuke set), then use "damage" as indicator of quality
 
                                         # Test the set and return its damage as a single number
-                                        damage, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
+                                        damage, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
                                         damage = int(damage)
                                         # print(b["Name2"], b2["Name2"], damage)
 
@@ -1366,7 +1366,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                                                     # This has nothing to do with plotting right now. Only used to compare damage from consecutive iterations.
                                     else:
                                         # Test the set and return its damage as a single number
-                                        time_to_ws, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
+                                        time_to_ws, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
                                         # print(b["Name2"], b2["Name2"], time_to_ws)
 
                                         tcount += 1
@@ -1473,7 +1473,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
     # Run the simulator once more, but with "final=True" to tell the code to create a proper distribution.
 
     if not nuke and not check_tp_set: # Don't run damage distributions for nukes or TP sets.
-        test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, True, check_tp_set)
+        test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, True, check_tp_set)
     elif check_tp_set:
         print(f"\nBest TP set to reach {tp1} TP with the provided buffs:\n")
         for k in Best_Gearset:
@@ -1494,6 +1494,7 @@ if __name__ == "__main__":
     ws_name = "Catastrophe"
     min_tp = 1000
     max_tp = 1500
+    tp0 = 0 # Starting TP value (after a WS you'll have like 100 TP initially)
     n_iter = 10
     n_sims = 10000
     check_gear = [[Heishi,Kikoku],[Fotia_Gorget, Ninja_Nodowa]]
@@ -1551,6 +1552,6 @@ if __name__ == "__main__":
 
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst,)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst,)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst)
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst)
