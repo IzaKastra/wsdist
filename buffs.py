@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 03
+# Version date: 2023 February 11
 #
 # This file contains a list of buffs that may be provided to a gear set when simulating damage.
 #
@@ -21,16 +21,6 @@ cor = {"Chaos": {"Attack":[0.25, 32./1024]},
        "Hunter": {"Accuracy":[40,5]},
        "Wizard": {"Magic Attack":[25,2]}}
 
-brd_trust = {"Minuet": {"Attack": 32, "Ranged Attack": 32},
-              "Minuet II": {"Attack": 64, "Ranged Attack": 64},
-              "Minuet III": {"Attack": 96, "Ranged Attack": 96},
-              "Minuet IV": {"Attack": 112, "Ranged Attack": 112},
-              "Minuet V": {"Attack": 124, "Ranged Attack": 124},
-              "Sword Madrigal": {"Accuracy": 45, "Ranged Accuracy": 45},
-              "Blade Madrigal": {"Accuracy": 60, "Ranged Accuracy": 60},
-              "Advancing March": {"Haste": 1+108./1024},
-              "Victory March": {"Haste": 1+163./1024}}
-
 brd = {"Minuet": {"Attack": [32+25, 3.2], "Ranged Attack": [32+25, 3.2]},
         "Minuet II": {"Attack": [64+25, 6.2], "Ranged Attack": [64+25, 6.2]},
         "Minuet III": {"Attack": [96+25, 9.5], "Ranged Attack": [96+25, 9.5]},
@@ -40,13 +30,24 @@ brd = {"Minuet": {"Attack": [32+25, 3.2], "Ranged Attack": [32+25, 3.2]},
         "Blade Madrigal": {"Accuracy": [60, 6]},
         "Advancing March": {"Haste": [108./1024, 11.8/1024]},
         "Victory March": {"Haste": [163./1024, 16.25/1024]},
-        "Honor March": {"Haste": [126./1024, 12./1024], "Attack": [168, 16], "Ranged Attack": [168, 16], "Accuracy": [42, 4], "Ranged Accuracy": [42, 4]}}
-
-geo_trust = {"Acumen": {"Magic Attack": 21},
-             "Focus": {"Magic Accuracy": 50},
-             "Fury": {"Attack": 1.375, "Ranged Attack": 1.375},
-             "Haste": {"Haste": 28.8},
-             "Precision": {"Accuracy": 56, "Ranged Accuracy": 56}}
+        "Honor March": {"Haste": [126./1024, 12./1024], "Attack": [168, 16], "Ranged Attack": [168, 16], "Accuracy": [42, 4], "Ranged Accuracy": [42, 4]},
+        "Sinewy Etude":{"STR":[9,1]},
+        "Herculean Etude":{"STR":[15,1]},
+        "Dextrous Etude":{"DEX":[9,1]},
+        "Uncanny Etude":{"DEX":[15,1]},
+        "Vivacious Etude":{"VIT":[9,1]},
+        "Vital Etude":{"VIT":[15,1]},
+        "Quick Etude":{"AGI":[9,1]},
+        "Swift Etude":{"AGI":[15,1]},
+        "Learned Etude":{"INT":[9,1]},
+        "Sage Etude":{"INT":[15,1]},
+        "Spirited Etude":{"MND":[9,1]},
+        "Logical Etude":{"MND":[15,1]},
+        "Enchanting Etude":{"CHR":[9,1]},
+        "Bewitching Etude":{"CHR":[15,1]},
+        "Hunter's Prelude":{"Ranged Accuracy":[45,4.5]},
+        "Archer's Prelude":{"Ranged Accuracy":[60,6]},
+        }
 
 geo = {"Fury": {"Attack": [0.347,0.027], "Ranged Attack": [0.347,0.027]},
        "Acumen": {"Magic Attack": [15,3]},
@@ -56,6 +57,7 @@ geo = {"Fury": {"Attack": [0.347,0.027], "Ranged Attack": [0.347,0.027]},
        "Frailty": {"Defense":[0.148,0.027]},
        "Torpor": {"Evasion":[50,5]},
        "Malaise": {"Magic Defense":[15,3]},
+       "Languor":{"Magic Evasion":[50,5]},
        "STR":{"STR":[25,2]},
        "DEX":{"DEX":[25,2]},
        "VIT":{"VIT":[25,2]},
