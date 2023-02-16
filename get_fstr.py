@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 09
+# Version date: 2023 February 11
 #
 # This code contains the function used to calculate the player's fSTR stat.
 #
@@ -49,6 +49,13 @@ def get_fstr2(rng_dmg, player_str, enemy_vit):
     wpn_rank = rng_dmg/9.
 
     dstr = player_str - enemy_vit
+
+    dstr_lower = -(7+2*wpn_rank)*2
+    dstr_upper = (14+2*wpn_rank)*2
+
+    dstr = dstr_lower if dstr < dstr_lower else dstr
+    dstr = dstr_upper if dstr > dstr_upper else dstr
+
     if dstr <= -22:
         fstr = (dstr+13)/2
     elif dstr <= -16:
@@ -66,7 +73,7 @@ def get_fstr2(rng_dmg, player_str, enemy_vit):
     elif dstr >= 12:
         fstr = (dstr+4)/2
 
-    fstr = -0.5*wpn_rank if fstr < -0.5*wpn_rank else fstr
+    fstr = -2.0*wpn_rank if fstr < -2.0*wpn_rank else fstr
     fstr = 2.0*(wpn_rank+8) if fstr > 2.0*(wpn_rank+8) else fstr
 
     return(fstr)
