@@ -950,7 +950,8 @@ while True:
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
                 quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
                 if spell == "Ranged Attack":
-                    if gearset.gear["ranged"]["Name"] in ["Gandiva","Armageddon"]: # Assume you want more damage than TP if using an empyrean ranged weapon
+                    priority = values["tp priority"]
+                    if priority=="Damage":
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
                     else:
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
