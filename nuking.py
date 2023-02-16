@@ -128,8 +128,7 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
             player_level = 99
             dINT = 0 if dINT < 0 else dINT 
             dINT = 300 if dINT > 300 else dINT 
-            d = int(0.067*player_level)*(37+int(0.67*dINT))
-
+            d = np.round(0.067*player_level,1)*(37+int(0.67*dINT))
         if ebullience:
             ebullience_bonus = 1.2
             if gearset.equipped["head"] == "Arbatel Bonnet +3":
