@@ -651,7 +651,9 @@ while True:
             ws_name = values["select weaponskill"]
             min_tp = int(values["mintp"]) if int(values["mintp"]) > 1000 else 1000
             max_tp = int(values["maxtp"]) if int(values["maxtp"]) < 3000 else 3000
-            starting_tp = int(values["startingtp"]) if int(values["startingtp"]) < 1000 else 1000
+            starting_tp = int(values["startingtp"]) if int(values["startingtp"]) <= 999 else 999
+            starting_tp = min_tp-1 if starting_tp >= min_tp else starting_tp
+
 
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
 
