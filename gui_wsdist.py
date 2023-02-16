@@ -29,6 +29,7 @@ def name2dictionary(name, all_gear):
 from tab_inputs import * # Load the inputs tab
 from tab_select_gear import *  # Load the select_gear tab
 from tab_outputs import * # Load the outputs tab.
+# from tab_conditionals import * # Load the conditionals tab.
 
 # Add a menu bar for the user to adjust font size and stuff.
 font_size_options = [f"&{k:>3d}::font{k}" for k in [l for l in range(6,16)]]
@@ -43,6 +44,7 @@ layout = [
                          sg.Tab("Inputs", input_tab),
                          sg.Tab("Select Gear", select_gear_tab),
                          sg.Tab("Outputs", ws_tab),
+                        #  sg.Tab("Conditions", conditional_tab),
                          ]
                        ],key="tab group")
           ]
@@ -54,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 January 31)",layout,size=(700,900) if h>900 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 February 14)",layout,size=(700,930) if h>930 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -82,9 +84,9 @@ for slot in gear_dict:
             window[f"start{slot}:{equipment['Name2']}"].unhide_row()
 
 
-# Dictionary of spells that each job has access to. This should be a copy/paste of the spell_dict in tab_inputs.py
+# Dictionary of spells that each job has access to. This SHOULD be a copy/paste of the spell_dict in tab_inputs.py
 spell_dict = {
-    "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
+    "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San","Ranged Attack"],
     "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
             "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
             "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
@@ -96,7 +98,8 @@ spell_dict = {
             "Aero","Aero II","Aero III","Aero IV","Aero V",
             "Fire","Fire II","Fire III","Fire IV","Fire V",
             "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V",
-            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",],
+            "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V",
+            "Ranged Attack"],
     "GEO":["Stone","Stone II","Stone III","Stone IV","Stone V",
             "Water","Water II","Water III","Water IV","Water V",
             "Aero","Aero II","Aero III","Aero IV","Aero V",
@@ -116,7 +119,11 @@ spell_dict = {
             "Fire","Fire II","Fire III",
             "Blizzard","Blizzard II","Blizzard III",
             "Thunder","Thunder II","Thunder III"],
-    "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
+    "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot","Ranged Attack"],
+    "RNG":["Ranged Attack"],
+    "SAM":["Ranged Attack"],
+    "THF":["Ranged Attack"],
+
 }
 
 
@@ -140,6 +147,7 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
 while True:
 
     event, values = window.read()
+    # print(event)
 
     # Exit the program if given exit or null command.
     if event in (None, "Exit"):
@@ -352,12 +360,16 @@ while True:
                             window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                             continue
 
+                        if "Kraken" in equipment["Name2"]: # Uncheck Kraken Club
+                            window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+                            continue
+
                         if selected_slot=="neck" and "R20" in equipment["Name2"]: # Unselect JSE+1 necks
                             window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                             continue
 
-                        if selected_slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
-                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+1" in equipment["Name2"]:
+                        if selected_slot in ["ear1", "ear2"]: # Unselect JSE+2 earrings
+                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+2" in equipment["Name2"]:
                                 window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                                 continue
 
@@ -390,12 +402,16 @@ while True:
                             window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                             continue
 
+                        if "Kraken" in equipment["Name2"]: # Uncheck Kraken Club
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
+
                         if slot=="neck" and "R20" in equipment["Name2"]: # Do not select JSE+1 necks
                             window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                             continue
 
                         if slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
-                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+1" in equipment["Name2"]:
+                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+2" in equipment["Name2"]:
                                 window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                                 continue
 
@@ -458,6 +474,12 @@ while True:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
 
+            # Update the main-hand weapon to be something your newly selected main job can equip.
+            # if main_job.lower() not in eq
+            # new_main = [k["Name"] for k in mains if main_job.lower() in k["Jobs"]][0]
+            # window[f"showradio main"].update(image_data=item2image(new_main))
+
+
             # Update the radio and checkbox buttons to only show items that the main job can use.
             for slot in gear_dict:
                 # First loop once to hide everything.
@@ -485,8 +507,12 @@ while True:
             window["impetus toggle"].update(visible=True if main_job.lower()=="mnk" else False)
             window["trueshot toggle"].update(visible=True if main_job.lower() in ["rng","cor"] else False)
             window["velocityshot toggle"].update(visible=True if main_job.lower() in ["rng"] else False)
+            window["hovershot toggle"].update(visible=True if main_job.lower() in ["rng"] else False)
+            window["doubleshot toggle"].update(visible=True if main_job.lower() in ["rng"] else False)
+            window["tripleshot toggle"].update(visible=True if main_job.lower() in ["cor"] else False)
             window["bloodrage toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["mightystrikes toggle"].update(visible=True if main_job.lower() in ["war"] else False)
+            window["lastresort toggle"].update(visible=True if main_job.lower() in ["drk"] else False)
 
             # Deselect Job abilities when changing jobs so they arent enabled while hidden.
             window["magic burst toggle"].update(False)
@@ -500,8 +526,12 @@ while True:
             window["footwork toggle"].update(False)
             window["trueshot toggle"].update(False)
             window["velocityshot toggle"].update(False)
+            window["hovershot toggle"].update(False)
+            window["doubleshot toggle"].update(False)
+            window["tripleshot toggle"].update(False)
             window["bloodrage toggle"].update(False)
             window["mightystrikes toggle"].update(False)
+            window["lastresort toggle"].update(False)
 
             # Enable magic sets for casting jobs.
             if main_job in spell_dict:
@@ -612,7 +642,7 @@ while True:
 # --------------------------------------------------------------------------------------------
 
         # Begin collecting variables to pass into the main code. There will be a lot of variables.
-        if event in ["Run WS", "Run Magic", "quicklook", "quicklook magic", "quicklook tp", "get stats"]:
+        if event in ["Run WS", "Run Magic", "Run TP", "quicklook", "quicklook magic", "quicklook TP", "get stats"]:
 
             main_job = values["mainjob"]
             sub_job = values["subjob"]
@@ -625,8 +655,22 @@ while True:
             fitn = 2 # Fit two slots simultaneously. Hard-coded because 3 isn't worth the time and 1 occasionally results in incorrect sets
 
             # How many simulations in the final plot?
-            n_sims = int(values["n_sims"]) if int(values["n_sims"]) > 100 else 100
+            n_sims = int(values["n_sims"]) if int(values["n_sims"]) > 2000 else 2000
 
+
+            conditions = {
+                         "PDT":int(values["dt_req"]),
+                         "MDT":int(values["dt_req"]),
+                        #  "Subtle Blow":int(values["sb_req"]) if int(values["sb_req"]) < 50 else 50,
+                        #  "Subtle Blow II":int(values["sb2_req"]) if int(values["sb2_req"]) < 50 else 50,
+                        #  "Magic Evasion":int(values["meva_req"]),
+                        #  "Magic Defense":int(values["mdef_req"]),
+                   }
+            conditions["PDT"] = conditions["PDT"] * -1 if conditions["PDT"] > 0 else conditions["PDT"] # Allow the user to input positive ot negative values to avoid confusion.
+            conditions["MDT"] = conditions["MDT"] * -1 if conditions["MDT"] > 0 else conditions["MDT"]
+
+            conditions["PDT"] = -50 if conditions["PDT"] < -50 else conditions["PDT"] # Limit PDT and MDT to -50 so the code doesn't try to find 70% DT that doesnt do anything.
+            conditions["MDT"] = -50 if conditions["MDT"] < -50 else conditions["MDT"]
 
             # How many maximum iterations before assuming converged? Currently hard-coded to 10 and 0. 0 means "do not find best set."
             # Usually it should finish with 3~5 iterations, but more doesn't hurt since the code will end earlier if it finds the best set earlier.
@@ -650,28 +694,44 @@ while True:
             soulvoice = values["soulvoice"]
             nsong = int(values["nsong"].split()[-1])
 
+            # Minuets cap at Songs+8
             brd_min5_attack  = ((brd["Minuet V"]["Attack"][0] + min(8,nsong)*brd["Minuet V"]["Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Minuet V" else 1.0) if "Minuet V" in active_songs else 0)*(1.0+1.0*soulvoice)
             brd_min4_attack  = ((brd["Minuet IV"]["Attack"][0] + min(8,nsong)*brd["Minuet IV"]["Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Minuet IV" else 1.0) if "Minuet IV" in active_songs else 0)*(1.0+1.0*soulvoice)
             brd_min3_attack  = ((brd["Minuet III"]["Attack"][0] + min(8,nsong)*brd["Minuet III"]["Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Minuet III" else 1.0) if "Minuet III" in active_songs else 0)*(1.0+1.0*soulvoice)
 
-            brd_hm_accuracy        = ((brd["Honor March"]["Accuracy"][0] + min(8,nsong)*brd["Honor March"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
-            brd_hm_rangedaccuracy  = ((brd["Honor March"]["Ranged Accuracy"][0] + min(8,nsong)*brd["Honor March"]["Ranged Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
-            brd_hm_attack          = ((brd["Honor March"]["Attack"][0] + min(8,nsong)*brd["Honor March"]["Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
-            brd_hm_rangedattack    = ((brd["Honor March"]["Ranged Attack"][0] + min(8,nsong)*brd["Honor March"]["Ranged Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
-            brd_hm_haste           = ((brd["Honor March"]["Haste"][0] + min(8,nsong)*brd["Honor March"]["Haste"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
+            # Honor March caps at Songs+4
+            brd_hm_accuracy        = ((brd["Honor March"]["Accuracy"][0] + min(4,nsong)*brd["Honor March"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_hm_rangedaccuracy  = ((brd["Honor March"]["Ranged Accuracy"][0] + min(4,nsong)*brd["Honor March"]["Ranged Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_hm_attack          = ((brd["Honor March"]["Attack"][0] + min(4,nsong)*brd["Honor March"]["Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_hm_rangedattack    = ((brd["Honor March"]["Ranged Attack"][0] + min(4,nsong)*brd["Honor March"]["Ranged Attack"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_hm_haste           = ((brd["Honor March"]["Haste"][0] + min(4,nsong)*brd["Honor March"]["Haste"][1])*(1.0+0.5*marcato if values["song1"]=="Honor March" else 1.0) if "Honor March" in active_songs else 0)*(1.0+1.0*soulvoice)
 
+            # Madrigals cap at Songs+9
+            brd_swordmad_accuracy  = ((brd["Sword Madrigal"]["Accuracy"][0] + min(9,nsong)*brd["Sword Madrigal"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Sword Madrigal" else 1.0) if "Sword Madrigal" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_blademad_accuracy  = ((brd["Blade Madrigal"]["Accuracy"][0] + min(9,nsong)*brd["Blade Madrigal"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Blade Madrigal" else 1.0) if "Blade Madrigal" in active_songs else 0)*(1.0+1.0*soulvoice)
 
-            brd_swordmad_accuracy  = ((brd["Sword Madrigal"]["Accuracy"][0] + min(8,nsong)*brd["Sword Madrigal"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Sword Madrigal" else 1.0) if "Sword Madrigal" in active_songs else 0)*(1.0+1.0*soulvoice)
-            brd_blademad_accuracy  = ((brd["Blade Madrigal"]["Accuracy"][0] + min(8,nsong)*brd["Blade Madrigal"]["Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Blade Madrigal" else 1.0) if "Blade Madrigal" in active_songs else 0)*(1.0+1.0*soulvoice)
+            # Madrigals cap at Songs+8
+            brd_hunter_rangedaccuracy  = ((brd["Hunter's Prelude"]["Ranged Accuracy"][0] + min(8,nsong)*brd["Hunter's Prelude"]["Ranged Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Hunter's Prelude" else 1.0) if "Hunter's Prelude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_archer_rangedaccuracy  = ((brd["Archer's Prelude"]["Ranged Accuracy"][0] + min(8,nsong)*brd["Archer's Prelude"]["Ranged Accuracy"][1])*(1.0+0.5*marcato if values["song1"]=="Archer's Prelude" else 1.0) if "Archer's Prelude" in active_songs else 0)*(1.0+1.0*soulvoice)
 
+            # Marches cap at Songs+8
             brd_vmarch_haste  = ((brd["Victory March"]["Haste"][0] + min(8,nsong)*brd["Victory March"]["Haste"][1])*(1.0+0.5*marcato if values["song1"]=="Victory March" else 1.0) if "Victory March" in active_songs else 0)*(1.0+1.0*soulvoice)
             brd_amarch_haste  = ((brd["Advancing March"]["Haste"][0] + min(8,nsong)*brd["Advancing March"]["Haste"][1])*(1.0+0.5*marcato if values["song1"]=="Advancing March" else 1.0) if "Advancing March" in active_songs else 0)*(1.0+1.0*soulvoice)
 
 
             brd_attack = brd_on*int(brd_min5_attack + brd_min4_attack + brd_min3_attack + brd_hm_attack)
             brd_accuracy = brd_on*int(brd_hm_accuracy + brd_swordmad_accuracy + brd_blademad_accuracy)
-            brd_rangedaccuracy = brd_on*int(brd_hm_accuracy)
+            brd_rangedaccuracy = brd_on*int(brd_hm_rangedaccuracy + brd_hunter_rangedaccuracy + brd_archer_rangedaccuracy)
             brd_haste = brd_on*(brd_vmarch_haste + brd_amarch_haste + brd_hm_haste)
+
+            # Etudes cap at Songs+9
+            brd_str = ((brd["Sinewy Etude"]["STR"][0] + min(9,nsong)*brd["Sinewy Etude"]["STR"][1])*(1.0+0.5*marcato if values["song1"]=="Sinewy Etude" else 1.0) if "Sinewy Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Herculean Etude"]["STR"][0] + min(9,nsong)*brd["Herculean Etude"]["STR"][1])*(1.0+0.5*marcato if values["song1"]=="Herculean Etude" else 1.0) if "Herculean Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_dex = ((brd["Dextrous Etude"]["DEX"][0] + min(9,nsong)*brd["Dextrous Etude"]["DEX"][1])*(1.0+0.5*marcato if values["song1"]=="Dextrous Etude" else 1.0) if "Dextrous Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Uncanny Etude"]["DEX"][0] + min(9,nsong)*brd["Uncanny Etude"]["DEX"][1])*(1.0+0.5*marcato if values["song1"]=="Uncanny Etude" else 1.0) if "Uncanny Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_vit = ((brd["Vivavious Etude"]["VIT"][0] + min(9,nsong)*brd["Vivavious Etude"]["VIT"][1])*(1.0+0.5*marcato if values["song1"]=="Vivavious Etude" else 1.0) if "Vivavious Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Vital Etude"]["VIT"][0] + min(9,nsong)*brd["Vital Etude"]["VIT"][1])*(1.0+0.5*marcato if values["song1"]=="Vital Etude" else 1.0) if "Vital Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_agi = ((brd["Quick Etude"]["AGI"][0] + min(9,nsong)*brd["Quick Etude"]["AGI"][1])*(1.0+0.5*marcato if values["song1"]=="Quick Etude" else 1.0) if "Quick Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Swift Etude"]["AGI"][0] + min(9,nsong)*brd["Swift Etude"]["AGI"][1])*(1.0+0.5*marcato if values["song1"]=="Swift Etude" else 1.0) if "Swift Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_int = ((brd["Learned Etude"]["INT"][0] + min(9,nsong)*brd["Learned Etude"]["INT"][1])*(1.0+0.5*marcato if values["song1"]=="Learned Etude" else 1.0) if "Learned Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Sage Etude"]["INT"][0] + min(9,nsong)*brd["Sage Etude"]["INT"][1])*(1.0+0.5*marcato if values["song1"]=="Sage Etude" else 1.0) if "Sage Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_mnd = ((brd["Spirited Etude"]["MND"][0] + min(9,nsong)*brd["Spirited Etude"]["MND"][1])*(1.0+0.5*marcato if values["song1"]=="Spirited Etude" else 1.0) if "Spirited Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Logical Etude"]["MND"][0] + min(9,nsong)*brd["Logical Etude"]["MND"][1])*(1.0+0.5*marcato if values["song1"]=="Logical Etude" else 1.0) if "Logical Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
+            brd_chr = ((brd["Enchanting Etude"]["CHR"][0] + min(9,nsong)*brd["Enchanting Etude"]["CHR"][1])*(1.0+0.5*marcato if values["song1"]=="Enchanting Etude" else 1.0) if "Enchanting Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Bewitching Etude"]["CHR"][0] + min(9,nsong)*brd["Bewitching Etude"]["CHR"][1])*(1.0+0.5*marcato if values["song1"]=="Bewitching Etude" else 1.0) if "Bewitching Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
 
 
             # Define COR buffs: Total bonus stat obtained from a Lucky roll with "Rolls +nroll" bonus from gear.
@@ -721,7 +781,7 @@ while True:
             frailty_potency = (geomancy_potency)*(geo_on*((geo["Frailty"]["Defense"][0] + nbubble*geo["Frailty"]["Defense"][1] if "Frailty" in active_bubbles else 0)*(1.0+0.5*blazeofglory*(geobubble=="Geo-Frailty"))*(1.0+1.0*bolster) + (geo["Frailty"]["Defense"][0] if entrust == "Entrust-Frailty" else 0)))
             malaise_potency = (geomancy_potency)*(geo_on*((geo["Malaise"]["Magic Defense"][0] + nbubble*geo["Malaise"]["Magic Defense"][1] if "Malaise" in active_bubbles else 0)*(1.0+0.5*blazeofglory*(geobubble=="Geo-Malaise"))*(1.0+1.0*bolster) + (geo["Malaise"]["Magic Defense"][0] if entrust == "Entrust-Malaise" else 0)))
             torpor_potency = (geomancy_potency)*(geo_on*((geo["Torpor"]["Evasion"][0] + nbubble*geo["Torpor"]["Evasion"][1] if "Torpor" in active_bubbles else 0)*(1.0+0.5*blazeofglory*(geobubble=="Geo-Torpor"))*(1.0+1.0*bolster) + (geo["Torpor"]["Evasion"][0] if entrust == "Entrust-Torpor" else 0)))
-
+            languor_potency = (geomancy_potency)*(geo_on*((geo["Languor"]["Magic Evasion"][0] + nbubble*geo["Languor"]["Magic Evasion"][1] if "Languor" in active_bubbles else 0)*(1.0+0.5*blazeofglory*(geobubble=="Geo-Languor"))*(1.0+1.0*bolster) + (geo["Languor"]["Magic Evasion"][0] if entrust == "Entrust-Languor" else 0)))
 
             # Define buffs from white magic:
             whm_on = values["whm_on"]
@@ -766,7 +826,7 @@ while True:
 
             # Collect all of the buffs into a single dictionary which gets looped over in the main code to add towards your final stats.
             buffs = {"food": {"Attack": food_attack, "Ranged Attack": food_attack, "Accuracy": food_accuracy, "Ranged Accuracy":food_accuracy, "Magic Attack":food_magicattack, "Magic Accuracy":food_magicaccuracy, "STR":food_str,"DEX":food_dex, "VIT":food_vit, "AGI":food_agi, "INT":food_int, "MND":food_mnd, "CHR":food_chr,},
-                     "brd": {"Attack": brd_attack, "Accuracy": brd_accuracy, "Ranged Accuracy": brd_rangedaccuracy, "Ranged Attack": brd_attack,"Haste":brd_haste},
+                     "brd": {"Attack": brd_attack, "Accuracy": brd_accuracy, "Ranged Accuracy": brd_rangedaccuracy, "Ranged Attack": brd_attack,"Haste":brd_haste, "STR":brd_str,"DEX":brd_dex, "VIT":brd_vit, "AGI":brd_agi, "INT":brd_int, "MND":brd_mnd, "CHR":brd_chr,},
                      "cor": {"Attack": cor_attack, "Ranged Attack": cor_attack, "Store TP": cor_stp, "Accuracy": cor_accuracy, "Magic Attack": cor_magicattack, "DA":cor_da, "Crit Rate": cor_critrate},
                      "geo": {"Attack": geo_attack, "Ranged Attack": geo_attack, "Accuracy": geo_accuracy, "Ranged Accuracy":geo_accuracy, "Magic Accuracy":geo_magicaccuracy, "Magic Attack":geo_magicattack, "STR":geo_str,"DEX":geo_dex, "VIT":geo_vit, "AGI":geo_agi, "INT":geo_int, "MND":geo_mnd, "CHR":geo_chr,"Haste":geo_haste},
                      "whm": {"Haste": whm_haste, "STR":whm_str,"DEX":whm_dex, "VIT":whm_vit, "AGI":whm_agi, "INT":whm_int, "MND":whm_mnd, "CHR":whm_chr}, # WHM buffs like boost-STR. Not tested
@@ -787,6 +847,7 @@ while True:
             enemy["Defense"] *= (1-(dia_potency + frailty_potency)) if (1-(dia_potency + frailty_potency)) > 0.01 else 0.01
             enemy["Magic Defense"] = (enemy["Magic Defense"] - malaise_potency) if (enemy["Magic Defense"]- malaise_potency) > -50 else -50
             enemy["Evasion"] -= torpor_potency
+            enemy["Magic Evasion"] -= languor_potency
 
 
             # We need to transfer the list of gear to check into a list of lists now. This will be used by the main code to check each piece, slot by slot.
@@ -824,7 +885,10 @@ while True:
             velocity_shot_toggle = values["velocityshot toggle"]
             bloodrage_toggle = values["bloodrage toggle"]
             mightystrikes_toggle = values["mightystrikes toggle"]
-
+            lastresort_toggle = values["lastresort toggle"]
+            hovershot_toggle = values["hovershot toggle"]
+            doubleshot_toggle = values["doubleshot toggle"]
+            tripleshot_toggle = values["tripleshot toggle"]
 
             # Define a dictionary so we can just pass this one thing in instead of passing 10 things to the WS function later
             job_abilities = {"Ebullience":ebullience,
@@ -840,7 +904,13 @@ while True:
                              "True Shot":true_shot_toggle,
                              "Velocity Shot":velocity_shot_toggle,
                              "Blood Rage":bloodrage_toggle,
-                             "Mighty Strikes":mightystrikes_toggle}
+                             "Mighty Strikes":mightystrikes_toggle,
+                             "Last Resort":lastresort_toggle,
+                             "Hover Shot":hovershot_toggle,
+                             "Double Shot":doubleshot_toggle,
+                             "Triple Shot":tripleshot_toggle,
+                             "metric":values["tp priority"],
+                             }
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
 
@@ -854,8 +924,20 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, False, spell, job_abilities, burst, False)[0]
+                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False)
                 window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
+
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Return the TP set statistic (either DPS, or time to weapon skill, or some combination of the two) for the given set.
+            if event == "quicklook TP":
+                from wsdist import weaponskill
+                from set_stats import *
+                gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
+                quicklook_time, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False, True)
+                window["quickaverage"].update(f"{'Average =':>10s} {quicklook_time:>6.3f} s / WS\n{'=':>10s} {tp:6.1f} TP / round")
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -866,8 +948,14 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage = weaponskill(main_job, sub_job, ws_name, enemy, gearset, np.average([min_tp, max_tp]), buffs, starting_gearset, True, spell, job_abilities, burst, False)[0]
-                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
+                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
+                if spell == "Ranged Attack":
+                    if gearset.gear["ranged"]["Name"] in ["Gandiva","Armageddon"]: # Assume you want more damage than TP if using an empyrean ranged weapon
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
+                    else:
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
+                else:
+                    window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -877,8 +965,58 @@ while True:
             elif event == "Run WS":
                 from wsdist import run_weaponskill
 
+                starting_gearset2 = starting_gearset.copy() # Create a copy of the starting gearset so any unequips do not affect the inputs tab
+                if values["find set"]:
+                    for slot in gear_dict:
+                        # print(slot)
+                        # count how many checkboxes are selected for that slot. break out if >0
+                        check_unequip = False
+                        for k in values:
+                            if f"checkbox_{slot}:" in k: # Check each of the checkbox values
+                                if values[k]: # if any of them are True for this slot, then check if you have something equipped there that shouldnt be
+                                    check_unequip = True
+                                    break
+                        if check_unequip:
+                            # print("checking unequip condition")
+                            # print(starting_gearset2[slot]["Name2"],values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"])
+                            if not values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"]:
+                                # If, in <slot>, you have <item> equipped, and the checkbox for that item is not selected, then:
+                                # print("Unequipping ",starting_gearset2[slot]['Name2'])
+                                starting_gearset2[slot] = Empty
+
                 show_final_plot = values["show final plot"] # TODO: Show final plot = false for magical WSs too
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, False, spell, job_abilities, burst)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, False) # Last False for check_tp_set
+                window["copy best set"].update(disabled=False)
+
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+            # --------------------------------------------------------------------------------------------
+
+            # Find the best TP set using average attacks per round, average TP gain per round, and time per WS.
+            elif event == "Run TP":
+                from wsdist import run_weaponskill
+
+                starting_gearset2 = starting_gearset.copy() # Create a copy of the starting gearset so any unequips do not affect the inputs tab
+                if values["find set"]:
+                    for slot in gear_dict:
+                        # print(slot)
+                        # count how many checkboxes are selected for that slot. break out if >0
+                        check_unequip = False
+                        for k in values:
+                            if f"checkbox_{slot}:" in k: # Check each of the checkbox values
+                                if values[k]: # if any of them are True for this slot, then check if you have something equipped there that shouldnt be
+                                    check_unequip = True
+                                    break
+                        if check_unequip:
+                            # print("checking unequip condition")
+                            # print(starting_gearset2[slot]["Name2"],values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"])
+                            if not values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"]:
+                                # If, in <slot>, you have <item> equipped, and the checkbox for that item is not selected, then:
+                                # print("Unequipping ",starting_gearset2[slot]['Name2'])
+                                starting_gearset2[slot] = Empty
+
+                show_final_plot = False # TODO: Show final plot = false for magical WSs too
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, True)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -889,8 +1027,28 @@ while True:
             elif event == "Run Magic":
                 from wsdist import run_weaponskill
 
+                starting_gearset2 = starting_gearset.copy() # Create a copy of the starting gearset so any unequips do not affect the inputs tab
+                if values["find set"]:
+                    for slot in gear_dict:
+                        # print(slot)
+                        # count how many checkboxes are selected for that slot. break out if >0
+                        check_unequip = False
+                        for k in values:
+                            if f"checkbox_{slot}:" in k: # Check each of the checkbox values
+                                if values[k]: # if any of them are True for this slot, then check if you have something equipped there that shouldnt be
+                                    check_unequip = True
+                                    break
+                        if check_unequip:
+                            # print("checking unequip condition")
+                            # print(starting_gearset2[slot]["Name2"],values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"])
+                            if not values[f"checkbox_{slot}:{starting_gearset2[slot]['Name2']}"]:
+                                # If, in <slot>, you have <item> equipped, and the checkbox for that item is not selected, then:
+                                # print("Unequipping ",starting_gearset2[slot]['Name2'])
+                                starting_gearset2[slot] = Empty
+
+
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, True, spell, job_abilities, burst)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, True, spell, job_abilities, conditions, burst, False)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -957,6 +1115,9 @@ while True:
                 pdl_trait = int(gearset.playerstats['PDL Trait'])/100
                 window["pdl trait stat"].update(f"{'PDL (trait):':<20s} {pdl_trait:>4.2f}")
 
+                qa = int(gearset.playerstats['Zanshin'])
+                window["zanshin stat"].update(f"{'Zanshin:':<21s} {qa:>3d}")
+
                 qa = int(gearset.playerstats['QA'])
                 window["qa stat"].update(f"{'Quad. Attack:':<21s} {qa:>3d}")
                 ta = int(gearset.playerstats['TA'])
@@ -971,8 +1132,13 @@ while True:
 
                 stp = int(gearset.playerstats['Store TP'])
                 window["stp stat"].update(f"{'Store TP:':<16s} {stp:>4d}")
+
                 dw = int(gearset.playerstats['Dual Wield']) if dual_wield else 0
                 window["dw stat"].update(f"{'Dual Wield:':<16s} {dw:>4d}")
+
+                marts = int(gearset.playerstats['Martial Arts']) if gearset.gear["main"]["Skill Type"] == "Hand-to-Hand" else 0
+                window["marts stat"].update(f"{'Martial Arts:':<16s} {marts:>4d}")
+
                 gear_haste = int(gearset.playerstats['Gear Haste'])
                 window["gear haste stat"].update(f"{'Gear Haste:':<16s} {gear_haste:>4d}")
                 magic_haste = gearset.playerstats['Magic Haste']*100
@@ -992,20 +1158,27 @@ while True:
 
                 window["macc skill stat"].update(f"{'Magic Accuracy Skill:':<21s} {gearset.playerstats[f'Magic Accuracy Skill']-gearset.gear['sub'].get('Magic Accuracy Skill',0):>3d}")
 
-                gear_haste = 25. if gear_haste > 25. else gear_haste
-                ja_haste = 25. if ja_haste > 25. else ja_haste
-                magic_haste = 448/1024*100. if magic_haste > 448/1024*100. else magic_haste
-                total_haste = magic_haste + gear_haste + ja_haste
+                base_delay = 480
+                delay1 = gearset.playerstats['Delay1'] + 480*(gearset.gear["main"]["Skill Type"]=="Hand-to-Hand")
+                delay2 = gearset.playerstats['Delay2'] if dual_wield else delay1
 
-                delay = (1-total_haste/100)*(1-dw/100)
-                delay_min = 0.2
-                delay_reduction = 1-delay_min if delay < delay_min else 1-delay # TODO: Martial Arts goes here too
+                gear_haste  = 256./1024. if  gear_haste/100 > 256./1024. else  gear_haste/100
+                magic_haste = 448./1024. if magic_haste/100 > 448./1024. else magic_haste/100
+                ja_haste    = 256./1024. if    ja_haste/100 > 256./1024. else    ja_haste/100
+                total_haste = gear_haste + magic_haste + ja_haste
 
-                window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {delay_reduction*100:>4.1f}")
+                delay = (delay1+delay2)/2. # Effective weapon delay. The delay minimum is 20% of this value. delay2=delay1 if not dual wielding, the this just becomes delay1
 
-                daken = int(gearset.playerstats["Daken"])
+                rdelay = (delay-marts)*(1-dw/100)*(1-total_haste) # Reduced weapon delay, including martial arts, dual wield, and all forms of haste
+                rdelay = 0.2*delay if rdelay < 0.2*delay else rdelay # -80% delay cap, including Dual Wield, Martial Arts, and Haste
+
+                delay_reduction = 1 - rdelay/delay # Should be between 0 and 0.8
+                
+                window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {(delay_reduction)*100:>4.1f}")
+
+                daken = int(gearset.playerstats["Daken"]) if main_job=="NIN" and gearset.gear["ammo"].get("Skill Type","None") == "Throwing" else 0
                 window["daken stat"].update(f"{'Daken:':<16s} {daken:>4d}")
-                kickattack = int(gearset.playerstats["Kick Attacks"])
+                kickattack = int(gearset.playerstats["Kick Attacks"]) if (main_job=="MNK" or sub_job=="MNK") and gearset.gear["main"]["Skill Type"] == "Hand-to-Hand" else 0
                 window["kickattack stat"].update(f"{'Kick Attacks:':<16s} {kickattack:>4d}")
 
                 pdt = int(gearset.playerstats["PDT"]) + int(gearset.playerstats["DT"])
