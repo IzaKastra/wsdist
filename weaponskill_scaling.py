@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 11
+# Version date: 2023 February 14
 #
 import numpy as np
 from set_stats import *
@@ -129,7 +129,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits = 1
     elif ws_name == "Chant du Cygne":
         crit_ws = True
-        crit_rate += gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
+        crit_rate += gearset.playerstats["Crit Rate"]/100
         crit_boost = [0.15, 0.25, 0.40]
         crit_bonus = np.interp(tp, base_tp, crit_boost) # Bonus crit rate from TP scaling
         crit_rate += crit_bonus
@@ -272,6 +272,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     # Dagger weapon skills
     elif ws_name == "Viper Bite":
         ftp = 1.0
+        ftp_rep = False
         ws_atk_bonus = 1.0
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities) # The attack bonus from Blade: Shun is applied before buffs. I needed to recalculate player attack with a "special set" to deal with this.
         player_attack1 = special_set.playerstats["Attack1"] # Redefine the player"s attack1 and attack2 used in the weapon skill based on the FTP scaling value
@@ -1194,17 +1195,23 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
 
 
     # Hand-to-Hand weapon skills
+    # Notice that each weapon skill has "-1" nhits.
+    # This is to allow us to fit in an "off-hand" attack to get full TP, as observed in game.
+    # Technically, the off-hand attack does not get any MA procs, but it does get full TP.
+    # You could instead think of this as H2H is dual-wielding, with full TP and MA procs for first main+sub hits, but the sub-hit uses the same stats as the main hit since it's the same weapon.
+    # Or you could say the first two main-hits get full TP, and there are no sub hits.
+    # I treat it as dual-wield so the empyrean/mythic Aftermaths are treated properly in the code and so it's easy to calculate TP return from WSs
     elif ws_name == "Combo":
         base_ftp = [1.0, 2.4, 3.4]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.3*(player_str + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 3
+        nhits    = 3-1
     elif ws_name == "One Inch Punch":
         ftp  = 1.0
         ftp_rep = True
         wsc = 1.0*player_vit + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits = 1
+        nhits = 2-1
         def_multiplier = [1.0, 0.75, 0.50]
         enemy_defense *= np.interp(tp, base_tp, def_multiplier) # TODO: This should be additive with Dia, Frailty, etc? I think it's fine as is.
     elif ws_name == "Raging Fists":
@@ -1212,18 +1219,18 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.3*(player_str + player_dex) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 5
+        nhits    = 5-1
     elif ws_name == "Spinning Attack":
         ftp  = 1.0
         ftp_rep = True
         wsc = 1.0*player_str + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
-        nhits = 1
+        nhits = 2-1
     elif ws_name == "Howling Fist":
         base_ftp = [2.05, 3.55, 5.75]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.5*player_vit + 0.2*player_str + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 2
+        nhits    = 2-1
         ws_atk_bonus = 0.5
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -1234,7 +1241,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.5*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 2
+        nhits    = 2-1
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
@@ -1244,14 +1251,14 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp       = 1.25
         ftp_rep   = True
         wsc       = 0.15*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits     = 8
+        nhits     = 8-1
     elif ws_name == "Tornado Kick":
         # This is a kick weaponskill that may benefit from Footwork. We re-calculate player attack if footwork is up to deal with Empy+3 feet: Footwork+16%
         base_ftp = [1.7, 2.8, 4.5]
         ftp      = np.interp(tp, base_tp, base_ftp)
         ftp_rep  = True
         wsc      = 0.4*(player_vit + player_str) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits    = 3
+        nhits    = 3-1
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
         player_attack2 = special_set.playerstats["Attack2"]
@@ -1261,7 +1268,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp  = 1.375
         ftp_rep = True
         wsc = 0.85*player_dex + dStat[1]*gearset.playerstats[dStat[0]] # Assuming 5/5 Blade: Shun merits. Add clickable drop-down menu to adjust merits later.
-        nhits = 5
+        nhits = 5-1
         ws_atk_bonus = 0.05
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -1270,7 +1277,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp  = 3.0
         ftp_rep = False
         wsc = 0.8*player_vit
-        nhits = 1
+        nhits = 2-1
     elif ws_name == "Victory Smite":
         crit_ws = True
         crit_rate += gearset.playerstats["Crit Rate"]/100 # Blade: Hi can crit, so define crit rate now
@@ -1281,7 +1288,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp = 1.5
         ftp_rep = True
         wsc = 0.8*player_str + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits = 4
+        nhits = 4-1
     elif ws_name == "Ascetic's Fury":
         crit_ws = True
         crit_rate += gearset.playerstats["Crit Rate"]/100
@@ -1292,7 +1299,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp = 1.0
         ftp_rep = True
         wsc = 0.5*(player_str + player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits = 1
+        nhits = 2-1
         ws_atk_bonus = 1.0
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
@@ -1307,7 +1314,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp = 1.0
         ftp_rep = True
         wsc = 0.32*(player_str + player_vit) + dStat[1]*gearset.playerstats[dStat[0]]
-        nhits = 6
+        nhits = 6-1
 
 
     if main_wpn_name == 'Shining One' and not phys_rng_ws:
