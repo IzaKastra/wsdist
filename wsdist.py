@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 15
+# Version date: 2023 February 16
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -1234,6 +1234,15 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, n_iter, n_simulati
                                     if new_set["ranged"].get("Type","None")=="Bow" and new_set["ammo"].get("Type","None") not in ["Arrow","None"]:
                                         # print("test12: bow without arrow/none")
                                         continue
+
+                                    if (ws_name in marksmanship or spell=="Ranged Attack") and new_set["ammo"]["Type"] not in ["Bullet","Bolt"]:
+                                        # print("test12: marksmanship ws requires ammo equipped")
+                                        continue
+
+                                    if (ws_name in archery or spell=="Ranged Attack") and new_set["ammo"]["Type"] not in ["Arrow"]:
+                                        # print("test12: archery ws requires ammo equipped")
+                                        continue
+
 
                                     # Equipping a bullet requires a gun to be equipped. (or a crossbow with a bolt)
                                     if new_set["ammo"].get("Type","None") == "Bullet" and new_set["ranged"].get("Type","None") != "Gun":
