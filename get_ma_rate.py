@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2022 December 15
+# Version date: 2023 February 14
 #
 # This code contains the function used to estimate the average number of attacks per attack round given multi-attack stats and accuracy.
 #
@@ -285,18 +285,18 @@ def get_ma_rate2(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix):
 #     return(main_hits, sub_hits)
 
 @njit
-def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix, striking_flourish=False, ternary_flourish=False):
-    dual_wield = True if dual_wield_type == 'Weapon' else False # Check if the item equipped in the dual_wield slot is a weapon. If this line returns an error, check the "gear.py" file to see if the item in the dual_wield slot has a "Type" key. Python is case-sensitive too
+def get_ma_rate3(main_job, nhits, qa, ta, da, oa_list, dual_wield, hitrate_matrix, ranged_hitrate2, daken, kickattacks, zanshin, zanhasso, zanshin_hitrate, zanshin_oa2, striking_flourish=False, ternary_flourish=False, tp_round=False,):
 
     main_hits = 0
     sub_hits = 0
+    daken_hits = 0
+    kickattack_hits = 0
 
     hitrate11 = hitrate_matrix[0][0] # Main hand hit rate with the bonus +100 accuracy. Caps at 99%
     hitrate21 = hitrate_matrix[0][1] # Off hand hit rate with the bonus +100 accuracy. Caps at 95%
 
     hitrate12 = hitrate_matrix[1][0] # Main hand hit rate. Caps at 99%
     hitrate22 = hitrate_matrix[1][1] # Off hand hit rate. Caps at 95%
-
 
     main_hits += 1*hitrate11 # Add the first main hit (gets bonus accuracy)
     main_hits += (nhits-1)*(hitrate12) # Add the remaining natural main hits
@@ -319,30 +319,70 @@ def get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix, s
         ta_main = ta
         da_main = da
 
+    oa3_main = oa_list[0]
+    oa2_main = oa_list[1]
+    oa8_sub = oa_list[2]
+    oa7_sub = oa_list[3]
+    oa6_sub = oa_list[4]
+    oa5_sub = oa_list[5]
+    oa4_sub = oa_list[6]
+    oa3_sub = oa_list[7]
+    oa2_sub = oa_list[8]
 
-    # Add main-hand multi-hits to the first natural hit.
+    # Add main-hand multi-hits to the first natural hit. Zanshin included at the very end.
     main_hits += (max(0,min(3, 8-(main_hits + sub_hits))*qa_main) + \
                   max(0,min(2, 8-(main_hits + sub_hits))*(1-qa_main)*ta_main) + \
                   max(0,min(1, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*da_main) + \
-                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*oa3) + \
-                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3)*oa2))*hitrate12
+                  max(0,min(2, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*oa3_main) + \
+                  max(0,min(1, 8-(main_hits + sub_hits))*(1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3_main)*oa2_main))*hitrate12
+
+    # Zanshin conditions:
+    # 1) Last hit to proc
+    # 2) Does not trigger on multi-attacks
+    # 3) Only gets a chance to proc if the first attack misses.
+    # 4) Does not proc on weapon skills
+
+    zanshin_hitrate = 0 if not tp_round else zanshin_hitrate # Do not allow Zanshin to contribute for weapon skills.
+    zanshin_bonus = ((1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3_main)*(1-oa2_main)*(1-hitrate12)*zanshin*zanshin_oa2*2 + \
+                    (1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3_main)*(1-oa2_main)*(1-hitrate12)*zanshin*(1-zanshin_oa2))*zanshin_hitrate
+
+    # Zanshin can proc on successful melee swings for SAM main with Hasso up.
+    zanshin_sam_bonus = ((1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3_main)*(1-oa2_main)*hitrate12*zanhasso*zanshin_oa2*2 + \
+                         (1-qa_main)*(1-ta_main)*(1-da_main)*(1-oa3_main)*(1-oa2_main)*hitrate12*zanhasso*(1-zanshin_oa2))*zanshin_hitrate*(main_job=="SAM")
+
+    zanshin_hits = zanshin_bonus + zanshin_sam_bonus
+    main_hits += zanshin_hits
 
     if dual_wield:
         # Add off-hand multi-hits to the first sub hit.
+        # Assume Kclub will only ever be in off-hand
         sub_hits += (max(0,min(3, 8-(sub_hits + main_hits)))*qa + \
                      max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*ta + \
                      max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*da + \
-                     max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3 + \
-                     max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2)*hitrate22
+                     max(0,min(7, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa8_sub + \
+                     max(0,min(6, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*oa7_sub + \
+                     max(0,min(5, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*(1-oa7_sub)*oa6_sub + \
+                     max(0,min(4, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*(1-oa7_sub)*(1-oa6_sub)*oa5_sub + \
+                     max(0,min(3, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*(1-oa7_sub)*(1-oa6_sub)*(1-oa5_sub)*oa4_sub + \
+                     max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*(1-oa7_sub)*(1-oa6_sub)*(1-oa5_sub)*(1-oa4_sub)*oa3_sub + \
+                     max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa8_sub)*(1-oa7_sub)*(1-oa6_sub)*(1-oa5_sub)*(1-oa4_sub)*(1-oa3_sub)*oa2_sub)*hitrate22
     elif nhits>1:
         # Add main-hand multi-hits to the second natural hit if not dual wield and if nhits>1
         main_hits += (max(0,min(3, 8-(sub_hits + main_hits)))*qa + \
                       max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*ta + \
                       max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*da + \
-                      max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3 + \
-                      max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3)*oa2)*hitrate12
+                      max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3_main + \
+                      max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3_main)*oa2_main)*hitrate12
 
-    return(main_hits, sub_hits)
+
+    remaining_hits_available = 8 - (main_hits + sub_hits)
+
+    if tp_round:
+        # Checked in-game as NIN/MNK. Kick Attack animation happens before daken animation, but both can occur on the same attack round
+        kickattack_hits += min(max(0,remaining_hits_available), 1.0)*kickattacks*hitrate12 # Need to use hitrate21, since hitrate11 gives an extra +100 accuracy for a WS's first hit.
+        daken_hits += min(max(0,remaining_hits_available - kickattacks), 1.0)*daken*ranged_hitrate2 # This uses ranged_hitrate2, for the same reason as hitrate21
+
+    return(main_hits, sub_hits, daken_hits, kickattack_hits, zanshin_hits)
 
 
 
