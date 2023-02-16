@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 13
+# Version date: 2023 February 14
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -52,13 +52,14 @@ ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", 
 
 
 spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
-              "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San",],
+              "NIN":["Doton: Ichi","Doton: Ni","Doton: San","Suiton: Ichi","Suiton: Ni","Suiton: San","Huton: Ichi","Huton: Ni","Huton: San","Katon: Ichi","Katon: Ni","Katon: San","Hyoton: Ichi","Hyoton: Ni","Hyoton: San", "Raiton: Ichi","Raiton: Ni","Raiton: San","Ranged Attack"],
               "BLM":["Stone","Stone II","Stone III","Stone IV","Stone V","Stone VI","Stoneja",
                      "Water","Water II","Water III","Water IV","Water V","Water VI","Waterja",
                      "Aero","Aero II","Aero III","Aero IV","Aero V","Aero VI","Aeroja",
                      "Fire","Fire II","Fire III","Fire IV","Fire V","Fire VI","Firaja",
                      "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Blizzard VI","Blizzaja",
-                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI", "Thundaja"],
+                     "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Thunder VI", "Thundaja",
+                     "Ranged Attack"],
               "RDM":["Stone","Stone II","Stone III","Stone IV","Stone V",
                      "Water","Water II","Water III","Water IV","Water V",
                      "Aero","Aero II","Aero III","Aero IV","Aero V",
@@ -78,7 +79,10 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
                      "Fire","Fire II","Fire III",
                      "Blizzard","Blizzard II","Blizzard III",
                      "Thunder","Thunder II","Thunder III",],
-              "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
+              "COR":["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot","Ranged Attack"],
+              "RNG":["Ranged Attack"],
+              "SAM":["Ranged Attack"],
+              "THF":["Ranged Attack"],
              }
 # spell_list = [k for k in spell_list if ":" in k] if main_job == "NIN" else [k for k in spell_list if ":" not in k]
 # Same for weapon skill; filter to only show weapon skills that the selected main weapon can equip
@@ -92,15 +96,18 @@ ws_column = [
 special_flourishes = ["Climactic Flourish", "Striking Flourish", "Ternary Flourish", "No Flourish"]
 ws_column2 = [
   [sg.vtop(sg.Column([
-  [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],[sg.Combo(values=sorted(ws_dict["Katana"]), default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
+#   [sg.Text("Weapon skill:",size=(20,1),font=font_choice,justification="r",key="ws label"),sg.Push()],
+  [sg.Combo(values=sorted(ws_dict["Katana"]), default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label"), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label"), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")]
   ])),sg.Push(),
   sg.vtop(sg.Column([
-  [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],[sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
+#   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],
+  [sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
   [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False),sg.Checkbox("True Shot",font=font_choice,key="trueshot toggle",visible=False),sg.Checkbox("Blood Rage",font=font_choice,key="bloodrage toggle",visible=False)],
-  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False),sg.Checkbox("Mighty Strikes",font=font_choice,key="mightystrikes toggle",visible=False),sg.Checkbox("Velocity Shot",font=font_choice,key="velocityshot toggle",disabled=False,tooltip="Velocity Shot toggle\n+15% Ranged Attack\n-15% Melee Attack",visible=False)],
-  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +40%\nAttack+80\nCrit Damage +40% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False)],
+  [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False),sg.Checkbox("Mighty Strikes",font=font_choice,key="mightystrikes toggle",visible=False),sg.Checkbox("Velocity Shot",font=font_choice,key="velocityshot toggle",disabled=False,tooltip="Velocity Shot toggle\n+15% Ranged Attack\n-15% Melee Attack\n-15% Magic Haste",visible=False),sg.Checkbox("Last Resort",font=font_choice,key="lastresort toggle",disabled=False,tooltip="Last Resort\n+25% Job Ability Haste\n+34.77% Attack",visible=False),sg.Checkbox("Triple Shot",font=font_choice,key="tripleshot toggle",disabled=False,tooltip="Triple Shot toggle\n+60% Triple Shot",visible=False)],
+  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +45%\nAttack+90\nCrit Damage +45% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False),sg.Checkbox("Hover Shot",font=font_choice,key="hovershot toggle",disabled=False,tooltip="Hover Shot toggle\n+100% Ranged Damage\n+100 Ranged Accuracy\n+100 Magic Accuracy",visible=False)],
+  [sg.Checkbox("Double Shot",font=font_choice,key="doubleshot toggle",disabled=False,tooltip="Double Shot toggle\n+60% Double Shot",visible=False)]
   ],))
 
 
@@ -121,19 +128,22 @@ buffs_whm_column = [
 
 
 
-song_list = ["Blade Madrigal","Sword Madrigal","Minuet V","Minuet IV","Minuet III","Honor March","Victory March","Adv. March"]
+song_list = ["Blade Madrigal","Sword Madrigal","Minuet V","Minuet IV","Minuet III","Honor March","Victory March","Adv. March","Hunter's Prelude","Archer's Prelude",
+             "Sinewy Etude","Herculean Etude","Dextrous Etude","Uncanny Etude","Vivacious Etude","Vital Etude","Quick Etude","Swift Etude","Learned Etude","Sage Etude","Spirited Etude","Logical Etude","Enchanting Etude","Bewitching Etude"]
 song1 = "Honor March"
 song2 = "Victory March"
 song3 = "Minuet V"
 song4 = "None"
+song5 = "None"
 # BRD buffs column
 buffs_brd_column = [
-  [sg.Checkbox("BRD",size=(15,1),tooltip="Use Bard buffs?",key="brd_on",default=False,font=font_choice,enable_events=True)],
-  [sg.Combo(values=("Songs +8","Songs +7","Songs +6","Songs +5","Songs +4","Songs +3","Songs +2","Songs +1","Songs +0"), default_value="Songs +7", readonly=True, k="nsong",size=(15,1),font=font_choice)],
-  [sg.Combo(values=song_list + ["None"], default_value=song1, readonly=True,enable_events=True, k="song1",size=(15,1),font=font_choice)],
-  [sg.Combo(values=song_list + ["None"], default_value=song2, readonly=True,enable_events=True, k="song2",size=(15,1),font=font_choice)],
-  [sg.Combo(values=song_list + ["None"], default_value=song3, readonly=True,enable_events=True, k="song3",size=(15,1),font=font_choice)],
-  [sg.Combo(values=song_list + ["None"], default_value=song4, readonly=True,enable_events=True, k="song4",size=(15,1),font=font_choice)],
+  [sg.Checkbox("BRD",size=(17,1),tooltip="Use Bard buffs?",key="brd_on",default=False,font=font_choice,enable_events=True)],
+  [sg.Combo(values=("Songs +9","Songs +8","Songs +7","Songs +6","Songs +5","Songs +4","Songs +3","Songs +2","Songs +1","Songs +0"), default_value="Songs +7", readonly=True, k="nsong",size=(17,1),font=font_choice)],
+  [sg.Combo(values=song_list + ["None"], default_value=song1, readonly=True,enable_events=True, k="song1",size=(17,1),font=font_choice)],
+  [sg.Combo(values=song_list + ["None"], default_value=song2, readonly=True,enable_events=True, k="song2",size=(17,1),font=font_choice)],
+  [sg.Combo(values=song_list + ["None"], default_value=song3, readonly=True,enable_events=True, k="song3",size=(17,1),font=font_choice)],
+  [sg.Combo(values=song_list + ["None"], default_value=song4, readonly=True,enable_events=True, k="song4",size=(17,1),font=font_choice)],
+  [sg.Combo(values=song_list + ["None"], default_value=song5, readonly=True,enable_events=True, k="song5",size=(17,1),font=font_choice)],
   [sg.Checkbox("Marcato*",size=(15,1),font=font_choice,disabled=True,k="marcato",enable_events=True,tooltip="Marcato applies to the first song.")],
   [sg.Checkbox("Soul Voice",size=(15,1),font=font_choice,disabled=True,k="soulvoice",enable_events=True)],
 ]
@@ -157,7 +167,7 @@ buffs_cor_column = [
 
 ]
 
-geo_spells = sorted(["Acumen", "Fury", "Precision", "Focus", "Haste", "STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR", "Frailty", "Torpor", "Malaise"])
+geo_spells = sorted(["Acumen", "Fury", "Precision", "Focus", "Haste", "STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR", "Frailty", "Torpor", "Malaise","Languor"])
 indispells = ["Indi-"+k for k in geo_spells] + ["None"]
 geospells = ["Geo-"+k for k in geo_spells] + ["None"]
 entrustspells = ["Entrust-"+k for k in geo_spells] + ["None"]
@@ -435,10 +445,10 @@ starting_set_tab = [
 
 if h > 900: # If screen height is greater than 900 pixels, then use a vertical (tall) layout
     input_tab = [
-            [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,230])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
+            [sg.vtop(sg.Frame("Basic inputs",[[sg.vtop(sg.Column(player_column,))],[sg.Column(ws_column2)]],size=[390,240])),sg.Push(),sg.vtop(sg.Frame("Enemy inputs",[[sg.Column(enemy_stat_column)]],))],
             [sg.Push(),sg.vtop(sg.Frame("Buffs", [[sg.vtop(sg.Column(buffs_whm_column,)), sg.vtop(sg.Column(buffs_brd_column,)), sg.vtop(sg.Column(buffs_cor_column,)), sg.vtop(sg.Column(buffs_geo_column,))]])),sg.Push()],
             [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
-            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=False),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
             [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]
             ]
 
