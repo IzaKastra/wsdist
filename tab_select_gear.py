@@ -86,7 +86,7 @@ from tab_inputs import item2image
 
 
 # This bit is the 4x4 grid of buttons and the few "Select" buttons under it.
-odyssey_rank_thing = [sg.Text("Odyssey Rank:",size=(15,1),font=font_choice,),sg.Combo(values=["None","15","20","25","30"], default_value="30", readonly=True, key="odyssey rank",size=(10,1),font=font_choice,tooltip="Auto-select Odyssey gear with this rank.",disabled=False,enable_events=False)]
+odyssey_rank_thing = [sg.Text("Odyssey Rank:",size=(15,1),font=font_choice,),sg.Combo(values=["None","0","15","20","25","30"], default_value="30", readonly=True, key="odyssey rank",size=(10,1),font=font_choice,tooltip="Auto-select Odyssey gear with this rank.",disabled=False,enable_events=False)]
 gear_tab = [
   [sg.Column([
     [sg.Push(),sg.Button("Main",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display main"),sg.Button("Sub",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display sub"),sg.Button("Ranged",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ranged"),sg.Button("Ammo",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display ammo"),sg.Push()],
