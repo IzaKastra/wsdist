@@ -123,12 +123,12 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
             # Kaustra uses a special base damage formula.
 
             m, v, window = get_mv_blm(element, tier, player_INT, enemy_INT)
-            d = int(v+mdmg+(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
+            d = int(v+mdmg + 40*ebullience +(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
         else:
             player_level = 99
             dINT = 0 if dINT < 0 else dINT 
             dINT = 300 if dINT > 300 else dINT 
-            d = np.round(0.067*player_level,1)*(37+int(0.67*dINT))
+            d = np.round(0.067*player_level,1)*(37 + 40*ebullience + int(0.67*dINT))
         if ebullience:
             ebullience_bonus = 1.2
             if gearset.equipped["head"] == "Arbatel Bonnet +3":
