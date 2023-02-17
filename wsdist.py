@@ -333,8 +333,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             if priority=="Damage":
                 metric = phys*phys*tp/1e6
             else:
-                metric = phys*tp*tp*tp/1e6
-
+                metric = phys*tp*tp/1e4
+    
             return(metric,tp)
 
 

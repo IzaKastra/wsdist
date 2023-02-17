@@ -959,7 +959,7 @@ while True:
                     if priority=="Damage":
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
                     else:
-                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^3)\n{'=':>10s} {tp:6.1f} TP / round")
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
                 else:
                     window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 
