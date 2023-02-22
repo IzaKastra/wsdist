@@ -93,7 +93,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     if gearset.gear["main"]["Skill Type"] != "Hand-to-Hand":
         main_dmg = gearset.playerstats['DMG1']
         delay1 = gearset.playerstats['Delay1'] # Main-hand delay.
-        
+
         marts = 0
         kick_dmg = 0
     else:
@@ -110,11 +110,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                                                                               # and this official post saying kick attacks use weapon damage with footwork: https://forum.square-enix.com/ffxi/threads/52969-August.-3-2017-%28JST%29-Version-Update
             if kick_ws_footwork and not check_tp_set:
                 main_dmg = kick_dmg
-                
+
         base_delay = 480
         marts = gearset.playerstats["Martial Arts"]
         delay1 = (base_delay + gearset.playerstats['Delay1']) # We include Martial Arts later.
-        
+
     sub_dmg  = gearset.playerstats['DMG2']
     rng_dmg  = gearset.playerstats.get('Ranged DMG',0)
     rng_delay  = gearset.playerstats.get('Ranged Delay',0)
@@ -147,9 +147,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     mdelay = (delay1+delay2)/2.*(1.-dw) if (dual_wield and gearset.gear["main"]["Skill Type"]!="Hand-to-Hand") else delay1 - marts # Modified delay based on weapon delays, dual wield, and martial arts. Used for TP return from weapon skills
 
     # Read in haste values. We apply limits in the get_delay_timing() function/file.
-    gear_haste  = gearset.playerstats['Gear Haste']/100
+    gear_haste  = gearset.playerstats['Gear Haste']/102.4
     magic_haste = gearset.playerstats['Magic Haste']
-    ja_haste    = gearset.playerstats['JA Haste']/100
+    ja_haste    = gearset.playerstats['JA Haste']/102.4
 
     tpa = get_delay_timing(delay1, delay2, dw, marts, magic_haste, ja_haste, gear_haste)
 
@@ -158,7 +158,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
     # Limits these to 100% proc rate.
     daken = 1.0 if daken > 1.0 else daken
-    kickattacks = 1.0 if kickattacks > 1.0 else kickattacks 
+    kickattacks = 1.0 if kickattacks > 1.0 else kickattacks
 
     wsd = gearset.playerstats['Weaponskill Damage']/100. # Applies to first hit only
     if phys_rng_ws and main_job == "SAM":
@@ -186,7 +186,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     dnc_empy_head_bonus = gearset.gear["head"]["Name"]=="Maculele Tiara +3" and climactic_flourish # We use this to enhance crit damage by 31% only for the first hit in get_phys_dmg later.
     dnc_empy_body_bonus = gearset.gear["body"]["Name"]=="Maculele Casaque +3" and striking_flourish # We use this to enhance crit rate by 70% only for the first hit in get_phys_dmg later.
 
-    # Zanshin stuff. 
+    # Zanshin stuff.
     two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
     zanshin = gearset.playerstats["Zanshin"]/100*(1+0.25*(main_job=="SAM")) + 0.1*(main_job=="SAM") if gearset.gear["main"]["Skill Type"] in two_handed else 0
     zanshin = 1 if zanshin > 1 else zanshin
@@ -201,7 +201,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     da = gearset.playerstats['DA']/100
     oa3_main = 0 # Only applies with Mythic Aftermath on WSs and only on the hand holding the weapon. Same deal as crit rate. OA3 and OA2 are read in properly if using Nagi main hand for AM3. See below.
     oa2_main = 0 # Only applies with Mythic Aftermath on WSs and only on the hand holding the weapon. Same deal as crit rate. OA3 and OA2 are read in properly if using Nagi main hand for AM3. See below.
-    
+
     oa8_sub = gearset.gear["sub"].get("OA8",0)/100
     oa7_sub = gearset.gear["sub"].get("OA7",0)/100
     oa6_sub = gearset.gear["sub"].get("OA6",0)/100
@@ -248,7 +248,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             #
             # Estimate the average white damage from a single /ra ranged attack.
             #
-            
+
             if gearset.gear["ranged"]["Name"]=="Empty":
                 rng_delay = 0
 
@@ -334,7 +334,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                 metric = phys*phys*tp/1e6
             else:
                 metric = phys*tp*tp/1e4
-    
+
             return(metric,tp)
 
 
@@ -362,7 +362,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             element = spells[spell.split(":")[0]].lower()
             tier = spell.split()[-1]
 
-            damage = nuking(spell, "Ninjutsu", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
+            damage = nuking(spell, "Ninjutsu", tier, element, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
 
         else:
             # If not Ninjutsu, then assume Elemental Magic
@@ -408,8 +408,8 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             elif len(spell.split()) == 2:
                 element = spells[spell.split()[0]].lower()
                 tier = spell.split()[-1]
-                
-            damage = nuking(spell, "Elemental Magic", tier, element, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
+
+            damage = nuking(spell, "Elemental Magic", tier, element, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
 
         return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
@@ -450,7 +450,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         # Run TP set separately from WS set. This includes copy/pasted functions just to keep things separate. We can move this entire if-statement to a separate function/file later.
         # Need to check TP sets before reading in WS scaling stuff, or we might accidentally give WS bonuses to our TP attacks
         crit_rate = gearset.playerstats['Crit Rate']/100
-        
+
         # Check hit rates for melee and ranged weapons. None of these hits get +100 accuracy since this is not a weapon skill
         hitrate11 = get_hitrate(player_accuracy1, 0, enemy_eva, 'main',  False, main_type_skill) # First main-hand hit.
         hitrate21 = get_hitrate(player_accuracy2, 0, enemy_eva,  'sub',  False, sub_type_skill) # First off-hand hit.
@@ -458,7 +458,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         hitrate22 = get_hitrate(player_accuracy2, 0, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
         hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
-        hitrate_ranged2 = get_hitrate(player_rangedaccuracy, 0, enemy_eva, "ranged", False, "Throwing") # Ranged hitrate here only applies for daken. I have no plans for ranged TPing 
+        hitrate_ranged2 = get_hitrate(player_rangedaccuracy, 0, enemy_eva, "ranged", False, "Throwing") # Ranged hitrate here only applies for daken. I have no plans for ranged TPing
 
         zanshin_hitrate = get_hitrate(player_accuracy1+34, 0, enemy_eva, "main", False, main_type_skill)
 
@@ -526,7 +526,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         if daken > 0:
             avg_pdif_rng = get_avg_pdif_ranged(player_rangedattack, "Throwing", pdl_trait, pdl_gear, enemy_def, crit_rate)
             ranged_hit_damage = get_avg_phys_damage(ammo_dmg, fstr_rng, 0, avg_pdif_rng, 1.0, crit_rate, crit_dmg, 0, 0, 0) # Daken throw damage. Uses WSD formula, but all WSD related stuff is 0, and ftp=1.
-            phys += ranged_hit_damage*hitrate_ranged2 
+            phys += ranged_hit_damage*hitrate_ranged2
 
         dps = phys / tpa # damage / time_per_action. Not useful until I add "DA dmg" "TA dmg" etc
 
@@ -595,15 +595,23 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
         magic_hit_rate = get_magic_hit_rate(magic_accuracy + 100*hover_shot, enemy_meva) if enemy_meva > 0 else 1.0
         resist_state = get_resist_state_average(magic_hit_rate)
-        
+
         klimaform_bonus = 1.0 # Klimaform with Empy+3 feet boosts magical WS damage by 25%
         if gearset.equipped["feet"] == "Arbatel Loafers +3": # Only SCH can use these feet
             klimaform_bonus += 0.25
 
         affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
-        dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
+
+        dayweather = 1.0
+        if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
+          if main_job == "SCH":
+            dayweather = 1.25
+          elif sub_job == "SCH":
+            dayweather = 1.1
+
+#        dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.22, 1.35. Assume no day/weather bonus/penalty.
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
-        enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.    
+        enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
 
         magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus*klimaform_bonus
         magical_damage *= magic_multiplier
@@ -680,8 +688,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
             resist_state = get_resist_state_average(magic_hit_rate)
 
+            dayweather = 1.0
+            if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
+              if main_job == "SCH":
+                dayweather = 1.25
+              elif sub_job == "SCH":
+                dayweather = 1.1
+
             affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
-            dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
+            #dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
             magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
             enemy_mdt = 1.0 # Usually 1.0 unless the enemy casts shell or a similar spell/ability.
 
@@ -897,8 +912,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
         resist_state = get_resist_state_average(magic_hit_rate) # TODO: Use a randomizer instead of the average resist state for hybrid simulations.
 
-        affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0)
         dayweather = 1.0
+        if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
+          if main_job == "SCH":
+            dayweather = 1.25
+          elif sub_job == "SCH":
+            dayweather = 1.1
+
+        affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0)
+        #dayweather = 1.0
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
         enemy_mdt = 1.0
         magic_multiplier = affinity*resist_state*dayweather*magic_attack_ratio*enemy_mdt*element_magic_attack_bonus
@@ -1024,7 +1046,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
 
     pdt = 100 # How much PDT the set has
     mdt = 100
-    
+
     conditional_converge_count = 0 # This uses a while loop, so if we don't add a condition to break out, then it'll run forever trying to find 1% more DT that doesn't exist.
     pdt_old = 100 # Used to check if the automatic set finder gets stuck trying to find a set that doesn't exist. Compare this value to the old value. If no change in 3 consecutive iterations, then break out.
     mdt_old = 100
@@ -1320,7 +1342,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                     pdt = 0
                                     mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
                                     for slot in new_set:
-                                        pdt += new_set[slot].get("PDT",0) + new_set[slot].get("DT",0)
+                                        pdt += new_set[slot].get("PDT",0) + new_set[slot].get("DT",0) + new_set[slot].get("PDT2",0)
                                         mdt += new_set[slot].get("MDT",0) + new_set[slot].get("DT",0)
                                     if pdt > pdt_thresh_temp or mdt > mdt_thresh_temp:
                                         continue
@@ -1440,7 +1462,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         pdt = 0
         mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
         for slot in Best_Gearset:
-            pdt += Best_Gearset[slot].get("PDT",0) + Best_Gearset[slot].get("DT",0)
+            pdt += Best_Gearset[slot].get("PDT",0) + Best_Gearset[slot].get("DT",0) + Best_Gearset[slot].get("PDT2",0)
             mdt += Best_Gearset[slot].get("MDT",0) + Best_Gearset[slot].get("DT",0)
             # print(Best_Gearset[slot]["Name2"],Best_Gearset[slot].get("PDT",0),Best_Gearset[slot].get("DT",0))
 
@@ -1485,7 +1507,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         print(f"\nBest {spell} set with the provided buffs:\n")
         for k in Best_Gearset:
             print(f"{k:>10s}  {Best_Gearset[k]['Name2']:<50s}")
-        
+
 
 
     return(Best_Gearset)
