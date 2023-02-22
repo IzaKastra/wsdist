@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 16
+# Version date: 2023 February 22
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -548,7 +548,7 @@ Adhemar_Jacket_A = {"Name": "Adhemar Jacket +1", "Name2": "Adhemar Jacket +1 A",
 Adhemar_Jacket_B = {"Name": "Adhemar Jacket +1", "Name2": "Adhemar Jacket +1 B", "Evasion":55,"Magic Evasion":69,"Magic Def":6,"STR":26+12, "DEX":33+12, "VIT":23, "AGI":29, "INT":20, "MND":20, "CHR":20, "Accuracy":35, "Attack":35+20, "Ranged Accuracy":35, "Ranged Attack":35, "Gear Haste":4, "TA":4, "Dual Wield":6,"Jobs":["mnk","thf","rng","nin","blu","cor","dnc","run"]}
 Adhemar_Jacket_C = {"Name": "Adhemar Jacket +1", "Name2": "Adhemar Jacket +1 C", "Evasion":55,"Magic Evasion":69,"Magic Def":6,"STR":26, "DEX":33, "VIT":23, "AGI":29+12, "INT":20, "MND":20, "CHR":20, "Accuracy":35, "Attack":35, "Ranged Accuracy":35, "Ranged Attack":35+20, "Ranged Accuracy":0+20, "Gear Haste":4, "TA":4, "Dual Wield":6,"Jobs":["mnk","thf","rng","nin","blu","cor","dnc","run"]}
 Agony_Jerkin = {"Name": "Agony Jerkin +1", "Name2": "Agony Jerkin +1 R15","Evasion":49,"Magic Evasion":64,"Magic Def":6, "STR":24+10, "DEX":35+10, "VIT":24+10, "AGI":28+10, "INT":23+10, "MND":23+10, "CHR":23+10, "Attack":23+60, "Gear Haste":4, "Accuracy":14, "Store TP":0+10,"Jobs":["nin","war","rdm","thf","pld","drk","bst","brd","rng","sam","drg","blu","cor","dnc","run"]}
-Ashera_Harness = {"Name": "Ashera Harness", "Evasion":90,"Magic Evasion":96,"Magic Def":5,"STR":30, "DEX":40, "VIT":30, "AGI":30, "INT":30, "MND":30, "CHR":40, "Accuracy":45, "Attack":45, "Gear Haste":4, "Store TP":10,"Jobs":["nin","mnk","thf","brd","dnc","run"]}
+Ashera_Harness = {"Name": "Ashera Harness", "Evasion":90,"Magic Evasion":96,"Magic Def":5,"STR":30, "DEX":40, "VIT":30, "AGI":30, "INT":30, "MND":30, "CHR":40, "Accuracy":45, "Attack":45, "Gear Haste":4, "Store TP":10,"DT":-7,"Jobs":["nin","mnk","thf","brd","dnc","run"]}
 Dagon_Breastplate = {"Name": "Dagon Breastplate", "Subtle Blow II":10,"Evasion":60,"Magic Evasion":86,"Magic Def":5,"STR":40,"DEX":30,"VIT":40,"AGI":30,"INT":30,"MND":30,"CHR":30,"Accuracy":45,"Attack":45,"Gear Haste":1,"Crit Rate":4, "TA":5,"Jobs":["drk","sam","pld","war","drg"]}
 Flamma_Korazin = {"Name": "Flamma Korazin +2","Subtle Blow":17,"Evasion":55,"Magic Evasion":69,"Magic Def":6, "STR":43,"DEX":39,"VIT":32,"AGI":20,"INT":20,"MND":20,"CHR":20,"Accuracy":46,"Magic Accuracy":46,"Gear Haste":2,"Store TP":9,"Jobs":["drk","sam","war","pld","drg"]}
 Gyve_Doublet = {"Name": "Gyve Doublet", "Evasion":41,"Magic Evasion":80, "Magic Def":6,"STR":19, "DEX":19, "VIT":19, "AGI":19, "INT":39, "MND":33, "CHR":33, "Magic Attack":42, "Gear Haste":3,"Jobs":["whm","brd","smn","blu","pup","nin","drk","blm","rdm","sch","geo","rng"]}
