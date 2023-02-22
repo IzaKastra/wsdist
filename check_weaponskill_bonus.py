@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 January 08
+# Version date: 2023 February 22
 #
 from get_dex_crit import *
 import numpy as np
@@ -141,6 +141,11 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
         bonuses['oa3'] += 0.2
         bonuses['oa2'] += 0.4
         if ws_name == "Drakesbane":
+            bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
+    elif main_wpn_name == "Terpsichore":
+        bonuses['oa3'] += 0.2
+        bonuses['oa2'] += 0.4
+        if ws_name == "Pyrrhic Kleos":
             bonuses['ws_bonus'] += 0.495 # Hidden +30% Mythic WS damage * R15 +15% WS damage (1.3)*(1.15)
     elif main_wpn_name == "Trishula":
         if ws_name == "Stardiver":
@@ -291,6 +296,5 @@ def check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi):
     elif rng_wpn_name == "Fail-not":
         if ws_name == "Apex Arrow":
             bonuses["ws_bonus"] += 0.1
-
 
     return(bonuses)
