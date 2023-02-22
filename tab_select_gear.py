@@ -1,3 +1,11 @@
+#
+# Created by Kastra on Asura.
+# Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
+#
+# Version date: 2023 February 20
+#
+# This file contains a the GUI tab "Select Gear".
+#
 import PySimpleGUI as sg
 from gear import *
 sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996
@@ -61,22 +69,22 @@ for k in sorted([k['Name2'] for k in feet]):
 framesize = [400,450]
 
 checkbox_tab = [[sg.Column([[
-  sg.Frame("Select main-hand equipment", [[sg.Column([  k for k in gear_main  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=True,key="main display",size=framesize),
-  sg.Frame("Select off-hand equipment", [[sg.Column([  k for k in gear_sub  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="sub display",size=framesize),
-  sg.Frame("Select ranged equipment", [[sg.Column([  k for k in gear_ranged  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ranged display",size=framesize),
-  sg.Frame('Select ammo equipment',[[sg.Column([  k for k in gear_ammo  ],size=framesize,scrollable=True,vertical_scroll_only=True)]],font=font_choice,visible=False,key='ammo display',size=framesize),
-  sg.Frame("Select head equipment", [[sg.Column([  k for k in gear_head  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="head display",size=framesize),
-  sg.Frame("Select neck equipment", [[sg.Column([  k for k in gear_neck  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="neck display",size=framesize),
-  sg.Frame("Select left ear equipment", [[sg.Column([  k for k in gear_ear1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear1 display",size=framesize),
-  sg.Frame("Select right ear equipment", [[sg.Column([  k for k in gear_ear2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ear2 display",size=framesize),
-  sg.Frame("Select body equipment", [[sg.Column([  k for k in gear_body  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="body display",size=framesize),
-  sg.Frame("Select hands equipment", [[sg.Column([  k for k in gear_hands  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="hands display",size=framesize),
-  sg.Frame("Select left ring equipment", [[sg.Column([  k for k in gear_ring1  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring1 display",size=framesize),
-  sg.Frame("Select right ring equipment", [[sg.Column([  k for k in gear_ring2  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="ring2 display",size=framesize),
-  sg.Frame("Select back equipment", [[sg.Column([  k for k in gear_back  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="back display",size=framesize),
-  sg.Frame("Select waist equipment", [[sg.Column([  k for k in gear_waist  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="waist display",size=framesize),
-  sg.Frame("Select legs equipment", [[sg.Column([  k for k in gear_legs ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="legs display",size=framesize),
-  sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True)],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
+  sg.Frame("Select main-hand equipment", [[sg.Column([  k for k in gear_main  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="main display col")],],font=font_choice,visible=True,key="main display",size=framesize),
+  sg.Frame("Select off-hand equipment", [[sg.Column([  k for k in gear_sub  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="sub display col")],],font=font_choice,visible=False,key="sub display",size=framesize),
+  sg.Frame("Select ranged equipment", [[sg.Column([  k for k in gear_ranged  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ranged display col")],],font=font_choice,visible=False,key="ranged display",size=framesize),
+  sg.Frame('Select ammo equipment',[[sg.Column([  k for k in gear_ammo  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ammo display col")]],font=font_choice,visible=False,key='ammo display',size=framesize),
+  sg.Frame("Select head equipment", [[sg.Column([  k for k in gear_head  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="head display col")],],font=font_choice,visible=False,key="head display",size=framesize),
+  sg.Frame("Select neck equipment", [[sg.Column([  k for k in gear_neck  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="neck display col")],],font=font_choice,visible=False,key="neck display",size=framesize),
+  sg.Frame("Select left ear equipment", [[sg.Column([  k for k in gear_ear1  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ear1 display col")],],font=font_choice,visible=False,key="ear1 display",size=framesize),
+  sg.Frame("Select right ear equipment", [[sg.Column([  k for k in gear_ear2  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ear2 display col")],],font=font_choice,visible=False,key="ear2 display",size=framesize),
+  sg.Frame("Select body equipment", [[sg.Column([  k for k in gear_body  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="body display col")],],font=font_choice,visible=False,key="body display",size=framesize),
+  sg.Frame("Select hands equipment", [[sg.Column([  k for k in gear_hands  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="hands display col")],],font=font_choice,visible=False,key="hands display",size=framesize),
+  sg.Frame("Select left ring equipment", [[sg.Column([  k for k in gear_ring1  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ring1 display col")],],font=font_choice,visible=False,key="ring1 display",size=framesize),
+  sg.Frame("Select right ring equipment", [[sg.Column([  k for k in gear_ring2  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="ring2 display col")],],font=font_choice,visible=False,key="ring2 display",size=framesize),
+  sg.Frame("Select back equipment", [[sg.Column([  k for k in gear_back  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="back display col")],],font=font_choice,visible=False,key="back display",size=framesize),
+  sg.Frame("Select waist equipment", [[sg.Column([  k for k in gear_waist  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="waist display col")],],font=font_choice,visible=False,key="waist display",size=framesize),
+  sg.Frame("Select legs equipment", [[sg.Column([  k for k in gear_legs ],size=framesize,scrollable=True,vertical_scroll_only=True,key="legs display col")],],font=font_choice,visible=False,key="legs display",size=framesize),
+  sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="feet display col")],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
 ]
 # TODO: checkbox_tab can be written as a single line with list comprehension.
 # At the very least, throw this together into no more than 4~5 lines for everything above with a loop...
