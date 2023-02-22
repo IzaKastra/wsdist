@@ -28,7 +28,13 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
 
     elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
     damage *= elemental_damage_bonus
-    dayweather = 1.0 # This is changed to 1.25 for SCH helix. Maybe also change it 1.10 for /sch for single-weather.
+
+    dayweather = 1.0
+    if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
+      if main_job == "SCH":
+        dayweather = 1.25
+      elif sub_job == "SCH":
+        dayweather = 1.1
 
     magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0 # This is weird for quick draw. I assume my QD macc is incorrect. i recommend always using meva=0 for QD
     resist_state = get_resist_state_average(magic_hit_rate)
@@ -41,7 +47,7 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
 
     return(damage)
 
-def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
+def nuking(spell, spelltype, tier, element, main_job, sub_job, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
 
     steps = 2 # 2-step skillchain
 
@@ -64,15 +70,20 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
 
     elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
 
-    dayweather = 1.0 # This is changed to 1.25 for SCH helix. Maybe also change it 1.10 for /sch for single-weather.
+    dayweather = 1.0
+    if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi" or tier=="helix":
+      if main_job == "SCH":
+        dayweather = 1.25
+      elif sub_job == "SCH":
+        dayweather = 1.1
 
     if burst: # Do burst stuff now so we can add +100 Magic Accuracy before calculating magic hit rates
         magic_accuracy += 100 + gearset.playerstats["Magic Burst Accuracy"]
         magic_burst_multiplier = 1.35 # Standard +35% damage for magic bursting
         skillchain_steps_bonus = (steps-2)*0.10 # Another +10% for each step in the skillchain after 2
         magic_burst_multiplier += skillchain_steps_bonus
-        
-        
+
+
         burst_bonus1 = 40 if gearset.playerstats['Magic Burst Damage'] > 40 else gearset.playerstats['Magic Burst Damage']
         burst_bonus2 = gearset.playerstats['Magic Burst Damage II']
         burst_bonus3 = gearset.playerstats["Magic Burst Damage Trait"]
@@ -86,7 +97,7 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
         burst_bonus_multiplier = 1.
         magic_burst_multiplier = 1.
 
-    
+
     magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
     resist_state = get_resist_state_average(magic_hit_rate)
     # print(magic_hit_rate,spelltype_skill,magic_accuracy_skill,dstat_macc,magic_accuracy,resist_state)
@@ -126,8 +137,8 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
             d = int(v+mdmg + 40*ebullience +(dINT-window)*m) # Black Magic uses (dINT-window)*m. This was simply a choice of the person who collected and fit the data.
         else:
             player_level = 99
-            dINT = 0 if dINT < 0 else dINT 
-            dINT = 300 if dINT > 300 else dINT 
+            dINT = 0 if dINT < 0 else dINT
+            dINT = 300 if dINT > 300 else dINT
             d = np.round(0.067*player_level,1)*(37 + 40*ebullience + int(0.67*dINT))
         if ebullience:
             ebullience_bonus = 1.2
@@ -138,10 +149,6 @@ def nuking(spell, spelltype, tier, element, gearset, player_INT, player_matk, md
     # These next few are outside the Elemental Magic block since they apply for "spells with element that matches day/weather", which technically applies to Ninjutsu until proven otherwise.
     if gearset.equipped["feet"] == "Arbatel Loafers +3": # Only SCH can use these feet
         klimaform_bonus += 0.25 # Assume full-time klimaform on SCH Main
-
-    if tier=="helix": # Only SCH has access to helix spells. TODO: add /sch helix1 spells and use tier=helix1 and tier=helix2 to distinguish between them
-        dayweather = 1.25 # Helix spells do not need the Obi to gain weather effects. 
-                            # SCH is the only job able to cast Helix2 spells, so if tier="helix", then job=SCH and we can assume double weather is always on.
 
     if gearset.equipped["main"] == "Akademos": # Technically this applies to Ninjutsu as well, so I've put it outside of the Elemental Magic section
         extra_gear_bonus += 0.02
@@ -234,7 +241,7 @@ def get_resist_state(magic_hit_rate):
     # https://www.bg-wiki.com/ffxi/Resist
     # Sounds like this bit simply rolls three times or until your roll wins.
     # Each failed roll halves your damage.
-    # 
+    #
     # This function is useful if you wanted to do simulations, but magic damage doesn't really need simulations. considering there are only a few possible damage values.
     # I instead use get_resist_state_average() to calculate the average damage from all four resist states (1/1, 1/2, 1/4, 1/8)
     #
