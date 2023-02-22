@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 14
+# Version date: 2023 February 20
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -349,22 +349,22 @@ framesize = [300,300]
 
 
 radio_tab = [
-    sg.Frame(f"Select main-hand.", [[sg.Column(start_main,size=framesize,scrollable=True)]],visible=True,key="radiobox_main"), # Main-hand weapon frame is visible by default
-    sg.Frame(f"Select off-hand.", [[sg.Column(start_sub,size=framesize,scrollable=True)]],visible=False,key="radiobox_sub"),
-    sg.Frame(f"Select ranged.", [[sg.Column(start_ranged,size=framesize,scrollable=True)]],visible=False,key="radiobox_ranged"),
-    sg.Frame(f"Select ammo.", [[sg.Column(start_ammo,size=framesize,scrollable=True)]],visible=False,key="radiobox_ammo"),
-    sg.Frame(f"Select head.", [[sg.Column(start_head,size=framesize,scrollable=True)]],visible=False,key="radiobox_head"),
-    sg.Frame(f"Select neck.", [[sg.Column(start_neck,size=framesize,scrollable=True)]],visible=False,key="radiobox_neck"),
-    sg.Frame(f"Select ear1.", [[sg.Column(start_ear1,size=framesize,scrollable=True)]],visible=False,key="radiobox_ear1"),
-    sg.Frame(f"Select ear2.", [[sg.Column(start_ear2,size=framesize,scrollable=True)]],visible=False,key="radiobox_ear2"),
-    sg.Frame(f"Select body.", [[sg.Column(start_body,size=framesize,scrollable=True)]],visible=False,key="radiobox_body"),
-    sg.Frame(f"Select hands.", [[sg.Column(start_hands,size=framesize,scrollable=True)]],visible=False,key="radiobox_hands"),
-    sg.Frame(f"Select ring1.", [[sg.Column(start_ring1,size=framesize,scrollable=True)]],visible=False,key="radiobox_ring1"),
-    sg.Frame(f"Select ring2.", [[sg.Column(start_ring2,size=framesize,scrollable=True)]],visible=False,key="radiobox_ring2"),
-    sg.Frame(f"Select back.", [[sg.Column(start_back,size=framesize,scrollable=True)]],visible=False,key="radiobox_back"),
-    sg.Frame(f"Select waist.", [[sg.Column(start_waist,size=framesize,scrollable=True)]],visible=False,key="radiobox_waist"),
-    sg.Frame(f"Select legs.", [[sg.Column(start_legs,size=framesize,scrollable=True)]],visible=False,key="radiobox_legs"),
-    sg.Frame(f"Select feet.", [[sg.Column(start_feet,size=framesize,scrollable=True)]],visible=False,key="radiobox_feet"),
+    sg.Frame(f"Select main-hand.", [[sg.Column(start_main,size=framesize,scrollable=True,key="radiobox_main_col")]],visible=True,key="radiobox_main"), # Main-hand weapon frame is visible by default
+    sg.Frame(f"Select off-hand.", [[sg.Column(start_sub,size=framesize,scrollable=True,key="radiobox_sub_col")]],visible=False,key="radiobox_sub"),
+    sg.Frame(f"Select ranged.", [[sg.Column(start_ranged,size=framesize,scrollable=True,key="radiobox_ranged_col")]],visible=False,key="radiobox_ranged"),
+    sg.Frame(f"Select ammo.", [[sg.Column(start_ammo,size=framesize,scrollable=True,key="radiobox_ammo_col")]],visible=False,key="radiobox_ammo"),
+    sg.Frame(f"Select head.", [[sg.Column(start_head,size=framesize,scrollable=True,key="radiobox_head_col")]],visible=False,key="radiobox_head"),
+    sg.Frame(f"Select neck.", [[sg.Column(start_neck,size=framesize,scrollable=True,key="radiobox_neck_col")]],visible=False,key="radiobox_neck"),
+    sg.Frame(f"Select ear1.", [[sg.Column(start_ear1,size=framesize,scrollable=True,key="radiobox_ear1_col")]],visible=False,key="radiobox_ear1"),
+    sg.Frame(f"Select ear2.", [[sg.Column(start_ear2,size=framesize,scrollable=True,key="radiobox_ear2_col")]],visible=False,key="radiobox_ear2"),
+    sg.Frame(f"Select body.", [[sg.Column(start_body,size=framesize,scrollable=True,key="radiobox_body_col")]],visible=False,key="radiobox_body"),
+    sg.Frame(f"Select hands.", [[sg.Column(start_hands,size=framesize,scrollable=True,key="radiobox_hands_col")]],visible=False,key="radiobox_hands"),
+    sg.Frame(f"Select ring1.", [[sg.Column(start_ring1,size=framesize,scrollable=True,key="radiobox_ring1_col")]],visible=False,key="radiobox_ring1"),
+    sg.Frame(f"Select ring2.", [[sg.Column(start_ring2,size=framesize,scrollable=True,key="radiobox_ring2_col")]],visible=False,key="radiobox_ring2"),
+    sg.Frame(f"Select back.", [[sg.Column(start_back,size=framesize,scrollable=True,key="radiobox_back_col")]],visible=False,key="radiobox_back"),
+    sg.Frame(f"Select waist.", [[sg.Column(start_waist,size=framesize,scrollable=True,key="radiobox_waist_col")]],visible=False,key="radiobox_waist"),
+    sg.Frame(f"Select legs.", [[sg.Column(start_legs,size=framesize,scrollable=True,key="radiobox_legs_col")]],visible=False,key="radiobox_legs"),
+    sg.Frame(f"Select feet.", [[sg.Column(start_feet,size=framesize,scrollable=True,key="radiobox_feet_col")]],visible=False,key="radiobox_feet"),
     ]
 
 
@@ -460,6 +460,6 @@ else: # Else, use a horizontal (wide) layout
             sg.Push(),
             sg.Column([
             [sg.Push(),sg.vtop(sg.Frame("Initial gearset",[[sg.Push(),sg.vcenter(sg.Column([[sg.Column(starting_set_tab)],[sg.Button("Quick-look WS",key="quicklook"),sg.Button("Quick-look Magic",key="quicklook magic", disabled=False)],
-            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=True),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
+            [sg.Push(),sg.Button("Quick-look TP",key="quicklook TP",disabled=False),sg.Button("Calculate Stats",key="get stats", disabled=False),sg.Push()],
             [sg.Text(f"{'Average =':>10s} ------ damage",key="quickaverage",font=font_choice)]])),sg.Push(),sg.Column([radio_tab])],],size=[800,350])),sg.Push()]])
             ]]
