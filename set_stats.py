@@ -116,7 +116,7 @@ class set_gear:
                      'Ninjutsu Skill':0, 'Dark Magic Skill':473+16, "Elemental Magic Skill":424+16, "Evasion Skill":393+16,
                      'Accuracy1':22, 'Accuracy2':22, 'Attack1':202, 'Attack2':202,
                      'Ranged Accuracy':22, 'Ranged Attack':202,
-                     'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Accuracy':30, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
@@ -140,7 +140,7 @@ class set_gear:
                      'Ninjutsu Skill':0, 'Dark Magic Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":393+16,
                      'Accuracy1':26, 'Accuracy2':26, 'Attack1':70+35, 'Attack2':70+35,
                      'Ranged Accuracy':26, 'Ranged Attack':70+35,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0+18, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
@@ -164,7 +164,7 @@ class set_gear:
                      'Ninjutsu Skill':0, "Elemental Magic Skill":0, "Evasion Skill":424+16,
                      'Accuracy1':36, 'Accuracy2':36, 'Attack1':70, 'Attack2':70,
                      'Ranged Accuracy':36, 'Ranged Attack':70,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0, 
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
@@ -258,7 +258,7 @@ class set_gear:
                      'Katana Skill':0+16, 'Dagger Skill':418+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':354+16, 'Throwing Skill':285+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':354+16,'Marksmanship Skill':0+16,
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":398+16, "Evasion Skill":354+16,
-                     'Accuracy1':32, 'Accuracy2':32, 'Attack1':0, 'Attack2':0,
+                     'Accuracy1':70+32, 'Accuracy2':70+32, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':22, 'Ranged Attack':0,
                      'Magic Accuracy':90+15+25, 'Magic Attack':48+28, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0+7, "Magic Burst Accuracy":0,
@@ -308,7 +308,7 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":354+16,
                      'Accuracy1':26, 'Accuracy2':26, 'Attack1':26, 'Attack2':26,
                      'Ranged Accuracy':46, 'Ranged Attack':26,
-                     'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
+                     'Magic Accuracy':26, 'Magic Attack':10, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0, # Quick Draw is "Magic Damage" for quick draw. "Quick Draw II" is the percent boost (empy feet here, but death penalty is treated separately)
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":20,
@@ -332,7 +332,7 @@ class set_gear:
                      'Ninjutsu Skill':0+16, "Elemental Magic Skill":0+16, "Evasion Skill":354+16,
                      'Accuracy1':16, 'Accuracy2':16, 'Attack1':0, 'Attack2':0,
                      'Ranged Accuracy':16, 'Ranged Attack':26,
-                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0, 
+                     'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0,'Magic Burst Damage Trait':0,"Magic Burst Accuracy":0,
                      "Quick Draw":40,"Quick Draw II":0,
                      'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
@@ -397,7 +397,7 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":42,"Magic Def":0,"Subtle Blow":35,"Subtle Blow II":0,
                      }
-        elif mainjob == "BLU":  # Master Level 20 Blue Mage stats # TODO: add traits
+        elif mainjob == "BLU":  # Master Level 20 Blue Mage stats. Traits are added later to make it easier to adjust them with a drop-down menu based on spells used.
             self.playerstats = {'STR':107, 'DEX':107, 'VIT':107, 'AGI':107, 'INT':107, 'MND':107, 'CHR':107,
                      'Katana Skill':0+16, 'Dagger Skill':0+16, 'Sword Skill':444+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':0+16,
                      'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':0+16,'Scythe Skill':0+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':0+16,'Marksmanship Skill':0+16,
@@ -614,16 +614,37 @@ class set_gear:
                 fencer_bonuses = {"WAR":5, "BST":3, "BRD":2}
                 self.playerstats["Fencer"] += fencer_bonuses[mainjob]
 
+
+        # Add specific Blue Magic bonuses now. Assuming the "Zahak Reborn" spellset from the ffxiah guide: https://www.ffxiah.com/forum/topic/30626/the-beast-within-a-guide-to-blue-mage/
+        if mainjob == "BLU":
+            self.playerstats["Accuracy1"] += 48
+            self.playerstats["Accuracy2"] += 48
+            self.playerstats["Ranged Accuracy"] += 48
+            self.playerstats["Magic Accuracy"] += 36
+            self.playerstats["Store TP"] += 30
+            self.playerstats["Dual Wield"] += 25
+            self.playerstats["TA"] += 5
+            self.playerstats["Crit Damage"] += 11
+            self.playerstats["Skillchain Bonus"] += 16
+            self.playerstats["STR"] += 5+4+3+2-3
+            self.playerstats["DEX"] += 8+6+2+4+4+1+8+4
+            self.playerstats["VIT"] += 4+7+4
+            self.playerstats["AGI"] += 5+2+1
+            self.playerstats["MND"] += 4+2
+            self.playerstats["INT"] += 4-1
+            self.playerstats["CHR"] += 1+5-2
+
+
         if mainjob == "SAM": # Add Hasso stats
             if self.gear['main'].get('Skill Type', 'None') in two_handed:
                 self.playerstats["STR"] += 14
                 self.playerstats["STR"] += 20 # Job point category while using Hasso
-                self.playerstats['JA Haste'] += 10 
+                self.playerstats['JA Haste'] += 10
                 self.playerstats['Accuracy1'] += 10
                 self.playerstats['Accuracy2'] += 10
 
         if mainjob == "DRK": # Check for Last Resort
-            if self.gear['main'].get('Skill Type', 'None') in two_handed:            
+            if self.gear['main'].get('Skill Type', 'None') in two_handed:
                 if job_abilities.get("Last Resort",False):
                     self.playerstats["Attack1"] += 40
                     self.playerstats["Attack2"] += 40
@@ -645,7 +666,7 @@ class set_gear:
             self.playerstats["Attack1"] += 100*impetus_potency*impetus # Add 90% of the impetus here. # TODO: Find a better place for it.
             self.playerstats["Attack2"] += 100*impetus_potency*impetus
             self.playerstats["Crit Rate"] += 50*impetus_potency*impetus # 90% impetus potency = +45% crit rate and +90 attack.
-            self.playerstats["Crit Damage"] += 50*impetus_potency*impetus*("Bhikku Cyclas" in gear["body"]["Name"]) # Impetus on and "Bhikku Cyclas" equipped is an extra 50% crit damage. 
+            self.playerstats["Crit Damage"] += 50*impetus_potency*impetus*("Bhikku Cyclas" in gear["body"]["Name"]) # Impetus on and "Bhikku Cyclas" equipped is an extra 50% crit damage.
             if self.gear["main"]["Skill Type"] != "Hand-to-Hand": # Kick attacks only proc if using a h2h weapon
                 self.playerstats["Kick Attacks"] = 0
 
@@ -662,7 +683,7 @@ class set_gear:
                 self.playerstats["Accuracy2"] += 40
                 self.playerstats["Ranged Accuracy"] += 40
                 self.playerstats["Weaponskill Damage"] += 20 # from job point categories
-                building_flourish = 0.25 
+                building_flourish = 0.25
 
         # Special stats for main jobs are finished now.
 
@@ -760,7 +781,7 @@ class set_gear:
         elif subjob == "SAM":
             if self.gear['main'].get('Skill Type', 'None') in two_handed:
                 self.playerstats["STR"] += 7
-                self.playerstats['JA Haste'] += 10 
+                self.playerstats['JA Haste'] += 10
                 self.playerstats['Accuracy1'] += 10
                 self.playerstats['Accuracy2'] += 10
             self.playerstats["STR"] += 12
@@ -918,7 +939,7 @@ class set_gear:
 
         fencer1_jobs = ["WAR"] # +1 Fencer
         if subjob in fencer1_jobs and self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed and mainjob not in fencer1_jobs: # Fencer trait (+1)
-            self.playerstats["Fencer"] += 1 # Fencer I from subjob WAR. 
+            self.playerstats["Fencer"] += 1 # Fencer I from subjob WAR.
                                             # Fencer from gear is applied after we've updated playerstats with gear stats.
                                             # We'll apply the Fencer bonus stats after we've added up all Fencer+ from gear and traits.
 
@@ -1018,7 +1039,7 @@ class set_gear:
             if gear["ring1"]['Name'] == "Mummu Ring" or gear["ring2"]['Name'] == "Mummu Ring":
                 if "mummu" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
                     mummu_count += 1
-                    
+
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
         self.set_bonuses['DEX'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
@@ -1110,7 +1131,7 @@ class set_gear:
             if evasion_skill >= 300:
                 evasion = 300 + 0.8*(evasion_skill - 300)
             else:
-                evasion = evasion_skill 
+                evasion = evasion_skill
 
             return(evasion)
 
@@ -1160,7 +1181,7 @@ class set_gear:
         sub_weapon_skill_type = self.gear['sub'].get('Skill Type','None')  + ' Skill' if dual_wield else False
         ranged_weapon_skill_type = self.gear['ranged'].get('Skill Type','None')  + ' Skill' # TODO: this is already defined as rng_wpn_skill
         ammo_weapon_skill_type = self.gear['ammo'].get('Skill Type','None') + ' Skill'
-    
+
         # Increase player Attack and Ranged Attack based on gear and base character stats.
         # Main hand =  Attack1 = 8+GearSkill+STR+Attack+MainWeaponSkill
         # Sub hand = Attack2 = 8+GearSkill+0.5*STR+Attack+SubWeaponSkill
@@ -1307,8 +1328,8 @@ class set_gear:
             self.playerstats['Store TP'] += buffs['food'].get('Store TP',0)
 
         if gear["ranged"].get("Skill Type","None") not in ["Marksmanship","Archery"] and gear["ammo"].get("Skill Type","None") != "Throwing":
-            self.playerstats["Ranged Attack"] = 0   
-            self.playerstats["Ranged Accuracy"] = 0 
+            self.playerstats["Ranged Attack"] = 0
+            self.playerstats["Ranged Accuracy"] = 0
 
         # Adjust main/sub/ammo weapon delays and damage
         self.playerstats['Delay1'] += self.gear['main']['Delay']
