@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 February 16)",layout,size=(700,930) if h>930 else (700+600,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 February 22)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -467,6 +467,7 @@ while True:
         # The user selected a new main job.
         # Gear lists and job abilities need to be updated when the main job changes.
         if event == "mainjob":
+
             main_job = values["mainjob"]
             sub_job = values["subjob"]
 
@@ -482,6 +483,7 @@ while True:
 
             # Update the radio and checkbox buttons to only show items that the main job can use.
             for slot in gear_dict:
+
                 # First loop once to hide everything.
                 for equipment in gear_dict[slot]:
                     if main_job.lower() not in equipment["Jobs"]:
@@ -546,6 +548,15 @@ while True:
                 window["select spell"].update(disabled=True)
                 window["select spell"].update(values=[])
 
+            # Update the gear lists so that scroll bar doesn't get stuck without showing everything
+            # https://stackoverflow.com/questions/75383587/how-to-manage-scrollbar-with-not-visible-items-in-pysimplegui
+            window.refresh()
+            for slot in gear_dict:
+                window[f"{slot} display col"].contents_changed()
+                window[f"radiobox_{slot}_col"].contents_changed()
+
+
+
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -559,7 +570,7 @@ while True:
             item_name = all_names_map[item]
             window[f"showradio {slot}"].update(image_data=item2image(item_name))
             # window[f"showradio {slot}"].set_tooltip(item)
-            
+
             item_dictionary = name2dictionary(item, all_gear)
 
             # Update the tooltip to show the gear's stats when changing gear with the radio buttons.
@@ -1145,12 +1156,12 @@ while True:
                 marts = int(gearset.playerstats['Martial Arts']) if gearset.gear["main"]["Skill Type"] == "Hand-to-Hand" else 0
                 window["marts stat"].update(f"{'Martial Arts:':<16s} {marts:>4d}")
 
-                gear_haste = int(gearset.playerstats['Gear Haste'])
-                window["gear haste stat"].update(f"{'Gear Haste:':<16s} {gear_haste:>4d}")
-                magic_haste = gearset.playerstats['Magic Haste']*100
+                gear_haste = gearset.playerstats['Gear Haste']/102.4*100
+                window["gear haste stat"].update(f"{'Gear Haste:':<15s} {gear_haste:>5.1f}")
+                magic_haste = gearset.playerstats['Magic Haste']*100 # Magic Haste is already using base-1024
                 window["magic haste stat"].update(f"{'Magic Haste:':<15s} {magic_haste:>5.1f}")
-                ja_haste = int(gearset.playerstats['JA Haste'])
-                window["ja haste stat"].update(f"{'JA Haste:':<16s} {ja_haste:>4d}")
+                ja_haste = gearset.playerstats['JA Haste']/102.4*100
+                window["ja haste stat"].update(f"{'JA Haste:':<15s} {ja_haste:>5.1f}")
 
                 two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
                 one_handed = ["Axe", "Club", "Dagger", "Sword", "Katana","Hand-to-Hand"]
@@ -1179,7 +1190,7 @@ while True:
                 rdelay = 0.2*delay if rdelay < 0.2*delay else rdelay # -80% delay cap, including Dual Wield, Martial Arts, and Haste
 
                 delay_reduction = 1 - rdelay/delay # Should be between 0 and 0.8
-                
+
                 window["delay reduction stat"].update(f"{'Delay Reduction:':<16s} {(delay_reduction)*100:>4.1f}")
 
                 daken = int(gearset.playerstats["Daken"]) if main_job=="NIN" and gearset.gear["ammo"].get("Skill Type","None") == "Throwing" else 0
