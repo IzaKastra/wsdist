@@ -967,10 +967,12 @@ while True:
                 quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
                 if spell == "Ranged Attack":
                     priority = values["tp priority"]
-                    if priority=="Damage":
+                    if priority=="Damage > TP":
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
-                    else:
+                    elif priority=="TP > Damage":
                         window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
+                    else:
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} damage\n{'=':>10s} {tp:6.1f} TP / round")
                 else:
                     window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 

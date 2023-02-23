@@ -330,10 +330,14 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                 phys *= (1+2*0.13)
 
             priority = job_abilities["metric"] # not a job ability, but this is an easy way to smuggle a variable from the GUI into this part of the main code
-            if priority=="Damage":
+            if priority=="Damage > TP":
                 metric = phys*phys*tp/1e6
-            else:
+            elif priority=="TP > Damage":
                 metric = phys*tp*tp/1e4
+            elif priority=="TP only":
+                metric = tp
+            elif priority=="Damage only":
+                metric = phys
 
             return(metric,tp)
 
