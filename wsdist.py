@@ -170,7 +170,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     ws_trait = gearset.playerstats.get("Weaponskill Trait",0)/100 # Only DRG traits go here. DRG main job also gets wyvern bonus 10% here.
 
     rng_crit_dmg = gearset.playerstats['Ranged Crit Damage']/100
-    crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100*phys_rng_ws*0
+    crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100*phys_rng_ws*0 # Dead Aim does not affect WSs
     crit_rate = 0 # WSs can't crit unless they explicitly say they can (Blade: Hi, Evisceration, CDC, etc). Crit rate is read in properly only for those weapon skills (see below) and the special case with Shining One
 
     true_shot = gearset.playerstats['True Shot']/100 * true_shot_toggle # 0 if False
@@ -280,7 +280,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             crit_dagi = ((player_agi - enemy_agi)/10)/100 if (player_agi > enemy_agi) else 0
 
             crit_rate = gearset.playerstats['Crit Rate']/100 + crit_dagi # Ranged attacks gain crit rate from AGI, not DEX
-            crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100 # Crit damage plus Dead Aim bonuses
+            crit_dmg = gearset.playerstats['Crit Damage']/100 + gearset.playerstats["Ranged Crit Damage"]/100 # "Crit damage" plus "Dead Aim trait" bonuses
 
             phys = 0 # Total physical damage dealt
             tp = 0  # Average TP return from a single /ra
@@ -534,11 +534,17 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
         dps = phys / tpa # damage / time_per_action. Not useful until I add "DA dmg" "TA dmg" etc
 
-        priority = job_abilities["metric"]
-        if priority=="Damage" and False:
-            metric = 1/dps
-        else:
-            metric = time_to_ws
+        priority = job_abilities["metric"] # not a job ability, but this is an easy way to smuggle a variable from the GUI into this part of the main code
+        if priority=="Damage > TP":
+            metric = phys*phys*tp/1e6
+        elif priority=="TP > Damage":
+            metric = phys*tp*tp/1e4
+        elif priority=="TP only":
+            metric = tp
+        elif priority=="Damage only":
+            metric = phys
+
+        metric = time_to_ws
 
         # import sys; sys.exit()
         return(metric, tp) # Return time (seconds) per WS and total TP per average attack round.
@@ -780,7 +786,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                     damage += physical_damage
 
         else:
-            hitrate_ranged = get_hitrate(player_rangedaccuracy, ws_acc, enemy_eva, "ranged", n==0, rng_type_skill)
+            hitrate_ranged = get_hitrate(player_rangedaccuracy + 100*hover_shot, ws_acc, enemy_eva, "ranged", n==0, rng_type_skill)
 
             if np.random.uniform() < hitrate_ranged:
                 if n == 0:
@@ -790,7 +796,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
                 pdif_rng, crit = get_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate) # Calculate the PDIF for this shot of the ranged weapon. Return whether or not that hit was a crit.
                 physical_damage = get_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, pdif_rng, ftp, crit, crit_dmg, wsd*(n==0), ws_bonus, ws_trait, n) # Calculate the physical damage dealt by a single hit. The first hit gets WSD.
-                damage += physical_damage*(1+true_shot)
+                damage += physical_damage*(1+true_shot)*(1+hover_shot)
 
 
             # This is the last line of the natural main/sub-hit for-loop. We'll check our two multi-attack procs next. We skip those for ranged weaponskills.
@@ -1397,7 +1403,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                         # Test the set and return its damage as a single number
                                         time_to_ws, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
                                         # print(b["Name2"], b2["Name2"], time_to_ws)
-
+                                        time_to_ws = time_to_ws**-1
                                         tcount += 1
                                         # if slot1==slot2:
                                         #     print(slot1, swap_item1,damatime_to_wsge)
