@@ -1403,7 +1403,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                         # Test the set and return its damage as a single number
                                         time_to_ws, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
                                         # print(b["Name2"], b2["Name2"], time_to_ws)
-                                        time_to_ws = time_to_ws**-1
+                                        # time_to_ws = time_to_ws**-1
                                         tcount += 1
                                         # if slot1==slot2:
                                         #     print(slot1, swap_item1,damatime_to_wsge)
