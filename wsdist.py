@@ -1512,8 +1512,9 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         pdt_old = pdt
         mdt_old = mdt
 
-        pdt_thresh_temp = pdt - 1
-        mdt_thresh_temp = mdt - 1
+        pdt_thresh_temp = pdt - 1 if pdt-1 > -50 else -50
+        mdt_thresh_temp = mdt - 1 if mdt-1 > -50 else -50
+        
         print(f"Current best set: PDT:{pdt},  MDT:{mdt}")
         # print(f"Setting new targets: PDT:{mdt_thresh_temp},  MDT:{mdt_thresh_temp}\n")
 
