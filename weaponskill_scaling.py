@@ -27,6 +27,10 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
     player_rangedattack = gearset.playerstats["Ranged Attack"]
     crit_rate = 0 # Start from zero crit rate. We add crit rate if the weapon skill is a crit weapon skill and if Shining One is equipped.
 
+
+    if gearset.gear["main"]["Skill Type"]=="Hand-to-Hand":
+        player_attack2 = player_attack1
+
     main_wpn_name = equipment["main"]["Name2"]
     phys_rng_ws = ws_name in ["Flaming Arrow", "Namas Arrow", "Apex Arrow", "Refulgent Arrow","Empyreal Arrow", "Sidewinder", "Piercing Arrow", "Jishnu's Radiance", "Blast Arrow", "Hot Shot", "Coronach","Last Stand","Detonator", "Blast Shot", "Slug Shot", "Split Shot", ] # Used to ensure Shining One does not let Ranged Weapon skills crit
 
@@ -1234,7 +1238,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ws_atk_bonus = 0.5
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
-        player_attack2 = special_set.playerstats["Attack2"]
+        player_attack2 = player_attack1 # For H2H just set main=sub.
     elif ws_name == "Dragon Kick":
         # This is a kick weaponskill that may benefit from Footwork. We re-calculate player attack if footwork is up to deal with Empy+3 feet: Footwork+16%
         base_ftp = [1.7, 3.0, 5.0]
@@ -1244,7 +1248,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits    = 2-1
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
-        player_attack2 = special_set.playerstats["Attack2"]
+        player_attack2 = player_attack1 # For H2H just set main=sub.
     elif ws_name == "Asuran Fists":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -1261,7 +1265,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         nhits    = 3-1
         special_set = set_gear(buffs, equipment, main_job, sub_job, (0.16+100/1024)*kick_ws_footwork, job_abilities=job_abilities) # 100/1024 base footwork bonus plus 16% from empy+3 feet
         player_attack1 = special_set.playerstats["Attack1"]
-        player_attack2 = special_set.playerstats["Attack2"]
+        player_attack2 = player_attack1 # For H2H just set main=sub.
     elif ws_name == "Shijin Spiral":
         acc_boost = [0, 20, 40] # Made these numbers up since it isnt known. Copied Blade: Ku, which i also made up
         acc_bonus = np.interp(tp, base_tp, acc_boost)
@@ -1272,7 +1276,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ws_atk_bonus = 0.05
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
-        player_attack2 = special_set.playerstats["Attack2"]
+        player_attack2 = player_attack1 # For H2H just set main=sub.
     elif ws_name == "Final Heaven":
         ftp  = 3.0
         ftp_rep = False
@@ -1303,7 +1307,7 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ws_atk_bonus = 1.0
         special_set = set_gear(buffs, equipment, main_job, sub_job, ws_atk_bonus, job_abilities=job_abilities)
         player_attack1 = special_set.playerstats["Attack1"]
-        player_attack2 = special_set.playerstats["Attack2"]
+        player_attack2 = player_attack1 # For H2H just set main=sub.
     elif ws_name == "Stringing Pummel":
         crit_ws = True
         crit_rate += gearset.playerstats["Crit Rate"]/100 
