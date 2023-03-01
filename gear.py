@@ -299,7 +299,7 @@ Floestone = {"Name":"Floestone","Type":"Equipment","STR":3,"INT":5,"Attack":10,"
 Hasty_Pinion = {"Name":"Hasty Pinion +1","Type":"Equipment","Attack":10,"Accuracy":10,"Gear Haste":2,"Store TP":-3,"Jobs":all_jobs}
 Sroda_Tathlum = {"Name":"Sroda Tathlum","Type":"Equipment","Magic Accuracy":-10,"Magic Crit Rate II":10,"Jobs":["blm","rdm","sch","geo"]}
 Neo_Animator = {"Name":"Neo Animator","Type":"Equipment","Weaponskill Damage":5,"Accuracy":10,"Jobs":["pup"]}
-Charis_Feather = {"Name":"Charis Feather","DEX":5,"Crit Damage":5,"Jobs":["dnc"]}
+Charis_Feather = {"Name":"Charis Feather","DEX":5,"Crit Damage":5,"Type":"Equipment","Jobs":["dnc"]}
 
 Living_Bullet = {"Name":"Living Bullet", "Type":"Bullet", "DMG":245,"Delay":240,"Magic Accuracy":25,"Magic Attack":35,"Jobs":["cor"]}
 Test_Bullet = {"Name":"Bullet","Name2":"Test Bullet", "Type":"Bullet", "DMG":999,"Delay":999,"DEX":150,"STR":150,"Attack":150,"Ranged Attack":150,"Jobs":all_jobs}
