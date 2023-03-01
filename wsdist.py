@@ -91,15 +91,24 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
 
     if gearset.gear["main"]["Skill Type"] != "Hand-to-Hand":
+        h2h = False
+
         main_dmg = gearset.playerstats['DMG1']
+        sub_dmg  = gearset.playerstats['DMG2']
         delay1 = gearset.playerstats['Delay1'] # Main-hand delay.
+
 
         marts = 0
         kick_dmg = 0
     else:
+        h2h = True # Using a h2h weapon
+
         base_dmg = 3 + int((gearset.playerstats["Hand-to-Hand Skill"]+gearset.gear["main"]["Hand-to-Hand Skill"])*0.11) # Base damage for no H2H with no weapon equipped.
         main_dmg = base_dmg + gearset.playerstats['DMG1'] # Add the "+damage" from H2H weapons
+        sub_dmg  = main_dmg
         kick_dmg = base_dmg + gearset.playerstats["Kick Attacks Attack"]
+
+        sub_type_skill = main_type_skill
 
         dual_wield = True # Treat H2H WSs as dual-wielding such that the off-hand hit (which is identical to the main-hand hit) gains full TP and can MA.
                           # The weaponskill_scaling.py code already subtracts one hit from each WS to account for this extra DW hit.
@@ -110,12 +119,12 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                                                                               # and this official post saying kick attacks use weapon damage with footwork: https://forum.square-enix.com/ffxi/threads/52969-August.-3-2017-%28JST%29-Version-Update
             if kick_ws_footwork and not check_tp_set:
                 main_dmg = kick_dmg
+                sub_dmg = kick_dmg
 
         base_delay = 480
         marts = gearset.playerstats["Martial Arts"]
         delay1 = (base_delay + gearset.playerstats['Delay1']) # We include Martial Arts later.
 
-    sub_dmg  = gearset.playerstats['DMG2']
     rng_dmg  = gearset.playerstats.get('Ranged DMG',0)
     rng_delay  = gearset.playerstats.get('Ranged Delay',0)
     ammo_dmg = gearset.playerstats.get("Ammo DMG",0)
@@ -141,6 +150,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     player_accuracy1 = gearset.playerstats['Accuracy1']
     player_accuracy2 = gearset.playerstats['Accuracy2'] if dual_wield else 0
     player_rangedaccuracy = gearset.playerstats['Ranged Accuracy']
+
+    if h2h:
+        player_accuracy2 = player_accuracy1
+        player_attack2 = player_attack1 # Technically off-hand attacks get half of your STR value, so these will not match TODO
+
 
     delay2 = gearset.playerstats['Delay2'] if (dual_wield and gearset.gear["main"]["Skill Type"]!="Hand-to-Hand") else delay1 # Off-hand delay if dual wielding
     dw = gearset.playerstats['Dual Wield']/100 if (dual_wield and gearset.gear["main"]["Skill Type"]!="Hand-to-Hand") else 0.
@@ -431,7 +445,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
     # fSTR calculation for main-hand and off-hand
     fstr_main = get_fstr(main_dmg, player_str, enemy_vit)
-    fstr_sub  = get_fstr(sub_dmg, player_str, enemy_vit)
+    fstr_sub  = get_fstr(sub_dmg, player_str, enemy_vit) if not h2h else fstr_main 
     fstr_kick = get_fstr(kick_dmg, player_str, enemy_vit)
     fstr_rng = get_fstr2(rng_dmg, player_str, enemy_vit)
 
@@ -575,6 +589,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     crit_rate += 0.2*blood_rage if crit_rate > 0 else 0 # Add 20% crit rate if blood rage is enabled
     crit_rate = 1.0 if mighty_strikes else crit_rate # Set crit rate to 100% if mighty strikes is enabled.
 
+    if h2h:
+        player_accuracy2 = player_accuracy1
+        player_attack2 = player_attack1
+
     player_accuracy1 += acc_bonus
     player_accuracy2 += acc_bonus
     player_rangedaccuracy += acc_bonus
@@ -677,6 +695,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             offhand_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
             offhand_damage = get_avg_phys_damage(sub_dmg, fstr_sub, wsc, offhand_pdif, ftp2, crit_rate, crit_dmg, 0, ws_bonus, ws_trait)
             phys += offhand_damage*sub_hits
+            # print("------------------------------------------------------")
+            # print("first_main_hit: ",player_attack1, main_type_skill, first_main_hit_pdif, first_main_hit_damage,main_hits,hitrate11,hitrate12)
+            # print("mainhand: ",player_attack1, main_type_skill, main_hit_pdif, main_hit_damage,main_hits,hitrate11,hitrate12)
+            # print("offhand: ",player_attack2, sub_type_skill, offhand_pdif, offhand_damage,sub_hits,hitrate21,hitrate22)
+
 
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy + 100*hover_shot, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
