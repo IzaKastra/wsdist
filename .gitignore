@@ -8,3 +8,4 @@ build/gui_wsdist/base_library.zip
 *.txt
 *.html
 *.png
+*.spec
