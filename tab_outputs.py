@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 14
+# Version date: 2023 March 02
 #
 # This file contains a the GUI tab "Outputs".
 # This will be renamed later to "WS Outputs" when I add TP sets and nuking.
@@ -87,7 +87,9 @@ other = sg.vtop(sg.Frame("Other",[
 ws_tab = [
           [sg.Text("Number of simulated weapon skills:",font=font_choice),sg.Input("2000",key="n_sims",size=(10,1),tooltip="Number of weapon skill simulations used for the final plot\nAND for calculating damage statistics (min/median/mean/max).\nValues less than 10 are converted to 10.",font=font_choice)],
           [sg.Checkbox("Show final simulated damage distribution plot?",font=font_choice,size=(50,1),key="show final plot",enable_events=False,default=False,tooltip="Uses matplotlib.pyplot to show a final damage distribution.\nMagic simulations will never show plots.")],[sg.Checkbox("Find the best set?",font=font_choice,size=(50,1),key="find set",enable_events=False,default=True,tooltip="Enabled: Check every combination of selected gear (2 at a time) to find the best set automatically.\nDisabled: Calculate damage statistics and plot the initial set from the inputs tab without modifications.")],
-          [sg.Text(f"{'DT requirement:':<16s}",font=font_choice,size=(16,1)),sg.Input("0",key="dt_req",size=(5,1),tooltip="DT requirement for gearset.\nFinding sets with DT requirements is slow.",font=font_choice)],
+          [sg.Checkbox(f"{'Print equipment with similar results?':<38s}",font=font_choice,size=(38,1),key="print swaps",enable_events=False,default=False,tooltip="Prints a list of reasonable gear swaps for each slot that are marginally worse than what the code finds as best.\nThis runs after the best set has been found, so you must first find the best set to use this."),sg.Input("1.0",key="swap percent",size=(5,1),tooltip="Percent difference for printing similar equipment\nI recommend no higher than 2%.",font=font_choice)],
+          [sg.Text(f"{'PDT requirement:':<16s}",font=font_choice,size=(16,1)),sg.Input("0",key="pdt_req",size=(5,1),tooltip="PDT requirement for gearset.\nFinding sets with DT requirements is slow.",font=font_choice)],
+          [sg.Text(f"{'MDT requirement:':<16s}",font=font_choice,size=(16,1)),sg.Input("0",key="mdt_req",size=(5,1),tooltip="MDT requirement for gearset.\nFinding sets with DT requirements is slow.",font=font_choice)],
           [sg.Text(f"{'Ranged TP priority:':<16s}",font=font_choice,size=(19,1)),sg.Combo(values=["Damage > TP","TP > Damage", "TP only", "Damage only"], default_value="TP only", readonly=True, key="tp priority",size=(11,1),font=font_choice,tooltip="Damage: Maximizes (damage^2)*(tp_return)\nTP Return: Maximizes (damage)*(tp_return^2)",disabled=False,enable_events=False)],
           [sg.Button("Run WS",size=(5,2),tooltip="Run weapon skill damage simulator."),sg.Button("Run Magic",size=(5,2),tooltip="Run magic damage simulator.\nRanged attacks are included here."),sg.Button("Run TP",size=(5,2),tooltip="Run the TP set finder."),sg.Button("Copy best set",size=(6,2),pad=(15,0),key="copy best set",disabled=True,tooltip="Copies best set to the initial set in the inputs tab for quick look.\nUseful for making minor changes to the best set for comparisons.")],
           [base_stats,physical,magical],[tp,other,skills]
