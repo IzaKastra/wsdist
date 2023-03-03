@@ -674,8 +674,8 @@ while True:
 
 
             conditions = {
-                         "PDT":int(values["dt_req"]),
-                         "MDT":int(values["dt_req"]),
+                         "PDT":int(values["pdt_req"]),
+                         "MDT":int(values["mdt_req"]),
                         #  "Subtle Blow":int(values["sb_req"]) if int(values["sb_req"]) < 50 else 50,
                         #  "Subtle Blow II":int(values["sb2_req"]) if int(values["sb2_req"]) < 50 else 50,
                         #  "Magic Evasion":int(values["meva_req"]),
@@ -904,6 +904,8 @@ while True:
             hovershot_toggle = values["hovershot toggle"]
             doubleshot_toggle = values["doubleshot toggle"]
             tripleshot_toggle = values["tripleshot toggle"]
+            print_swaps = values["print swaps"]
+            swap_percent = values["swap percent"]
 
             # Define a dictionary so we can just pass this one thing in instead of passing 10 things to the WS function later
             job_abilities = {"Ebullience":ebullience,
@@ -1004,7 +1006,7 @@ while True:
                                 starting_gearset2[slot] = Empty
 
                 show_final_plot = values["show final plot"] # TODO: Show final plot = false for magical WSs too
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, False) # Last False for check_tp_set
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, swap_percent, burst, print_swaps, False) # Last False for check_tp_set
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -1035,7 +1037,7 @@ while True:
                                 starting_gearset2[slot] = Empty
 
                 show_final_plot = False # TODO: Show final plot = false for magical WSs too
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, burst, True)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, False, spell, job_abilities, conditions, swap_percent, burst, print_swaps, True)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------
@@ -1067,7 +1069,7 @@ while True:
 
 
                 show_final_plot = False
-                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, True, spell, job_abilities, conditions, burst, False)
+                best_set = run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, starting_tp, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset2, show_final_plot, True, spell, job_abilities, conditions, swap_percent, burst, print_swaps, False)
                 window["copy best set"].update(disabled=False)
 
             # --------------------------------------------------------------------------------------------

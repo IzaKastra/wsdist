@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 16
+# Version date: 2023 March 02
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -1020,7 +1020,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
 
 
 
-def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, conditions, burst=False, check_tp_set=False):
+def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_simulations, check_gear, check_slots, buffs, enemy, starting_gearset, show_final_plot, nuke, spell, job_abilities, conditions, swap_percent, burst=False, print_swaps=False, check_tp_set=False):
 
     # We use this ws_dict to ensure that the main-hand weapon matches the WS being used.
     ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu","Blade: Jin","Blade: Teki", "Blade: To"],
@@ -1102,12 +1102,17 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         damage_list = np.ones(n_iter) # Nothing to do with plotting. This is for checking how the damage changed between consecutive iterations.
         time_list = np.ones(n_iter) # Nothing to do with plotting. This is for checking how the time to WS changed between consecutive iterations.
 
+        swaps = {"ammo":[],"head":[],"neck":[],"ear1":[],"ear2":[],"body":[],"hands":[],"ring1":[],"ring2":[],"waist":[],"legs":[],"feet":[]}
 
         for z in range(n_iter):
 
+            # Clear the potential swaps for each iteration, so the final iteration can print a clean list.
             if converge_count >= nconverge: # Check if converged
                 print(f"No significant change after {converge_count} consecutive iterations - exiting.")
                 break
+            else:
+                swaps = {"ammo":[],"head":[],"neck":[],"ear1":[],"ear2":[],"body":[],"hands":[],"ring1":[],"ring2":[],"waist":[],"legs":[],"feet":[]}
+
 
             # Start testing stuff
             print(f"Current iteration: {z+1}")
@@ -1420,6 +1425,11 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                             Best_Gearset[slot2] = b2  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
                                             Best_Gearset[slot3] = b3  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
 
+
+                                        if (best_damage%damage / best_damage) < (float(swap_percent)/100) and slot1==slot2 and slot2==slot3 and slot1 not in ["main","sub","ranged","back"] and swap_item1 != equipped_item1:
+                                            # If the currently swapped item is within 1% of the best item, then add it to the swaps list.
+                                            swaps[slot1].append([new_set[slot1]["Name2"],damage])
+
                                         damage_list[z] = best_damage  # Update the damage_list[] array to contain the best damage obtained from this iteration.
                                                                     # This has nothing to do with plotting right now. Only used to compare damage from consecutive iterations.
                                     else:
@@ -1534,7 +1544,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
     if not nuke and not check_tp_set: # Don't run damage distributions for nukes or TP sets.
         test_set(main_job, sub_job, ws_name, enemy, buffs, Best_Gearset, best_set, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, True, check_tp_set)
     elif check_tp_set:
-        print(f"\nBest TP set to reach {tp1} TP with the provided buffs:\n")
+        print(f"\nBest TP set to reach {tp1} TP with the provided buffs (nsim={n_simulations}):\n")
         for k in Best_Gearset:
             print(f"{k:>10s}  {Best_Gearset[k]['Name2']:<50s}")
     elif nuke:
@@ -1542,6 +1552,13 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         for k in Best_Gearset:
             print(f"{k:>10s}  {Best_Gearset[k]['Name2']:<50s}")
 
+    # Print the recommended swaps for WS, magic, and ranged checks; not TP checks.
+    if not check_tp_set and print_swaps:
+        print(f"\nList of potential swaps within {swap_percent}% of the best set ({best_damage} damage):")
+        for slot in swaps:
+            for swap in swaps[slot]:
+                line = f"{slot:<6s} {swap[0]:<50s} {swap[1]:<6d} {best_damage%swap[1]/best_damage*100:>5.1f}%"
+                print(line)
 
 
     return(Best_Gearset)
@@ -1608,9 +1625,10 @@ if __name__ == "__main__":
                         "Mighty Strikes":False}
 
     conditions = {"PDT":-30,"MDT":-30}
-
+    print_swaps = False
+    swap_percent = 1.0
     if False:
         import cProfile
-        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst,)",sort="cumtime")
+        cProfile.run("run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, swap_percent, burst, print_swaps)",sort="cumtime")
     else:
-        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, burst)
+        run_weaponskill(main_job, sub_job, ws_name, min_tp, max_tp, tp0, n_iter, n_sims, check_gear, check_slots, buffs, enemy, starting_gearset1, show_final_plot, nuke, spell, job_abilities, conditions, swap_percent, burst, print_swaps)
