@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 02
+# Version date: 2023 March 03
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -768,7 +768,7 @@ Moonlight_Ring2 = {"Name":"Moonlight Ring","Name2":"Moonlight Ring B","Accuracy"
 rings = [Beithir_Ring0,Moonlight_Ring1,Moonlight_Ring2,Chirich_Ring2,Gelatinous_Ring,Defending_Ring,Karieyh_Ring,Garuda_Ring1,Titan_Ring1,Carbuncle_Ring1,Ifrit_Ring1,Fenrir_Ring1,Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring30,Beithir_Ring25,Beithir_Ring20,Beithir_Ring15,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
 rings2 = [Beithir_Ring0,Moonlight_Ring1,Moonlight_Ring2,Chirich_Ring2,Gelatinous_Ring,Defending_Ring,Karieyh_Ring,Garuda_Ring1,Titan_Ring1,Carbuncle_Ring1,Ifrit_Ring1,Fenrir_Ring1,Cacoethic_Ring,Ramuh_Ring1,Ayanmo_Ring,Apate_Ring,Archon_Ring,Begrudging_Ring,Beithir_Ring30,Beithir_Ring25,Beithir_Ring20,Beithir_Ring15,Chirich_Ring,Crepuscular_Ring,Dingir_Ring,Epaminondas_Ring,Epona_Ring,Flamma_Ring,Gere_Ring,Hetairoi_Ring,Ilabrat_Ring,Locus_Ring,Metamorph_Ring,Mujin_Band,Mummu_Ring,Niqmaddu_Ring,Petrov_Ring,Regal_Ring,Rufescent_Ring,Shiva_Ring1,Shukuyu_Ring,Sroda_Ring,Weatherspoon_Ring,Freke_Ring,]
 
-Andartia_Critagi = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle AGI Crit Rate", "AGI":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "Jobs":["nin"]}
+Andartia_Critagi = {"Name": "Andartia's Mantle", "Name2": "Andartia's Mantle AGI Crit Rate", "AGI":30, "Accuracy":20, "Attack":20, "Crit Rate":10, "PDT":-10, "Jobs":["nin"]}
 # Each job has identical Ambuscade cape augments. Here I define a simple code block to automatically build each possible type of ambu cape for each job.
 # We define filters so that some cape variants aren't created, such as CHR capes on NIN which would never be used and would only waste computation time if included.
 # This is a simple loop reading from pre-defined lists, but it will save us well over 100 lines of modifying nearly identical capes with different names and jobs.
@@ -813,7 +813,7 @@ for job in cape_names:
         if base_stat not in cape_names[job][2]:
             continue # Skip stats for jobs that don't use them. (For example: Don't consider ANY capes with CHR, MND, or VIT for NIN)
         for main_stat in ambu_stats[base_stat]:
-            capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} {main_stat}", "Accuracy":20, "Attack":20, "DT":-5, f"{base_stat}":30, f"{main_stat}":10}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
+            capes.append({**{"Name":f"{cape_names[job][0]}","Name2":f"{cape_names[job][0]} {base_stat} {main_stat}", "Accuracy":20, "Attack":20, "PDT":-10, f"{base_stat}":30, f"{main_stat}":10}, **{i:cape_names[job][1][i] for i in cape_names[job][1]}})
         if job in ["NIN", "RDM", "WHM", "BLM", "SCH", "GEO", "DRK", "WAR", "SAM", "RNG", "THF"] and base_stat in ["INT","MND","STR","DEX","AGI"]: # List of jobs that use magic weapon skills
             if job=="SAM" and base_stat!="STR": # SAM only needs STR+WSD (probably)
                 continue
