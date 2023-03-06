@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 20
+# Version date: 2023 March 06
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -118,9 +118,10 @@ ws_column2 = [
 food_list = sorted([k["Name"] for k in all_food]) + ["None"] # Reads "all_food" from gear.py
 buffs_whm_column = [
   [sg.Checkbox("WHM",size=(15,1),tooltip="Use White Magic buffs?",key="whm_on",default=False,font=font_choice)],
-  [sg.Combo(values=("Dia","Dia II","Dia III","None"), default_value="Dia II", readonly=True, k="ndia",size=(15,1),font=font_choice)],
-  [sg.Combo(values=("Haste","Haste II","None"), default_value="Haste", readonly=True, key="nhaste",size=(15,1),font=font_choice)],
-  [sg.Combo(values=("Boost-STR","Boost-DEX","Boost-VIT","Boost-AGI","Boost-INT","Boost-MND","Boost-CHR","None"), default_value="None", readonly=True, key="whm_boost",size=(15,1),font=font_choice)],
+  [sg.Combo(values=("Dia","Dia II","Dia III","None"), default_value="Dia II", readonly=True, k="ndia",size=(16,1),font=font_choice)],
+  [sg.Combo(values=("Haste","Haste II","None"), default_value="Haste", readonly=True, key="nhaste",size=(16,1),font=font_choice)],
+  [sg.Combo(values=("Boost-STR","Boost-DEX","Boost-VIT","Boost-AGI","Boost-INT","Boost-MND","Boost-CHR","None"), default_value="None", readonly=True, key="whm_boost",size=(16,1),font=font_choice)],
+  [sg.Combo(values=("Sandstorm II","Rainstorm II","Windstorm II","Firestorm II","Hailstorm II","Thunderstorm II","Aurorastorm II","Voidstorm II","None"), default_value="None", readonly=True, key="sch_storm",size=(16,1),font=font_choice)],
   [sg.Text("Food:",font=font_choice)],
   [sg.Combo(values=food_list, default_value="Grape Daifuku", readonly=True, key="food",size=(15,1),font=font_choice)],
   [sg.Text("",font=font_choice)]

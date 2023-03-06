@@ -72,6 +72,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
     phys_rng_ws = ws_name in ["Flaming Arrow", "Namas Arrow", "Apex Arrow", "Refulgent Arrow","Empyreal Arrow", "Sidewinder", "Piercing Arrow", "Jishnu's Radiance", "Blast Arrow", "Hot Shot", "Coronach","Last Stand","Detonator", "Blast Shot", "Slug Shot", "Split Shot", ] # Used to ensure Shining One does not let Ranged Weapon skills crit
 
+    # List all ranged WSs here, so we can remove 500 TP bonus from ranged aeonics for melee WSs. This needs to be updated if more ranged WSs are added
+    all_ranged_ws = ["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow","Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight", "Detonator","Blast Shot","Slug Shot","Split Shot"] 
+
+    # List all ranged WSs here, so we can remove 500 TP bonus from ranged aeonics for melee WSs. This needs to be updated if more ranged WSs are added
     kick_ws_footwork = footwork and (ws_name in ["Dragon Kick", "Tornado Kick"])
 
     # Save the main and sub weapon names for later.
@@ -88,8 +92,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     rng_type_skill = gearset.gear['ranged'].get('Skill Type', 'None') # If the sub item doesn't have a skill type (Katana/Dagger/Scythe, etc) then return "None"
 
     tp += gearset.playerstats['TP Bonus'] # Add TP bonus
-    tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
+    if gearset.gear["ranged"]["Name"] in ["Fomalhaut","Fail-not"] and ws_name not in all_ranged_ws:
+        tp -= 500 # remove 500 TP if using the aeonic bow/gun but not using a ranged WS
 
+    tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
+    
     if gearset.gear["main"]["Skill Type"] != "Hand-to-Hand":
         h2h = False
 
@@ -353,14 +360,14 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             elif priority=="Damage only":
                 metric = phys
 
-            return(metric,tp)
+            return(metric,[phys,tp])
 
 
         cor_shots = ["Earth Shot", "Water Shot", "Wind Shot", "Fire Shot", "Ice Shot", "Thunder Shot"]
         if spell in cor_shots:
             player_mab += gearset.playerstats['Ninjutsu Magic Attack']
-            damage = quickdraw(rng_dmg, ammo_dmg, spell.lower().split()[0], gearset, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva)
-            return(damage, 0) # Return 0 TP
+            damage = quickdraw(rng_dmg, ammo_dmg, spell.lower().split()[0], gearset, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, job_abilities)
+            return(damage, [damage,0]) # Return 0 TP
 
 
         # Define Ninjutsu specifics: element, tier, bonus damage
@@ -380,7 +387,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             element = spells[spell.split(":")[0]].lower()
             tier = spell.split()[-1]
 
-            damage = nuking(spell, "Ninjutsu", tier, element, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
+            damage = nuking(spell, "Ninjutsu", tier, element, job_abilities, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, ninjutsu_damage, futae, burst, ebullience)
 
         else:
             # If not Ninjutsu, then assume Elemental Magic
@@ -427,9 +434,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                 element = spells[spell.split()[0]].lower()
                 tier = spell.split()[-1]
 
-            damage = nuking(spell, "Elemental Magic", tier, element, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
+            damage = nuking(spell, "Elemental Magic", tier, element, job_abilities, main_job, sub_job, gearset, player_int, player_mab, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, 0, futae, burst, ebullience)
 
-        return(damage,0) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
+        return(damage,[damage,0]) # If nuke, then don't bother running the rest of the code, simply return the magic damage (and 0 TP return) and continue with the testing.
 
 
 
@@ -559,9 +566,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             metric = phys
 
         metric = time_to_ws
+        print(metric, [phys,tp])
+
 
         # import sys; sys.exit()
-        return(metric, tp) # Return time (seconds) per WS and total TP per average attack round.
+        return(metric, [phys,tp]) # Return time (seconds) per WS and total TP per average attack round.
 
 
 
@@ -647,7 +656,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         magical_damage *= (1 + 0.25*magic_crit_rate2) # Magic Crit Rate II is apparently +25% damage x% of the time.
         magical_damage *= (1 + hover_shot)
 
-        return(magical_damage,0) # Return 0 TP for now.
+        return(magical_damage,[magical_damage,0]) # Return 0 TP for now.
 
 
     if not final: # If the best set hasn't been determined yet, then just take a simple average. No need to run a bunch of simulations unless you're making a plot.
@@ -700,6 +709,16 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             # print("mainhand: ",player_attack1, main_type_skill, main_hit_pdif, main_hit_damage,main_hits,hitrate11,hitrate12)
             # print("offhand: ",player_attack2, sub_type_skill, offhand_pdif, offhand_damage,sub_hits,hitrate21,hitrate22)
 
+            tp = 0
+            # Calculate TP return from the first main hit
+            tp += get_tp(hitrate11,mdelay,stp) # First main hit has a "hitrate11"% chance to hit, so it gains TP for that many hits.
+
+            # Add TP return from the first off-hand hit, which also gains the full TP amount
+            tp += get_tp(hitrate21,mdelay,stp) # First sub hit has a "hitrate21"% chance to hit, so it gains TP for that many hits.
+
+
+            # Add TP return from the remaining main+off-hand hits together. All of these hits simply gain 10*(1+stp) TP
+            tp += 10*(1+stp)*(main_hits+sub_hits - hitrate11 - hitrate21) # main_hits and sub_hits already account for hit rates.
 
         else:
             hitrate_ranged1 = get_hitrate(player_rangedaccuracy + 100*hover_shot, ws_acc, enemy_eva, "ranged", True, rng_type_skill) # Assume first ranged hit gets +100 accuracy. Melee hits do at least...
@@ -707,6 +726,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
             avg_pdif_rng = get_avg_pdif_ranged(player_rangedattack, rng_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
 
+            tp = 0
+            tp += get_tp(hitrate_ranged1, rng_delay+ammo_delay, stp) # First main shot TP
+            tp += 10*(1+stp)*(nhits-1)*hitrate_ranged2 # TP from other ranged WS hits for multi-hit ranged WSs such as Jishnu's
+            
             ranged_hit_damage = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp,  crit_rate, crit_dmg, wsd, ws_bonus, ws_trait) # The amount of damage done by the first hit of the WS if it does not miss
             ranged_hit_damage2 = get_avg_phys_damage(rng_dmg+ammo_dmg, fstr_rng, wsc, avg_pdif_rng, ftp2,  crit_rate, crit_dmg, 0, ws_bonus, ws_trait) # Hits after the first main hit (jishnu hits 2+3. Last stand hit 2, etc)
             phys = ranged_hit_damage*hitrate_ranged1 + ranged_hit_damage2*hitrate_ranged2*(nhits-1)
@@ -740,7 +763,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
         damage *= (1 + hover_shot)
 
-        return(damage, 0) # Return the average damage dealt and 0 TP return.
+        return(damage, [damage,tp]) # Return the average damage dealt and TP returned.
 
     # This marks the end of the damage calculation for average estimates. We'll start the proper simulations next.
 
@@ -964,7 +987,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     # damage = 99999 if damage > 99999 else damage  # Cap damage at 99999. This ruins the scale of the plots for high-buff situations. Better to leave damage uncapped.
     tp_returned = get_tp(mainhit+subhit, mdelay, stp) + int(10*(1+stp))*ma_tp_hits
 
-    return(int(damage), int(tp_returned))
+    return(int(damage), [int(damage),int(tp_returned)])
 
 
 '''
@@ -990,7 +1013,7 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         for k in range(n_simulations):
 
             tp = np.random.uniform(tp1,tp2)
-            values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set=False)
+            metric, values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set=False)
             damage.append(values[0]) # Append the damage from each simulation to a list. Plot this list as a histogram later.
             tp_return.append(values[1])
 
@@ -1015,8 +1038,9 @@ def test_set(main_job, sub_job, ws_name, enemy, buffs, equipment, gearset, tp1, 
         return()
     else:
         tp = np.average([tp1,tp2])
-        damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set)
-        return(damage, tp)
+        metric, values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs, equipment, nuke, spell, job_abilities, burst, final, check_tp_set)
+        damage,tp = values
+        return(metric, values)
 
 
 
@@ -1392,8 +1416,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                     if not check_tp_set: # If not checking TP set (checking WS or Nuke set), then use "damage" as indicator of quality
 
                                         # Test the set and return its damage as a single number
-                                        damage, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
-                                        damage = int(damage)
+                                        metric, values = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
+                                        damage,tp = int(values[0]),values[1]
                                         # print(b["Name2"], b2["Name2"], damage)
 
                                         tcount += 1
@@ -1403,38 +1427,41 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                         #     print(slot1, slot2, swap_item1, swap_item2, damage)
 
                                         # If the damage returned after swapping those 1~3 pieces is higher than the previous best, then run this next bit of code to print the swap that was performed and the change in damage observed.
-                                        if damage > best_damage:
+                                        if metric > best_damage:
                                             if (swap_item1 == swap_item2) and (swap_item1 == swap_item3):
-                                                print(f"{check_slots[i]}:   {equipped_item1} ->  {swap_item1}   [{best_damage:>6.0f} -> {damage:>6.0f}]") # Print the new best damage and the new item that led to this new record
+                                                print(f"{check_slots[i]}:   {equipped_item1} ->  {swap_item1}   [{best_damage:>6.0f} -> {metric:>6.0f}]") # Print the new best damage and the new item that led to this new record
 
                                             elif (swap_item1 == swap_item2) and (swap_item1 != swap_item3):
-                                                print(f"[{check_slots[i]} & {check_slots[i3]}]:   [{equipped_item1} & {equipped_item3}]  ->  [{swap_item1} & {swap_item3}]   [{best_damage:>6.0f} -> {damage:>6.0f}]") # Print the new best damage and the new item that led to this new record
+                                                print(f"[{check_slots[i]} & {check_slots[i3]}]:   [{equipped_item1} & {equipped_item3}]  ->  [{swap_item1} & {swap_item3}]   [{best_damage:>6.0f} -> {metric:>6.0f}]") # Print the new best damage and the new item that led to this new record
 
                                             elif (swap_item1 == swap_item3) and (swap_item1 != swap_item2):
-                                                print(f"[{check_slots[i]} & {check_slots[i2]}]:   [{equipped_item1} & {equipped_item2}]  ->  [{swap_item1} & {swap_item2}]   [{best_damage:>6.0f} -> {damage:>6.0f}]")
+                                                print(f"[{check_slots[i]} & {check_slots[i2]}]:   [{equipped_item1} & {equipped_item2}]  ->  [{swap_item1} & {swap_item2}]   [{best_damage:>6.0f} -> {metric:>6.0f}]")
 
                                             elif (swap_item2 == swap_item3) and (swap_item1 != swap_item2):
-                                                print(f"[{check_slots[i]} & {check_slots[i2]}]:   [{equipped_item1} & {equipped_item2}]  ->  [{swap_item1} & {swap_item2}]   [{best_damage:>6.0f} -> {damage:>6.0f}]")
+                                                print(f"[{check_slots[i]} & {check_slots[i2]}]:   [{equipped_item1} & {equipped_item2}]  ->  [{swap_item1} & {swap_item2}]   [{best_damage:>6.0f} -> {metric:>6.0f}]")
 
                                             elif (swap_item2 != swap_item3) and (swap_item1 != swap_item2) and (swap_item1 != swap_item3):
-                                                print(f"[{check_slots[i]} & {check_slots[i2]} & {check_slots[i3]}]:   [{equipped_item1} & {equipped_item2} & {equipped_item3}]  ->  [{swap_item1} & {swap_item2} & {swap_item3}]   [{best_damage:>6.0f} -> {damage:>6.0f}]")
+                                                print(f"[{check_slots[i]} & {check_slots[i2]} & {check_slots[i3]}]:   [{equipped_item1} & {equipped_item2} & {equipped_item3}]  ->  [{swap_item1} & {swap_item2} & {swap_item3}]   [{best_damage:>6.0f} -> {metric:>6.0f}]")
 
                                             # If your new set is better than your previous best set, then:
-                                            best_damage = damage      # Save the highest damage to compare with future test gearsets
+                                            best_damage = metric      # Save the highest damage to compare with future test gearsets
                                             Best_Gearset[slot1]  = b  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
                                             Best_Gearset[slot2] = b2  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
                                             Best_Gearset[slot3] = b3  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
 
 
-                                        if (best_damage%damage / best_damage) < (float(swap_percent)/100) and slot1==slot2 and slot2==slot3 and slot1 not in ["main","sub","ranged","back"] and swap_item1 != equipped_item1:
+                                        if (best_damage%metric / best_damage) < (float(swap_percent)/100) and slot1==slot2 and slot2==slot3 and slot1 not in ["main","sub","ranged","back"] and swap_item1 != equipped_item1:
                                             # If the currently swapped item is within 1% of the best item, then add it to the swaps list.
-                                            swaps[slot1].append([new_set[slot1]["Name2"],damage])
+                                            swaps[slot1].append([new_set[slot1]["Name2"],metric])
 
                                         damage_list[z] = best_damage  # Update the damage_list[] array to contain the best damage obtained from this iteration.
                                                                     # This has nothing to do with plotting right now. Only used to compare damage from consecutive iterations.
                                     else:
                                         # Test the set and return its damage as a single number
-                                        time_to_ws, tp = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
+                                        metric, values = test_set(main_job, sub_job, ws_name, enemy, buffs, new_set, test_Gearset, tp1, tp2, tp0, n_simulations, show_final_plot, nuke, spell, job_abilities, burst, False, check_tp_set)
+                                        damage, tp = values
+                                        time_to_ws = metric
+
                                         # print(b["Name2"], b2["Name2"], time_to_ws)
                                         # time_to_ws = time_to_ws**-1
                                         tcount += 1
@@ -1554,10 +1581,10 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
 
     # Print the recommended swaps for WS, magic, and ranged checks; not TP checks.
     if not check_tp_set and print_swaps:
-        print(f"\nList of potential swaps within {swap_percent}% of the best set ({best_damage} damage):")
+        print(f"\nList of potential swaps within {swap_percent}% of the best set ({float(best_damage):<9.2f}):")
         for slot in swaps:
             for swap in swaps[slot]:
-                line = f"{slot:<6s} {swap[0]:<50s} {swap[1]:<6d} {best_damage%swap[1]/best_damage*100:>5.1f}%"
+                line = f"{slot:<6s} {swap[0]:<50s} {float(swap[1]):<9.2f} {best_damage%swap[1]/best_damage*100:>5.1f}%"
                 print(line)
 
 

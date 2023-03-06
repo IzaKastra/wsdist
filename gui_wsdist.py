@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 March 03)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 March 06)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -127,7 +127,7 @@ spell_dict = {
 }
 
 
-main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK","DNC","BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file too.
+main_jobs = sorted(["NIN", "DRK", "SCH", "RDM", "BLM", "SAM", "DRG", "WHM", "WAR", "COR", "BRD", "THF","MNK","DNC","BST","RUN","RNG","PUP","BLU","GEO","PLD"]) # If you add jobs here, make sure to add them in the tab_inputs.py file and wsdist.py "all_ranged_ws" too.
 
 ws_dict = {"Katana": ["Blade: Chi", "Blade: Hi", "Blade: Kamu", "Blade: Metsu", "Blade: Shun", "Blade: Ten", "Blade: Ku", "Blade: Ei", "Blade: Yu", "Blade: Retsu","Blade: Jin","Blade: Teki", "Blade: To"],
             "Great Katana": ["Tachi: Rana", "Tachi: Fudo", "Tachi: Kaiten", "Tachi: Shoha", "Tachi: Kasha", "Tachi: Gekko", "Tachi: Jinpu", "Tachi: Koki", "Tachi: Goten", "Tachi: Kagero","Tachi: Enpi","Tachi: Yukikaze"],
@@ -801,13 +801,13 @@ while True:
             # Define buffs from white magic:
             whm_on = values["whm_on"]
             whm_haste = whm_on*(whm["Haste"]["Haste"]*(values["nhaste"] == "Haste") + whm["Haste II"]["Haste"]*(values["nhaste"] == "Haste II"))
-            whm_str   = whm_on*(whm["Boost-STR"]["STR"]*(values["whm_boost"]=="Boost-STR"))
-            whm_dex   = whm_on*(whm["Boost-DEX"]["DEX"]*(values["whm_boost"]=="Boost-DEX"))
-            whm_vit   = whm_on*(whm["Boost-VIT"]["VIT"]*(values["whm_boost"]=="Boost-VIT"))
-            whm_agi   = whm_on*(whm["Boost-AGI"]["AGI"]*(values["whm_boost"]=="Boost-AGI"))
-            whm_int   = whm_on*(whm["Boost-INT"]["INT"]*(values["whm_boost"]=="Boost-INT"))
-            whm_mnd   = whm_on*(whm["Boost-MND"]["MND"]*(values["whm_boost"]=="Boost-MND"))
-            whm_chr   = whm_on*(whm["Boost-CHR"]["CHR"]*(values["whm_boost"]=="Boost-CHR"))
+            whm_str   = whm_on*(whm["Boost-STR"]["STR"]*(values["whm_boost"]=="Boost-STR") + 7*(values["sch_storm"]=="Firestorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_dex   = whm_on*(whm["Boost-DEX"]["DEX"]*(values["whm_boost"]=="Boost-DEX") + 7*(values["sch_storm"]=="Thunderstorm II") + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_vit   = whm_on*(whm["Boost-VIT"]["VIT"]*(values["whm_boost"]=="Boost-VIT") + 7*(values["sch_storm"]=="Sandstorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_agi   = whm_on*(whm["Boost-AGI"]["AGI"]*(values["whm_boost"]=="Boost-AGI") + 7*(values["sch_storm"]=="Windstorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_int   = whm_on*(whm["Boost-INT"]["INT"]*(values["whm_boost"]=="Boost-INT") + 7*(values["sch_storm"]=="Hailstorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_mnd   = whm_on*(whm["Boost-MND"]["MND"]*(values["whm_boost"]=="Boost-MND") + 7*(values["sch_storm"]=="Rainstorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
+            whm_chr   = whm_on*(whm["Boost-CHR"]["CHR"]*(values["whm_boost"]=="Boost-CHR") + 7*(values["sch_storm"]=="Aurorastorm II")  + 3*(values["sch_storm"]=="Voidstorm II"))
 
             # Define Dia
             dia_dictionary = {"None":0,
@@ -927,7 +927,8 @@ while True:
                              "Double Shot":doubleshot_toggle,
                              "Triple Shot":tripleshot_toggle,
                              "metric":values["tp priority"],
-                             "shell v":values["whm_on"]
+                             "shell v":values["whm_on"],
+                             "storm spell":values["sch_storm"]*whm_on,
                              }
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway
@@ -942,8 +943,10 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False)
-                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
+                metric, dmg_tp_values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False)
+                quicklook_damage, tp = dmg_tp_values
+                # window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
+                window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage\n{'=':>10s} {tp:6.1f} TP ")
 
             # --------------------------------------------------------------------------------------------
             # --------------------------------------------------------------------------------------------
@@ -954,7 +957,9 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_time, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False, True)
+                metric, dmg_tp_values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, False, spell, job_abilities, burst, False, True)
+                damage, tp = dmg_tp_values
+                quicklook_time = metric
                 window["quickaverage"].update(f"{'Average =':>10s} {quicklook_time:>6.3f} s / WS\n{'=':>10s} {tp:6.1f} TP / round")
 
             # --------------------------------------------------------------------------------------------
@@ -966,15 +971,18 @@ while True:
                 from wsdist import weaponskill
                 from set_stats import *
                 gearset = set_gear(buffs, starting_gearset, main_job ,sub_job, job_abilities=job_abilities)
-                quicklook_damage, tp = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
+                metric, dmg_tp_values = weaponskill(main_job, sub_job, ws_name, enemy, gearset, min_tp, max_tp, starting_tp, buffs, starting_gearset, True, spell, job_abilities, burst, False)
+                quicklook_damage, tp = dmg_tp_values
                 if spell == "Ranged Attack":
                     priority = values["tp priority"]
                     if priority=="Damage > TP":
-                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / round")
+                        # window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg^2)(tp)\n{'=':>10s} {tp:6.1f} TP / shot")
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} damage\n{'=':>10s} {tp:6.1f} TP / shot")
                     elif priority=="TP > Damage":
-                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / round")
+                        # window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} (dmg)(tp^2)\n{'=':>10s} {tp:6.1f} TP / shot")
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} damage\n{'=':>10s} {tp:6.1f} TP / shot")
                     else:
-                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} damage\n{'=':>10s} {tp:6.1f} TP / round")
+                        window["quickaverage"].update(f"{'Average =':>10s} {quicklook_damage:>6.0f} damage\n{'=':>10s} {tp:6.1f} TP / shot")
                 else:
                     window["quickaverage"].update(f"{'Average =':>10s} {int(quicklook_damage):>6d} damage")
 

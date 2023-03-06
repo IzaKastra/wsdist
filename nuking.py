@@ -1,10 +1,10 @@
 # Author: Kastra (Asura)
-# Version date: 2023 February 16
+# Version date: 2023 March 06
 
 from get_dint_m_v import *
 import numpy as np
 
-def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_damage, enemy_int, enemy_mdb, enemy_meva):
+def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_damage, enemy_int, enemy_mdb, enemy_meva, job_abilities):
     #
     # Calculate Quick Draw damage
     #
@@ -24,17 +24,19 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
     base_damage = ((rng_dmg+ammo_dmg)*2 + gearset.playerstats["Quick Draw"] + player_magic_damage)
     damage = base_damage * (1 + gearset.playerstats["Quick Draw II"]/100) # Death Penalty + Empyrean feet.
 
+    storms = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark"}
+    storm_element = storms.get(job_abilities["storm spell"],"None")
 
 
     elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
     damage *= elemental_damage_bonus
 
     dayweather = 1.0
-    if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
-      if main_job == "SCH":
+    if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi" and storm_element.lower()==element:
         dayweather = 1.25
-      elif sub_job == "SCH":
-        dayweather = 1.1
+
+    if storm_element!="None":
+        magic_accuracy += 15 # +15 Magic Accuracy from Klimaform.
 
     magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0 # This is weird for quick draw. I assume my QD macc is incorrect. i recommend always using meva=0 for QD
     resist_state = get_resist_state_average(magic_hit_rate)
@@ -47,7 +49,7 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
 
     return(damage)
 
-def nuking(spell, spelltype, tier, element, main_job, sub_job, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
+def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, gearset, player_INT, player_matk, mdmg, enemy_INT, enemy_mdb, enemy_meva, ninjutsu_damage, futae=False, burst=False, ebullience=False):
 
     steps = 2 # 2-step skillchain
 
@@ -70,12 +72,19 @@ def nuking(spell, spelltype, tier, element, main_job, sub_job, gearset, player_I
 
     elemental_damage_bonus = 1 + (gearset.playerstats['Elemental Bonus'] + gearset.playerstats[f'{element.capitalize()} Elemental Bonus'])/100
 
+    storms = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark"}
+    storm_element = storms.get(job_abilities["storm spell"],"None")
+
     dayweather = 1.0
     if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi" or tier=="helix":
-      if main_job == "SCH":
+      if main_job == "SCH" or storm_element.lower()==element:
         dayweather = 1.25
       elif sub_job == "SCH":
         dayweather = 1.1
+
+    if main_job=="SCH" or sub_job=="SCH" or storm_element!="None":
+        magic_accuracy += 15 # +15 Magic Accuracy from Klimaform.
+
 
     if burst: # Do burst stuff now so we can add +100 Magic Accuracy before calculating magic hit rates
         magic_accuracy += 100 + gearset.playerstats["Magic Burst Accuracy"]
