@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 06
+# Version date: 2023 March 07
 #
 # This code holds the methods for building a player's stats.
 #
@@ -1004,11 +1004,13 @@ class set_gear:
 
         # Do set bonuses!
         # Count the number of set-bonus gear equipped.
-        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0, "Weaponskill Damage":0, "Attack":0}
+        self.set_bonuses = {'Crit Rate':0, 'STR':0, 'DEX':0, 'AGI':0, 'VIT':0, "INT":0, "MND":0, 'CHR':0, "Accuracy":0, "Ranged Accuracy":0, "Magic Accuracy":0, "Magic Attack":0, "Weaponskill Damage":0, "Attack":0}
         adhemar_count = 0    # Adhemar +1 gives Crit Rate
         mummu_count = 0      # Mummu +2 with the Mummu Ring gives DEX/AGI/VIT/CHR
         regal_ring_count = 0 # Regal Ring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy.
+        regal_earring_count = 0 # Regal Earring with AF+3 gear gives Accuracy/Ranged Accuracy/Magic Accuracy.
         flamma_count = 0     # Flamma +2 with the Flamma Ring gives STR/DEX/VIT
+        mallquis_count = 0     # Mallquis +2 with the Mllquis Ring gives VIT/INT/MND
         ayanmo_count = 0     # Flamma +2 with the Flamma Ring gives STR/VIT/MND
         amalric_count = 0    # +10 Magic Attack for every piece of Amalric equipped after the first
         lustratio_count = 0    # +2 WSD for every piece of Amalric equipped after the first
@@ -1026,28 +1028,40 @@ class set_gear:
 
             if "regal ring" == gear['ring1']['Name'].lower() or "regal ring" == gear['ring2']['Name'].lower():
                 if af_armor[mainjob.lower()] in gear[slot]['Name'].lower():
-                    if regal_ring_count == 4:
-                        continue
                     regal_ring_count += 1
 
-            if "flamma ring" == gear['ring1']['Name'].lower() or "flamma ring" == gear['ring2']['Name'].lower():
-                if "flamma" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
+            if "regal earring" == gear['ear1']['Name'].lower() or "regal earring" == gear['ear2']['Name'].lower():
+                if af_armor[mainjob.lower()] in gear[slot]['Name'].lower():
+                    regal_earring_count += 1
+
+            if "flamma ring" == gear['ring1']['Name'].lower() or "flamma ring" == gear['ring2']['Name'].lower() or True:
+                if "flamma" in gear[slot]['Name'].lower():
                     flamma_count += 1
-            if "ayanmo ring" == gear['ring1']['Name'].lower() or "ayanmo ring" == gear['ring2']['Name'].lower():
-                if "ayanmo" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
+            if "mallquis ring" == gear['ring1']['Name'].lower() or "mallquis ring" == gear['ring2']['Name'].lower() or True:
+                if "mallquis" in gear[slot]['Name'].lower():
+                    mallquis_count += 1
+            if "ayanmo ring" == gear['ring1']['Name'].lower() or "ayanmo ring" == gear['ring2']['Name'].lower() or True:
+                if "ayanmo" in gear[slot]['Name'].lower():
                     ayanmo_count += 1
-            if gear["ring1"]['Name'] == "Mummu Ring" or gear["ring2"]['Name'] == "Mummu Ring":
-                if "mummu" in gear[slot]['Name'].lower() and "+2" in gear[slot]['Name']:
+            if gear["ring1"]['Name'] == "Mummu Ring" or gear["ring2"]['Name'] == "Mummu Ring" or True:
+                if "mummu" in gear[slot]['Name'].lower():
                     mummu_count += 1
+
+        mallquis_count = 5 if mallquis_count > 5 else mallquis_count
+        ayanmo_count = 5 if ayanmo_count > 5 else ayanmo_count
+        flamma_count = 5 if flamma_count > 5 else flamma_count
+        mummu_count = 5 if mummu_count > 5 else mummu_count
+        regal_ring_count = 5 if regal_ring_count > 5 else regal_ring_count
+        regal_earring_count = 5 if regal_earring_count > 5 else regal_earring_count
 
         self.set_bonuses['Crit Rate'] += adhemar_count*2 if adhemar_count > 1 else 0
         self.set_bonuses['DEX'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['AGI'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['VIT'] += (mummu_count)*8 if mummu_count >= 2 else 0
         self.set_bonuses['CHR'] += (mummu_count)*8 if mummu_count >= 2 else 0
-        self.set_bonuses['Accuracy'] += (regal_ring_count)*15
-        self.set_bonuses['Ranged Accuracy'] += (regal_ring_count)*15
-        self.set_bonuses['Magic Accuracy']  += (regal_ring_count)*15
+        self.set_bonuses['Accuracy'] += (regal_ring_count + regal_earring_count)*15
+        self.set_bonuses['Ranged Accuracy'] += (regal_ring_count + regal_earring_count)*15
+        self.set_bonuses['Magic Accuracy']  += (regal_ring_count + regal_earring_count)*15
         self.set_bonuses['DEX'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['VIT'] += (flamma_count)*8 if flamma_count >= 2 else 0
         self.set_bonuses['STR'] += (flamma_count)*8 if flamma_count >= 2 else 0
@@ -1057,6 +1071,9 @@ class set_gear:
         self.set_bonuses['MND'] += (ayanmo_count)*8 if ayanmo_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
         self.set_bonuses['Weaponskill Damage'] += (lustratio_count)*2 if lustratio_count >= 2 else 0 # TODO: confirm and remove the ring requirement for ambu gear.
         self.set_bonuses['Attack'] += (ryuo_count)*10 if ryuo_count >= 2 else 0
+        self.set_bonuses['VIT'] += (mallquis_count)*8 if mallquis_count >= 2 else 0
+        self.set_bonuses['INT'] += (mallquis_count)*8 if mallquis_count >= 2 else 0
+        self.set_bonuses['MND'] += (mallquis_count)*8 if mallquis_count >= 2 else 0
 
         # Details:
         # Your gear stats start out as all zero. Your player stats start out as whatever base values you have from traits/gifts/etc

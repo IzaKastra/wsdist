@@ -566,7 +566,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             metric = phys
 
         metric = time_to_ws
-        print(metric, [phys,tp])
+        # print(metric, [phys,tp])
 
 
         # import sys; sys.exit()
