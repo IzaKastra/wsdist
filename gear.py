@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 07
+# Version date: 2023 March 09
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -501,53 +501,53 @@ Suppanomimi = {"Name": "Suppanomimi", "AGI":2,"Dual Wield":5,"Sword Skill":5, "J
 Telos_Earring = {"Name": "Telos Earring", "Accuracy":10, "Attack":10, "Ranged Accuracy":10, "Ranged Attack":10, "DA":1, "Store TP":5, "Jobs":all_jobs}
 Thrud_Earring = {"Name": "Thrud Earring", "STR":10, "VIT":10, "Weaponskill Damage":3, "Jobs":["war","pld","drk","bst","sam","drg"]}
 Hattori_Earring = {"Name": "Hattori Earring +2", "PDL":9, "Throwing Skill":12, "Katana Skill":12, "Accuracy":18, "Magic Accuracy":18, "Store TP":7, "DEX":11, "AGI":11, "Jobs":["nin"]}
-Hattori_Earring1 = {"Name": "Hattori Earring +1", "PDL":9, "Throwing Skill":12, "Katana Skill":12, "Accuracy":13, "Magic Accuracy":13, "Store TP":4, "Jobs":["nin"]}
+Hattori_Earring1 = {"Name": "Hattori Earring +1", "PDL":8, "Throwing Skill":11, "Katana Skill":11, "Accuracy":13, "Magic Accuracy":13, "Store TP":4, "Jobs":["nin"]}
 Heathen_Earring = {"Name": "Heathen's Earring +2", "Attack":20, "PDL":9, "Accuracy":18,"Magic Accuracy":18, "Weaponskill Damage":6, "STR":11, "INT":11, "Jobs":["drk"]}
-Heathen_Earring1 = {"Name": "Heathen's Earring +1", "Attack":20, "PDL":9, "Accuracy":13,"Magic Accuracy":13, "Weaponskill Damage":3, "Jobs":["drk"]}
+Heathen_Earring1 = {"Name": "Heathen's Earring +1", "Attack":17, "PDL":89, "Accuracy":13,"Magic Accuracy":13, "Weaponskill Damage":3, "Jobs":["drk"]}
 Regal_Earring = {"Name":"Regal Earring", "INT":10, "MND":10, "CHR":10, "Magic Attack":7,"Jobs":["blm","rdm","sch","geo","whm","brd","blu"]}
 Malignance_Earring = {"Name":"Malignance Earring","INT":8,"MND":8,"Magic Accuracy":10,"Magic Attack":8,"Jobs":["blm","rdm","sch","geo","drk","whm"]}
 Barkarole_Earring = {"Name":"Barkarole Earring", "INT":3, "Magic Accuracy":8, "Magic Attack":8,"Jobs":["blm","sch","geo"]}
 Wicce_Earring = {"Name":"Wicce Earring +2", "Magic Attack":9,"Magic Damage":9,"INT":11,"MND":11,"Magic Accuracy":18,"Jobs":["blm"]}
-Wicce_Earring1 = {"Name":"Wicce Earring +1", "Magic Attack":9,"Magic Damage":9,"Magic Accuracy":13,"Jobs":["blm"]}
+Wicce_Earring1 = {"Name":"Wicce Earring +1", "Magic Attack":8,"Magic Damage":8,"Magic Accuracy":13,"Jobs":["blm"]}
 Sherida_Earring = {"Name":"Sherida Earring", "STR":5, "DEX":5, "DA":5, "Store TP":5, "Jobs":["mnk","rdm","thf","bst","rng","drg","dnc","run"]}
 Lethargy_Earring = {"Name":"Lethargy Earring +2", "Accuracy":0+18,"Magic Accuracy":0+18, "DA":0+7, "STR":0+11, "DEX":0+11, "Jobs":["rdm"]}
 Lethargy_Earring1 = {"Name":"Lethargy Earring +1", "Accuracy":0+13,"Magic Accuracy":0+13, "DA":0+4, "Jobs":["rdm"]}
-Peltast_Earring = {"Name":"Peltast's Earring +2", "PDL":9, "Accuracy":18,"Magic Accuracy":18,"Crit Rate":7,"STR":11,"VIT":11,"Jobs":["drg"]}
-Peltast_Earring1 = {"Name":"Peltast's Earring +1", "PDL":9, "Accuracy":13,"Magic Accuracy":13,"Crit Rate":4,"Jobs":["drg"]}
+Peltast_Earring = {"Name":"Peltast's Earring +2", "PDL":9,"Subtle Blow":7, "Accuracy":18,"Magic Accuracy":18,"Crit Rate":7,"STR":11,"VIT":11,"Jobs":["drg"]}
+Peltast_Earring1 = {"Name":"Peltast's Earring +1", "PDL":8,"Subtle Blow":6, "Accuracy":13,"Magic Accuracy":13,"Crit Rate":4,"Jobs":["drg"]}
 Ebers_Earring = {"Name":"Ebers Earring +2", "Accuracy":18,"Magic Accuracy":18,"STR":11,"MND":11,"Jobs":["whm"]}
 Ebers_Earring1 = {"Name":"Ebers Earring +1", "Accuracy":13,"Magic Accuracy":13,"Jobs":["whm"]}
 Kasuga_Earring = {"Name":"Kasuga Earring +2","Store TP":9,"Skillchain Bonus":7,"Accuracy":18,"Weaponskill Damage":5,"STR":11,"DEX":11,"Jobs":["sam"]}
-Kasuga_Earring1 = {"Name":"Kasuga Earring +1","Store TP":9,"Skillchain Bonus":7,"Accuracy":13,"Weaponskill Damage":3,"Jobs":["sam"]}
+Kasuga_Earring1 = {"Name":"Kasuga Earring +1","Store TP":8,"Skillchain Bonus":6,"Accuracy":13,"Weaponskill Damage":3,"Jobs":["sam"]}
 Arbatel_Earring = {"Name":"Arbatel Earring +2","Magic Attack":9,"Magic Damage":9,"Magic Accuracy":18,"INT":11,"MND":11,"Jobs":["sch"]}
-Arbatel_Earring1 = {"Name":"Arbatel Earring +1","Magic Attack":9,"Magic Damage":9,"Magic Accuracy":13,"Jobs":["sch"]}
+Arbatel_Earring1 = {"Name":"Arbatel Earring +1","Magic Attack":8,"Magic Damage":8,"Magic Accuracy":13,"Jobs":["sch"]}
 Enervating_Earring = {"Name":"Enervating Earring","Ranged Accuracy":7,"Ranged Attack":7,"Store TP":4,"Jobs":["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","sam","nin","drg","smn","blu","cor","pup","dnc","sch","geo","run"]}
 Boii_Earring = {"Name":"Boii Earring +2","DA":9,"Accuracy":18,"Magic Accuracy":18,"STR":11,"VIT":11,"Crit Rate":7,"Jobs":["war"]}
-Boii_Earring1 = {"Name":"Boii Earring +1","DA":9,"Accuracy":13,"Magic Accuracy":13,"Crit Rate":4,"Jobs":["war"]}
+Boii_Earring1 = {"Name":"Boii Earring +1","DA":8,"Accuracy":13,"Magic Accuracy":13,"Crit Rate":4,"Jobs":["war"]}
 Chasseurs_Earring = {"Name":"Chasseur's Earring +2","Accuracy":18,"Magic Accuracy":18,"STR":11,"AGI":11,"Crit Rate":7,"Jobs":["cor"]}
 Chasseurs_Earring1 = {"Name":"Chasseur's Earring +1","Accuracy":13,"Magic Accuracy":13,"Crit Rate":4,"Jobs":["cor"]}
 Fili_Earring = {"Name":"Fili Earring +2","Accuracy":18,"Magic Accuracy":18,"MND":11,"CHR":11,"Jobs":["brd"]}
 Fili_Earring1 = {"Name":"Fili Earring +1","Accuracy":13,"Magic Accuracy":13,"Jobs":["brd"]}
 Skulkers_Earring = {"Name":"Skulker's Earring +2","TA":5,"DEX":11,"AGI":11,"Accuracy":18,"Magic Accuracy":18,"Store TP":7,"Jobs":["thf"]}
-Skulkers_Earring1 = {"Name":"Skulker's Earring +1","TA":5,"Accuracy":13,"Magic Accuracy":13,"Store TP":4,"Jobs":["thf"]}
+Skulkers_Earring1 = {"Name":"Skulker's Earring +1","TA":4,"Accuracy":13,"Magic Accuracy":13,"Store TP":4,"Jobs":["thf"]}
 Bhikku_Earring = {"Name":"Bhikku Earring +2","Hand-to-Hand Skill":12,"DEX":11,"STR":11,"Accuracy":18,"Magic Accuracy":18,"Store TP":7,"Jobs":["mnk"]}
-Bhikku_Earring1 = {"Name":"Bhikku Earring +1","Hand-to-Hand Skill":12,"Accuracy":13,"Magic Accuracy":13,"Store TP":4,"Jobs":["mnk"]}
-Maculele_Earring = {"Name":"Maculele Earring +2","DEX":0+11, "AGI":0+11, "PDL":9, "Store TP":0+7, "Accuracy":0+18, "Magic Accuracy":0+18, "Jobs":["dnc"]}
-Maculele_Earring1 = {"Name":"Maculele Earring +1","PDL":9, "Store TP":0+4, "Accuracy":0+13, "Magic Accuracy":0+13, "Jobs":["dnc"]}
+Bhikku_Earring1 = {"Name":"Bhikku Earring +1","Hand-to-Hand Skill":11,"Accuracy":13,"Magic Accuracy":13,"Store TP":4,"Jobs":["mnk"]}
+Maculele_Earring = {"Name":"Maculele Earring +2","Skillchain Bonus":7,"DEX":0+11, "AGI":0+11, "PDL":9, "Store TP":0+7, "Accuracy":0+18, "Magic Accuracy":0+18, "Jobs":["dnc"]}
+Maculele_Earring1 = {"Name":"Maculele Earring +1","Skillchain Bonus":6,"PDL":8, "Store TP":0+4, "Accuracy":0+13, "Magic Accuracy":0+13, "Jobs":["dnc"]}
 Nukumi_earring = {"Name":"Nukumi earring +2","STR":0+11, "CHR":0+11, "Axe Skill":12, "PDL":9, "Accuracy":0+18, "Magic Accuracy":0+18, "Jobs":["bst"]}
-Nukumi_earring1 = {"Name":"Nukumi earring +1", "Axe Skill":12, "PDL":9, "Accuracy":0+13, "Magic Accuracy":0+13, "Jobs":["bst"]}
+Nukumi_earring1 = {"Name":"Nukumi earring +1", "Axe Skill":11, "PDL":8, "Accuracy":0+13, "Magic Accuracy":0+13, "Jobs":["bst"]}
 Azimuth_earring = {"Name":"Azimuth earring +2","INT":0+11, "MND":0+11,"Magic Attack":9, "Magic Accuracy":0+18, "Jobs":["geo"]}
-Azimuth_earring1 = {"Name":"Azimuth earring +1","Magic Attack":9, "Magic Accuracy":0+13, "Jobs":["geo"]}
+Azimuth_earring1 = {"Name":"Azimuth earring +1","Magic Attack":8, "Magic Accuracy":0+13, "Jobs":["geo"]}
 Sroda_Earring = {"Name":"Sroda Earring", "DA":7,"Jobs":["bst","drg","smn","pup"]}
 Chevalier_earring = {"Name":"Chevalier's earring +2","STR":0+11,"VIT":0+11,"Magic Accuracy":0+18,"Accuracy":0+18,"DT":-7,"Jobs":["pld"]}
 Chevalier_earring1 = {"Name":"Chevalier's earring +1","Magic Accuracy":0+13,"Accuracy":0+13,"DT":-4,"Jobs":["pld"]}
 Amini_earring = {"Name":"Amini earring +2","STR":0+11, "AGI":0+11,"PDL":9, "Magic Accuracy":0+18, "Accuracy":0+18, "Crit Rate":0+7, "Jobs":["rng"]}
-Amini_earring1 = {"Name":"Amini earring +1","PDL":9, "Magic Accuracy":0+13, "Accuracy":0+13, "Crit Rate":0+4, "Jobs":["rng"]}
-Karagoz_earring = {"Name":"Karagoz earring +2","STR":0+11, "DEX":0+11,"Hand-to-Hand Skill":12, "Magic Accuracy":0+18, "Accuracy":0+18, "Store TP":0+7, "Jobs":["pup"]}
-Karagoz_earring1 = {"Name":"Karagoz earring +1","Hand-to-Hand Skill":12, "Magic Accuracy":0+13, "Accuracy":0+13, "Store TP":0+4, "Jobs":["pup"]}
+Amini_earring1 = {"Name":"Amini earring +1","PDL":8, "Magic Accuracy":0+13, "Accuracy":0+13, "Crit Rate":0+4, "Jobs":["rng"]}
+Karagoz_earring = {"Name":"Karagoz earring +2","STR":0+11, "DEX":0+11,"Hand-to-Hand Skill":12, "Subtle Blow":7, "Magic Accuracy":0+18, "Accuracy":0+18, "Store TP":0+7, "Jobs":["pup"]}
+Karagoz_earring1 = {"Name":"Karagoz earring +1","Hand-to-Hand Skill":11, "Subtle Blow":6, "Magic Accuracy":0+13, "Accuracy":0+13, "Store TP":0+4, "Jobs":["pup"]}
 Hashishin_earring = {"Name":"Hashishin earring +2","STR":0+11, "INT":0+11,"Sword Skill":12, "Magic Accuracy":0+18, "Accuracy":0+18, "DA":0+7, "Jobs":["blu"]}
-Hashishin_earring1 = {"Name":"Hashishin earring +1","Sword Skill":12, "Magic Accuracy":0+13, "Accuracy":0+13, "DA":0+4, "Jobs":["blu"]}
-Erilaz_earring = {"Name":"Erilaz earring +2","STR":0+11, "MND":0+11,"Magic Accuracy":0+18,"Accuracy":0+18,"DT":-7,"Jobs":["run"]}
-Erilaz_earring1 = {"Name":"Erilaz earring +1","Magic Accuracy":0+13, "Accuracy":0+13,"DT":-4,"Jobs":["run"]}
+Hashishin_earring1 = {"Name":"Hashishin earring +1","Sword Skill":11, "Magic Accuracy":0+13, "Accuracy":0+13, "DA":0+4, "Jobs":["blu"]}
+Erilaz_earring = {"Name":"Erilaz earring +2","Magic Evasion":11,"STR":0+11, "MND":0+11,"Magic Accuracy":0+18,"Accuracy":0+18,"DT":-7,"Jobs":["run"]}
+Erilaz_earring1 = {"Name":"Erilaz earring +1","Magic Evasion":11,"Magic Accuracy":0+13, "Accuracy":0+13,"DT":-4,"Jobs":["run"]}
 Odnowa_Earring = {"Name":"Odnowa Earring +1","Name2":"Odnowa Earring +1 R15","STR":3,"VIT":3,"Accuracy":9,"MDT":-2,"DT":-3,"Jobs":all_jobs}
 ears = [Schere_Earring0,Erilaz_earring1,Hashishin_earring1,Karagoz_earring1,Amini_earring1,Chevalier_earring1,Azimuth_earring1,Nukumi_earring1,Maculele_Earring1,Bhikku_Earring1,Skulkers_Earring1,Fili_Earring1,Chasseurs_Earring1,Boii_Earring1,Arbatel_Earring1,Peltast_Earring1,Ebers_Earring1,Kasuga_Earring1,Lethargy_Earring1,Wicce_Earring1,Heathen_Earring1,Hattori_Earring1,Odnowa_Earring,Erilaz_earring,Karagoz_earring,Hashishin_earring,Amini_earring,Chevalier_earring,Sroda_Earring,Azimuth_earring, Nukumi_earring, Maculele_Earring,Bhikku_Earring,Skulkers_Earring,Fili_Earring,Chasseurs_Earring,Enervating_Earring,Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring30,Schere_Earring25,Schere_Earring20,Schere_Earring15,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
 ears2 = [Schere_Earring0,Erilaz_earring1,Hashishin_earring1,Karagoz_earring1,Amini_earring1,Chevalier_earring1,Azimuth_earring1,Nukumi_earring1,Maculele_Earring1,Bhikku_Earring1,Skulkers_Earring1,Fili_Earring1,Chasseurs_Earring1,Boii_Earring1,Arbatel_Earring1,Peltast_Earring1,Ebers_Earring1,Kasuga_Earring1,Lethargy_Earring1,Wicce_Earring1,Heathen_Earring1,Hattori_Earring1,Odnowa_Earring,Erilaz_earring,Karagoz_earring,Hashishin_earring,Amini_earring,Chevalier_earring,Sroda_Earring,Azimuth_earring, Nukumi_earring, Maculele_Earring,Bhikku_Earring,Skulkers_Earring,Fili_Earring,Chasseurs_Earring,Enervating_Earring,Boii_Earring,Arbatel_Earring,Kasuga_Earring,Ebers_Earring,Peltast_Earring,Lethargy_Earring,Sherida_Earring,Balder_Earring,Brutal_Earring,Cessance_Earring,Crematio_Earring,Crepuscular_Earring,Dedition_Earring,Dignitary_Earring,Eabani_Earring,Friomisi_Earring,Ishvara_Earring,Lugra_Earring_Aug,Mache_Earring1,Mache_Earring2,Moonshade_Earring,Odr_Earring,Schere_Earring30,Schere_Earring25,Schere_Earring20,Schere_Earring15,Static_Earring,Suppanomimi,Telos_Earring,Thrud_Earring,Hattori_Earring,Heathen_Earring,Regal_Earring,Malignance_Earring,Barkarole_Earring,Wicce_Earring]
