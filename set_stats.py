@@ -527,7 +527,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0+27, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
