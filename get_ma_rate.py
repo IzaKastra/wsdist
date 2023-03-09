@@ -2,8 +2,8 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 14
-#
+# Version date: 2023 March 09
+
 # This code contains the function used to estimate the average number of attacks per attack round given multi-attack stats and accuracy.
 #
 from numba import njit
@@ -181,51 +181,48 @@ def get_ma_rate2(nhits, qa, ta, da, oa3, oa2, sub_type, hitrate_matrix):
                 total_hits += 1
 
         # Add second MA
-        if random.uniform(0,1) < qa:
-            for m in range(3):
-                if total_hits >= 8:
-                    continue
-                if dual_wield:
-                    sub_hits += 1*hitrate22
-                elif nhits > 1:
-                    main_hits += 1*hitrate12
-                total_hits += 1
-        elif random.uniform(0,1) < ta:
-            for m in range(2):
-                if total_hits >= 8:
-                    continue
-                if dual_wield:
-                    sub_hits += 1*hitrate22
-                elif nhits > 1:
-                    main_hits += 1*hitrate12
-                total_hits += 1
-        elif random.uniform(0,1) < da:
-            for m in range(1):
-                if total_hits >= 8:
-                    continue
-                if dual_wield:
-                    sub_hits += 1*hitrate22
-                elif nhits > 1:
-                    main_hits += 1*hitrate12
-                total_hits += 1
-        elif random.uniform(0,1) < oa3:
-            for m in range(2):
-                if total_hits >= 8:
-                    continue
-                if dual_wield:
-                    sub_hits += 1*hitrate22
-                elif nhits > 1:
-                    main_hits += 1*hitrate12
-                total_hits += 1
-        elif random.uniform(0,1) < oa2:
-            for m in range(1):
-                if total_hits >= 8:
-                    continue
-                if dual_wield:
-                    sub_hits += 1*hitrate22
-                elif nhits > 1:
-                    main_hits += 1*hitrate12
-                total_hits += 1
+        if nhits > 1 or dual_wield:
+            if random.uniform(0,1) < qa:
+                for m in range(3):
+                    if total_hits >= 8:
+                        continue
+                    if dual_wield:
+                        sub_hits += 1*hitrate22
+                    elif nhits > 1:
+                        main_hits += 1*hitrate12
+                    total_hits += 1
+            elif random.uniform(0,1) < ta:
+                for m in range(2):
+                    if total_hits >= 8:
+                        continue
+                    if dual_wield:
+                        sub_hits += 1*hitrate22
+                    elif nhits > 1:
+                        main_hits += 1*hitrate12
+                    total_hits += 1
+            elif random.uniform(0,1) < da:
+                for m in range(1):
+                    if total_hits >= 8:
+                        continue
+                    if dual_wield:
+                        sub_hits += 1*hitrate22
+                    elif nhits > 1:
+                        main_hits += 1*hitrate12
+                    total_hits += 1
+            elif random.uniform(0,1) < oa3:
+                for m in range(2):
+                    if total_hits >= 8:
+                        continue
+                    if nhits > 1:
+                        main_hits += 1*hitrate12
+                        total_hits += 1
+            elif random.uniform(0,1) < oa2:
+                for m in range(1):
+                    if total_hits >= 8:
+                        continue
+                    if nhits > 1:
+                        main_hits += 1*hitrate12
+                        total_hits += 1
 
         main_hits_list[k] = main_hits
         sub_hits_list[k] = sub_hits
@@ -292,10 +289,10 @@ def get_ma_rate3(main_job, nhits, qa, ta, da, oa_list, dual_wield, hitrate_matri
     daken_hits = 0
     kickattack_hits = 0
 
-    hitrate11 = hitrate_matrix[0][0] # Main hand hit rate with the bonus +100 accuracy. Caps at 99%
+    hitrate11 = hitrate_matrix[0][0] # Main hand hit rate with the bonus +100 accuracy. Caps at 99% for single-handed weapons
     hitrate21 = hitrate_matrix[0][1] # Off hand hit rate with the bonus +100 accuracy. Caps at 95%
 
-    hitrate12 = hitrate_matrix[1][0] # Main hand hit rate. Caps at 99%
+    hitrate12 = hitrate_matrix[1][0] # Main hand hit rate. Caps at 99% for single-handed weapons
     hitrate22 = hitrate_matrix[1][1] # Off hand hit rate. Caps at 95%
 
     main_hits += 1*hitrate11 # Add the first main hit (gets bonus accuracy)
@@ -353,7 +350,7 @@ def get_ma_rate3(main_job, nhits, qa, ta, da, oa_list, dual_wield, hitrate_matri
     zanshin_hits = zanshin_bonus + zanshin_sam_bonus
     main_hits += zanshin_hits
 
-    if dual_wield:
+    if dual_wield==True:
         # Add off-hand multi-hits to the first sub hit.
         # Assume Kclub will only ever be in off-hand
         sub_hits += (max(0,min(3, 8-(sub_hits + main_hits)))*qa + \
@@ -374,11 +371,10 @@ def get_ma_rate3(main_job, nhits, qa, ta, da, oa_list, dual_wield, hitrate_matri
                       max(0,min(2, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*oa3_main + \
                       max(0,min(1, 8-(sub_hits + main_hits)))*(1-qa)*(1-ta)*(1-da)*(1-oa3_main)*oa2_main)*hitrate12
 
-
-    remaining_hits_available = 8 - (main_hits + sub_hits)
-
     if tp_round:
-        # Checked in-game as NIN/MNK. Kick Attack animation happens before daken animation, but both can occur on the same attack round
+        # I checked in-game as NIN/MNK. Kick Attack animation happens before daken animation, but both can occur on the same attack round
+        
+        remaining_hits_available = 8 - (main_hits + sub_hits)
         kickattack_hits += min(max(0,remaining_hits_available), 1.0)*kickattacks*hitrate12 # Need to use hitrate21, since hitrate11 gives an extra +100 accuracy for a WS's first hit.
         daken_hits += min(max(0,remaining_hits_available - kickattacks), 1.0)*daken*ranged_hitrate2 # This uses ranged_hitrate2, for the same reason as hitrate21
 
@@ -388,21 +384,28 @@ def get_ma_rate3(main_job, nhits, qa, ta, da, oa_list, dual_wield, hitrate_matri
 
 if __name__ == "__main__":
 
-    nhits = 4
+    nhits = 5
     qa = 0.03
-    ta = 0.21
-    da = 0.26
-    oa3 = 0
-    oa2 = 0
+    ta = 0.06
+    da = 0.64
+    oa3_main = 0
+    oa2_main = 0
+    oa8_sub = 0
+    oa7_sub = 0
+    oa6_sub = 0
+    oa5_sub = 0
+    oa4_sub = 0
+    oa3_sub = 0
+    oa2_sub = 0
+    oa_list = np.array([oa3_main,oa2_main,oa8_sub,oa7_sub,oa6_sub,oa5_sub,oa4_sub,oa3_sub,oa2_sub],dtype=np.float32)
 
-    hitrate_matrix = [[0.99,0.95],
-                      [0.99,0.95]]
+    hitrate_matrix = np.array([[0.95,0.], [0.95,0.]])
     # hitrate_matrix = np.ones_like(hitrate_matrix)
     dual_wield_type = "None"
 
     # main_hits, sub_hits = get_ma_rate(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
     # print(main_hits, sub_hits, main_hits+sub_hits)
-    main_hits, sub_hits = get_ma_rate2(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
+    main_hits, sub_hits = get_ma_rate2(nhits, qa, ta, da, oa3_main, oa2_main, dual_wield_type, hitrate_matrix,)
     print(main_hits, sub_hits, main_hits+sub_hits)
-    main_hits, sub_hits = get_ma_rate3(nhits, qa, ta, da, oa3, oa2, dual_wield_type, hitrate_matrix)
+    main_hits, sub_hits, daken_hits, kickattack_hits, zanshin_hits  = get_ma_rate3("nin", nhits, qa, ta, da, oa_list, dual_wield_type, hitrate_matrix, 0, 0, 0, 0, 0, 0, 0, False, False, False)
     print(main_hits, sub_hits, main_hits+sub_hits)
