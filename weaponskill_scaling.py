@@ -685,6 +685,9 @@ def weaponskill_scaling(main_job, sub_job, ws_name, tp, gearset, equipment, buff
         ftp_rep = True
         wsc = 0.85*(player_str) + dStat[1]*gearset.playerstats[dStat[0]]
         nhits = 5
+        special_set = set_gear(buffs, equipment, main_job, sub_job, -0.15, job_abilities=job_abilities)
+        player_attack1 = special_set.playerstats["Attack1"]
+        player_attack2 = special_set.playerstats["Attack2"]
     elif ws_name == "Scourge":
         ftp  = 3.0
         ftp_rep = False
