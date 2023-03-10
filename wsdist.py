@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 02
+# Version date: 2023 March 10
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -220,16 +220,16 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     qa = gearset.playerstats['QA']/100
     ta = gearset.playerstats['TA']/100
     da = gearset.playerstats['DA']/100
-    oa3_main = 0 # Only applies with Mythic Aftermath on WSs and only on the hand holding the weapon. Same deal as crit rate. OA3 and OA2 are read in properly if using Nagi main hand for AM3. See below.
-    oa2_main = 0 # Only applies with Mythic Aftermath on WSs and only on the hand holding the weapon. Same deal as crit rate. OA3 and OA2 are read in properly if using Nagi main hand for AM3. See below.
-
+    oa3_main = gearset.gear["main"].get("OA3",0)/100
+    oa2_main = gearset.gear["main"].get("OA2",0)/100
+    
     oa8_sub = gearset.gear["sub"].get("OA8",0)/100
     oa7_sub = gearset.gear["sub"].get("OA7",0)/100
     oa6_sub = gearset.gear["sub"].get("OA6",0)/100
     oa5_sub = gearset.gear["sub"].get("OA5",0)/100
     oa4_sub = gearset.gear["sub"].get("OA4",0)/100
-    oa3_sub = gearset.gear["sub"].get("OA4",0)/100
-    oa2_sub = gearset.gear["sub"].get("OA3",0)/100
+    oa3_sub = gearset.gear["sub"].get("OA3",0)/100
+    oa2_sub = gearset.gear["sub"].get("OA2",0)/100
 
     stp = gearset.playerstats['Store TP']/100
 

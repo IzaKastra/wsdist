@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 06
+# Version date: 2023 March 10
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -69,7 +69,7 @@ spell_dict = {# This SHOULD be a copy/paste of the spell_dict in gui_wsdist.py
               "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
                      "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
                      "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
-                     "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
+                     "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix II",
                      "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
                      "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
                      "Luminohelix II", "Noctohelix II","Kaustra"],

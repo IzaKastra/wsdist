@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 March 09)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 March 10)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -109,7 +109,7 @@ spell_dict = {
     "SCH":["Stone","Stone II","Stone III","Stone IV","Stone V","Geohelix II",
             "Water","Water II","Water III","Water IV","Water V","Hydrohelix II",
             "Aero","Aero II","Aero III","Aero IV","Aero V","Anemohelix II",
-            "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix",
+            "Fire","Fire II","Fire III","Fire IV","Fire V","Pyrohelix II",
             "Blizzard","Blizzard II","Blizzard III","Blizzard IV","Blizzard V","Cryohelix II",
             "Thunder","Thunder II","Thunder III","Thunder IV","Thunder V","Ionohelix II",
             "Luminohelix II", "Noctohelix II","Kaustra"],
