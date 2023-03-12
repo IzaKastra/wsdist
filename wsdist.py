@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 10
+# Version date: 2023 March 12
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -475,6 +475,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         # Run TP set separately from WS set. This includes copy/pasted functions just to keep things separate. We can move this entire if-statement to a separate function/file later.
         # Need to check TP sets before reading in WS scaling stuff, or we might accidentally give WS bonuses to our TP attacks
         crit_rate = gearset.playerstats['Crit Rate']/100
+        da_dmg = gearset.playerstats["DA DMG"]/100
+        ta_dmg = gearset.playerstats["TA DMG"]/100
+
 
         # Check hit rates for melee and ranged weapons. None of these hits get +100 accuracy since this is not a weapon skill
         hitrate11 = get_hitrate(player_accuracy1, 0, enemy_eva, 'main',  False, main_type_skill) # First main-hand hit.
@@ -521,23 +524,26 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         # -------------------
         # -------------------
         # -------------------
+        # Empyrean Aftermath lv3: 50% chance to triple damage
         empyrean_aftermath_multiplier = (1+2*0.5) if gearset.gear["main"]["Name"] in ["Verethragna","Twashtar","Almace","Caladbolg","Farsha","Ukonvasara","Redemption","Kannagi","Rhongomiant","Gambanteinn","Masamune","Hvergelmir"] else 1.0
-        relic_aftermath_multiplier = (1+2*0.13) if gearset.gear["main"]["Name"] in ["Spharai","Mandau","Excalibur","Ragnarok","Guttler","Bravura","Apocalypse","Gungnir Kikoku","Amanomurakumo","Mjollnir","Claustrum"] else 1.0
+
+        # Relic weapon hidden effect: 13% chance to triple damage.
+        relic_bonus_multiplier = (1+2*0.13) if gearset.gear["main"]["Name"] in ["Spharai","Mandau","Excalibur","Ragnarok","Guttler","Bravura","Apocalypse","Gungnir Kikoku","Amanomurakumo","Mjollnir","Claustrum"] else 1.0
 
         # Get melee damage from the main-hand attacks
         main_hit_pdif = get_avg_pdif_melee(player_attack1, main_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
         main_hit_damage = get_avg_phys_damage(main_dmg, fstr_main, 0, main_hit_pdif, 1.0, crit_rate, crit_dmg, 0, 0, 0)
 
         # Calculate first main hit damage (relic aftermath only applies to this one hit so we should calculate it separately.)
-        phys += hitrate11*main_hit_damage*hitrate12*empyrean_aftermath_multiplier*relic_aftermath_multiplier
+        phys += hitrate11*main_hit_damage*hitrate12*empyrean_aftermath_multiplier*relic_bonus_multiplier*(1+da_dmg*da)*(1+ta_dmg*ta) # Assuming all hits of a DA/TA are boosted by dmg+ gear.
 
         # Add in the remaining hits, which can get empyrean aftermath procs
-        phys += (main_hits-hitrate11)*main_hit_damage*hitrate12*empyrean_aftermath_multiplier
+        phys += (main_hits-hitrate11)*main_hit_damage*hitrate12*empyrean_aftermath_multiplier*(1+da_dmg*da)*(1+ta_dmg*ta) 
 
         # Get melee damage from the off-hand attacks
         sub_hit_pdif = get_avg_pdif_melee(player_attack2, sub_type_skill, pdl_trait, pdl_gear, enemy_def, crit_rate)
         sub_hit_damage = get_avg_phys_damage(sub_dmg, fstr_sub, 0, sub_hit_pdif, 1.0, crit_rate, crit_dmg, 0, 0, 0)
-        phys += sub_hits*sub_hit_damage*hitrate22
+        phys += sub_hits*sub_hit_damage*hitrate22*(1+da_dmg*da)*(1+ta_dmg*ta) 
 
         # Get melee damage from the extra kick attack
         kick_hit_pdif = get_avg_pdif_melee(player_attack1, "Hand-to-Hand", pdl_trait, pdl_gear, enemy_def, crit_rate)
@@ -1296,8 +1302,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
 
                                     # Require that a ranged weapon that matches your selected ranged weapon skill be equipped IF you're using a ranged weapon skill.
                                     # This prevents something like Seething Bomblet +1 R15 from being BiS for Empyreal Arrow for some reason.
-                                    archery = ["Empyreal Arrow", "Jishnu's Radiance", "Flaming Arrow", "Namas Arrow","Apex Arrow","Refulgent Arrow"]
-                                    marksmanship = ["Coronach","Last Stand","Hot Shot", "Leaden Salute", "Wildfire", "Trueflight","Detonator"]
+                                    archery = ["Empyreal Arrow", "Flaming Arrow", "Namas Arrow","Jishnu's Radiance","Apex Arrow","Refulgent Arrow","Sidewinder","Blast Arrow","Piercing Arrow"]
+                                    marksmanship = ["Last Stand","Hot Shot","Leaden Salute","Wildfire","Coronach","Trueflight", "Detonator","Blast Shot","Slug Shot","Split Shot"]
                                     if ws_name in archery:
                                         if new_set["ranged"]["Skill Type"] != "Archery":
                                             # print("test8: using a bow WS without a bow")
@@ -1306,6 +1312,7 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                         if new_set["ranged"]["Skill Type"] != "Marksmanship":
                                             # print("test9: using a gun WS without a gun")
                                             continue
+
 
                                     # Do not allow dual wielding unless NIN, DNC, THF main or subjobs.
                                     if main_job not in ["NIN", "DNC", "THF", "BLU"] and sub_job not in ["NIN", "DNC"]:
@@ -1449,7 +1456,6 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                             Best_Gearset[slot2] = b2  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
                                             Best_Gearset[slot3] = b3  # Assign to the Best_Gearset dictionary the new piece of gear into the appropriate slot
 
-
                                         if (best_damage%metric / best_damage) < (float(swap_percent)/100) and slot1==slot2 and slot2==slot3 and slot1 not in ["main","sub","ranged","back"] and swap_item1 != equipped_item1:
                                             # If the currently swapped item is within 1% of the best item, then add it to the swaps list.
                                             swaps[slot1].append([new_set[slot1]["Name2"],metric])
@@ -1480,7 +1486,6 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                                 print(f"[{check_slots[i]:<15s}]: {equipped_item1} -> {swap_item1} [{best_time:>6.2f} -> {time_to_ws:>6.2f}]") # Print the new best item and it's statistic
 
 
-
                                             elif (swap_item1 == swap_item2) and (swap_item1 != swap_item3):
                                                 print(f"[{check_slots[i]:<6s} & {check_slots[i3]:<6s}]: [{equipped_item1} & {equipped_item3}] -> [{swap_item1} & {swap_item3}] [{best_time:>6.2f} -> {time_to_ws:>6.2f}]") # Print the new best damage and the new item that led to this new record
 
@@ -1503,7 +1508,6 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
 
                                         time_list[z] = best_time  # Update the damage_list[] array to contain the best damage obtained from this iteration.
                                                                     # This has nothing to do with plotting right now. Only used to compare time between consecutive iterations.
-
 
 
             # TODO: Is this next bit needed now? It was originally only in for when the code ran 50,000 simulations to deal with fluctuations in the damage due to "low" number statistics
