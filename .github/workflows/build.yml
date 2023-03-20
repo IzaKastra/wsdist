@@ -52,7 +52,7 @@ jobs:
     - name: Upload Installer
       uses: actions/upload-artifact@v3
       with: 
-        name: wsdist-installer-only
+        name: wsdist-executable-only
         path: ./dist/gui_wsdist.exe
 
   publish-artifacts:
@@ -67,7 +67,7 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v3
       with:
-        name: wsdist-installer-only
+        name: wsdist-executable-only
         path: ./  
 
     - name: Zip Artifacts
