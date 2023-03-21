@@ -9,16 +9,6 @@ on:
   pull_request:
     branches: [ 'main' ]
 
-  # On the publish of a release.
-  release:
-    types:
-      - published
-
-# Allow concurrent runs except for on pull requests.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 env:
   # System
   TERM: xterm
@@ -82,9 +72,3 @@ jobs:
       with: 
         name: wsdist-full
         path: ./wsdist.zip
-
-    - name: Upload Release Asset
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: ./wsdist.zip
