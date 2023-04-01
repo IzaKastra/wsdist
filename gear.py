@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 10
+# Version date: 2023 April 01
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -258,6 +258,7 @@ grips = [Rigorous_Grip, Utu_Grip, Enki_Strap, Alber_Strap, Niobid_Strap]
 
 
 
+Antitail = {"Name":"Antitail +1","Name2":"Antitail +1 R15","Skill Type":"Throwing","DMG":71,"Delay":252,"Ranged Attack":21,"Throwing Skill":242,"Ranged Accuracy":21,"DA":3+3,"Magic Evasion":15,"Type":"Equipment","Jobs":["war","thf","rng"]}
 Date = {"Name": "Date Shuriken", "Skill Type": "Throwing", "Type":"Shuriken", "DMG": 125, "Delay": 192, "Evasion":5, "Accuracy": 5, "Ranged Accuracy": 5, "Throwing Skill": 242, "DEX": 5, "AGI": 5, "Jobs":["nin"]}
 Happo = {"Name": "Happo Shuriken", "Skill Type": "Throwing", "Type":"Shuriken", "DMG":  99, "Delay": 188, "Accuracy": 6, "Attack": 6, "Ranged Accuracy": 11, "Throwing Skill": 228, "Crit Rate": 2, "Jobs":["nin"]}
 Seki = {"Name": "Seki Shuriken", "Skill Type": "Throwing", "Type":"Shuriken", "DMG": 101, "Delay": 192, "Attack": 13, "Store TP": 2, "Throwing Skill": 242, "Jobs":["nin"]}
@@ -335,7 +336,7 @@ Artemis_Arrow = {"Name":"Artemis's Arrow","Type":"Arrow","DMG":101,"Delay":90,"R
 Eradicating_Bullet = {"Name":"Eradicating Bullet","Type":"Bullet","DMG":289,"Delay":240,"Ranged Accuracy":30,"Ranged Attack":30,"Jobs":["rng"]}
 Decimating_Bullet = {"Name":"Decimating Bullet","Type":"Bullet","DMG":220,"Delay":240,"Ranged Accuracy":10,"Ranged Attack":5,"Jobs":["thf","rng","nin","cor"]}
 Quelling_Bolt = {"Name":"Quelling Bolt","Type":"Bolt","DMG":145,"Delay":192,"Ranged Accuracy":30,"Ranged Attack":30,"Magic Accuracy":30, "Magic Attack":30, "Jobs":["rng"]}
-ammos = [Charis_Feather,Coiste_Bodhar0,Decimating_Bullet,Beryllium_Bolt,Hasty_Pinion,Neo_Animator,Eradicating_Bullet,Quelling_Bolt,Chrono_Arrow,Artemis_Arrow,Hauksbok_Arrow,Hauksbok_Bullet,Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar15,Coiste_Bodhar20,Coiste_Bodhar25,Coiste_Bodhar30,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
+ammos = [Antitail,Charis_Feather,Coiste_Bodhar0,Decimating_Bullet,Beryllium_Bolt,Hasty_Pinion,Neo_Animator,Eradicating_Bullet,Quelling_Bolt,Chrono_Arrow,Artemis_Arrow,Hauksbok_Arrow,Hauksbok_Bullet,Devastating_Bullet,Chrono_Bullet,Yoichi_Arrow,Sroda_Tathlum,Beryllium_Arrow,Living_Bullet,Floestone, Amar_Cluster,Voluspa_Tathlum,Date,Happo,Seki,Aurgelmir_Orb,Cath_Palug_Stone,Coiste_Bodhar15,Coiste_Bodhar20,Coiste_Bodhar25,Coiste_Bodhar30,Crepuscular_Pebble,Ghastly_Tathlum,Knobkierrie,Oshashas_Treatise,Pemphredo_Tathlum,Seething_Bomblet,Yetshila,Empty]
 # Raetic Arrow does not proc for weapon skills.
 
 
