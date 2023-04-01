@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 07
+# Version date: 2023 April 01
 #
 # This code holds the methods for building a player's stats.
 #
@@ -46,6 +46,7 @@ class set_gear:
         subjob = sub_job.upper()
 
         impetus = job_abilities.get("Impetus",False)
+        natures_med_bonus = job_abilities.get("Nature's Meditation",False)
 
         sub_type = gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon, a grip, or nothing. If the item doesn't have a "Type" Key then return "None", meaning nothing is equipped.
         dual_wield = sub_type == 'Weapon'
@@ -133,7 +134,7 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":22,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
-        elif mainjob == "WAR":  # Master Level 20 Warrior stats. Smite and Fencer are added later
+        elif mainjob == "WAR":  # Master Level 20 Warrior stats. Smite and Fencer are added later.
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':110, 'AGI':113, 'INT':104, 'MND':104, 'CHR':107,
                      'Scythe Skill':424+16, 'Dagger Skill':408+16, 'Sword Skill':418+16, 'Hand-to-Hand Skill':334+16, 'Great Katana Skill':0+16, 'Club Skill':408+16, 'Throwing Skill':354+16,
                      'Katana Skill':0+16, 'Axe Skill':437+16,'Great Axe Skill':444+16,'Polearm Skill':408+16,'Staff Skill':418+16,'Great Sword Skill':424+16,'Archery Skill':354+16,'Marksmanship Skill':354+16,
@@ -143,7 +144,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0,'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':0, 'DA':0+18, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Daken':0, 'QA':0, 'TA':0, 'DA':0+18+10+5, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10+10, 'Crit Damage':10+8, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
@@ -359,7 +360,7 @@ class set_gear:
                      'Magic Accuracy':26, 'Magic Attack':0, 'Magic Damage':0, 'Magic Accuracy Skill':0, 'Ninjutsu Magic Attack':0, 'Ninjutsu Damage':0, 'Magic Crit Rate':0,
                      'Magic Burst Damage':0, 'Magic Burst Damage II':0, 'Magic Burst Damage Trait':0, "Magic Burst Accuracy":0,
                      "Quick Draw":0,"Quick Draw II":0,
-                     'Daken':0, 'QA':0, 'TA':8+6, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
+                     'Daken':0, 'QA':0, 'TA':8+6+5, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':8+14, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":20,"Trick Attack":20,"Flourish Bonus":0,"Ranged Crit Damage":0,
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
@@ -1260,9 +1261,9 @@ class set_gear:
         # Berserk/Warcry would also go here, but there is no real benefit to including them in a simulation (in my opinion).
         percent_attack_buff += ws_atk_bonus
 
-        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus + velocity_shot_melee_bonus + last_resort_bonus)
-        self.playerstats['Attack2'] *= (1+percent_attack_buff + velocity_shot_melee_bonus + last_resort_bonus) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
-        self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff + velocity_shot_ranged_bonus) # Smite does not apply to ranged attacks.
+        self.playerstats['Attack1'] *= (1+percent_attack_buff + smite_bonus + 0.2*wyvern_bonus + naegling_attack_bonus + velocity_shot_melee_bonus + last_resort_bonus + (208./1024)*natures_med_bonus)
+        self.playerstats['Attack2'] *= (1+percent_attack_buff + velocity_shot_melee_bonus + last_resort_bonus + (208./1024)*natures_med_bonus) if dual_wield else 1.0 # Smite only applies to main hand, and only when using 2-handed weapons anyway...
+        self.playerstats['Ranged Attack'] *= (1 + percent_attack_buff + percent_rangedattack_buff + velocity_shot_ranged_bonus + (208./1024)*natures_med_bonus) # Smite does not apply to ranged attacks.
 
         # Convert the attack values to integers.
         self.playerstats['Attack1'] = int(self.playerstats['Attack1'])

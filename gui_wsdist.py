@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 March 12)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 April 01)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -515,6 +515,7 @@ while True:
             window["bloodrage toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["mightystrikes toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["lastresort toggle"].update(visible=True if main_job.lower() in ["drk"] else False)
+            window["nat.meditation toggle"].update(visible=True if main_job.lower() in ["blu"] else False)
 
             # Deselect Job abilities when changing jobs so they arent enabled while hidden.
             window["magic burst toggle"].update(False)
@@ -534,6 +535,7 @@ while True:
             window["bloodrage toggle"].update(False)
             window["mightystrikes toggle"].update(False)
             window["lastresort toggle"].update(False)
+            window["nat.meditation toggle"].update(False)
 
             # Enable magic sets for casting jobs.
             if main_job in spell_dict:
@@ -904,6 +906,7 @@ while True:
             hovershot_toggle = values["hovershot toggle"]
             doubleshot_toggle = values["doubleshot toggle"]
             tripleshot_toggle = values["tripleshot toggle"]
+            nature_meditation_toggle = values["nat.meditation toggle"]
             print_swaps = values["print swaps"]
             swap_percent = values["swap percent"]
 
@@ -926,6 +929,7 @@ while True:
                              "Hover Shot":hovershot_toggle,
                              "Double Shot":doubleshot_toggle,
                              "Triple Shot":tripleshot_toggle,
+                             "Nature's Meditation":nature_meditation_toggle,
                              "metric":values["tp priority"],
                              "shell v":values["whm_on"],
                              "storm spell":values["sch_storm"]*whm_on,

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 10
+# Version date: 2023 April 01
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -105,7 +105,7 @@ ws_column2 = [
   sg.vtop(sg.Column([
 #   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],
   [sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
-  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False),sg.Checkbox("True Shot",font=font_choice,key="trueshot toggle",visible=False),sg.Checkbox("Blood Rage",font=font_choice,key="bloodrage toggle",visible=False)],
+  [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False),sg.Checkbox("True Shot",font=font_choice,key="trueshot toggle",visible=False),sg.Checkbox("Blood Rage",font=font_choice,key="bloodrage toggle",visible=False),sg.Checkbox("Nat. Meditation",font=font_choice,key="nat.meditation toggle",visible=False)],
   [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False),sg.Checkbox("Mighty Strikes",font=font_choice,key="mightystrikes toggle",visible=False),sg.Checkbox("Velocity Shot",font=font_choice,key="velocityshot toggle",disabled=False,tooltip="Velocity Shot toggle\n+15% Ranged Attack\n-15% Melee Attack\n-15% Magic Haste",visible=False),sg.Checkbox("Last Resort",font=font_choice,key="lastresort toggle",disabled=False,tooltip="Last Resort\n+25% Job Ability Haste\n+34.77% Attack",visible=False),sg.Checkbox("Triple Shot",font=font_choice,key="tripleshot toggle",disabled=False,tooltip="Triple Shot toggle\n+60% Triple Shot",visible=False)],
   [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +45%\nAttack+90\nCrit Damage +45% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False),sg.Checkbox("Hover Shot",font=font_choice,key="hovershot toggle",disabled=False,tooltip="Hover Shot toggle\n+100% Ranged Damage\n+100 Ranged Accuracy\n+100 Magic Accuracy",visible=False)],
   [sg.Checkbox("Double Shot",font=font_choice,key="doubleshot toggle",disabled=False,tooltip="Double Shot toggle\n+60% Double Shot",visible=False)]
