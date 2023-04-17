@@ -654,8 +654,8 @@ class set_gear:
                     last_resort_bonus += 356./1024
                     self.playerstats["JA Haste"] += 25
             
-            self.playerstats["Attack1"] += 70*endark
-            self.playerstats["Attack2"] += 70*endark
+            self.playerstats["Attack1"] += 90*endark
+            self.playerstats["Attack2"] += 90*endark
             self.playerstats["Accuracy1"] += 20*endark
             self.playerstats["Accuracy2"] += 20*endark
 
