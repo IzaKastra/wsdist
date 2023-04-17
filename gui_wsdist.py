@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 April 01)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 April 17)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -199,7 +199,7 @@ while True:
                 window["enemy_agi"].update(f"{preset_enemies[enemy]['AGI']}")
                 window["enemy_int"].update(f"{preset_enemies[enemy]['INT']}")
                 window["enemy_mnd"].update(f"{preset_enemies[enemy]['MND']}")
-                window["enemy_location"].update(f"({preset_enemies[enemy]['Location']})")
+                window["enemy_location"].update(f"{preset_enemies[enemy]['Location']}")
 
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -460,6 +460,12 @@ while True:
             if sub_job == main_job:
                 window["subjob"].update("None") # Prioritize main job if main and sub are set to the same thing.
 
+
+            # Adjust which subjob abilities appear when changing subjobs
+            window["hasso toggle"].update(visible=True if main_job.lower() in ["sam"] or sub_job.lower() in ["sam"] else False)
+            window["hasso toggle"].update(False)
+
+
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -515,6 +521,8 @@ while True:
             window["bloodrage toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["mightystrikes toggle"].update(visible=True if main_job.lower() in ["war"] else False)
             window["lastresort toggle"].update(visible=True if main_job.lower() in ["drk"] else False)
+            window["endark toggle"].update(visible=True if main_job.lower() in ["drk"] else False)
+            window["hasso toggle"].update(visible=True if main_job.lower() in ["sam"] or sub_job.lower() in ["sam"] else False)
             window["nat.meditation toggle"].update(visible=True if main_job.lower() in ["blu"] else False)
 
             # Deselect Job abilities when changing jobs so they arent enabled while hidden.
@@ -535,6 +543,8 @@ while True:
             window["bloodrage toggle"].update(False)
             window["mightystrikes toggle"].update(False)
             window["lastresort toggle"].update(False)
+            window["endark toggle"].update(False)
+            window["hasso toggle"].update(False)
             window["nat.meditation toggle"].update(False)
 
             # Enable magic sets for casting jobs.
@@ -903,6 +913,8 @@ while True:
             bloodrage_toggle = values["bloodrage toggle"]
             mightystrikes_toggle = values["mightystrikes toggle"]
             lastresort_toggle = values["lastresort toggle"]
+            endark_toggle = values["endark toggle"]
+            hasso_toggle = values["hasso toggle"]
             hovershot_toggle = values["hovershot toggle"]
             doubleshot_toggle = values["doubleshot toggle"]
             tripleshot_toggle = values["tripleshot toggle"]
@@ -926,6 +938,8 @@ while True:
                              "Blood Rage":bloodrage_toggle,
                              "Mighty Strikes":mightystrikes_toggle,
                              "Last Resort":lastresort_toggle,
+                             "Endark II":endark_toggle,
+                             "Hasso":hasso_toggle,
                              "Hover Shot":hovershot_toggle,
                              "Double Shot":doubleshot_toggle,
                              "Triple Shot":tripleshot_toggle,

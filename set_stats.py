@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 April 01
+# Version date: 2023 April 17
 #
 # This code holds the methods for building a player's stats.
 #
@@ -47,6 +47,8 @@ class set_gear:
 
         impetus = job_abilities.get("Impetus",False)
         natures_med_bonus = job_abilities.get("Nature's Meditation",False)
+        endark = job_abilities.get("Endark II", False)
+        hasso = job_abilities.get("Hasso",False)
 
         sub_type = gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon, a grip, or nothing. If the item doesn't have a "Type" Key then return "None", meaning nothing is equipped.
         dual_wield = sub_type == 'Weapon'
@@ -637,7 +639,7 @@ class set_gear:
 
 
         if mainjob == "SAM": # Add Hasso stats
-            if self.gear['main'].get('Skill Type', 'None') in two_handed:
+            if self.gear['main'].get('Skill Type', 'None') in two_handed and hasso:
                 self.playerstats["STR"] += 14
                 self.playerstats["STR"] += 20 # Job point category while using Hasso
                 self.playerstats['JA Haste'] += 10
@@ -651,6 +653,12 @@ class set_gear:
                     self.playerstats["Attack2"] += 40
                     last_resort_bonus += 356./1024
                     self.playerstats["JA Haste"] += 25
+            
+            self.playerstats["Attack1"] += 70*endark
+            self.playerstats["Attack2"] += 70*endark
+            self.playerstats["Accuracy1"] += 20*endark
+            self.playerstats["Accuracy2"] += 20*endark
+
         elif mainjob == "RNG": # Add hover shot and velocity shot bonuses
             if job_abilities.get("Velocity Shot",True):
                 self.playerstats["Ranged Attack"] += 40
@@ -780,7 +788,7 @@ class set_gear:
             self.playerstats["MND"] += 10
             self.playerstats["CHR"] += 9
         elif subjob == "SAM":
-            if self.gear['main'].get('Skill Type', 'None') in two_handed:
+            if self.gear['main'].get('Skill Type', 'None') in two_handed and hasso:
                 self.playerstats["STR"] += 7
                 self.playerstats['JA Haste'] += 10
                 self.playerstats['Accuracy1'] += 10
@@ -994,11 +1002,12 @@ class set_gear:
         elif subjob in subtleblow2_jobs and mainjob not in subtleblow2_jobs:
             self.playerstats["Subtle Blow"] += 10
 
-        dualwield_jobs3 = ["NIN"] # +10 Subtle Blow
-        dualwield_jobs2 = ["DNC","NIN"] # +15 Subtle Blow
-        if subjob in dualwield_jobs3 and mainjob not in dualwield_jobs2:
+        # Jobs with native DW2 and DW3 traits. 
+        dualwield2_jobs = ["THF","DNC","NIN"] # +10 Dual Wield II trait
+        dualwield3_jobs = ["THF","NIN"] # +15 Dual Wield III trait
+        if subjob in dualwield2_jobs and mainjob not in dualwield2_jobs and mainjob != "BLU":
             self.playerstats["Dual Wield"] += 25
-        elif subjob in dualwield_jobs2 and mainjob not in dualwield_jobs2:
+        elif subjob in dualwield2_jobs and mainjob not in dualwield2_jobs and mainjob != "BLU":
             self.playerstats["Dual Wield"] += 15
 
 

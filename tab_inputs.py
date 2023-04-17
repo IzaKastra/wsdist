@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 April 01
+# Version date: 2023 April 17
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -107,8 +107,8 @@ ws_column2 = [
   [sg.Combo(values=spell_dict["NIN"], size=(16,1),default_value=np.random.choice([k for k in spell_dict["NIN"] if "San" in k]), readonly=True, k="select spell",font=font_choice,enable_events=True)],
   [sg.Checkbox("Magic Burst",font=font_choice,key="magic burst toggle",visible=True),sg.Checkbox("Building Flourish",font=font_choice,key="building toggle",visible=False),sg.Checkbox("True Shot",font=font_choice,key="trueshot toggle",visible=False),sg.Checkbox("Blood Rage",font=font_choice,key="bloodrage toggle",visible=False),sg.Checkbox("Nat. Meditation",font=font_choice,key="nat.meditation toggle",visible=False)],
   [sg.Checkbox("Futae",font=font_choice,key="futae toggle",disabled=False,tooltip="Enhance Ninjutsu damage. NIN only.",visible=True),sg.Checkbox("Ebullience",font=font_choice,key="ebullience toggle",disabled=False,tooltip="Enhance Black Magic damage. SCH only.",visible=False),sg.Checkbox("Sneak Attack",font=font_choice,key="sa toggle",disabled=False,tooltip="Sneak Attack. THF only.",visible=False),sg.Checkbox("Footwork",font=font_choice,key="footwork toggle",disabled=False,tooltip="Footwork significantly enhances Kick Attacks (MNK only)\n(Dragon Kick and Tornado Kick).",visible=False),sg.Checkbox("Mighty Strikes",font=font_choice,key="mightystrikes toggle",visible=False),sg.Checkbox("Velocity Shot",font=font_choice,key="velocityshot toggle",disabled=False,tooltip="Velocity Shot toggle\n+15% Ranged Attack\n-15% Melee Attack\n-15% Magic Haste",visible=False),sg.Checkbox("Last Resort",font=font_choice,key="lastresort toggle",disabled=False,tooltip="Last Resort\n+25% Job Ability Haste\n+34.77% Attack",visible=False),sg.Checkbox("Triple Shot",font=font_choice,key="tripleshot toggle",disabled=False,tooltip="Triple Shot toggle\n+60% Triple Shot",visible=False)],
-  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +45%\nAttack+90\nCrit Damage +45% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False),sg.Checkbox("Hover Shot",font=font_choice,key="hovershot toggle",disabled=False,tooltip="Hover Shot toggle\n+100% Ranged Damage\n+100 Ranged Accuracy\n+100 Magic Accuracy",visible=False)],
-  [sg.Checkbox("Double Shot",font=font_choice,key="doubleshot toggle",disabled=False,tooltip="Double Shot toggle\n+60% Double Shot",visible=False)]
+  [sg.Checkbox("Trick Attack",font=font_choice,key="ta toggle",disabled=False,tooltip="Trick Attack. THF only.",visible=False),sg.Checkbox("Impetus",font=font_choice,key="impetus toggle",disabled=False,tooltip="Assume 90% Impetus bonus:\nCrit Rate +45%\nAttack+90\nCrit Damage +45% (if using Bhikku Body)",visible=False),sg.Combo(values=special_flourishes, size=(20,1),default_value="No Flourish", readonly=True, k="select flourish",font=font_choice,enable_events=True, visible=False),sg.Checkbox("Hover Shot",font=font_choice,key="hovershot toggle",disabled=False,tooltip="Hover Shot toggle\n+100% Ranged Damage\n+100 Ranged Accuracy\n+100 Magic Accuracy",visible=False),sg.Checkbox("Endark II",font=font_choice,key="endark toggle",disabled=False,tooltip="+70 Attack (80\% of 600 Dark Magic Skill)\n+20 Accuracy from Job Points",visible=False)],
+  [sg.Checkbox("Double Shot",font=font_choice,key="doubleshot toggle",disabled=False,tooltip="Double Shot toggle\n+60% Double Shot",visible=False),sg.Checkbox("Hasso",font=font_choice,key="hasso toggle",disabled=False,tooltip="+10% JA Haste\n+7 STR\n+10 Accuracy",visible=False)]
   ],))
 
 
@@ -122,8 +122,8 @@ buffs_whm_column = [
   [sg.Combo(values=("Haste","Haste II","None"), default_value="Haste", readonly=True, key="nhaste",size=(16,1),font=font_choice)],
   [sg.Combo(values=("Boost-STR","Boost-DEX","Boost-VIT","Boost-AGI","Boost-INT","Boost-MND","Boost-CHR","None"), default_value="None", readonly=True, key="whm_boost",size=(16,1),font=font_choice)],
   [sg.Combo(values=("Sandstorm II","Rainstorm II","Windstorm II","Firestorm II","Hailstorm II","Thunderstorm II","Aurorastorm II","Voidstorm II","None"), default_value="None", readonly=True, key="sch_storm",size=(16,1),font=font_choice)],
-  [sg.Text("Food:",font=font_choice)],
-  [sg.Combo(values=food_list, default_value="Grape Daifuku", readonly=True, key="food",size=(15,1),font=font_choice)],
+  [sg.Text("Food:",font=font_choice,)],
+  [sg.Combo(values=food_list, default_value="Grape Daifuku", readonly=True, key="food",size=(16,1),font=font_choice)],
   [sg.Text("",font=font_choice)]
 ]
 
@@ -193,8 +193,8 @@ nopad = [1,2]
 
 default_enemy = "Apex Bat" # Just a default value so the fields are populated on start up.
 enemy_stat_column = [
-  [sg.Text("Enemy:", font=font_choice, size=[6,2],justification="r"), sg.Column([[sg.Combo(values=tuple(list(preset_enemies.keys())+["Custom"]), default_value=preset_enemies[default_enemy]["Name"], readonly=True, k="enemy_name", size=[20,1],font=font_choice,enable_events=True)],
-  [sg.Text(f"({preset_enemies[default_enemy]['Location']})",font=font_choice,key="enemy_location")]])],
+  [sg.Text("Enemy:", font=font_choice, size=[6,2],justification="r"), sg.Column([[sg.Combo(values=tuple(list(preset_enemies.keys())+["Custom"]), default_value=preset_enemies[default_enemy]["Name"], readonly=True, k="enemy_name", size=[25,1],font=font_choice,enable_events=True)],
+  [sg.Text(f"{preset_enemies[default_enemy]['Location']}",size=(25,1),font=font_choice,key="enemy_location")]])],
   [sg.Text("Level:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Level"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_level"),],
   [sg.Text("Evasion:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Evasion"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_evasion"),sg.Text("AGI:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["AGI"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_agi")],
   [sg.Text("Defense:",size=text_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["Defense"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_defense"),sg.Text("VIT:",size=stat_length,font=font_choice,justification="r",border_width=bwidth,pad=nopad),sg.Input(preset_enemies[default_enemy]["VIT"],size=input_length,pad=nopad,border_width=bwidth,font=font_choice,key="enemy_vit")],
