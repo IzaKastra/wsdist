@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 March 12
+# Version date: 2023 April 19
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -1411,8 +1411,15 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
                                     pdt = 0
                                     mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
                                     for slot in new_set:
-                                        pdt += new_set[slot].get("PDT",0) + new_set[slot].get("DT",0) + new_set[slot].get("PDT2",0)
+                                        pdt += new_set[slot].get("PDT",0) + new_set[slot].get("DT",0)
                                         mdt += new_set[slot].get("MDT",0) + new_set[slot].get("DT",0)
+
+                                    pdt = -50 if pdt < -50 else pdt
+                                    mdt = -50 if mdt < -50 else mdt
+                                    for slot in new_set:
+                                        pdt += new_set[slot].get("PDT2",0)
+                                        mdt += new_set[slot].get("MDT2",0)
+
                                     if pdt > pdt_thresh_temp or mdt > mdt_thresh_temp:
                                         continue
 
@@ -1536,9 +1543,16 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         pdt = 0
         mdt = 0 - 29*job_abilities["shell v"] # If WHM is selected on the GUI, then assume you have shell V active
         for slot in Best_Gearset:
-            pdt += Best_Gearset[slot].get("PDT",0) + Best_Gearset[slot].get("DT",0) + Best_Gearset[slot].get("PDT2",0)
+            pdt += Best_Gearset[slot].get("PDT",0) + Best_Gearset[slot].get("DT",0)
             mdt += Best_Gearset[slot].get("MDT",0) + Best_Gearset[slot].get("DT",0)
             # print(Best_Gearset[slot]["Name2"],Best_Gearset[slot].get("PDT",0),Best_Gearset[slot].get("DT",0))
+
+        pdt = -50 if pdt < -50 else pdt
+        mdt = -50 if mdt < -50 else mdt
+        for slot in new_set:
+            pdt += Best_Gearset[slot].get("PDT2",0)
+            mdt += Best_Gearset[slot].get("MDT2",0)
+
 
         # Compare the pdt and mdt values from this iteration with the previous iteration.
         if pdt == pdt_old and mdt == mdt_old:
@@ -1553,8 +1567,8 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
         pdt_old = pdt
         mdt_old = mdt
 
-        pdt_thresh_temp = pdt - 1 if pdt-1 > -50 else -50
-        mdt_thresh_temp = mdt - 1 if mdt-1 > -50 else -50
+        pdt_thresh_temp = pdt - 1 if pdt-1 > pdt_thresh else pdt_thresh
+        mdt_thresh_temp = mdt - 1 if mdt-1 > mdt_thresh else mdt_thresh
         
         print(f"Current best set: PDT:{pdt},  MDT:{mdt}")
         # print(f"Setting new targets: PDT:{mdt_thresh_temp},  MDT:{mdt_thresh_temp}\n")

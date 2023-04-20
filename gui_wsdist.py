@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 April 17)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 April 19)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -696,8 +696,11 @@ while True:
             conditions["PDT"] = conditions["PDT"] * -1 if conditions["PDT"] > 0 else conditions["PDT"] # Allow the user to input positive ot negative values to avoid confusion.
             conditions["MDT"] = conditions["MDT"] * -1 if conditions["MDT"] > 0 else conditions["MDT"]
 
-            conditions["PDT"] = -50 if conditions["PDT"] < -50 else conditions["PDT"] # Limit PDT and MDT to -50 so the code doesn't try to find 70% DT that doesnt do anything.
-            conditions["MDT"] = -50 if conditions["MDT"] < -50 else conditions["MDT"]
+            pdt_input_limit = -100 # We don't really need these limits anymore since we added a convergence condition, but may as well keep them here for now anyway.
+            mdt_input_limit = -100
+
+            conditions["PDT"] = pdt_input_limit if conditions["PDT"] < pdt_input_limit else conditions["PDT"] 
+            conditions["MDT"] = mdt_input_limit if conditions["MDT"] < mdt_input_limit else conditions["MDT"]
 
             # How many maximum iterations before assuming converged? Currently hard-coded to 10 and 0. 0 means "do not find best set."
             # Usually it should finish with 3~5 iterations, but more doesn't hurt since the code will end earlier if it finds the best set earlier.
@@ -1229,10 +1232,18 @@ while True:
                 window["kickattack stat"].update(f"{'Kick Attacks:':<16s} {kickattack:>4d}")
 
                 pdt = int(gearset.playerstats["PDT"]) + int(gearset.playerstats["DT"])
+                pdt0 = pdt
+                pdt = -50 if pdt < -50 else pdt
                 pdt2 = int(gearset.playerstats["PDT2"])
                 window["pdt stat"].update(f"{'Physical DT:':<16s} {pdt+pdt2:>4d}")
+                window[f"pdt stat"].set_tooltip(f"Total PDT: {pdt0+pdt2}%")
 
                 mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"]) - 29*values["whm_on"]
+                mdt0 = mdt
+                mdt2 = 0
+                mdt = -50 if mdt < -50 else mdt
+                window[f"mdt stat"].set_tooltip(f"Total MDT: {mdt0+mdt2}%")
+
                 window["mdt stat"].update(f"{'Magical DT:':<16s} {mdt:>4d}")
 
                 meva = int(gearset.playerstats["Magic Evasion"])
