@@ -14761,3 +14761,37 @@
 28670;leafkin shield
 28671;butznar shield
 26365;cornelia's belt
+21535;Varga Purnikawa
+21590;Mpu Gandring
+21646;Caliburnus
+21653;Helheim
+21730;Spalirisos
+21785;Laphria
+21837;Foenaria
+21891;Gae Buide
+21932;Dokoku
+21986;Kusanagi-no-Tsurugi
+22002;Lorg Mor
+22106;Opashoro
+22164;Earp
+22163;Pinaka
+17322;bayeux arrow
+17341;bayeux bullet
+13471;Cornelia's ring
+13472;Ephramad's ring
+13474;Fickblix's ring
+13488;Gurebu-Orebu's ring
+13471;Lehko Habhoka's ring
+13478;Medada's ring
+13479;Ragelise's ring
+
+# Need to wait on the icons to be released first.
+#26227;Cornelia's ring
+#26231;Ephramad's ring
+#26230;Fickblix's ring
+#26226;Gurebu-Orebu's ring
+#26229;Lehko Habhoka's ring
+#26225;Medada's ring
+#26228;Ragelise's ring
+#22309;bayeux arrow
+#22308;bayeux bullet
