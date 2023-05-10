@@ -304,8 +304,8 @@ Gleti_Crossbow20 = {"Name":"Gleti's Crossbow","Name2":"Gleti's Crossbow R20","Ra
 Gleti_Crossbow25 = {"Name":"Gleti's Crossbow","Name2":"Gleti's Crossbow R25","Rank":25,"Type":"Weapon","Skill Type":"Marksmanship","AGI":15, "MND":15, "DMG":115+8, "Delay":432, "Ranged Accuracy":40+10, "Ranged Attack":30+40, "Marksmanship Skill":255, "Store TP":5, "Crit Rate":5, "Weaponskill Damage":10, "Magic Accuracy":0+10, "Jobs":["rng"]}
 Gleti_Crossbow30 = {"Name":"Gleti's Crossbow","Name2":"Gleti's Crossbow R30","Rank":30,"Type":"Weapon","Skill Type":"Marksmanship","AGI":15, "MND":15, "DMG":115+9, "Delay":432, "Ranged Accuracy":40+15, "Ranged Attack":30+45, "Marksmanship Skill":255, "Store TP":5, "Crit Rate":5, "Weaponskill Damage":10, "Magic Accuracy":0+15, "Jobs":["rng"]}
 
-Earp = {"Name":"Earp", "Type":"Weapon", "Skill Type":"Marksmanship", "Marksmanship Skill":277, "DMG":162, "Delay":582, "DEX":35,"AGI":35,"Magic Accuracy Skill":277,"Crit Rate":15,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rng","cor"]}
-Pinaka = {"Name":"Pinaka", "Type":"Weapon", "Skill Type":"Archery", "Archery Skill":277, "DMG":324, "Delay":524,"STR":35,"AGI":35,"Store TP":10, "Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rng"]}
+Earp = {"Name":"Earp", "Type":"Gun", "Skill Type":"Marksmanship", "Marksmanship Skill":277, "DMG":162, "Delay":582, "DEX":35,"AGI":35,"Magic Accuracy Skill":277,"Crit Rate":15,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rng","cor"]}
+Pinaka = {"Name":"Pinaka", "Type":"Bow", "Skill Type":"Archery", "Archery Skill":277, "DMG":324, "Delay":524,"STR":35,"AGI":35,"Store TP":10, "Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rng"]}
 
 ranged = [Pinaka,Earp,Exalted_Crossbow,Gastraphetes,Annihilator,Accipiter,Fail_not,Gandiva,Mpaca_Bow30,Mpaca_Bow25,Mpaca_Bow20,Mpaca_Bow15,Gleti_Crossbow30,Gleti_Crossbow25,Gleti_Crossbow20,Gleti_Crossbow15,Molybdosis,Ataktos,Death_Penalty,Fomalhaut,Yoichinoyumi,Armageddon,Empty,Donar_Gun,Ullr]
 
