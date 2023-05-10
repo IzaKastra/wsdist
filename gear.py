@@ -257,7 +257,7 @@ Culminus = {"Name":"Culminus","Type":"Shield","Skill Type":"Shield","Magic Attac
 Sacro_Bulwark = {"Name":"Sacro Bulwark","Type":"Shield","Skill Type":"Shield","DT":-10, "Jobs":["war","rdm","pld","bst"]}
 
 Varga_Purnikawa = {"Name":"Varga Purnikawa", "Type":"Weapon", "Skill Type":"Hand-to-Hand", "Hand-to-Hand Skill":277, "DMG":213, "Delay":116,"STR":35,"DEX":35,"Crit Rate":15, "Magic Accuracy Skill":277,"Magic Damage":263,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["mnk","pup"]}
-Mpu_Gandring = {"Name":"Mpu Gandring", "Type":"Weapon", "Skill Type":"Dagger", "Dagger Skill":277, "DMG":137, "Delay":176, "DEX":35,"AGI":35,"TA":6,"Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rdm","thf","brd","dnc"]}
+Mpu_Gandring = {"Name":"Mpu Gandring", "Type":"Weapon", "Skill Type":"Dagger", "Dagger Skill":277, "DMG":137, "Delay":176, "DEX":35,"AGI":35,"CHR":35,"TA":6,"Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["rdm","thf","brd","dnc"]}
 Caliburnus = {"Name":"Caliburnus", "Type":"Weapon", "Skill Type":"Sword", "Sword Skill":277, "DMG":181, "Delay":233, "DEX":35,"MND":35,"Magic Damage":263,"Accuracy":35,"Attack":70, "Magic Accuracy Skill":277,"DT":-10,"Magic Accuracy":35,"PDL":5,"Jobs":["rdm","pld","blu"]}
 Helheim = {"Name":"Helheim", "Type":"Weapon", "Skill Type":"Great Sword", "Great Sword Skill":277, "DMG":336, "Delay":431,"STR":35,"VIT":35,"Store TP":10, "Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["war","pld","drk","run"]}
 Spalirisos = {"Name":"Spalirisos", "Type":"Weapon", "Skill Type":"Axe", "Axe Skill":277, "DMG":218, "Delay":280,"STR":35,"DEX":35,"Crit Rate":15, "Magic Accuracy Skill":277,"Accuracy":35,"Magic Accuracy":35,"PDL":5,"Jobs":["bst"]}
