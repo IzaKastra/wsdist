@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 April 19
+# Version date: 2023 May 10
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -644,13 +644,18 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             klimaform_bonus += 0.25
 
         affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
+      
+        storm_elements = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark"}
 
         dayweather = 1.0
         if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
-          if main_job == "SCH":
+          if main_job == "SCH" or (storm_elements.get(job_abilities["storm spell"],"None")==element):
             dayweather = 1.25
           elif sub_job == "SCH":
             dayweather = 1.1
+
+
+        # print(storm_elements.get(job_abilities["storm spell"],"None"),element,dayweather)
 
 #        dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.22, 1.35. Assume no day/weather bonus/penalty.
         magic_attack_ratio = (100 + player_mab) / (100 + enemy_mdb)
@@ -750,12 +755,15 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
             resist_state = get_resist_state_average(magic_hit_rate)
 
+
+            storm_elements = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark","None":"None"}
+
             dayweather = 1.0
             if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
-              if main_job == "SCH":
-                dayweather = 1.25
-              elif sub_job == "SCH":
-                dayweather = 1.1
+                if main_job == "SCH" or (storm_elements.get(job_abilities["storm spell"],"None")==element):
+                    dayweather = 1.25
+                elif sub_job == "SCH":
+                    dayweather = 1.1
 
             affinity = 1 + 0.05*gearset.playerstats[f'{element} Affinity'] + 0.05*(gearset.playerstats[f'{element} Affinity']>0) # Affinity Bonus. Only really applies to Magian Trial staves. Archon Ring is different.
             #dayweather = 1.0 # 0.65, 0.8, 0.9, 1.0, 1.1, 1.2, 1.35. Assume no day/weather bonus/penalty.
@@ -974,9 +982,11 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         magic_hit_rate = get_magic_hit_rate(magic_accuracy, enemy_meva) if enemy_meva > 0 else 1.0
         resist_state = get_resist_state_average(magic_hit_rate) # TODO: Use a randomizer instead of the average resist state for hybrid simulations.
 
+        storm_elements = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark","None":"None"}
+
         dayweather = 1.0
         if gearset.gear["waist"]["Name"]=="Hachirin-no-Obi":
-          if main_job == "SCH":
+          if main_job == "SCH" or (storm_elements.get(job_abilities["storm spell"],"None")==element):
             dayweather = 1.25
           elif sub_job == "SCH":
             dayweather = 1.1
