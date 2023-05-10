@@ -14775,8 +14775,8 @@
 22106;Opashoro
 22164;Earp
 22163;Pinaka
-17322;bayeux arrow
-17341;bayeux bullet
+22309;bayeux arrow
+22308;bayeux bullet
 13471;Cornelia's ring
 13472;Ephramad's ring
 13474;Fickblix's ring
@@ -14793,5 +14793,3 @@
 #26229;Lehko Habhoka's ring
 #26225;Medada's ring
 #26228;Ragelise's ring
-#22309;bayeux arrow
-#22308;bayeux bullet
