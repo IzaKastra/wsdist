@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 April 17
+# Version date: 2023 May 10
 #
 # This code holds the methods for building a player's stats.
 #
@@ -49,7 +49,7 @@ class set_gear:
         natures_med_bonus = job_abilities.get("Nature's Meditation",False)
         endark = job_abilities.get("Endark II", False)
         hasso = job_abilities.get("Hasso",False)
-        aftermath = job_abilities.get("Aftermath",False)
+        aftermath = int(job_abilities.get("Aftermath",0))
 
         sub_type = gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon, a grip, or nothing. If the item doesn't have a "Type" Key then return "None", meaning nothing is equipped.
         dual_wield = sub_type == 'Weapon'

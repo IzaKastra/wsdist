@@ -101,6 +101,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
     # Before reading in stats from gear, add aftermath bonuses to the stats.
     # We do it in this order so we can use dictionary names instead of variable names when adding things like "Subtle Blow"
+    # We copy/paste this whole section into gui_wsdist.py so the Outputs tab has the correct stats displayed.
     aftermath = int(job_abilities.get("Aftermath",0))
     relic_am_dict = {"Spharai":[["Subtle Blow",10]], # We add the "Kick Attacks" +15% in the set_stats.py file.
                     "Mandau":[["Crit Rate",5],["Crit Damage",5]],

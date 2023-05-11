@@ -1110,6 +1110,7 @@ while True:
             elif event == "get stats":
                 from set_stats import *
 
+
                 # Defining the empty set lets us see the contribution to stats from gear vs base.
                 # It also means it'll call the set_gear() class twice, so expect two print statements if testing/debugging with the "Calc sets" button.
                 empty_set = {'main':Hitaki,'sub':Empty,'ranged':Empty,'ammo':Empty,'head':Empty,'body':Empty,'hands':Empty,'legs':Empty,'feet':Empty,'neck':Empty,'waist':Empty,'ear1':Empty,'ear2':Empty,'ring1':Empty,'ring2':Empty,'back':Empty,}
@@ -1125,6 +1126,95 @@ while True:
                     player_value = f"{k}: {int(empty_gearset.playerstats[k]):3d}{'+' + str(int(gearset.playerstats[k])-int(empty_gearset.playerstats[k])):>5s}"
                     window[f"{k.lower()} stat"].update(f"{k}: {int(gearset.playerstats[k])}")
                     window[f"{k.lower()} stat"].set_tooltip(player_value)
+
+
+                main_wpn_name = gearset.equipment()['main'] # TODO: Why is this one using the .equipment() method, but the other two are using .gear[]
+                rng_wpn_name = gearset.gear['ranged']['Name'] # Use name1 so we don't have to deal with " R15" in the check_weaponskill_bonuses.py file
+
+                aftermath = int(job_abilities.get("Aftermath",0))
+                relic_am_dict = {"Spharai":[["Subtle Blow",10]], # We add the "Kick Attacks" +15% in the set_stats.py file.
+                                "Mandau":[["Crit Rate",5],["Crit Damage",5]],
+                                "Ragnarok":[["Crit Rate",5],["Accuracy1",15],["Accuracy2",15]],
+                                "Bravura":[["DT",-10]],
+                                "Apocalypse":[["JA Haste",10],["Accuracy1",15],["Accuracy2",15]],
+                                "Gungir":[["DA",5]], # Attack +5% added in the set_stats.py file.
+                                "Kikoku":[["Subtle Blow",10]], # Attack +10% added in set_stats.py
+                                "Amanomurakumo":[["Zanshin",10],["Store TP",10]],
+                                "Mjollnir":[["Accuracy1",20],["Accuracy2",20],["Magic Accuracy",20]],
+                                "Claustrum":[["DT",-20]],
+                                "Yoichinoyumi":[["Ranged Accuracy",20]],
+                }
+                mythic_am_scaling = 0.85
+                myth99max = (99-40)*mythic_am_scaling + 40 
+                myth49max = (49-30)*mythic_am_scaling + 30
+                mythic_am_dict = {"Conqueror":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Glanzfaust":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Vajra":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Gastraphetes":[  [["Ranged Accuracy",myth49max]], [["Ranged Attack",myth99max]]   ],
+                                "Death Penalty":[  [["Ranged Accuracy",myth49max]], [["Ranged Attack",myth99max]]   ],
+                                "Vajra":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Burtgang":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Liberator":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Aymur":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Kogarasumaru":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Nagi":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Nirvana":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Ryunohige":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Tizona":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Magic Accuracy",myth49max]]   ],
+                                "Carnwenhan":[  [["Magic Accuracy",myth49max]],[["Accuracy1",myth49max],["Accuracy2",myth49max]],    ],
+                                "Yagrush":[  [["Magic Accuracy",myth49max]],[["Accuracy1",myth49max],["Accuracy2",myth49max]],    ],
+                                "Laevateinn":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                                "Tupsimati":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                                "Idris":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                                "Murgleis":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                                "Kenkonken":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Terpsichore":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                                "Epeolatry":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ]
+                }
+
+                prime_am_dict = {"Caliburnus":[  ["PDL",5]],
+                                "Dokoku":[  ["PDL",5]],
+                                "Earp":[  ["PDL",5]],
+                                "Foenaria":[  ["PDL",5]],
+                                "Gae Buide":[  ["PDL",5]],
+                                "Helheim":[  ["PDL",5]],
+                                "Kusanagi-no-Tsurugi":[  ["PDL",5]],
+                                "Laphria":[  ["PDL",5]],
+                                "Lorg Mor":[  ["Magic Damage",20]],
+                                "Mpu Gandring":[  ["PDL",5]],
+                                "Opashoro":[  ["Magic Damage",20],["Magic Attack",20]],
+                                "Pinaka":[  ["PDL",5]],
+                                "Spalirisos":[  ["PDL",5]],
+                                "Varga Purnikawa":[  ["PDL",5]],
+                }
+
+
+
+                if aftermath > 0:
+                    # Relic Aftermath effects
+                    if main_wpn_name in relic_am_dict:
+                        for stat in relic_am_dict[main_wpn_name]:
+                            gearset.playerstats[stat[0]] += stat[1]
+                    if rng_wpn_name in relic_am_dict:
+                        for stat in relic_am_dict[rng_wpn_name]:
+                            gearset.playerstats[stat[0]] += stat[1]
+
+                    # Mythic Aftermath Lv1 and Lv2 effects. We deal with Lv3 aftermath after we've already read-in the OA2/OA3 stats for the main-hand weapon.
+                    if main_wpn_name in mythic_am_dict and aftermath < 3:
+                        for stat in mythic_am_dict[main_wpn_name][aftermath-1]:
+                            gearset.playerstats[stat[0]] += stat[1]
+                    if rng_wpn_name in mythic_am_dict and aftermath < 3:
+                        for stat in mythic_am_dict[rng_wpn_name][aftermath-1]:
+                            gearset.playerstats[stat[0]] += stat[1]
+
+
+                    # Prime weapon aftermath effects
+                    if main_wpn_name in prime_am_dict:
+                        for stat in prime_am_dict[main_wpn_name]:
+                            gearset.playerstats[stat[0]] += stat[1]
+                    if rng_wpn_name in prime_am_dict:
+                        for stat in prime_am_dict[rng_wpn_name]:
+                            gearset.playerstats[stat[0]] += stat[1]
 
 
                 player_accuracy1 = int(gearset.playerstats['Accuracy1'])
