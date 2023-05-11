@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 10
+# Version date: 2023 May 11
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -22,12 +22,18 @@ all_jobs = ["war","mnk","whm","blm","rdm","thf","pld","drk","bst","brd","rng","s
 Empty = {"Name":"Empty", "Jobs":all_jobs, "DMG":0, "Delay":999, "Skill Type":"None", "Type":"None"}
 
 Grape_Daifuku = {"Name": "Grape Daifuku", "Type":"Food","STR":2, "VIT":3, "Attack":50, "Ranged Attack":50, "Accuracy":80, "Ranged Accuracy":80, "Magic Attack":3}
+Grape_Daifuku2 = {"Name": "Grape Daifuku +1", "Type":"Food","STR":3, "VIT":4, "Attack":55, "Ranged Attack":55, "Accuracy":85, "Ranged Accuracy":85, "Magic Attack":4}
 Sublime_Sushi = {"Name": "Sublime Sushi", "Type":"Food","STR":6, "DEX":7, "MND":-3, "CHR":6, "Accuracy":100, "Ranged Accuracy":100}
+Sublime_Sushi2 = {"Name": "Sublime Sushi +1", "Type":"Food","STR":7, "DEX":8, "MND":-4, "CHR":7, "Accuracy":105, "Ranged Accuracy":105}
 Marine_Stewpot = {"Name": "Marine Stewpot", "Type":"Food", "Accuracy":90, "Ranged Accuracy":90, "Magic Accuracy":90}
-Tropical_Crepe = {"Name": "Tropical Crepe", "Type":"Food", "Magic Accuracy":90, "INT":2, "MND":2}
+Tropical_Crepe = {"Name": "Tropical Crepe", "Type":"Food", "Magic Accuracy":90, "INT":2, "MND":2, "Magic Def":1}
+Tropical_Crepe2 = {"Name": "Crepe des rois", "Type":"Food", "Magic Accuracy":95, "INT":2, "MND":2, "Magic Def":1}
 Red_Curry_Bun = {"Name": "Red Curry Bun", "Type":"Food", "STR":7, "AGI":1, "INT":-2, "Attack":150, "Ranged Attack":75,}
-Omellete_Sandwich = {"Name": "Omelette Sandwich", "Type":"Food", "Accuracy":80, "VIT":7, "MND":7}
-all_food = [Omellete_Sandwich, Red_Curry_Bun, Grape_Daifuku, Sublime_Sushi,Marine_Stewpot,Tropical_Crepe]
+Omellete_Sandwich = {"Name": "Om. Sandwich", "Type":"Food", "Accuracy":80, "VIT":7, "MND":7}
+Omellete_Sandwich2 = {"Name": "Om. Sandwich +1", "Type":"Food", "Accuracy":85, "VIT":8, "MND":8}
+Gyudon = {"Name": "Gyudon", "Type":"Food", "DA":5, "Weaponskill Damage":5}
+Gyudon2 = {"Name": "Gyudon +1", "Type":"Food", "DA":6, "Weaponskill Damage":6}
+all_food = [Gyudon, Gyudon2, Omellete_Sandwich, Omellete_Sandwich2, Red_Curry_Bun, Grape_Daifuku, Grape_Daifuku2, Sublime_Sushi, Sublime_Sushi2, Marine_Stewpot, Tropical_Crepe, Tropical_Crepe2]
 
 # If adding new weapons, you must include a dictionary key for "Skill Type", "Type", "DMG", and "Delay". Use the entries already present as examples
 Amanomurakumo = {"Name": "Amanomurakumo", "Name2": "Amanomurakumo R15", "Skill Type": "Great Katana", "Type":"Weapon", "DMG": 308+18, "Delay": 437, "Accuracy": 60, "Great Katana Skill": 269, "Magic Accuracy Skill": 228, "Skillchain Bonus":0+5, "Jobs":["sam"]}

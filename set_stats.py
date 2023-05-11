@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 10
+# Version date: 2023 May 11
 #
 # This code holds the methods for building a player's stats.
 #
@@ -1356,6 +1356,8 @@ class set_gear:
             self.playerstats['Magic Accuracy'] += buffs['food'].get('Magic Accuracy',0)
             self.playerstats['Magic Attack'] += buffs['food'].get('Magic Attack',0)
             self.playerstats['Store TP'] += buffs['food'].get('Store TP',0)
+            self.playerstats['Weaponskill Damage'] += buffs['food'].get('Weaponskill Damage',0)
+            self.playerstats['DA'] += buffs['food'].get('DA',0)
 
         if gear["ranged"].get("Skill Type","None") not in ["Marksmanship","Archery"] and gear["ammo"].get("Skill Type","None") != "Throwing":
             self.playerstats["Ranged Attack"] = 0
