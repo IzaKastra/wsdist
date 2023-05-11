@@ -100,7 +100,8 @@ ws_column2 = [
   [sg.Combo(values=sorted(ws_dict["Katana"]), default_value="Blade: Shun", size=(20,1),readonly=True, k="select weaponskill",font=font_choice,enable_events=True)],
   [sg.Text("Min.TP:",font=font_choice,key="minTP label",size=(13,1)), sg.Input("1500",key="mintp",size=(5,1),font=font_choice,tooltip="Lower limit for weapon skill TP.")],
   [sg.Text("Max.TP:",font=font_choice,key="maxTP label",size=(13,1)), sg.Input("1800",key="maxtp",size=(5,1),font=font_choice,tooltip="Upper limit for weapon skill TP.")],
-  [sg.Text("Starting TP:",font=font_choice,key="starttp label",size=(13,1)), sg.Input("0",key="startingtp",size=(5,1),font=font_choice,tooltip="Starting TP value for estimating melee TP sets based on \"Time to WS\"")]
+  [sg.Text("Starting TP:",font=font_choice,key="starttp label",size=(13,1)), sg.Input("0",key="startingtp",size=(5,1),font=font_choice,tooltip="Starting TP value for estimating melee TP sets based on \"Time to WS\"")],
+  [sg.Text("Aftermath Lv:",font=font_choice,size=(13,1)),sg.Combo(values=("0","1","2","3"), default_value="0", readonly=True, key="aftermath toggle",size=(3,1),font=font_choice,tooltip="Enable/Disable REMA aftermath effects.\nApplies to Melee and Ranged simultaneously.",visible=True)],
   ])),sg.Push(),
   sg.vtop(sg.Column([
 #   [sg.Text("Spell:",size=(16,1),font=font_choice,justification="r"),sg.Push()],

@@ -96,7 +96,102 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         tp -= 500 # remove 500 TP if using the aeonic bow/gun but not using a ranged WS
 
     tp = 3000 if tp > 3000 else int(tp) # Cap TP at 3000
-    
+
+
+
+    # Before reading in stats from gear, add aftermath bonuses to the stats.
+    # We do it in this order so we can use dictionary names instead of variable names when adding things like "Subtle Blow"
+    aftermath = int(job_abilities.get("Aftermath",0))
+    relic_am_dict = {"Spharai":[["Subtle Blow",10]], # We add the "Kick Attacks" +15% in the set_stats.py file.
+                    "Mandau":[["Crit Rate",5],["Crit Damage",5]],
+                    "Ragnarok":[["Crit Rate",5],["Accuracy1",15],["Accuracy2",15]],
+                    "Bravura":[["DT",-10]],
+                    "Apocalypse":[["JA Haste",10],["Accuracy1",15],["Accuracy2",15]],
+                    "Gungir":[["DA",5]], # Attack +5% added in the set_stats.py file.
+                    "Kikoku":[["Subtle Blow",10]], # Attack +10% added in set_stats.py
+                    "Amanomurakumo":[["Zanshin",10],["Store TP",10]],
+                    "Mjollnir":[["Accuracy1",20],["Accuracy2",20],["Magic Accuracy",20]],
+                    "Claustrum":[["DT",-20]],
+                    "Yoichinoyumi":[["Ranged Accuracy",20]],
+    }
+    mythic_am_scaling = 0.85
+    myth99max = (99-40)*mythic_am_scaling + 40 
+    myth49max = (49-30)*mythic_am_scaling + 30
+    mythic_am_dict = {"Conqueror":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Glanzfaust":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Vajra":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Gastraphetes":[  [["Ranged Accuracy",myth49max]], [["Ranged Attack",myth99max]]   ],
+                      "Death Penalty":[  [["Ranged Accuracy",myth49max]], [["Ranged Attack",myth99max]]   ],
+                      "Vajra":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Burtgang":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Liberator":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Aymur":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Kogarasumaru":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Nagi":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Nirvana":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Ryunohige":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Tizona":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Magic Accuracy",myth49max]]   ],
+                      "Carnwenhan":[  [["Magic Accuracy",myth49max]],[["Accuracy1",myth49max],["Accuracy2",myth49max]],    ],
+                      "Yagrush":[  [["Magic Accuracy",myth49max]],[["Accuracy1",myth49max],["Accuracy2",myth49max]],    ],
+                      "Laevateinn":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                      "Tupsimati":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                      "Idris":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                      "Murgleis":[  [["Magic Accuracy",myth49max]],[["Magic Attack",myth49max]],    ],
+                      "Kenkonken":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Terpsichore":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ],
+                      "Epeolatry":[  [["Accuracy1",myth49max],["Accuracy2",myth49max]], [["Attack1",myth99max],["Attack2",myth99max]]   ]
+    }
+
+    prime_am_dict = {"Caliburnus":[  ["PDL",5]],
+                      "Dokoku":[  ["PDL",5]],
+                      "Earp":[  ["PDL",5]],
+                      "Foenaria":[  ["PDL",5]],
+                      "Gae Buide":[  ["PDL",5]],
+                      "Helheim":[  ["PDL",5]],
+                      "Kusanagi-no-Tsurugi":[  ["PDL",5]],
+                      "Laphria":[  ["PDL",5]],
+                      "Lorg Mor":[  ["Magic Damage",20]],
+                      "Mpu Gandring":[  ["PDL",5]],
+                      "Opashoro":[  ["Magic Damage",20],["Magic Attack",20]],
+                      "Pinaka":[  ["PDL",5]],
+                      "Spalirisos":[  ["PDL",5]],
+                      "Varga Purnikawa":[  ["PDL",5]],
+    }
+
+
+
+    if aftermath > 0:
+        # Relic Aftermath effects
+        if main_wpn_name in relic_am_dict:
+            for stat in relic_am_dict[main_wpn_name]:
+                gearset.playerstats[stat[0]] += stat[1]
+        if rng_wpn_name in relic_am_dict:
+            for stat in relic_am_dict[rng_wpn_name]:
+                gearset.playerstats[stat[0]] += stat[1]
+
+        # Mythic Aftermath Lv1 and Lv2 effects. We deal with Lv3 aftermath after we've already read-in the OA2/OA3 stats for the main-hand weapon.
+        if main_wpn_name in mythic_am_dict and aftermath < 3:
+            for stat in mythic_am_dict[main_wpn_name][aftermath-1]:
+                gearset.playerstats[stat[0]] += stat[1]
+        if rng_wpn_name in mythic_am_dict and aftermath < 3:
+            for stat in mythic_am_dict[rng_wpn_name][aftermath-1]:
+                gearset.playerstats[stat[0]] += stat[1]
+
+
+        # Prime weapon aftermath effects
+        if main_wpn_name in prime_am_dict:
+            for stat in prime_am_dict[main_wpn_name]:
+                gearset.playerstats[stat[0]] += stat[1]
+        if rng_wpn_name in prime_am_dict:
+            for stat in prime_am_dict[rng_wpn_name]:
+                gearset.playerstats[stat[0]] += stat[1]
+
+
+    # Empyrean Aftermath: 30%/40%/50% chance of triple damage.
+    empyrean_am = [0.3, 0.4, 0.5] # We use this when calculating Ranged/Melee TP damage later.
+
+
+
     if gearset.gear["main"]["Skill Type"] != "Hand-to-Hand":
         h2h = False
 
@@ -223,6 +318,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     oa3_main = gearset.gear["main"].get("OA3",0)/100
     oa2_main = gearset.gear["main"].get("OA2",0)/100
     
+    # Lv3 Mythic aftermath OA3/OA2 applies only to the main-hand
+    if main_wpn_name in mythic_am_dict and aftermath==3:
+        oa3_main += 0.2
+        oa2_main += 0.4
+
+
+
     oa8_sub = gearset.gear["sub"].get("OA8",0)/100
     oa7_sub = gearset.gear["sub"].get("OA7",0)/100
     oa6_sub = gearset.gear["sub"].get("OA6",0)/100
@@ -343,12 +445,17 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
             # Multiply by the hover shot bonus (+100%)
             phys *= (1+hover_shot)
 
-            if gearset.gear["ranged"]["Name"] in ["Gandiva","Armageddon"]:
-                # Assume AM3, which triples damage 50% of the time, or doubles damage on all shots on average
-                phys *= (1+2*0.5)
-            elif gearset.gear["ranged"]["Name"] in ["Annihilator","Yoichinoyumi"]:
-                # Relics which triples damage 13% of the time
+            # Empyrean Aftermath. 30%/40%/50% chance of dealing triple damage.
+            if gearset.gear["ranged"]["Name"] in ["Gandiva","Armageddon"] and aftermath>0:
+                phys *= (1+2*empyrean_am[aftermath-1])
+
+            # Hidden +13% damage on relics
+            if gearset.gear["ranged"]["Name"] in ["Annihilator","Yoichinoyumi"]:
                 phys *= (1+2*0.13)
+
+            # Ranged mythic AM3 multiplier
+            if gearset.gear["ranged"]["Name"] in ["Gastraphetes","Death Penalty"] and aftermath==3:
+                phys *= (1 + 2*0.2 + 1*0.4)
 
             priority = job_abilities["metric"] # not a job ability, but this is an easy way to smuggle a variable from the GUI into this part of the main code
             if priority=="Damage > TP":
@@ -447,7 +554,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     bonuses = check_weaponskill_bonus(ws_weapons, ws_name, gearset, tp, enemy_agi)
     ws_bonus += bonuses['ws_bonus']
     # crit_rate = bonuses['crit_rate'] # Crit rate adjusted for Shining One. Commented out. We'll do this in "weaponskill_scaling" instead.
-    oa3_main += bonuses['oa3'] ; oa2_main += bonuses['oa2'] # Mythic OA3 and OA2 rates
+
     # triple_dmg_rate += bonuses['triple_dmg_rate'] # Empyrean triple damage rate
 
     # fSTR calculation for main-hand and off-hand
@@ -524,8 +631,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         # -------------------
         # -------------------
         # -------------------
-        # Empyrean Aftermath lv3: 50% chance to triple damage
-        empyrean_aftermath_multiplier = (1+2*0.5) if gearset.gear["main"]["Name"] in ["Verethragna","Twashtar","Almace","Caladbolg","Farsha","Ukonvasara","Redemption","Kannagi","Rhongomiant","Gambanteinn","Masamune","Hvergelmir"] else 1.0
+        
+        # Empyrean Lv1/2/3 aftermath multiplier: 30%/40%/50% chance of dealing triple damage
+        empyrean_aftermath_multiplier = (1+2*empyrean_am[aftermath-1]) if gearset.gear["main"]["Name"] in ["Verethragna","Twashtar","Almace","Caladbolg","Farsha","Ukonvasara","Redemption","Kannagi","Rhongomiant","Gambanteinn","Masamune","Hvergelmir"] else 1.0
 
         # Relic weapon hidden effect: 13% chance to triple damage.
         relic_bonus_multiplier = (1+2*0.13) if gearset.gear["main"]["Name"] in ["Spharai","Mandau","Excalibur","Ragnarok","Guttler","Bravura","Apocalypse","Gungnir Kikoku","Amanomurakumo","Mjollnir","Claustrum"] else 1.0

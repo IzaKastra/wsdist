@@ -950,6 +950,7 @@ while True:
                              "metric":values["tp priority"],
                              "shell v":values["whm_on"],
                              "storm spell":values["sch_storm"]*whm_on,
+                             "Aftermath":values["aftermath toggle"]
                              }
 
             kick_ws_footwork = True if "Kick" in ws_name and footwork else False # TODO: maybe use this later or delete it from here. we already define it in the other files anyway

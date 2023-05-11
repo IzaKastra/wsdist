@@ -49,6 +49,7 @@ class set_gear:
         natures_med_bonus = job_abilities.get("Nature's Meditation",False)
         endark = job_abilities.get("Endark II", False)
         hasso = job_abilities.get("Hasso",False)
+        aftermath = job_abilities.get("Aftermath",False)
 
         sub_type = gear['sub'].get('Type', 'None') # Check if the item equipped in the sub slot is a weapon, a grip, or nothing. If the item doesn't have a "Type" Key then return "None", meaning nothing is equipped.
         dual_wield = sub_type == 'Weapon'
@@ -1252,12 +1253,14 @@ class set_gear:
             percent_attack_buff += buffs['cor'].get('Attack',0) # Chaos roll
         if buffs['geo']:
             percent_attack_buff += buffs['geo'].get('Attack',0) # Fury
-        if gear['main']['Name'] in ["Kikoku","Guttler"]:
+        if gear['main']['Name'] in ["Kikoku","Guttler"] and aftermath>0:
             percent_attack_buff += 100./1024.  # +10% Attack boost from Kikoku/Guttler Aftermath is applied as a sum with GEO and COR % boosts
-        if gear['main']['Name'] in ["Annihilator"]:
+        if gear['main']['Name'] in ["Annihilator"] and aftermath>0:
             percent_rangedattack_buff += 100./1024.  # +10% Ranged Attack boost from Annihilator Aftermath is applied as a sum with GEO and COR % boosts
-        if gear['main']['Name'] == "Gungnir":
+        if gear['main']['Name'] == "Gungnir" and aftermath>0:
             percent_attack_buff += 50./1024.  # +5% Attack boost from Gungnir Aftermath
+        if gear['main']['Name'] == "Spharai" and aftermath>0:
+            self.playerstats["Kick Attacks"] += 15 # +15 Kick Attacks from Spharai Aftermath
         if gear['main']['Name'] == 'Naegling':
             nbuffs = 8 # Assume 8 buffs: pro, shell, haste, utsu, kakka, yonin, food, signet
             nbuffs += 4 if buffs['brd'] else 0 # If BRD in party, assume +4 buffs from songs
