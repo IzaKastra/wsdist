@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 11
+# Version date: 2023 May 12
 #
 # This file contains a list of buffs that may be provided to a gear set when simulating damage.
 #
@@ -14,12 +14,12 @@ import numpy as np
 # Format is [Base, Bonus].
 # For Example: GEO Acumen uses [15,3]. So with +6 geomancy, it would be Base+Bonus*6 = 15+3*6 Magic Attack with Acumen
 
-cor = {"Chaos": {"Attack":[0.25, 32./1024]},
-       "Samurai": {"Store TP":[32,4]},
-       "Rogue": {"Crit Rate":[10,1]},
-       "Fighter": {"DA":[10,1]},
-       "Hunter": {"Accuracy":[40,5]},
-       "Wizard": {"Magic Attack":[25,2]}}
+cor = {"Chaos": {"Attack":[{"1":0.0625,"2":0.0781,"3":0.0937,"4":0.25,"5":0.1093,"6":0.1250,"7":0.1562,"8":0.0312,"9":0.1718,"10":0.1875,"11":0.3125}, 32./1024, 100./1024]},
+       "Samurai": {"Store TP":[{"1":8,"2":32,"3":10,"4":12,"5":14,"6":4,"7":16,"8":20,"9":22,"10":24,"11":40},4,10]},
+       "Rogue": {"Crit Rate":[{"1":1,"2":2,"3":3,"4":4,"5":10,"6":5,"7":6,"8":7,"9":1,"10":8,"11":14},1,5]},
+       "Fighter": {"DA":[{"1":1,"2":2,"3":3,"4":4,"5":10,"6":5,"7":6,"8":6,"9":1,"10":7,"11":15},1,5]},
+       "Hunter": {"Accuracy":[{"1":10,"2":13,"3":15,"4":40,"5":18,"6":20,"7":25,"8":5,"9":28,"10":30,"11":50},5,15]},
+       "Wizard": {"Magic Attack":[{"1":4,"2":6,"3":8,"4":10,"5":25,"6":12,"7":14,"8":17,"9":2,"10":20,"11":30},2,10]}}
 
 brd = {"Minuet": {"Attack": [32+25, 3.2], "Ranged Attack": [32+25, 3.2]},
         "Minuet II": {"Attack": [64+25, 6.2], "Ranged Attack": [64+25, 6.2]},

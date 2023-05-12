@@ -56,7 +56,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 May 11)",layout,size=(700,930) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 May 12)",layout,size=(700,950) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -260,11 +260,14 @@ while True:
             if values["cor_on"]:
                 window["LIGHTSHOT"].update(disabled=False)
                 window["Crooked Cards"].update(disabled=False)
+                window["Job Bonus"].update(disabled=False)
             else:
                 window["LIGHTSHOT"].update(False)
                 window["LIGHTSHOT"].update(disabled=True)
                 window["Crooked Cards"].update(False)
                 window["Crooked Cards"].update(disabled=True)
+                window["Job Bonus"].update(False)
+                window["Job Bonus"].update(disabled=True)
 
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -764,16 +767,19 @@ while True:
             brd_chr = ((brd["Enchanting Etude"]["CHR"][0] + min(9,nsong)*brd["Enchanting Etude"]["CHR"][1])*(1.0+0.5*marcato if values["song1"]=="Enchanting Etude" else 1.0) if "Enchanting Etude" in active_songs else 0)*(1.0+1.0*soulvoice) + ((brd["Bewitching Etude"]["CHR"][0] + min(9,nsong)*brd["Bewitching Etude"]["CHR"][1])*(1.0+0.5*marcato if values["song1"]=="Bewitching Etude" else 1.0) if "Bewitching Etude" in active_songs else 0)*(1.0+1.0*soulvoice)
 
 
-            # Define COR buffs: Total bonus stat obtained from a Lucky roll with "Rolls +nroll" bonus from gear.
+            # Define COR buffs: Total bonus stat obtained from a set potency roll with "Rolls +nroll" bonus from gear.
             cor_on = values["cor_on"]
             active_rolls = [values["roll1"], values["roll2"]]
             nroll = int(values["nroll"].split()[-1])
-            cor_sam = cor["Samurai"]["Store TP"][0] + nroll*cor["Samurai"]["Store TP"][1] if "Samurai" in active_rolls else 0
-            cor_chaos = cor["Chaos"]["Attack"][0] + nroll*cor["Chaos"]["Attack"][1] if "Chaos" in active_rolls else 0
-            cor_hunter = cor["Hunter"]["Accuracy"][0] + nroll*cor["Hunter"]["Accuracy"][1] if "Hunter's" in active_rolls else 0
-            cor_rogue = cor["Rogue"]["Crit Rate"][0] + nroll*cor["Rogue"]["Crit Rate"][1] if "Rogue's" in active_rolls else 0
-            cor_wizard = cor["Wizard"]["Magic Attack"][0] + nroll*cor["Wizard"]["Magic Attack"][1] if "Wizard's" in active_rolls else 0
-            cor_fighter = cor["Fighter"]["DA"][0] + nroll*cor["Fighter"]["DA"][1] if "Fighter's" in active_rolls else 0
+            job_bonus = values["Job Bonus"]
+            roll_potency1 = values["roll1 potency"]
+            roll_potency2 = values["roll2 potency"]
+            cor_sam = cor["Samurai"]["Store TP"][0].get(roll_potency1 if "Samurai"==active_rolls[0] else roll_potency2 if "Samurai"==active_rolls[1] else 0,0) + nroll*cor["Samurai"]["Store TP"][1] + job_bonus*cor["Samurai"]["Store TP"][2] if "Samurai" in active_rolls else 0
+            cor_chaos = cor["Chaos"]["Attack"][0].get(roll_potency1 if "Chaos"==active_rolls[0] else roll_potency2 if "Chaos"==active_rolls[1] else 0,0) + nroll*cor["Chaos"]["Attack"][1] + job_bonus*cor["Chaos"]["Attack"][2] if "Chaos" in active_rolls else 0
+            cor_hunter = cor["Hunter"]["Accuracy"][0].get(roll_potency1 if "Hunter's"==active_rolls[0] else roll_potency2 if "Hunter's"==active_rolls[1] else 0,0) + nroll*cor["Hunter"]["Accuracy"][1] + job_bonus*cor["Hunter"]["Accuracy"][2] if "Hunter's" in active_rolls else 0
+            cor_rogue = cor["Rogue"]["Crit Rate"][0].get(roll_potency1 if "Rogue's"==active_rolls[0] else roll_potency2 if "Rogue's"==active_rolls[1] else 0,0) + nroll*cor["Rogue"]["Crit Rate"][1] + job_bonus*cor["Rogue"]["Crit Rate"][2] if "Rogue's" in active_rolls else 0
+            cor_wizard = cor["Wizard"]["Magic Attack"][0].get(roll_potency1 if "Wizard's"==active_rolls[0] else roll_potency2 if "Wizard's"==active_rolls[1] else 0,0) + nroll*cor["Wizard"]["Magic Attack"][1] + job_bonus*cor["Wizard"]["Magic Attack"][2] if "Wizard's" in active_rolls else 0
+            cor_fighter = cor["Fighter"]["DA"][0].get(roll_potency1 if "Fighter's"==active_rolls[0] else roll_potency2 if "Fighter's"==active_rolls[1] else 0,0) + nroll*cor["Fighter"]["DA"][1] + job_bonus*cor["Fighter"]["DA"][2] if "Fighter's" in active_rolls else 0
             crooked = values["Crooked Cards"]
             cor_stp = cor_on*cor_sam*(1.0+0.2*crooked if values["roll1"]=="Samurai" else 1.0)
             cor_attack = cor_on*cor_chaos*(1.0+0.2*crooked if values["roll1"]=="Chaos" else 1.0)

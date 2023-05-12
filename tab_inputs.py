@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 11
+# Version date: 2023 May 12
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -153,17 +153,25 @@ buffs_brd_column = [
 ]
 
 
-
-
+# "I","II","III","IV","V","VI","VII","VIII","IX","X","XI"
 rolls_list = ["Chaos", "Fighter's", "Hunter's", "Rogue's", "Samurai", "Wizard's"]
 roll1 = "Chaos"
 roll2 = "Samurai"
 # COR buffs column
 buffs_cor_column = [
+#   [sg.Checkbox("COR",size=(14,1),tooltip="Use Corsair buffs?",key="cor_on",default=False,enable_events=True,font=font_choice)],
+#   [sg.Combo(values=("Rolls +8","Rolls +7","Rolls +6","Rolls +5","Rolls +3","Rolls +0"), default_value="Rolls +7", readonly=True, k="nroll",size=(14,1),font=font_choice)],
+#   [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(14,1),font=font_choice,enable_events=True)],
+#   [sg.Combo(values=rolls_list + ["None"], default_value=roll2, readonly=True, k="roll2",size=(14,1),font=font_choice,enable_events=True)],
+#   [sg.Checkbox("Light Shot",size=(14,1),font=font_choice,disabled=True,k="LIGHTSHOT")],
+#   [sg.Checkbox("Crooked\nCards*",size=(14,2),font=font_choice,disabled=True,k="Crooked Cards",tooltip="Crooked Cards applies to the first roll.")],
+#   [sg.Text("",font=font_choice)], # Blank line with the same font so that the formatting lines up with other buffs
+#   [sg.Text("",font=font_choice)], # Blank line with the same font so that the formatting lines up with other buffs
   [sg.Checkbox("COR",size=(14,1),tooltip="Use Corsair buffs?",key="cor_on",default=False,enable_events=True,font=font_choice)],
-  [sg.Combo(values=("Rolls +8","Rolls +7","Rolls +6","Rolls +5","Rolls +3","Rolls +0"), default_value="Rolls +7", readonly=True, k="nroll",size=(14,1),font=font_choice)],
-  [sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(14,1),font=font_choice,enable_events=True)],
-  [sg.Combo(values=rolls_list + ["None"], default_value=roll2, readonly=True, k="roll2",size=(14,1),font=font_choice,enable_events=True)],
+  [sg.Combo(values=("Rolls +8","Rolls +7","Rolls +6","Rolls +5","Rolls +3","Rolls +0"), default_value="Rolls +7", readonly=True, k="nroll",size=(17,1),font=font_choice)],
+  [sg.Combo(values=("1","2","3","4","5","6","7","8","9","10","11"), default_value="9", readonly=True, k="roll1 potency",size=(3,1),font=font_choice,tooltip="Dice roll value."),sg.Combo(values=rolls_list + ["None"], default_value=roll1, readonly=True, k="roll1",size=(10,1),font=font_choice,enable_events=True)],
+  [sg.Combo(values=("1","2","3","4","5","6","7","8","9","10","11"), default_value="9", readonly=True, k="roll2 potency",size=(3,1),font=font_choice,tooltip="Dice roll value."),sg.Combo(values=rolls_list + ["None"], default_value=roll2, readonly=True, k="roll2",size=(10,1),font=font_choice,enable_events=True)],
+  [sg.Checkbox("Job Bonuses",size=(14,1),font=font_choice,disabled=True,k="Job Bonus",tooltip="Include bonus stats for having the relevant jobs in party?\n(SAM roll gets an additional +10 STP for having a SAM in party)")],
   [sg.Checkbox("Light Shot",size=(14,1),font=font_choice,disabled=True,k="LIGHTSHOT")],
   [sg.Checkbox("Crooked\nCards*",size=(14,2),font=font_choice,disabled=True,k="Crooked Cards",tooltip="Crooked Cards applies to the first roll.")],
   [sg.Text("",font=font_choice)], # Blank line with the same font so that the formatting lines up with other buffs
