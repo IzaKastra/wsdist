@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 February 20
+# Version date: 2023 May 13
 #
 # This file contains a the GUI tab "Select Gear".
 #
@@ -86,8 +86,6 @@ checkbox_tab = [[sg.Column([[
   sg.Frame("Select legs equipment", [[sg.Column([  k for k in gear_legs ],size=framesize,scrollable=True,vertical_scroll_only=True,key="legs display col")],],font=font_choice,visible=False,key="legs display",size=framesize),
   sg.Frame("Select feet equipment", [[sg.Column([  k for k in gear_feet  ],size=framesize,scrollable=True,vertical_scroll_only=True,key="feet display col")],],font=font_choice,visible=False,key="feet display",size=framesize)]],)],
 ]
-# TODO: checkbox_tab can be written as a single line with list comprehension.
-# At the very least, throw this together into no more than 4~5 lines for everything above with a loop...
 
 from tab_inputs import item2image
 
@@ -103,7 +101,7 @@ gear_tab = [
     [sg.Push(),sg.Button("Back",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display back"),sg.Button("Waist",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display waist"),sg.Button("Legs",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display legs"),sg.Button("Feet",image_data=item2image("Empty"),font=font_choice,pad=(0,0),border_width=1,size=(7,1),key="display feet"),sg.Push()],
     [sg.Push(),sg.Text("",font=font_choice)],
     [sg.Push(),sg.Button("Select All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select all gear",tooltip="Select all items in the displayed list.",enable_events=True),sg.Button("Unselect All",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="unselect all gear",tooltip="Unselect all items in the displayed list.",enable_events=True)],
-    [sg.Push(),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)],odyssey_rank_thing,
+    [sg.Push(),sg.Button("Select From\nFile",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select file",tooltip="Open an input file to select gear.\nInput file format is based on the \"\\\\gs export all\" command.",enable_events=True,disabled=False),sg.Button("Select <ALL>\nMain Job",font=font_choice,pad=(0,0),border_width=1,size=(16,2),key="select ALL main",tooltip="Select all items in ALL LISTS that your selected main job can equip.",enable_events=True,disabled=False)],odyssey_rank_thing,
   ],vertical_alignment="center",size=[270,450]),]]
 
 

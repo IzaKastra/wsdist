@@ -10,12 +10,15 @@ random_theme = np.random.choice(sg.theme_list())
 random_theme = np.random.choice([k for k in sg.theme_list() if "Mono" in k])
 random_theme = "BlueMono"
 
+# for k in sg.theme_list():
+#     print(k)
+# import sys; sys.exit()
 
 sg.theme(random_theme)
 
 def name2dictionary(name, all_gear):
     #
-    # Given an item name ("Adhemar Bonnet +1A"), find the dictionary (adhemar_bonnet_A) which containts that item's stats.
+    # Given an item name ("Adhemar Bonnet +1A"), find the dictionary (adhemar_bonnet_A) which contains that item's stats.
     # This will be used often, may as well make it a function, even if it is inefficient.
     # First check Name2, then check Name. This is so you don't mix up different augment paths.
     # Name is mostly for finding the icon anyway.
@@ -51,12 +54,12 @@ layout = [
          ]
 
 # window_styles = ["default", "winnative", "clam", "alt", "classic", "vista", "xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
-window_styles = ["default", "alt"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
+window_styles = ["default", "vista","xpnative"] # https://old.reddit.com/r/learnpython/comments/k0m9on/how_can_i_change_the_ui_style_in_pysimplegui/
 random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 May 12)",layout,size=(700,950) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 May 13)",layout,size=(700,950) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -1433,6 +1436,108 @@ while True:
 
             window["select weaponskill"].update(values=updated_ws_list)
             window["select weaponskill"].update(original_ws_selection)
+
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+
+        if event == "select file":
+            #
+            # Use an input file to select items in all slots.
+            # The input file must be the output from the "//gs export all" command.
+            #
+            # The algorithm searches for substrings to convert abbreviated names to full names in the item_list.txt file.
+            # This results in "false-positives" such as "Dalmatica" finding: ['dalmatica', 'dalmatica +1', 'apogee dalmatica', 'apogee dalmatica +1', 'bewitched dalmatica', 'voodoo dalmatica']
+            # 
+            items0 = [] # Raw item names from "//gs export all". Many abbreviated.
+            items = [] # Full item names. We'll do a match with the item_list.txt file to convert abbreviated names to full names.
+
+            filename = sg.popup_get_file("Use \"//gs export all\" in game to create an input file.")
+
+            if not filename:
+                continue
+
+            # For now assume a valid file was provided.
+            with open(filename, "r") as ifile:
+                for line in ifile:
+                    try:
+                        items0.append(line.split('"')[1]) # Assume that all item names in the input file are within FIRST occurrence of double quotes.
+                    except:
+                        continue
+            # print(f"{len(items0)} items found in {filename}") # These items are all the potentially abbreviated versions
+
+            item_name_map = np.loadtxt("item_list.txt",unpack=True,delimiter=";",usecols=(1,2),dtype=str)
+
+            for item0 in items0:
+                # Strip the + from item names ("Eerie Cloak +1" becomes "Eerie Cloak").
+                item01 = "".join(item0.split(" +")[0:-1]) if "+" in item0 else item0
+                indices = [i for i,k in enumerate(item_name_map[1]) if item01 in k] # Index of matching names. Simply looks for substring in item name. 
+                items0 = [item_name_map[0][i] for i in indices]
+
+                # Append each of the matches to the items list, which is a list of full item names that the gear.py file uses as the "Name" value.
+                for k in items0:
+                    items.append(k.lower())
+
+            # Most of the following code block was copied directly from the "select ALL main" event
+            main_job = values["mainjob"]
+            odyrank = values["odyssey rank"]
+            ws_name = values["select weaponskill"]
+
+            input_gear_dict = {k:[] for k in gear_dict} # Create an empty "all gear" dictionary containing empty slots of gear lists. We will fill this up with gear from the input file.
+
+            for slot in gear_dict:
+                
+                # Use the items (full names) list to create a dictionary of gear that exists in the gear.py file that the user also provided in their input file.
+                for equipment in gear_dict[slot]:
+                    if equipment["Name"].lower() in items:
+                        input_gear_dict[slot].append(equipment)
+                
+
+                for equipment in gear_dict[slot]:
+
+                    # Deselect all items not in the input file.
+                    if equipment["Name"] not in [k["Name"] for k in input_gear_dict[slot]]: 
+                        window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                        continue
+                    
+                    if main_job.lower() in equipment["Jobs"]:
+                        # First turn off Nyame Path A,
+                        if "Nyame" in equipment["Name2"] and equipment["Name2"][-1]=="A":
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
+
+                        if "Kraken" in equipment["Name2"]: # Uncheck Kraken Club
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
+
+                        if slot=="neck" and "R20" in equipment["Name2"]: # Do not select JSE+1 necks
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            continue
+
+                        if slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
+                            if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+2" in equipment["Name2"]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                                continue
+
+                        # If using a melee WS, then unselect weapons that can't use it (this is annoying when testing magic since it unselects stuff)
+                        if ws_name not in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                            if slot == "main" and ws_name not in ws_dict[equipment["Skill Type"]]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            else:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False) # This line selects everything that passed all the previous checks as long as Odyssey rank requirement is met
+
+                        # If using a ranged WS, then unselect guns for bow WSs and bows for gun WSs. Also unselect equipment ammo since you can't shoot equipment (like seething bomblet)
+                        elif ws_name in ws_dict["Marksmanship"]+ws_dict["Archery"]:
+                            if slot == "ranged" and ws_name not in ws_dict.get(equipment.get("Skill Type","None"),[]):
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                            if slot == "ammo" and equipment.get("Type","None") not in ["Bullet", "Arrow", "Bolt"]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+
+                            # Select all items except Odyssey gear with rank different than "odyrank"
+                            window[f"checkbox_{slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False) # This line selects everything that passed all the previous checks as long as Odyssey rank requirement is met
+                    else:
+                        window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+
 
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
