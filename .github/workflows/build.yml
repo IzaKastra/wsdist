@@ -37,7 +37,7 @@ jobs:
         pip install pyinstaller
 
     - name: Create Installer
-      run: pyinstaller --clean --onefile gui_wsdist.py
+      run: pyinstaller --exclude-module gear --clean --onefile gui_wsdist.py
 
     - name: Upload Installer
       uses: actions/upload-artifact@v3
