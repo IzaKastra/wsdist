@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 11
+# Version date: 2023 June 14
 #
 # This file contains a list of all gear to be considered.
 # "Name" is the item name as seen in-game. "Name" is used to pull the correct item ID from the equipviewer icons to create the fancy plot in the end.
@@ -821,7 +821,7 @@ Mallquis_Ring = {"Name":"Mallquis Ring","Magic Accuracy":6,"Magic Damage":12,"Jo
 Cornelia_ring = {"Name":"Cornelia's ring", "Weaponskill Accuracy":10, "Weaponskill Damage":10,"Jobs":all_jobs}
 Ephramad_ring = {"Name":"Ephramad's ring", "STR":10,"DEX":10,"AGI":10,"Accuracy":20, "Attack":20, "Ranged Accuracy":20, "Ranged Attack":20, "PDL":10, "Jobs":all_jobs}
 Fickblix_ring = {"Name":"Fickblix's ring", "DA":10, "Subtle Blow":10, "Jobs":all_jobs}
-Gurebu_Orebu_ring = {"Name":"Gurebu-Orebu's ring", "MND":10,"Magic Evasion":20, "Jobs":all_jobs}
+Gurebu_Orebu_ring = {"Name":"Gurebu-Ogurebu's ring", "MND":10,"Magic Evasion":20, "Jobs":all_jobs}
 Lehko_Habhoka_ring = {"Name":"Lehko Habhoka's ring", "DEX":10,"Store TP":10,"Gear Haste":10,"Crit Rate":10,"Jobs":all_jobs}
 Medada_ring = {"Name":"Medada's ring","INT":10,"Magic Accuracy":20,"Magic Attack":10, "Jobs":all_jobs}
 Ragelise_ring = {"Name":"Ragelise's ring", "VIT":10,"DT":-10,"Jobs":all_jobs}

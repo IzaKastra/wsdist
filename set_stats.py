@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 11
+# Version date: 2023 June 14
 #
 # This code holds the methods for building a player's stats.
 #
@@ -1138,9 +1138,6 @@ class set_gear:
 
         if self.gear['main'].get('Skill Type', 'None') in two_handed and hasso:
             self.playerstats['JA Haste'] += self.gearstats["Hasso+ JA Haste"]
-
-        print(self.playerstats["JA Haste"])
-
 
         # print(self.playerstats)
         # At this point, the playerstats dictionary should have all the player's gear stats added to the player's base stats, except attack1, attack2, accuracy1, and accuracy2

@@ -59,7 +59,7 @@ random_style = np.random.choice(window_styles)
 random_style = "default"
 
 # Build the window.
-window = sg.Window(f"Kastra FFXI Damage Simulator (2023 May 13)",layout,size=(700,950) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
+window = sg.Window(f"Kastra FFXI Damage Simulator (2023 June 14)",layout,size=(700,950) if h>930 else (700+500,600),resizable=True,alpha_channel=1.0,finalize=True,no_titlebar=False,ttk_theme=random_style)
 
 
 
@@ -351,6 +351,8 @@ while True:
         if event in ["select all gear", "unselect all gear"]:
             main_job = values["mainjob"]
             odyrank = values["odyssey rank"]
+            tvr_ring = values["tvr ring"]
+            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Orebu's","Lehko Habhoka's","Medada's","Ragelise's"]
 
             # First figure out which list is currently displayed.
             for slot in gear_dict:
@@ -379,6 +381,12 @@ while True:
                                 window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
                                 continue
 
+                        if selected_slot in ["ring1", "ring2"]: # Only select one TVR ring
+                            if (" ".join(equipment["Name2"].split()[:-1]) in tvr_rings) and (" ".join(equipment["Name2"].split()[:-1])!=tvr_ring):
+                                window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(False)
+                                continue
+
+
                         window[f"checkbox_{selected_slot}:{equipment['Name2']}"].update(True if str(equipment.get("Rank",odyrank))==odyrank else False)
 
                     else:
@@ -399,6 +407,8 @@ while True:
             main_job = values["mainjob"]
             odyrank = values["odyssey rank"]
             ws_name = values["select weaponskill"]
+            tvr_ring = values["tvr ring"]
+            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Orebu's","Lehko Habhoka's","Medada's","Ragelise's"]
 
             for slot in gear_dict:
                 for equipment in gear_dict[slot]:
@@ -418,6 +428,10 @@ while True:
 
                         if slot in ["ear1", "ear2"]: # Unselect JSE+1 earrings
                             if jse_ear_names[main_job.lower()] in equipment["Name2"] and "+2" in equipment["Name2"]:
+                                window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
+                                continue
+                        if slot in ["ring1", "ring2"]: # Only select one TVR ring
+                            if (" ".join(equipment["Name2"].split()[:-1]) in tvr_rings) and (" ".join(equipment["Name2"].split()[:-1])!=tvr_ring):
                                 window[f"checkbox_{slot}:{equipment['Name2']}"].update(False)
                                 continue
 
@@ -889,6 +903,14 @@ while True:
             enemy["Magic Defense"] = (enemy["Magic Defense"] - malaise_potency) if (enemy["Magic Defense"]- malaise_potency) > -50 else -50
             enemy["Evasion"] -= torpor_potency
             enemy["Magic Evasion"] -= languor_potency
+
+
+            # check_gear = {} # Create a dictionary that holds a list of selected gear to check
+            # for slot in gear_dict:
+            #     check_gear[slot] = [name2dictionary(k.split(":")[-1], all_gear) for k in values if f"checkbox_{slot}:" in k and values[k]]
+
+            # print(check_gear)
+            # break
 
 
             # We need to transfer the list of gear to check into a list of lists now. This will be used by the main code to check each piece, slot by slot.

@@ -12618,13 +12618,13 @@
 26222;seabird's ring;Seabird's Ring
 26223;patissiere's ring;Patissiere's Ring
 26224;confectioner's ring;Confectioner's Ring
-13471;Cornelia's ring;Cornelia's ring
-13472;Ephramad's ring;Ephramad's ring
-13474;Fickblix's ring;Fickblix's ring
-13488;Gurebu-Orebu's ring;Gurebu-Orebu's ring
-13471;Lehko Habhoka's ring;Lehko Habhoka's ring
-13478;Medada's ring;Medada's ring
-13479;Ragelise's ring;Ragelise's ring
+26225;Medada's Ring;Medada's ring
+26226;Gurebu-Ogurebu's Ring;Gurebu's ring
+26227;Cornelia's Ring;Cornelia's ring
+26228;Ragelise's Ring;Ragelise's ring
+26229;Lehko Habhoka's Ring;Lehko's ring
+26230;Fickblix's Ring;Fickblix's ring
+26231;Ephramad's Ring;Ephramad's ring
 26240;tantalic cape;Tantalic Cape
 26241;scintillating cape;Scintillating Cape
 26242;phalangite mantle;Phalangite Mantle
@@ -14838,12 +14838,3 @@
 28669;butznar shield +1;Butznar Shield +1
 28670;leafkin shield;Leafkin Shield
 28671;butznar shield;Butznar Shield
-
-# Need to wait on the icons to be released first.
-# 26225;Medada's Ring;Medada's ring
-# 26226;Gurebu-Orebu's Ring;Gurebu-Orebu's ring
-# 26227;Cornelia's Ring;Cornelia's ring
-# 26228;Ragelise's Ring;Ragelise's ring
-# 26229;Lehko's Ring;Lehko Habhoka's ring
-# 26230;Fickblix's Ring;Fickblix's ring
-# 26231;Ephramad's Ring;Ephramad's ring

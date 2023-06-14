@@ -180,7 +180,6 @@ def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, ge
     d *= futae_bonus
     # print(resist_state,(100+player_matk)/(100+enemy_mdb),dayweather,futae_bonus,ninjutsu_skill_potency,magic_burst_multiplier,burst_bonus_multiplier)
     magic_multiplier = (100+player_matk)/(100+enemy_mdb)*ninjutsu_skill_potency*(1+ninjutsu_damage/100)*dayweather*magic_burst_multiplier*burst_bonus_multiplier*elemental_damage_bonus*(1 + 0.25 * gearset.playerstats["Magic Crit Rate II"]/100)*klimaform_bonus*ebullience_bonus*extra_gear_bonus*futae_bonus
-    print(v,mdmg,dINT,m,base_damage,magic_multiplier,base_damage*magic_multiplier)
 
     d *= resist_state
 
