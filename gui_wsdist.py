@@ -352,7 +352,7 @@ while True:
             main_job = values["mainjob"]
             odyrank = values["odyssey rank"]
             tvr_ring = values["tvr ring"]
-            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Orebu's","Lehko Habhoka's","Medada's","Ragelise's"]
+            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Ogurebu's","Lehko Habhoka's","Medada's","Ragelise's"]
 
             # First figure out which list is currently displayed.
             for slot in gear_dict:
@@ -408,7 +408,7 @@ while True:
             odyrank = values["odyssey rank"]
             ws_name = values["select weaponskill"]
             tvr_ring = values["tvr ring"]
-            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Orebu's","Lehko Habhoka's","Medada's","Ragelise's"]
+            tvr_rings = ["Cornelia's","Ephramad's","Fickblix's","Gurebu-Ogurebu's","Lehko Habhoka's","Medada's","Ragelise's"]
 
             for slot in gear_dict:
                 for equipment in gear_dict[slot]:

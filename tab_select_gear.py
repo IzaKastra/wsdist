@@ -95,7 +95,7 @@ from tab_inputs import item2image
 odyssey_rank_thing = [sg.Text("Odyssey Rank:",size=(15,1),font=font_choice,),sg.Combo(values=["None","0","15","20","25","30"], default_value="30", readonly=True, key="odyssey rank",size=(10,1),font=font_choice,tooltip="Auto-select Odyssey gear with this rank.",disabled=False,enable_events=False)]
 
 
-tvr_ring_thing = [sg.Text("TVR Ring:",size=(15,1),font=font_choice,),sg.Combo(values=["Cornelia's","Ephramad's","Fickblix's","Gurebu-Orebu's","Lehko Habhoka's","Medada's","Ragelise's"], default_value="Cornelia's", readonly=True, key="tvr ring",size=(17,1),font=font_choice,tooltip="Only auto-select this one TVR ring.",disabled=False,enable_events=False)]
+tvr_ring_thing = [sg.Text("TVR Ring:",size=(15,1),font=font_choice,),sg.Combo(values=["Cornelia's","Ephramad's","Fickblix's","Gurebu-Ogurebu's","Lehko Habhoka's","Medada's","Ragelise's"], default_value="Cornelia's", readonly=True, key="tvr ring",size=(17,1),font=font_choice,tooltip="Only auto-select this one TVR ring.",disabled=False,enable_events=False)]
 
 gear_tab = [
   [sg.Column([
