@@ -13,6 +13,12 @@ import numpy as np
 import base64 # Used to convert image icons into image_data readable by the GUI
 from PIL import Image # Imported only for image resizing. Useful for super high resolutions where showing a 32x32 icon is tiny...
 
+# Use an external gear.py file
+# https://stackoverflow.com/questions/47350078/importing-external-module-in-single-file-exe-created-with-pyinstaller
+import sys
+import os
+sys.path.append(os.path.dirname(sys.executable))
+
 from gear import all_food
 from gear import *
 from enemies import *

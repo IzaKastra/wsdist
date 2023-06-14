@@ -6,6 +6,13 @@
 #
 # This file contains a the GUI tab "Select Gear".
 #
+
+# Use an external gear.py file
+# https://stackoverflow.com/questions/47350078/importing-external-module-in-single-file-exe-created-with-pyinstaller
+import sys
+import os
+sys.path.append(os.path.dirname(sys.executable))
+
 import PySimpleGUI as sg
 from gear import *
 sg.Window.get_screen_size() # https://github.com/PySimpleGUI/PySimpleGUI/issues/1996

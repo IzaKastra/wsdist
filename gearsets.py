@@ -6,6 +6,13 @@
 #
 # This file contains a list of gear sets that can be used in the init.py code. These can be copy/pasted or simply called as they are named.
 #
+
+# Use an external gear.py file
+# https://stackoverflow.com/questions/47350078/importing-external-module-in-single-file-exe-created-with-pyinstaller
+import sys
+import os
+sys.path.append(os.path.dirname(sys.executable))
+
 from gear import *
 from set_stats import *
 
