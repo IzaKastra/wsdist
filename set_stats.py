@@ -37,7 +37,6 @@ class set_gear:
     # Build the gearstats dictionary using stats from the provided gearset
     # Build the playerstats dictionary using the stats from the provided gearset. But the playerstats dictionary doesnt have "Attack" or "Accuracy". We need to calculation "Attack1" and "Accuracy2", later for main- and off-hand
     #
-
     def __init__(self, buffs, gear, main_job, sub_job, ws_atk_bonus=0.0, job_abilities={}):
 
         self.gear = gear
@@ -75,7 +74,7 @@ class set_gear:
                  'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                  'PDL':0,"PDL Trait":0,
                  'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                 'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                 'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                  'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                  'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                  'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -105,7 +104,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':5, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -129,7 +128,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':50,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -153,7 +152,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":180,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":180,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':8, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -177,7 +176,7 @@ class set_gear:
                      'Store TP':8+40, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':50+5+10, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':50+5+10, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':8+19, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':8+16, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -201,7 +200,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":21, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -225,7 +224,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -249,7 +248,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -273,7 +272,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -297,7 +296,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -321,7 +320,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0+5,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -345,7 +344,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -369,7 +368,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -393,7 +392,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':30,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":210,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':12, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -417,7 +416,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -441,7 +440,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':5+30, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':10,"Martial Arts":0, # +10 JA Haste assuming haste samba with 5/5 merits
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -465,7 +464,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0, "Fencer TP Bonus":230,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0, "Fencer TP Bonus":230,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -489,7 +488,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -513,7 +512,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -537,7 +536,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -585,7 +584,7 @@ class set_gear:
                      'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0,"PDL Trait":0,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":205,
-                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Recycle":0,
+                     'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':0, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':0, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -612,11 +611,18 @@ class set_gear:
             smite_bonuses = {"DRK":304./1024, "WAR":204./1024, "MNK":152./1024, "DRG":152./1024, "PUP":100./1024}
             smite_bonus = smite_bonuses[mainjob]
 
+
         # Add Fencer trait bonuses now.
         if mainjob in ["WAR","BST","BRD"]:
             if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed:
                 fencer_bonuses = {"WAR":5, "BST":3, "BRD":2}
                 self.playerstats["Fencer"] += fencer_bonuses[mainjob]
+
+        # fencer_bonuses = {"WAR":5, "BST":3, "BRD":2}
+        # fencer_bonus = fencer_bonuses.get(main_job,0) if self.gear["sub"]["Type"] != "Weapon" and self.gear["main"]["Skill Type"] not in two_handed else 0
+
+        # smite_bonuses = {"drk":304./1024, "war":204./1024, "mnk":152./1024, "drg":152./1024, "pup":100./1024}
+        # smite_bonus = smite_bonuses.get(main_job,0)
 
 
         # Add specific Blue Magic bonuses now. Assuming the "Zahak Reborn" spellset from the ffxiah guide: https://www.ffxiah.com/forum/topic/30626/the-beast-within-a-guide-to-blue-mage/
@@ -643,7 +649,7 @@ class set_gear:
             if self.gear['main'].get('Skill Type', 'None') in two_handed and hasso:
                 self.playerstats["STR"] += 14
                 self.playerstats["STR"] += 20 # Job point category while using Hasso
-                self.playerstats['JA Haste'] += 10
+                self.playerstats['JA Haste'] += 10 + self.playerstats["Hasso+ JA Haste"]
                 self.playerstats['Accuracy1'] += 10
                 self.playerstats['Accuracy2'] += 10
 
@@ -1129,6 +1135,13 @@ class set_gear:
                 self.playerstats[stat] += self.gear[slot][stat] # This line already adds gear stat skills "Scythe Skill" from Empyrean +3 head for example is added here
                 # self.gearstats[stat] += self.gear[slot][stat] # This line is adding stats to gearstats. but i dont think i even use gearstats anymore i could probably delete it entirely TODO
 
+
+        if self.gear['main'].get('Skill Type', 'None') in two_handed and hasso:
+            self.playerstats['JA Haste'] += self.gearstats["Hasso+ JA Haste"]
+
+        print(self.playerstats["JA Haste"])
+
+
         # print(self.playerstats)
         # At this point, the playerstats dictionary should have all the player's gear stats added to the player's base stats, except attack1, attack2, accuracy1, and accuracy2
 
@@ -1160,6 +1173,8 @@ class set_gear:
                 evasion = 300 + 0.8*(evasion_skill - 300)
             else:
                 evasion = evasion_skill
+
+            # 300 + 0.8*(self.playerstats.get("Evasion Skill",0)-300) if self.playerstats.get("Evasion Skill",0) > 300 else self.playerstats.get("Evasion Skill",0)
 
             return(evasion)
 
