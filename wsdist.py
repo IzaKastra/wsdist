@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 10
+# Version date: 2023 May 18
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -594,7 +594,9 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         hitrate22 = get_hitrate(player_accuracy2, 0, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
         hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
-        hitrate_ranged2 = get_hitrate(player_rangedaccuracy, 0, enemy_eva, "ranged", False, "Throwing") # Ranged hitrate here only applies for daken. I have no plans for ranged TPing
+        shuriken_equipped = gearset.gear["ammo"]["Type"] == "Shuriken" # Used to add +100 racc on daken throws
+
+        hitrate_ranged2 = get_hitrate(player_rangedaccuracy + 100*shuriken_equipped, 0, enemy_eva, "ranged", False, "Throwing") # Ranged hitrate here only applies for daken. I have no plans for ranged TPing
 
         zanshin_hitrate = get_hitrate(player_accuracy1+34, 0, enemy_eva, "main", False, main_type_skill)
 
