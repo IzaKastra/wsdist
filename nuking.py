@@ -21,9 +21,8 @@ def quickdraw(rng_dmg, ammo_dmg, element, gearset, player_matk, player_magic_dam
     if "Death Penalty" in gearset.gear["ranged"]["Name2"]:
         magic_accuracy += 60
 
-    base_damage = ((rng_dmg+ammo_dmg)*2 + gearset.playerstats["Quick Draw"] + player_magic_damage)
-    damage = base_damage * (1 + gearset.playerstats["Quick Draw II"]/100) # Death Penalty + Empyrean feet.
-
+    base_damage = (((rng_dmg+ammo_dmg)*2 + gearset.playerstats["Quick Draw"])*(1 + gearset.playerstats["Quick Draw II"]/100))
+    damage = base_damage + player_magic_damage
     storms = {"Sandstorm II":"Earth","Rainstorm II":"Water","Windstorm II":"Wind","Firestorm II":"Fire","Hailstorm II":"Ice","Thunderstorm II":"Thunder","Aurorastorm II":"Light","Voidstorm II":"Dark"}
     storm_element = storms.get(job_abilities["storm spell"],"None")
 
@@ -118,6 +117,9 @@ def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, ge
     futae_bonus = 1.0
     extra_gear_bonus = 1.0 # For now, this is just Akademos +2% damage if spell element = weather
     if spelltype == "Ninjutsu":
+        if futae: # Futae = False if not Ninjutsu
+            mdmg += 100
+
         if tier == "Ichi":
             ninjutsu_skill_potency = ((100 + (spelltype_skill-50)/2)/100 if spelltype_skill <= 250 else 2.0) if spelltype_skill > 50 else 1.0
         elif tier == "Ni":
@@ -129,7 +131,7 @@ def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, ge
 
         m,v = get_mv(tier, player_INT, enemy_INT)
         d = int(v+mdmg+dINT*m)
-
+        
         if futae: # Futae = False if not Ninjutsu
             futae_bonus = 1.5 # Standard +50% damage when using futae
             if gearset.equipped['hands'] == "Hattori Tekko +3":
@@ -154,7 +156,7 @@ def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, ge
             if gearset.equipped["head"] == "Arbatel Bonnet +3":
                 ebullience_bonus += 0.21
 
-
+    base_damage=d
     # These next few are outside the Elemental Magic block since they apply for "spells with element that matches day/weather", which technically applies to Ninjutsu until proven otherwise.
     if gearset.equipped["feet"] == "Arbatel Loafers +3": # Only SCH can use these feet
         klimaform_bonus += 0.25 # Assume full-time klimaform on SCH Main
@@ -176,6 +178,9 @@ def nuking(spell, spelltype, tier, element, job_abilities, main_job, sub_job, ge
     d *= ebullience_bonus
     d *= extra_gear_bonus
     d *= futae_bonus
+    # print(resist_state,(100+player_matk)/(100+enemy_mdb),dayweather,futae_bonus,ninjutsu_skill_potency,magic_burst_multiplier,burst_bonus_multiplier)
+    magic_multiplier = (100+player_matk)/(100+enemy_mdb)*ninjutsu_skill_potency*(1+ninjutsu_damage/100)*dayweather*magic_burst_multiplier*burst_bonus_multiplier*elemental_damage_bonus*(1 + 0.25 * gearset.playerstats["Magic Crit Rate II"]/100)*klimaform_bonus*ebullience_bonus*extra_gear_bonus*futae_bonus
+    print(v,mdmg,dINT,m,base_damage,magic_multiplier,base_damage*magic_multiplier)
 
     d *= resist_state
 
