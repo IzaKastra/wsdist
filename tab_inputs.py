@@ -229,7 +229,7 @@ def item2image(item_name):
     #
     # Use base64 to convert image data
     #
-    items = np.loadtxt('item_list.txt',dtype=str, delimiter=";", unpack=True)
+    items = np.loadtxt('item_list.txt',dtype=str, delimiter=";", unpack=True, usecols=(0,1))
 
     path32 = "icons32/"
     path64 = "icons64/"

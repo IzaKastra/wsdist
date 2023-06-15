@@ -19,7 +19,7 @@ def get_image_ids(gearset):
     items_file = "item_list.txt"
     icons_path = "icons32/"
 
-    item_ids, item_names = np.loadtxt(items_file, unpack=True, dtype=str, delimiter=';')
+    item_ids, item_names = np.loadtxt(items_file, unpack=True, dtype=str, delimiter=';', usecols=(0,1))
     item_ids = np.array(item_ids, dtype=int)
     item_names = np.array([k.lower() for k in item_names])
 

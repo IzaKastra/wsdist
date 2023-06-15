@@ -1670,10 +1670,14 @@ def run_weaponskill(main_job, sub_job, ws_name, mintp, maxtp, tp0, n_iter, n_sim
 
         pdt = -50 if pdt < -50 else pdt
         mdt = -50 if mdt < -50 else mdt
-        for slot in new_set:
-            pdt += Best_Gearset[slot].get("PDT2",0)
-            mdt += Best_Gearset[slot].get("MDT2",0)
-
+        try:
+            for slot in new_set:
+                pdt += Best_Gearset[slot].get("PDT2",0)
+                mdt += Best_Gearset[slot].get("MDT2",0)
+        except:
+            for slot in Best_Gearset:
+                pdt += Best_Gearset[slot].get("PDT2",0)
+                mdt += Best_Gearset[slot].get("MDT2",0)
 
         # Compare the pdt and mdt values from this iteration with the previous iteration.
         if pdt == pdt_old and mdt == mdt_old:
