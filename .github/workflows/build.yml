@@ -63,6 +63,7 @@ jobs:
     - name: Zip Artifacts
       run: |
         zip -r ./wsdist.zip ./gui_wsdist.exe
+        zip -r ./wsdist.zip ./gear.py
         zip -r ./wsdist.zip ./item_list.txt
         zip -r ./wsdist.zip ./icons32
         zip -r ./wsdist.zip ./icons64
