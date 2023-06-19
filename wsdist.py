@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 18
+# Version date: 2023 June 18
 #
 # This is the main code that gets run. It reads in the GUI window for user-defined parameters and runs the simulations to find the best gear set by calling the functions within this code and within other codes.
 #
@@ -67,6 +67,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     blood_rage = job_abilities["Blood Rage"]
     mighty_strikes = job_abilities["Mighty Strikes"]
     last_resort = job_abilities["Last Resort"]
+    hasso = job_abilities["Hasso"]
 
     # Ranged WSs can't multi-attack. Here we define a thing that we can use later to deal with ranged-specific damage
     # It would be better to just use a separate melee/ranged/magical/hybrid WS function and not have to do this. but i'll do that later TODO
@@ -305,12 +306,20 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
     # Zanshin stuff.
     two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
-    zanshin = gearset.playerstats["Zanshin"]/100*(1+0.25*(main_job=="SAM")) + 0.1*(main_job=="SAM") if gearset.gear["main"]["Skill Type"] in two_handed else 0
-    zanshin = 1 if zanshin > 1 else zanshin
-    zanhasso = gearset.playerstats["Zanshin"]/100/4 if main_job=="SAM" else 0
-    zanhasso = 0.25 if zanhasso > 0.25 else zanhasso
-    zanhasso += 0.1
-    zanhasso = 0 if main_job != "SAM" else zanhasso
+    zanshin = gearset.playerstats["Zanshin"]/100 # Includes Gear, Traits, Merits
+    if main_job=="SAM" and hasso:
+        zanshin += 0.10 # +10% from SAM job points
+        zanshin *= 1.25 # +25% Zanshin proc with Hasso up on SAM main
+    zanshin = 0 if gearset.gear["main"]["Skill Type"] not in two_handed else zanshin # No Zanshin without a 2h weapon equipped.
+
+    zanhasso = 0 # Zanshin procs with hasso up and main hit connects. Only applies for SAM Main job with Hasso up
+    if main_job=="SAM" and hasso and (gearset.gear["main"]["Skill Type"] in two_handed):
+        zanhasso = (zanshin - 0.125)/4 # 1/4 the total Zanshin from Gear, traits, and merits, after subtracting the 10% from JP so we don't double-count
+        zanhasso = 0.25 if zanhasso > 0.25 else zanhasso
+        zanhasso += 0.10 # +10% from job points. 
+
+    zanshin = 1 if zanshin > 1 else zanshin # Cap Zanshin at 100%
+
     zanshin_oa2 = gearset.playerstats["Zanshin OA2"]/100
 
     qa = gearset.playerstats['QA']/100
