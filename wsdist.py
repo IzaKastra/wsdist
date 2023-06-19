@@ -307,14 +307,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
     # Zanshin stuff.
     two_handed = ["Great Sword", "Great Katana", "Great Axe", "Polearm", "Scythe", "Staff"]
     zanshin = gearset.playerstats["Zanshin"]/100 # Includes Gear, Traits, Merits
-    if main_job=="SAM" and hasso:
-        zanshin *= 1.25 # +25% Zanshin proc with Hasso up on SAM main
+
     zanshin = 0 if gearset.gear["main"]["Skill Type"] not in two_handed else zanshin # No Zanshin without a 2h weapon equipped.
     zanshin = 1 if zanshin > 1 else zanshin # Cap Zanshin at 100%
 
     zanhasso = 0 # Zanshin procs with hasso up and main hit connects. Only applies for SAM Main job with Hasso up
     if main_job=="SAM" and hasso and (gearset.gear["main"]["Skill Type"] in two_handed):
-        zanhasso = (zanshin)*0.35 # With the 100 and 1200 JP gifts, ZanHasso is 35% of your total Zanshin rate (up to 35% with 100% Zanshin)
+        zanhasso = (zanshin)*0.35 # With the 100 and 1200 JP gifts, ZanHasso is 35% of your total Zanshin rate (up to 35% with 100% Zanshin) https://www.ffxiah.com/forum/topic/41903/bushido-the-way-of-the-samurai-a-guide-v-20/55#3118638
 
     zanshin_oa2 = gearset.playerstats["Zanshin OA2"]/100
 
