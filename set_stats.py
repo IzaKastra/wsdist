@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 June 14
+# Version date: 2023 June 18
 #
 # This code holds the methods for building a player's stats.
 #
@@ -108,7 +108,7 @@ class set_gear:
                      'Daken':54, 'QA':0, 'TA':0, 'DA':0, 'OA8':0, 'OA7':0, 'OA6':0, 'OA5':0, 'OA4':0, 'OA3':0, 'OA2':0,"Double Shot":0,"Triple Shot":0,
                      "Kick Attacks":0,"Kick Attacks Attack":0,"Kick Attacks Accuracy":0,
                      'Crit Rate':10, 'Crit Damage':0, 'DA DMG':0, 'TA DMG':0,"Sneak Attack":0,"Trick Attack":0,"Flourish Bonus":0,"Ranged Crit Damage":0,
-                     'Store TP':0, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
+                     'Store TP':10, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':10,
                      'Dual Wield':35, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
                      'Zanshin':0, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
@@ -117,7 +117,7 @@ class set_gear:
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
                      'Light Elemental Bonus':0, 'Dark Elemental Bonus':0, 'Fire Elemental Bonus':0,'Earth Elemental Bonus':0, 'Water Elemental Bonus':0, 'Wind Elemental Bonus':0,'Ice Elemental Bonus':0, 'Thunder Elemental Bonus':0,'Elemental Bonus':0, 'Weaponskill Accuracy':0,
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
-                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,"Subtle Blow":27+5,"Subtle Blow II":0,
+                     "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":64,"Magic Def":0,"Subtle Blow":27+15,"Subtle Blow II":0,
                      }
         elif mainjob == "DRK":  # Master Level 20 Dark Knight stats
             self.playerstats = {'STR':117, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':113, 'MND':101, 'CHR':101,
@@ -167,7 +167,7 @@ class set_gear:
                      'Light Affinity':0, 'Dark Affinity':0, 'Fire Affinity':0,'Earth Affinity':0, 'Water Affinity':0, 'Wind Affinity':0,'Ice Affinity':0, 'Thunder Affinity':0,
                      "Magic Crit Rate II":0,"PDT":0,"MDT":0,"DT":0,"PDT2":0,"Magic Evasion":36,"Evasion":36,"Magic Def":0,"Subtle Blow":0,"Subtle Blow II":0,
                      }
-        elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso stuff is added later. Zanshin is +50% from traits, +5% from merits, +10% from job gifts. The additional +10% from gifts are added in the main code for now as "zanhasso"
+        elif mainjob == "SAM":  # Master Level 20 Samurai stats. Hasso stuff is added later. Zanshin is +50% from traits, +5% from merits, +10% from job gifts (added later). The additional +10% from gifts are added in the main code for now as "zanhasso"
             self.playerstats = {'STR':113, 'DEX':113, 'VIT':113, 'AGI':110, 'INT':107, 'MND':107, 'CHR':110,
                      'Scythe Skill':0+16, 'Dagger Skill':320+16, 'Sword Skill':398+16, 'Hand-to-Hand Skill':0+16, 'Great Katana Skill':444+16, 'Club Skill':320+16, 'Throwing Skill':398+16,
                      'Katana Skill':0+16, 'Axe Skill':0+16,'Great Axe Skill':0+16,'Polearm Skill':408+16,'Staff Skill':0+16,'Great Sword Skill':0+16,'Archery Skill':398+16,'Marksmanship Skill':0+16,
@@ -183,7 +183,7 @@ class set_gear:
                      'Store TP':8+40, "True Shot":0,"Double Shot Damage":0,"Triple Shot Damage":0,"Double Shot DMG":0,"Triple Shot DMG":0,
                      'PDL':0, 'PDL Trait':20,
                      'Dual Wield':0, 'Magic Haste':0, 'Gear Haste':0, 'JA Haste':0,"Martial Arts":0,
-                     'Zanshin':50+5+10, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
+                     'Zanshin':50+5, "Zanshin OA2":0, "Fencer":0,"Fencer TP Bonus":0,"Hasso":0,"Hasso+ JA Haste":0,"Recycle":0,
                      'Weaponskill Damage':8+19, 'Weaponskill Bonus':0, "Weaponskill Trait":0, 'Skillchain Bonus':8+16, 'ftp':0, 'TP Bonus':0, 'Weaponskill Accuracy':0,
                      'Delay1':0, 'Delay2':0, 'Delay':0, 'Ammo Delay':0, "Ranged Delay":0,
                      'DMG1':0, 'DMG2':0, 'Ammo DMG':0, "Ranged DMG":0,
@@ -1310,7 +1310,7 @@ class set_gear:
             # The contribution from skill changes with different skill levels. We need to add the contributions separately
             #
             skill = self.playerstats.get(wpn.get('Skill Type','None') + ' Skill',0) + wpn.get(wpn.get('Skill Type','None') + ' Skill',0)*(slot != "ammo")*(slot != "ranged") # We've already added skill from ranged+ammo slots. Do not add them again.
-            skill += 13
+
             skill_accuracy = 0
             if skill > 200:
                 skill_accuracy += int((min(skill,400)-200)*0.9) + 200
