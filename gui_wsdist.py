@@ -272,6 +272,15 @@ while True:
                 window["Job Bonus"].update(False)
                 window["Job Bonus"].update(disabled=True)
 
+
+        if event == "whm_on":
+            if values["whm_on"]:
+                window["shell_on"].update(disabled=False)
+                window["shell_on"].update(True)
+            else:
+                window["shell_on"].update(disabled=True)
+                window["shell_on"].update(False)
+
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------
@@ -838,6 +847,7 @@ while True:
 
             # Define buffs from white magic:
             whm_on = values["whm_on"]
+            shell_on = values["shell_on"]
             whm_haste = whm_on*(whm["Haste"]["Haste"]*(values["nhaste"] == "Haste") + whm["Haste II"]["Haste"]*(values["nhaste"] == "Haste II"))
             whm_str   = whm_on*(whm["Boost-STR"]["STR"]*(values["whm_boost"]=="Boost-STR") + 7*(values["sch_storm"]=="Firestorm II")    + 3*(values["sch_storm"]=="Voidstorm II"))
             whm_dex   = whm_on*(whm["Boost-DEX"]["DEX"]*(values["whm_boost"]=="Boost-DEX") + 7*(values["sch_storm"]=="Thunderstorm II") + 3*(values["sch_storm"]=="Voidstorm II"))
@@ -981,7 +991,7 @@ while True:
                              "Triple Shot":tripleshot_toggle,
                              "Nature's Meditation":nature_meditation_toggle,
                              "metric":values["tp priority"],
-                             "shell v":values["whm_on"],
+                             "shell v":values["shell_on"]*whm_on,
                              "storm spell":values["sch_storm"]*whm_on,
                              "Aftermath":values["aftermath toggle"]
                              }
@@ -1362,7 +1372,7 @@ while True:
                 window["pdt stat"].update(f"{'Physical DT:':<16s} {pdt+pdt2:>4d}")
                 window[f"pdt stat"].set_tooltip(f"Total PDT: {pdt0+pdt2}%")
 
-                mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"]) - 29*values["whm_on"]
+                mdt = int(gearset.playerstats["MDT"]) + int(gearset.playerstats["DT"]) - 29*values["shell_on"]
                 mdt0 = mdt
                 mdt2 = 0
                 mdt = -50 if mdt < -50 else mdt

@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 May 12
+# Version date: 2023 June 29
 #
 # This file contains a the GUI tab "Inputs".
 #
@@ -125,7 +125,8 @@ ws_column2 = [
 food_list = sorted([k["Name"] for k in all_food]) + ["None"] # Reads "all_food" from gear.py
 food_list = [k["Name"] for k in all_food] + ["None"] # Reads "all_food" from gear.py
 buffs_whm_column = [
-  [sg.Checkbox("WHM",size=(15,1),tooltip="Use White Magic buffs?",key="whm_on",default=False,font=font_choice)],
+  [sg.Checkbox("WHM",size=(15,1),tooltip="Use White Magic buffs?",key="whm_on",enable_events=True,default=False,font=font_choice)],
+  [sg.Checkbox("Shell V",size=(15,1),tooltip="Apply Shell V MDT -29%?",key="shell_on",default=False,font=font_choice,disabled=True)],
   [sg.Combo(values=("Dia","Dia II","Dia III","None"), default_value="Dia II", readonly=True, k="ndia",size=(16,1),font=font_choice)],
   [sg.Combo(values=("Haste","Haste II","None"), default_value="Haste", readonly=True, key="nhaste",size=(16,1),font=font_choice)],
   [sg.Combo(values=("Boost-STR","Boost-DEX","Boost-VIT","Boost-AGI","Boost-INT","Boost-MND","Boost-CHR","None"), default_value="None", readonly=True, key="whm_boost",size=(16,1),font=font_choice)],
