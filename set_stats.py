@@ -2,7 +2,7 @@
 # Created by Kastra on Asura.
 # Feel free to /tell in game or send a PM on FFXIAH you have questions, comments, or suggestions.
 #
-# Version date: 2023 June 18
+# Version date: 2023 June 29
 #
 # This code holds the methods for building a player's stats.
 #
@@ -1019,7 +1019,7 @@ class set_gear:
         # Jobs with native DW2 and DW3 traits. 
         dualwield2_jobs = ["THF","DNC","NIN"] # +10 Dual Wield II trait
         dualwield3_jobs = ["THF","NIN"] # +15 Dual Wield III trait
-        if subjob in dualwield2_jobs and mainjob not in dualwield2_jobs and mainjob != "BLU":
+        if subjob in dualwield3_jobs and mainjob not in dualwield2_jobs and mainjob != "BLU":
             self.playerstats["Dual Wield"] += 25
         elif subjob in dualwield2_jobs and mainjob not in dualwield2_jobs and mainjob != "BLU":
             self.playerstats["Dual Wield"] += 15
