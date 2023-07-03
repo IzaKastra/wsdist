@@ -596,6 +596,13 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         hitrate21 = get_hitrate(player_accuracy2, 0, enemy_eva,  'sub',  False, sub_type_skill) # First off-hand hit.
         hitrate12 = get_hitrate(player_accuracy1, 0, enemy_eva, 'main', False, main_type_skill) # Additional main-hand hits. "False" to not gain the +100 accuracy.
         hitrate22 = get_hitrate(player_accuracy2, 0, enemy_eva,  'sub', False, sub_type_skill) # Additional off-hand hits.
+
+        if not dual_wield:
+            hitrate21 = 0
+            hitrate22 = 0
+                
+
+
         hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
         shuriken_equipped = gearset.gear["ammo"]["Type"] == "Shuriken" # Used to add +100 racc on daken throws
@@ -798,6 +805,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
                 hitrate11 = 1.0
                 hitrate21 = 1.0
 
+            if not dual_wield:
+                hitrate21 = 0
+                hitrate22 = 0
+
             hitrate_matrix = np.array([[hitrate11, hitrate21],[hitrate12, hitrate22]])
 
 
@@ -841,7 +852,6 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
             # Add TP return from the first off-hand hit, which also gains the full TP amount
             tp += get_tp(hitrate21,mdelay,stp) # First sub hit has a "hitrate21"% chance to hit, so it gains TP for that many hits.
-
 
             # Add TP return from the remaining main+off-hand hits together. All of these hits simply gain 10*(1+stp) TP
             tp += 10*(1+stp)*(main_hits+sub_hits - hitrate11 - hitrate21) # main_hits and sub_hits already account for hit rates.
