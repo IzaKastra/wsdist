@@ -12,6 +12,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(sys.executable))
+from gear import *
 
 from buffs import *
 from gear import *
