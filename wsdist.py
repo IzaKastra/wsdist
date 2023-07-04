@@ -848,10 +848,10 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
 
             tp = 0
             # Calculate TP return from the first main hit
-            tp += get_tp(hitrate11,mdelay,stp) # First main hit has a "hitrate11"% chance to hit, so it gains TP for that many hits.
+            tp += get_tp(hitrate11,(mdelay/2 if (main_type_skill == "Hand-to-Hand") else mdelay),stp) # First main hit has a "hitrate11"% chance to hit, so it gains TP for that many hits.
 
             # Add TP return from the first off-hand hit, which also gains the full TP amount
-            tp += get_tp(hitrate21,mdelay,stp) # First sub hit has a "hitrate21"% chance to hit, so it gains TP for that many hits.
+            tp += get_tp(hitrate21,(mdelay/2 if (main_type_skill == "Hand-to-Hand") else mdelay),stp) # First sub hit has a "hitrate21"% chance to hit, so it gains TP for that many hits.
 
             # Add TP return from the remaining main+off-hand hits together. All of these hits simply gain 10*(1+stp) TP
             tp += 10*(1+stp)*(main_hits+sub_hits - hitrate11 - hitrate21) # main_hits and sub_hits already account for hit rates.
@@ -1126,7 +1126,7 @@ def weaponskill(main_job, sub_job, ws_name, enemy, gearset, tp1, tp2, tp0, buffs
         damage += magical_damage
 
     # damage = 99999 if damage > 99999 else damage  # Cap damage at 99999. This ruins the scale of the plots for high-buff situations. Better to leave damage uncapped.
-    tp_returned = get_tp(mainhit+subhit, mdelay, stp) + int(10*(1+stp))*ma_tp_hits
+    tp_returned = get_tp(mainhit+subhit, (mdelay/2 if (main_type_skill == "Hand-to-Hand") else mdelay), stp) + int(10*(1+stp))*ma_tp_hits
 
     return(int(damage), [int(damage),int(tp_returned)])
 
