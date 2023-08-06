@@ -1248,11 +1248,11 @@ class set_gear:
             self.playerstats['Attack2'] += buffs['brd'].get('Attack',0) if dual_wield else 0
             self.playerstats['Ranged Attack'] += buffs['brd'].get('Attack',0)
 
-            if buffs["brd"].get("Attack",0) > 0 and mainjob=="BRD":
-                # +20 attack when under the effects of minuet (job point category)
-                self.playerstats["Attack1"] += 20
-                self.playerstats["Attack2"] += 20
-                self.playerstats["Ranged Attack"] += 20
+            # if buffs["brd"].get("Attack",0) > 0 and mainjob=="BRD":
+            #     # +20 attack when under the effects of minuet (job point category)
+            #     self.playerstats["Attack1"] += 20
+            #     self.playerstats["Attack2"] += 20
+            #     self.playerstats["Ranged Attack"] += 20
 
         # Now multiply each attack by the sum of the %-based attack boosts like COR GEO and Kikoku's Attack+10%
         # First collect the individual attack% boosts and add them together.
