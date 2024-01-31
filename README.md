@@ -1,6 +1,9 @@
 # wsdist
 GUI interface for wsdist.py.
 
+Note: This version is no longer updated. Please see the "beta" version for a more up-to-date application with additional features (https://github.com/IzaKastra/wsdist_beta).
+
+
 The code for finding and comparing gearsets works well, but the UI scaling is not great yet.
 You will likely need to resize the window or increase font size (see Edit menubar at the top) to make things useable.
 
@@ -16,7 +19,7 @@ You should be able to run the executable with just the following files:
     gui_wsdist.exe
     item_list.txt
     icons32/*
-    icons64/*
+    icons64/
 
 The gui_wsdist.exe was created with the following commands within a Python3.8.8 virtual environment using Windows10 PowerShell (see https://virtualenv.pypa.io/en/stable/user_guide.html):
 
